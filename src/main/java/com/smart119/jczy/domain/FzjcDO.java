@@ -1,0 +1,127 @@
+package com.smart119.jczy.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+
+
+/**
+ * 辅助决策
+ * 
+ * @author wangguangyu
+ * @email wangguangyu@sz000673.com
+ * @date 2021-02-02 10:22:35
+ */
+public class FzjcDO implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	//主键 uuid
+	private String fzjcId;
+	//标题
+	private String bt;
+	//辅助决策类型代码 （sys_dict表 type为FZJCLXDM的value值）
+	private String fzjclxdm;
+	//辅助决策内容（页面用富文本编辑器编辑）
+	private String fzjcnr;
+	//创建时间
+	private Date cdate;
+	//创建人
+	private String cperson;
+	//状态0 在用 1删除
+	private Integer status;
+
+	private String fzjclx;
+
+	/**
+	 * 设置：主键 uuid
+	 */
+	public void setFzjcId(String fzjcId) {
+		this.fzjcId = fzjcId;
+	}
+	/**
+	 * 获取：主键 uuid
+	 */
+	public String getFzjcId() {
+		return fzjcId;
+	}
+	/**
+	 * 设置：标题
+	 */
+	public void setBt(String bt) {
+		this.bt = bt;
+	}
+	/**
+	 * 获取：标题
+	 */
+	public String getBt() {
+		return bt;
+	}
+	/**
+	 * 设置：辅助决策类型代码 （sys_dict表 type为FZJCLXDM的value值）
+	 */
+	public void setFzjclxdm(String fzjclxdm) {
+		this.fzjclxdm = fzjclxdm;
+	}
+	/**
+	 * 获取：辅助决策类型代码 （sys_dict表 type为FZJCLXDM的value值）
+	 */
+	public String getFzjclxdm() {
+		return fzjclxdm;
+	}
+	/**
+	 * 设置：辅助决策内容（页面用富文本编辑器编辑）
+	 */
+	public void setFzjcnr(String fzjcnr) {
+		this.fzjcnr = fzjcnr;
+	}
+	/**
+	 * 获取：辅助决策内容（页面用富文本编辑器编辑）
+	 */
+	public String getFzjcnr() {
+		return fzjcnr;
+	}
+	/**
+	 * 设置：创建时间
+	 */
+	public void setCdate(Date cdate) {
+		this.cdate = cdate;
+	}
+	/**
+	 * 获取：创建时间
+	 */
+	public Date getCdate() {
+		return cdate;
+	}
+	/**
+	 * 设置：创建人
+	 */
+	public void setCperson(String cperson) {
+		this.cperson = cperson;
+	}
+	/**
+	 * 获取：创建人
+	 */
+	public String getCperson() {
+		return cperson;
+	}
+	/**
+	 * 设置：状态0 在用 1删除
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	/**
+	 * 获取：状态0 在用 1删除
+	 */
+	public Integer getStatus() {
+		return status;
+	}
+
+	public String getFzjclx() {
+		return fzjclx;
+	}
+
+	public void setFzjclx(String fzjclx) {
+		this.fzjclx = fzjclx;
+	}
+}
