@@ -4,15 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>bootdo - 地图</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="favicon.ico">
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/layui.css" rel="stylesheet">
     <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
     <style  type="text/css">
         *{ margin:0px;padding:0}
         html,body{height:100%;width: 100%}
@@ -33,7 +35,6 @@
             z-index: 555;
         }
     </style>
-    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=您的密钥"></script>-->
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content maxHeight" id="app">
@@ -42,8 +43,16 @@
 
         </div>
         <div class="search-box">
-            <div id="r-result">搜索:<input type="text" id="suggestId" size="20" value="" style="width:150px;" /></div>
-            <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+            <div class="info">
+                <div class="input-item">
+                    <div class="input-item-prepend">
+                        <span class="input-item-text" style="width:8rem;">请输入关键字</span>
+                    </div>
+                    <input id='tipinput' type="text">
+                </div>
+            </div>
+            <!--<div id="r-result">搜索:<input type="text" id="suggestId" size="20" value="" style="width:150px;" /></div>-->
+            <!--<div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>-->
         </div>
 
 
@@ -54,7 +63,8 @@
 </div>
 
 <!-- 全局js -->
-<script src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=L63VqGA7HKUOLTTVkKCGwMxvdobIyHiy"></script>
+<!--<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=6abf4a07a2d27ca236c01b4be5341be9"></script>-->
+
 <script src="/js/jquery.min.js?v=2.1.4"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="/js/bootstrap-paginator.min.js"></script>
@@ -63,7 +73,8 @@
 <script src="/js/plugins/clipboard/clipboard.min.js"></script>
 <script src="/js/plugins/layer/layer.min.js"></script>
 <script src="/js/vue.min.js"></script>
-
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=19c164c322b2e90bb896f8bfb07f4d1c&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
+<!--<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>-->
 <script th:inline="javascript">
     var lat = [[${lat}]];
     var lng = [[${lng}]];
@@ -82,82 +93,45 @@
         methods: {
 
             createMap:function () {
-                function G(id) {
-                    return document.getElementById(id);
-                }
-
                 var _this = this;
-                var map = new BMapGL.Map("container");
-                // 创建地图实例
-//                var point = new BMapGL.Point(116.404, 39.915);
-                // 创建点坐标
-                map.centerAndZoom('临沂市', 12); // 初始化地图,设置中心点坐标和地图级别
-                map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
+                var center = [118.36594023480365, 35.11351000895431];
+                if(lng!='' && lat!=''){
+                    center[0] = lng
+                    center[1] = lat
+                }
+                var map = new AMap.Map('container', {
+                    zoom:12,//级别
+                    center: center,//中心点坐标
+                });
+                //输入提示
+                var auto = new AMap.Autocomplete({
+                    input: "tipinput"
+                });
+                var placeSearch = new AMap.PlaceSearch({
+                    map: map
+                });  //构造地点查询类
+                AMap.event.addListener(auto, "select", select);//注册监听，
+                function select(e) {
+                    placeSearch.setCity(e.poi.adcode);
+                    placeSearch.search(e.poi.name);  //关键字查询查询
+                }
+                var clickHandler = function(e) {
+                    // 创建一个 Marker 实例：
+                    map.clearMap();
+                    var marker = new AMap.Marker({
+                        icon: "https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png",
+                        position: new AMap.LngLat(e.lnglat.getLng(), e.lnglat.getLat()),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+                        title: ''
+                    });
+                    _this.marker.lng = e.lnglat.getLng();
+                    _this.marker.lat = e.lnglat.getLat();
+                    map.add(marker);
+                };
+                // 绑定事件
+                map.on('click', clickHandler);
                 if(lat!=''&& lng!=''){
                     this.initMarker(map);
                 }
-                // 初始化地图，设置中心点坐标和地图级别
-                map.addEventListener('click', function(e) {
-                    _this.marker = {};
-                    map.clearOverlays()
-                    var point = new BMapGL.Point(e.latlng.lng,e.latlng.lat);
-                    var marker = new BMapGL.Marker(point);        // 创建标注
-                    map.addOverlay(marker);                     // 将标注添加到地图中
-                    _this.marker.lng = e.latlng.lng;
-                    _this.marker.lat = e.latlng.lat;
-                });
-
-                // G(container).innerHTML = "<div id=\"r-result\">搜索:<input type=\"text\" id=\"suggestId\" size=\"20\" value=\"\" style=\"width:150px;\" /></div>\n" +
-                //     "            <div id=\"searchResultPanel\" style=\"border:1px solid #C0C0C0;width:150px;height:auto; display:none;\"></div>"
-
-                // 地图搜索poi
-                var ac = new BMapGL.Autocomplete(    //建立一个自动完成的对象
-                    {"input" : "suggestId"
-                        ,"location" : map
-                    });
-
-                ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-                    var str = "";
-                    var _value = e.fromitem.value;
-                    var value = "";
-                    if (e.fromitem.index > -1) {
-                        value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-                    }
-                    str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-
-                    value = "";
-                    if (e.toitem.index > -1) {
-                        _value = e.toitem.value;
-                        value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-                    }
-                    str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-                    G("searchResultPanel").innerHTML = str;
-                });
-
-                var myValue;
-                ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-                    var _value = e.item.value;
-                    myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-                    G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
-
-                    setPlace();
-                });
-
-                function setPlace(){
-                    map.clearOverlays();    //清除地图上所有覆盖物
-                    function myFun(){
-                        var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
-                        map.centerAndZoom(pp, 18);
-                        map.addOverlay(new BMapGL.Marker(pp));    //添加标注
-                        _this.marker.lng = pp.lng;
-                        _this.marker.lat = pp.lat;
-                    }
-                    var local = new BMapGL.LocalSearch(map, { //智能搜索
-                        onSearchComplete: myFun
-                    });
-                    local.search(myValue);
-                }
-                // 地图搜索poi =====end
             },
             createMarker:function () {
                 if( typeof parent.saveMarker =='function'){
@@ -167,9 +141,15 @@
                 parent.layer.close(index);
             },
             initMarker:function (map) {
-                var point = new BMapGL.Point(lng,lat);
-                var marker = new BMapGL.Marker(point);
-                map.addOverlay(marker);
+                map.clearMap();
+                var marker = new AMap.Marker({
+                    icon: "https://a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-red.png",
+                    position: new AMap.LngLat(lng,lat),   // 经纬度对象，也可以是经纬度构成的一维数组[116.39, 39.9]
+                    title: ''
+                });
+                this.marker.lng = lng;
+                this.marker.lat = lat;
+                map.add(marker);
             },
 
 
