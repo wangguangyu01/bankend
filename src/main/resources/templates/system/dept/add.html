@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">上级部门：</label>
+								<div class="col-sm-8">
+									<input id="parentId" name="parentId" th:value="${pId}"
+										class="form-control hidden" type="hidden">
+								</div>
+								<div class="col-sm-10">
+									<input id="pName" name="pName" th:value="${pName}"
+										class="form-control" type="text" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">单位名称：</label>
+								<div class="col-sm-4">
+									<input id="dwmc" name="dwmc" class="form-control" type="text" required>
+								</div>
+								<label class="col-sm-2 control-label">单位简称：</label>
+								<div class="col-sm-4">
+									<input id="dwjc" name="dwjc" class="form-control" type="text" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label" >联系人姓名：</label>
+								<div class="col-sm-4">
+									<input id="lxrXm" name="lxrXm" class="form-control" type="text" required>
+								</div>
+								<label class="col-sm-2 control-label">联系电话：</label>
+								<div class="col-sm-4">
+									<input id="lxdh" name="lxdh" class="form-control" type="text" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">邮政编码：</label>
+								<div class="col-sm-4">
+									<input id="yzbm" name="yzbm" class="form-control" type="text">
+								</div>
+								<label class="col-sm-2 control-label">电子邮箱：</label>
+								<div class="col-sm-4">
+									<input id="dzxx" name="dzxx" class="form-control" type="text">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地球经度：</label>
+								<div class="col-sm-4">
+									<input id="dqjd" name="dqjd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly" placeholder="请选择" required>
+								</div>
+								<label class="col-sm-2 control-label">地球纬度：</label>
+								<div class="col-sm-4">
+									<input id="dqwd" name="dqwd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly" placeholder="请选择" required>
+								</div>
+							</div>
+							<div class="form-group" id="zffwDiv" style="display: none">
+								<label class="col-sm-2 control-label">管辖范围：</label>
+								<div class="col-sm-10">
+									<input  id="zbfw" name="zbfw" class="form-control" type="text" onclick="openMap2()" style="cursor: pointer;" readonly="readonly" placeholder="请选择" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">行政区划代码：</label>
+								<div class="col-sm-3">
+									<select data-placeholder="省/直辖市" name="province" title="省/直辖市"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="sds" selected="selected">山东省</option>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'xzqhdm')"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">传真号码：</label>
+								<div class="col-sm-4">
+									<input id="czhm" name="czhm" class="form-control" type="text">
+								</div>
+								<label class="col-sm-2 control-label">消防救援机构性质代码：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xfjyjgxzdm"  onchange="changeval()" id="xfjyjgxzdm" required title="请选择消防救援机构性质"/>
+									<div class="XFJYJGXZDM-DIV dropdown">
+										<a id="dLabel" role="button" style="width: 100%;text-align: left;" data-toggle="dropdown" class="btn btn-white" >
+											<span id="xfjyjgxzdm-title">--请选择--</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+									<label for="xfjyjgxzdm" class="error"></label>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">通讯地址：</label>
+								<div class="col-sm-10">
+									<textarea id="txdz" name="txdz" class="form-control" ></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">职责_简要情况：</label>
+								<div class="col-sm-10">
+									<textarea id="zhzJyqk" name="zhzJyqk" class="form-control" ></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-10">
+									<textarea id="bz" name="bz" class="form-control"></textarea>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="application/javascript" th:inline="javascript">
+        var deptList = [[${deptList}]];
+        console.log(deptList)
+	</script>
+	<script type="text/javascript" src="/js/appjs/system/sysDept/add.js"></script>
+	<script type="text/javascript" src="/js/publicUtil.js"></script>
+
+</body>
+</html>

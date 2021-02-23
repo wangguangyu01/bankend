@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">重点部位名称：</label>
+                            <div class="col-sm-4">
+                                <input id="mc" name="mc" class="form-control" type="text">
+                            </div>
+							<label class="col-sm-2 control-label">重点部位地点：</label>
+							<div class="col-sm-4">
+								<input id="ddmc" name="ddmc" class="form-control" type="text">
+							</div>
+                        </div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">消防救援机构：</label>
+                            <div class="col-sm-4">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+                                    id="deptName" name="deptName" class="form-control" type="text"
+                                    style="cursor: pointer;" onclick="openDept()"
+                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+                            </div>
+                            <label class="col-sm-2 control-label">建筑物耐火等级：</label>
+                            <div class="col-sm-4">
+                                <select data-placeholder="建筑物耐火等级" name="jzwnhdjdm" id="jzwnhdjdm" title="建筑物耐火等级"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">--请选择建筑物耐火等级--</option>
+                                </select>
+                            </div>
+						</div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">高度：</label>
+                            <div class="col-sm-4">
+                                <input id="bwszGd" name="bwszGd" class="form-control" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">楼层：</label>
+                            <div class="col-sm-4">
+                                <input id="bwszLc" name="bwszLc" class="form-control" type="number" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">建筑结构类型：</label>
+                            <div class="col-sm-4">
+                                <select data-placeholder="建筑结构类型" name="jzjglxdm" id="jzjglxdm" title="建筑结构类型"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">--请选择建筑结构类型--</option>
+                                </select>
+                            </div>
+							<label class="col-sm-2 control-label">建筑物使用性质：</label>
+							<div class="col-sm-4">
+                                <select data-placeholder="建筑物使用性质" name="jzwsyxzdm" id="jzwsyxzdm" title="建筑物使用性质"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">--请选择建筑物使用性质--</option>
+                                </select>
+							</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">建筑面积：</label>
+                            <div class="col-sm-4">
+                                <input id="jzMj" name="jzMj" class="form-control" type="number" min="0">
+                            </div>
+							<label class="col-sm-2 control-label">消防电梯数量：</label>
+							<div class="col-sm-4">
+								<input id="xfdtSl" name="xfdtSl" class="form-control" type="number" min="0">
+							</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">疏散出口数量：</label>
+                            <div class="col-sm-4">
+                                <input id="ssckSl" name="ssckSl" class="form-control" type="number" min="0">
+                            </div>
+							<label class="col-sm-2 control-label">安全出口数量：</label>
+							<div class="col-sm-4">
+								<input id="aqckSl" name="aqckSl" class="form-control" type="number" min="0">
+							</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">灭火设施简要情况：</label>
+                            <div class="col-sm-4">
+								<textarea id="mhssJyqk" name="mhssJyqk" class="form-control"></textarea>
+                            </div>
+                            <label class="col-sm-2 control-label">危险性简要情况：</label>
+                            <div class="col-sm-4">
+                                <textarea id="wxxJyqk" name="wxxJyqk" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">确立原因简要情况：</label>
+                            <div class="col-sm-4">
+								<textarea id="qlyyJyqk" name="qlyyJyqk" class="form-control"></textarea>
+                            </div>
+                            <label class="col-sm-2 control-label">防火标识设立简要情况：</label>
+                            <div class="col-sm-4">
+                                <textarea id="ffbsslJyqk" name="ffbsslJyqk" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">危险源简要情况：</label>
+                            <div class="col-sm-4">
+								<textarea id="wxyJyqk" name="wxyJyqk" class="form-control"></textarea>
+                            </div>
+                            <label class="col-sm-2 control-label">火种简要情况：</label>
+                            <div class="col-sm-4">
+                                <textarea id="hzJyqk" name="hzJyqk" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">责任人姓名：</label>
+                            <div class="col-sm-4">
+                                <input id="zrrXm" name="zrrXm" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">消防安全管理简要情况：</label>
+                            <div class="col-sm-4">
+								<textarea id="sfaqglJyqk" name="sfaqglJyqk" class="form-control"></textarea>
+                            </div>
+                            <label class="col-sm-2 control-label">备注：</label>
+                            <div class="col-sm-4">
+                                <textarea id="bz" name="bz" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">图纸：</label>
+                            <div class="col-sm-10">
+                                <input id='input-id' multiple type="file" name="tzFile" data-show-caption="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/jczy/zdbw/add.js">
+</script>
+</body>
+</html>

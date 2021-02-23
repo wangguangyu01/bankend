@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
+						<input id="mhjyzjTywysbm" name="mhjyzjTywysbm" th:value="${mhjyzj.mhjyzjTywysbm}"  type="hidden">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">姓名：</label>
+								<div class="col-sm-4">
+									<input id="xm" name="xm" class="form-control" type="text" th:value="${mhjyzj.xm}" required>
+								</div>
+								<label class="col-sm-2 control-label">公民身份号码：</label>
+								<div class="col-sm-4">
+									<input id="gmsfhm" name="gmsfhm" class="form-control" type="text" th:value="${mhjyzj.gmsfhm}" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">性别：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="xbdmVal" th:value="${mhjyzj.xbdm}"/>
+									<select data-placeholder="性别" name="xbdm" id="xbdm" title="性别"
+											class="form-control chosen-select" tabindex="2" required>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">学历：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xldm" id="xldm" value=""  th:value="${mhjyzj.xldm}"/>
+									<div class="XLDM-DIV dropdown">
+										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
+											<span id="xldm-title" th:text="${xldm_name}">选择分类</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防岗位类别：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xfgwlbdm" id="xfgwlbdm" value=""  th:value="${mhjyzj.xfgwlbdm}"/>
+									<div class="XFGWFLYDM-DIV dropdown">
+										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
+											<span id="xfgwlbdm-title" th:text="${xfgwlbdm_name}">选择分类</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">出生_日期：</label>
+								<div class="col-sm-4">
+									<input type="text" class="laydate-icon layer-date form-control" id="csRq" name="csRq"  placeholder="请选择入党日期"
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${mhjyzj.csRq}==null?null:${#dates.format(mhjyzj.csRq,'yyyy-MM-dd')}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">籍贯：</label>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="jg_provinceVal" th:value="${jg_province}"/>
+									<select data-placeholder="省/直辖市" id="jg_province" title="省/直辖市" onchange="getXzqhdm(this,'city')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="jg_cityVal" th:value="${jg_city}"/>
+									<select data-placeholder="市/直辖县" title="市/直辖县" id="jg_city" onchange="getXzqhdm(this,'jgdm')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="jgdmVal" th:value="${mhjyzj.jgdm}"/>
+									<select data-placeholder="区/县" name="jgdm" title="区/县" id="jgdm"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">行政区划代码：</label>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="qh_provinceVal" th:value="${qh_province}"/>
+									<select data-placeholder="省/直辖市" id="qh_province" title="省/直辖市" onchange="getXzqhdm(this,'qh_city')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="qh_cityVal" th:value="${qh_city}"/>
+									<select data-placeholder="市/直辖县"  title="市/直辖县" id="qh_city" onchange="getXzqhdm(this,'xzqhdm')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="xzqhdmVal" th:value="${mhjyzj.xzqhdm}"/>
+									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">居住_地址名称：</label>
+								<div class="col-sm-4">
+									<input id="jzhDzmc" name="jzhDzmc" class="form-control" type="text" th:value="${mhjyzj.jzhDzmc}">
+								</div>
+								<label class="col-sm-2 control-label">通信地址：</label>
+								<div class="col-sm-4">
+									<input id="txdz" name="txdz" class="form-control" type="text" th:value="${mhjyzj.txdz}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">邮政编码：</label>
+								<div class="col-sm-4">
+									<input id="yzbm" name="yzbm" class="form-control" type="text" th:value="${mhjyzj.yzbm}">
+								</div>
+								<label class="col-sm-2 control-label">联系电话：</label>
+								<div class="col-sm-4">
+									<input id="yddh" name="yddh" class="form-control" type="text" th:value="${mhjyzj.yddh}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">家庭_联系电话：</label>
+								<div class="col-sm-4">
+									<input id="jtLxdh" name="jtLxdh" class="form-control" type="text" th:value="${mhjyzj.jtLxdh}">
+								</div>
+								<label class="col-sm-2 control-label">办公_联系电话：</label>
+								<div class="col-sm-4">
+									<input id="bgLxdh" name="bgLxdh" class="form-control" type="text" th:value="${mhjyzj.bgLxdh}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">单位名称：</label>
+								<div class="col-sm-4">
+									<input id="dwmc" name="dwmc" class="form-control" type="text" th:value="${mhjyzj.dwmc}" required>
+								</div>
+								<label class="col-sm-2 control-label">是否队伍内部专家：</label>
+								<div class="col-sm-4">
+									<input id="sfdwnbzjPdbzVal" class="form-control" type="hidden" th:value="${mhjyzj.sfdwnbzjPdbz}">
+									<select data-placeholder="是否队伍内部专家" name="sfdwnbzjPdbz" title="是否队伍内部专家" id="sfdwnbzjPdbz"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防专家领域类别：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xfzjlylbdm" id="xfzjlylbdm" value="" th:value="${mhjyzj.xfzjlylbdm}"/>
+									<div class="XFZJLYLBDM-DIV dropdown">
+										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
+											<span id="xfzjlylbdm-title" th:text="${xfzjlylbdm_name}">选择分类</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">消防救援机构：</label>
+								<div class="col-sm-4">
+									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${mhjyzj.xfjyjgTywysbm}"> <input
+										id="xfjyjgTywysbmName" name="deptName" class="form-control" type="text" th:value="${xfjyjgTywysbm_name}"
+										style="cursor: pointer;" onclick="openDept('xfjyjgTywysbm')"
+										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-10">
+									<textarea id="bz" name="bz" class="form-control" th:text="${mhjyzj.bz}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">照片：</label>
+								<div class="col-sm-10">
+									<input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/mhjyzj/edit.js">
+	</script>
+	<script th:inline="javascript">
+        var attachmentDOList = [[${attachmentDOList}]];
+	</script>
+</body>
+</html>

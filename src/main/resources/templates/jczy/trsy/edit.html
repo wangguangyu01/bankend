@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm"  enctype="multipart/form-data">
+							<input id="trsyTywysbm" name="trsyTywysbm" th:value="${trsy.trsyTywysbm}"  type="hidden">
+							<input id="sylxdmVal" th:value="${trsy.sylxdm}" type="hidden">
+							<input id="sykyztlbdmVal" th:value="${trsy.sykyztlbdm}" type="hidden">
+							<input type="hidden" id="cityVal" th:value="${city}"/>
+							<input type="hidden" id="provinceVal" th:value="${province}"/>
+							<input type="hidden" id="xzqhdmVal" th:value="${trsy.xzqhdm}"/>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">天然水源名称：</label>
+								<div class="col-sm-4">
+									<input id="mc" name="mc" class="form-control" type="text" th:value="${trsy.mc}">
+								</div>
+								<label class="col-sm-2 control-label">天然水源地址：</label>
+								<div class="col-sm-4">
+									<input id="dzmc" name="dzmc" class="form-control" type="text" th:value="${trsy.dzmc}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">高度：</label>
+								<div class="col-sm-4">
+									<input id="gd" name="gd" class="form-control" type="number" th:value="${trsy.gd}" min="0">
+								</div>
+								<label class="col-sm-2 control-label">水源类型：</label>
+								<div class="col-sm-4">
+									<select data-placeholder="水源类型" name="sylxdm" id="sylxdm" title="水源类型"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--请选择水源类型--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">容积：</label>
+								<div class="col-sm-4">
+									<input id="rj" name="rj" class="form-control" type="number" th:value="${trsy.rj}" min="0">
+								</div>
+								<label class="col-sm-2 control-label">面积：</label>
+								<div class="col-sm-4">
+									<input id="mj" name="mj" class="form-control" type="number" th:value="${trsy.mj}" min="0">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地球经度：</label>
+								<div class="col-sm-4">
+									<input id="dqjd" name="dqjd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+										   readonly="readonly" placeholder="请选择" title="请在地图上选择天然水源位置" required th:value="${trsy.dqjd}">
+								</div>
+								<label class="col-sm-2 control-label">地球纬度：</label>
+								<div class="col-sm-4">
+									<input id="dqwd" name="dqwd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+										   readonly="readonly" placeholder="请选择" title="请在地图上选择天然水源位置" required th:value="${trsy.dqwd}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">水质情况简要情况：</label>
+								<div class="col-sm-10">
+									<textarea id="szqkJyqk" name="szqkJyqk" class="form-control" th:text="${trsy.szqkJyqk}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">四季变化简要情况：</label>
+								<div class="col-sm-10">
+									<textarea id="sjbhJyqk" name="sjbhJyqk" class="form-control" th:text="${trsy.sjbhJyqk}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">水源可用状态：</label>
+								<div class="col-sm-4">
+									<select data-placeholder="水源可用状态类别" name="sykyztlbdm" id="sykyztlbdm" title="水源可用状态"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--请选择水源可用状态--</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">有无枯水期判断标识：</label>
+								<div class="col-sm-4">
+									<input id="ywksqPdbz" name="ywksqPdbz" class="form-control" type="text" th:value="${trsy.ywksqPdbz}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">枯水期跨度简要情况：</label>
+								<div class="col-sm-10">
+									<textarea id="ksqkdJyqk" name="ksqkdJyqk" class="form-control" th:text="${trsy.ksqkdJyqk}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防救援机构：</label>
+								<div class="col-sm-2">
+									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+										id="deptName" name="deptName" class="form-control" type="text"
+										style="cursor: pointer;" onclick="openDept()"
+										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构"  required th:value="${trsy.xfjyjg}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">行政区划：</label>
+								<div class="col-sm-3">
+									<select data-placeholder="省/直辖市" name="province" title="省/直辖市"
+											class="form-control chosen-select" tabindex="2">
+										<option value="">山东省</option>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'xzqhdm')"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-4">
+									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">建造日期：</label>
+									<div class="col-sm-2">
+										<input type="text" class="laydate-icon layer-date form-control" id="jizRq" name="jizRq" placeholder="请选择建造日期"
+											   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期" required th:value="${trsy.jizRq}==null?null:${#dates.format(trsy.jizRq,'yyyy-MM-dd')}"/>
+									</div>
+									<label class="col-sm-2 control-label">启用日期：</label>
+									<div class="col-sm-2">
+										<input type="text" class="laydate-icon layer-date form-control" id="qyRq" name="qyRq" placeholder="请选择启用日期"
+											   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期" required th:value="${trsy.qyRq}==null?null:${#dates.format(trsy.qyRq,'yyyy-MM-dd')}"/>
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">实景图：</label>
+								<div class="col-sm-4">
+									<input id='input-id' multiple type="file" name="sjFile" data-show-caption="true"/>
+								</div>
+								<label class="col-sm-2 control-label">方位图：</label>
+								<div class="col-sm-4">
+									<input id='input-id1' multiple type="file" name="fwFile" data-show-caption="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:inline="javascript">
+		var trsysjtList = [[${trsysjtList}]];
+		var trsyfwtList = [[${trsyfwtList}]];
+	</script>
+	<script type="text/javascript" src="/js/appjs/jczy/trsy/edit.js">
+	</script>
+</body>
+</html>

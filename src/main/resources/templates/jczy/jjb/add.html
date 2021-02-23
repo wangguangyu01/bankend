@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">交班人员id：</label>
+								<div class="col-sm-8">
+									<input id="jiaobryid" name="jiaobryid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交班人员名称：</label>
+								<div class="col-sm-8">
+									<input id="jiaobrymc" name="jiaobrymc" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交班部门id：</label>
+								<div class="col-sm-8">
+									<input id="jiaobbmid" name="jiaobbmid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交班部门名称：</label>
+								<div class="col-sm-8">
+									<input id="jiaobbmmc" name="jiaobbmmc" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">接班人员id：</label>
+								<div class="col-sm-8">
+									<input id="jiebryid" name="jiebryid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">接班人员名称：</label>
+								<div class="col-sm-8">
+									<input id="jiebrymc" name="jiebrymc" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">接班部门id：</label>
+								<div class="col-sm-8">
+									<input id="jiebbmid" name="jiebbmid" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">接班部门名称：</label>
+								<div class="col-sm-8">
+									<input id="jiebbmmc" name="jiebbmmc" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交接班时间：</label>
+								<div class="col-sm-8">
+									<input id="jjbsj" name="jjbsj" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">交接班内容：</label>
+								<div class="col-sm-8">
+									<input id="jjbnr" name="jjbnr" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="cdate" name="cdate" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="cperson" name="cperson" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">：</label>
+								<div class="col-sm-8">
+									<input id="status" name="status" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/jjb/add.js">
+	</script>
+</body>
+</html>

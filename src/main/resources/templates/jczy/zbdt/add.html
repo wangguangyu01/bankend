@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">值班日期：</label>
+								<div class="col-sm-4">
+									<input type="text" class="laydate-icon layer-date form-control" id="zhbRq" name="zhbRq"  placeholder="值班日期"
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+								</div>
+
+								<label class="col-sm-2 control-label">值班人员：</label>
+								<div class="col-sm-4">
+									<input id="zbryXm" name="zbryXm" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">联系电话：</label>
+								<div class="col-sm-4">
+									<input id="zbryLxdh" name="zbryLxdh" class="form-control" type="text">
+								</div>
+
+								<label class="col-sm-2 control-label">消防值班角色类别：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="zbryXfzbjslbdm" name="zbryXfzbjslbdm" title="请选择角色类别" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防岗位分类：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="zbryXfgwflydm" id="zbryXfgwflydm" value="" />
+									<div class="ZBRYXFGWFLYDM-DIV dropdown" >
+										<a  role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;"><span id="zbryXfgwflydm-title">--请选择--</span> <span class="caret pull-right" style="position: relative;top: 10px;"></span></a>
+									</div>
+								</div>
+
+								<label class="col-sm-2 control-label">值班人员单位名称：</label>
+								<div class="col-sm-4">
+									<input id="zbryDwmc" name="zbryDwmc" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">值班人员_正副班：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="zfbPdbs" name="zfbPdbs" title="请选择正副班" required>
+										<option value="">--请选择--</option>
+										<option value="正">正</option>
+										<option value="副">副</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">消防救援机构：</label>
+								<div class="col-sm-4">
+									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+										id="deptName" name="deptName" class="form-control" type="text"
+										style="cursor: pointer;" onclick="openDept()"
+										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-10">
+									<textarea id="bz" name="bz" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">行政区划代码：</label>
+
+								<div class="col-sm-4">
+									<select data-placeholder="省/直辖市" name="province" title="省/直辖市"
+											class="form-control chosen-select" tabindex="2">
+										<option value="">山东省</option>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'xzqhdm')"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">值班日志_简要情况：</label>
+								<div class="col-sm-10">
+									<textarea id="zbrzJyqk" name="zbrzJyqk" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/zbdt/add.js">
+	</script>
+</body>
+</html>

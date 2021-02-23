@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
+                        <input id="yjlddwTywysbm" name="yjlddwTywysbm" th:value="${yjlddw.yjlddwTywysbm}" type="hidden">
+                        <input type="hidden" id="cityVal" th:value="${city}"/>
+                        <input type="hidden" id="provinceVal" th:value="${province}"/>
+                        <input type="hidden" id="xzqhdmVal" th:value="${yjlddw.xzqhdm}"/>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">单位名称：</label>
+                            <div class="col-sm-4">
+                                <input id="dwmc" name="dwmc" class="form-control" type="text" title="请输入单位名称" required th:value="${yjlddw.dwmc}">
+                            </div>
+                            <label class="col-sm-2 control-label">应急联动单位类别：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="yjlddwlbdm" name="yjlddwlbdm" title="请选择应急联动单位类别" required th:value="${yjlddw.yjlddwlbdm}">
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">单位地址：</label>
+                            <div class="col-sm-10">
+                                <input id="dzmc" name="dzmc" class="form-control" type="text" title="请输入单位地址" required th:value="${yjlddw.dzmc}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <div class="col-sm-4">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${yjlddw.xfjyjgTywysbm}"> <input
+                                    id="deptName" name="deptName" class="form-control" type="text"
+                                    style="cursor: pointer;" onclick="openDept()"
+                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${yjlddw.xfjyjg}">
+                            </div>
+                            <label class="col-sm-2 control-label">传真号码：</label>
+                            <div class="col-sm-4">
+                                <input id="czhm" name="czhm" class="form-control" type="text" th:value="${yjlddw.czhm}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">应急服务内容：</label>
+                            <div class="col-sm-10">
+                                <textarea id="yjfwnrJyqk" name="yjfwnrJyqk" class="form-control" th:text="${yjlddw.yjfwnrJyqk}"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">单位简要情况：</label>
+                            <div class="col-sm-10">
+                                <textarea id="dwJyqk" name="dwJyqk" class="form-control" th:text="${yjlddw.dwJyqk}"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">联系人：</label>
+                            <div class="col-sm-4">
+                                <input id="lxrXm" name="lxrXm" class="form-control" type="text" title="请输入联系人" required th:value="${yjlddw.lxrXm}">
+                            </div>
+                            <label class="col-sm-2 control-label">联系电话：</label>
+                            <div class="col-sm-4">
+                                <input id="lxrLxdh" name="lxrLxdh" class="form-control" type="text" title="请输入联系电话" required th:value="${yjlddw.lxrLxdh}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">地球经度：</label>
+                            <div class="col-sm-4">
+                                <input id="dqjd" name="dqjd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+                                       readonly="readonly" placeholder="请选择" th:value="${yjlddw.dqjd}">
+                            </div>
+                            <label class="col-sm-2 control-label">地球纬度：</label>
+                            <div class="col-sm-4">
+                                <input id="dqwd" name="dqwd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+                                       readonly="readonly" placeholder="请选择" th:value="${yjlddw.dqwd}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">行政区划：</label>
+                            <div class="col-sm-4">
+                                <select data-placeholder="省/直辖市" name="province" title="省/直辖市"
+                                        class="form-control chosen-select" tabindex="2">
+                                    <option value="">山东省</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'xzqhdm')"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">--选择类别--</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+                                        class="form-control chosen-select" tabindex="2" required>
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">单位概况图：</label>
+                            <div class="col-sm-10">
+                                <input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script th:inline="javascript">
+    var yjlddwlbdm = [[${yjlddw.yjlddwlbdm}]];
+    var attachmentDOList = [[${attachmentDOList}]];
+</script>
+<script type="text/javascript" src="/js/appjs/jczy/yjlddw/edit.js">
+</script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style type="text/css">
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #fff;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+    input.validate_hidden { position:absolute; height:0; width:0; border:0; }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="xfzbTywysbm" name="xfzbTywysbm" th:value="${xfzb.xfzbTywysbm}" type="hidden">
+                        <input id="jldldwdmVal" th:value="${xfzb.jldldwdm}" type="hidden">
+                        <input id="xfzbztlbdmVal" th:value="${xfzb.xfzbztlbdm}" type="hidden">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">名称：</label>
+                            <div class="col-sm-2">
+                                <input id="xfzbMc" name="xfzbMc" class="form-control" type="text" th:value="${xfzb.xfzbMc}" title="请输入名称" required>
+                            </div>
+                            <label class="col-sm-2 control-label">消防装备器材分类：</label>
+                            <div class="col-sm-2">
+                                <div class="XFZBLXDM-DIV dropdown">
+                                    <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-white"  style="width: 100%;text-align: left;"><span id="xfzblxdm-title" th:text="${xfzb.xfzblx}==null?'--请选择--':${xfzb.xfzblx}">--请选择--</span> <span class="caret pull-right" style="position: relative;top: 10px;"></span></a>
+                                </div>
+                                <input type="text" name="xfzblxdm" id="xfzblxdm" th:value="${xfzb.xfzblxdm}" class="validate_hidden" title="请选择消防装备器材分类" required/>
+                            </div>
+                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <div class="col-sm-2">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${xfzb.xfjyjgTywysbm}"> <input
+                                    id="deptName" name="deptName" class="form-control" type="text"
+                                    style="cursor: pointer;" onclick="openDept()"
+                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${xfzb.xfjyjg}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">规格型号：</label>
+                            <div class="col-sm-2">
+                                <input id="ggxh" name="ggxh" class="form-control" type="text" th:value="${xfzb.ggxh}">
+                            </div>
+                            <label class="col-sm-2 control-label">参考价：</label>
+                            <div class="col-sm-2">
+                                <input id="ckjJe" name="ckjJe" class="form-control" type="text" th:value="${xfzb.ckjJe}">
+                            </div>
+                            <label class="col-sm-2 control-label">品牌名称：</label>
+                            <div class="col-sm-2">
+                                <input id="ppMc" name="ppMc" class="form-control" type="text" th:value="${xfzb.ppMc}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">生产厂家：</label>
+                            <div class="col-sm-2">
+                                <input id="sccjDwmc" name="sccjDwmc" class="form-control" type="text" th:value="${xfzb.sccjDwmc}">
+                            </div>
+                            <label class="col-sm-2 control-label">责任人：</label>
+                            <div class="col-sm-2">
+                                <input id="zrrXm" name="zrrXm" class="form-control" type="text" th:value="${xfzb.zrrXm}">
+                            </div>
+                            <label class="col-sm-2 control-label">批次号：</label>
+                            <div class="col-sm-2">
+                                <input id="pch" name="pch" class="form-control" type="text" th:value="${xfzb.pch}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">装备入库日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="zbrkRq" name="zbrkRq" placeholder="请选择装备入库日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfzb.zbrkRq}==null?null:${#dates.format(xfzb.zbrkRq,'yyyy-MM-dd')}"/>
+                            </div>
+                            <label class="col-sm-2 control-label">装备失效日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="zbsxRq" name="zbsxRq" placeholder="请选择装备失效日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfzb.zbsxRq}==null?null:${#dates.format(xfzb.zbsxRq,'yyyy-MM-dd')}"/>
+                            </div>
+                            <label class="col-sm-2 control-label">计量度量单位：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="jldldwdm" name="jldldwdm">
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否消耗型装备：</label>
+                            <div class="col-sm-2">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfxhxzbPdbz" value="0" th:checked="${xfzb.sfxhxzbPdbz=='0'}"/> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfxhxzbPdbz" value="1" th:checked="${xfzb.sfxhxzbPdbz=='0'}"/> 否
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label">是否装配：</label>
+                            <div class="col-sm-2">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfzpPdbz" value="0" th:checked="${xfzb.sfzpPdbz=='0'}"/> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfzpPdbz" value="1" th:checked="${xfzb.sfzpPdbz=='1'}"/> 否
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label">是否用于训练：</label>
+                            <div class="col-sm-2">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfyyxlPdbz" value="0" th:checked="${xfzb.sfyyxlPdbz=='0'}"/> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfyyxlPdbz" value="1" th:checked="${xfzb.sfyyxlPdbz=='1'}"/> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">重量（千克）：</label>
+                            <div class="col-sm-2">
+                                <input id="zl" name="zl" class="form-control" type="number" th:value="${xfzb.zl}" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">体积（立方米）：</label>
+                            <div class="col-sm-2">
+                                <input id="tj" name="tj" class="form-control" type="number" th:value="${xfzb.tj}" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">消防装备状态：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="xfzbztlbdm" name="xfzbztlbdm" title="请选择消防装备状态" required>
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">主要成分_简要情况：</label>
+                            <div class="col-sm-10">
+                                <textarea id="zycfJyqk" name="zycfJyqk" class="form-control" th:text="${xfzb.zycfJyqk}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">适用范围_简要情况：</label>
+                            <div class="col-sm-10">
+                                <textarea id="syfwJyqk" name="syfwJyqk" class="form-control" th:text="${xfzb.syfwJyqk}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">消防装备_简要情况：</label>
+                            <div class="col-sm-10">
+                                <textarea id="xfzbJyqk" name="xfzbJyqk" class="form-control" th:text="${xfzb.xfzbJyqk}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">售后服务_单位名称：</label>
+                            <div class="col-sm-2">
+                                <input id="shfwDwmc" name="shfwDwmc" class="form-control" type="text" th:value="${xfzb.shfwDwmc}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">装备_数量：</label>
+                            <div class="col-sm-2">
+                                <input id="zbSl" name="zbSl" class="form-control" type="number" th:value="${xfzb.zbSl}" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">库存_数量：</label>
+                            <div class="col-sm-2">
+                                <input id="kcSl" name="kcSl" class="form-control" type="number" th:value="${xfzb.kcSl}" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">领用_数量：</label>
+                            <div class="col-sm-2">
+                                <input id="lySl" name="lySl" class="form-control" type="number" th:value="${xfzb.lySl}" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">装载_数量：</label>
+                            <div class="col-sm-2">
+                                <input id="zzSl" name="zzSl" class="form-control" type="number" th:value="${xfzb.zzSl}" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">维修_数量：</label>
+                            <div class="col-sm-2">
+                                <input id="wxSl" name="wxSl" class="form-control" type="number" th:value="${xfzb.wxSl}" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">在途_数量：</label>
+                            <div class="col-sm-2">
+                                <input id="ztSl" name="ztSl" class="form-control" type="number" th:value="${xfzb.ztSl}" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/jczy/xfzb/edit.js">
+</script>
+</body>
+</html>

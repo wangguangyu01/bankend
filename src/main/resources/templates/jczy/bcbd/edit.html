@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="bcbdId" name="bcbdId" th:value="${bcbd.bcbdId}"  type="hidden">
+							<input id="bcbdlxdmVal" th:value="${bcbd.bcbdlxdm}" type="hidden">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">编成编队名称：</label>
+								<div class="col-sm-4">
+									<input id="bcbdMc" name="bcbdMc" class="form-control" type="text" th:value="${bcbd.bcbdMc}">
+								</div>
+								<label class="col-sm-2 control-label">编成编队类型：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="bcbdlxdm" name="bcbdlxdm" title="请选择编队类型状态" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">作战单元：</label>
+								<div class="col-sm-10">
+									<div class="columns pull-left">
+										<button  type="button" class="btn  btn-primary" onclick="add()">
+											<i class="fa fa-plus" aria-hidden="true"></i>添加
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-10">
+									<input id="zzdyid" name="zzdyid" class="form-control" type="hidden"  th:value="${bcbd.zzdyid}">
+									<div class="columns pull-left"  id="addzzdy">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">编成编队描述：</label>
+								<div class="col-sm-10">
+									<textarea id="bcbdms" name="bcbdms" class="form-control"  th:text="${bcbd.bcbdms}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<script th:inline="javascript">
+		var bcbdZzdyList = [[${bcbdZzdyList}]];
+	</script>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/bcbd/edit.js">
+	</script>
+</body>
+</html>

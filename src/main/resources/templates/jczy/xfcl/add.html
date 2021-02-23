@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style type="text/css">
+    .dropdown-submenu {
+        position: relative;
+    }
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+    .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #fff;
+    }
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+    .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">消防装备器材分类：</label>
+                            <div class="col-sm-2">
+                                <input type="hidden" id="childAttr" value="yes" class="xfzblxdm"/>
+                                <div class="XFZBLXDM-DIV dropdown">
+                                    <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-white"  style="width: 100%;text-align: left;">
+                                        <span id="xfzblxdm-title">--请选择--</span>
+                                        <span class="caret pull-right" style="position: relative;top: 10px;"></span>
+                                    </a>
+                                </div>
+                                <input type="hidden" name="xfzblxdm" id="xfzblxdm" value="" onpropertychange="addXfzblxdmSx(this)" title="请选择消防装备器材分类" required/>
+                            </div>
+                            <label class="col-sm-2 control-label">消防车辆作战功能：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="xfclzzgndm" name="xfclzzgndm" title="请选择消防车辆作战功能" required>
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">消防车辆等级：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="xfcldjdm" name="xfcldjdm" title="请选择消防车辆等级" required>
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <div class="col-sm-2">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+                                    id="deptName" name="deptName" class="form-control" type="text"
+                                    style="cursor: pointer;" onclick="openDept()"
+                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+                            </div>
+                            <label class="col-sm-2 control-label">机动车号牌号码：</label>
+                            <div class="col-sm-2">
+                                <input id="jdchphm" name="jdchphm" class="form-control" type="text">
+                            </div>
+                            <label class="col-sm-2 control-label">车辆识别代号：</label>
+                            <div class="col-sm-2">
+                                <input id="clsbdh" name="clsbdh" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">定位设备SIM卡卡号：</label>
+                            <div class="col-sm-2">
+                                <input id="dwsbSimkkh" name="dwsbSimkkh" class="form-control" type="text">
+                            </div>
+                            <label class="col-sm-2 control-label">规格型号：</label>
+                            <div class="col-sm-2">
+                                <input id="ggxh" name="ggxh" class="form-control" type="text">
+                            </div>
+                            <label class="col-sm-2 control-label">机动车发动机（电动机）号：</label>
+                            <div class="col-sm-2">
+                                <input id="jdcfdjddjh" name="jdcfdjddjh" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">生产厂家：</label>
+                            <div class="col-sm-2">
+                                <input id="sccjDwmc" name="sccjDwmc" class="form-control" type="text">
+                            </div>
+                            <label class="col-sm-2 control-label">机动车车身颜色：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="jdccsyslbdm" name="jdccsyslbdm" title="请选择机动车车身颜色" required>
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">车辆勤务状态：</label>
+                            <div class="col-sm-2">
+                                <div class="CLQWZTLBDM-DIV dropdown" >
+                                    <a  role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;"><span id="clqwztlbdm-title">--请选择--</span> <span class="caret pull-right" style="position: relative;top: 10px;"></span></a>
+                                </div>
+                                <input type="hidden" name="clqwztlbdm" id="clqwztlbdm" title="请选择车辆勤务状态" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否第一出动车辆：</label>
+                            <div class="col-sm-2">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfdycdclTywysbm" value="0"/> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfdycdclTywysbm" value="1"/> 否
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label">是否装配：</label>
+                            <div class="col-sm-2">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfzpPdbz" value="0"/> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfzpPdbz" value="1"/> 否
+                                </label>
+                            </div>
+                            <label class="col-sm-2 control-label">是否用于训练：</label>
+                            <div class="col-sm-2">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfyyxlPdbz" value="0"/> 是
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sfyyxlPdbz" value="1"/> 否
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">备注：</label>
+                            <div class="col-sm-10">
+                                <textarea id="bz" name="bz" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">装载水_容积(吨)：</label>
+                            <div class="col-sm-2">
+                                <input id="zzsRj" name="zzsRj" class="form-control" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">装载A类泡沫_容积(升)：</label>
+                            <div class="col-sm-2">
+                                <input id="zzalpmRj" name="zzalpmRj" class="form-control" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">装载B类泡沫_容积(升)：</label>
+                            <div class="col-sm-2">
+                                <input id="zzblpmRj" name="zzblpmRj" class="form-control" type="number" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">出厂日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="ccrq" name="ccrq" placeholder="请选择出厂日期"
+                                onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+                            </div>
+                            <label class="col-sm-2 control-label">装备日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="zbrq" name="zbrq" placeholder="请选择装备日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+                            </div>
+                            <label class="col-sm-2 control-label">报废日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="bfrq" name="bfrq" placeholder="请选择报废日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">参考价_金额：</label>
+                            <div class="col-sm-2">
+                                <input id="ckjJe" name="ckjJe" class="form-control" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">负责人：</label>
+                            <div class="col-sm-2">
+                                <input id="fzrXm" name="fzrXm" class="form-control" type="text">
+                            </div>
+                            <label class="col-sm-2 control-label">负责人联系电话：</label>
+                            <div class="col-sm-2">
+                                <input id="fzrLxdh" name="fzrLxdh" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">车辆性能指标_简要情况：</label>
+                            <div class="col-sm-10">
+                                <textarea id="clxnzbJyqk" name="clxnzbJyqk" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script th:inline="javascript">
+    var map=[[${map}]];
+    $('#xfjyjgTywysbm').val(map.xfjyjgTywysbm);
+    $('#deptName').val(map.deptName);
+</script>
+<script type="text/javascript" src="/js/appjs/jczy/xfcl/add.js">
+</script>
+</body>
+</html>

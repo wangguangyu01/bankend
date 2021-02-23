@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm"  enctype="multipart/form-data">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">姓名：</label>
+								<div class="col-sm-4">
+									<input id="xm" name="xm" class="form-control" type="text" required>
+								</div>
+								<label class="col-sm-2 control-label">公民身份号码：</label>
+								<div class="col-sm-4">
+									<input id="gmsfhm" name="gmsfhm" class="form-control" type="text" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">性别：</label>
+								<div class="col-sm-4">
+									<select data-placeholder="性别" name="xbdm" id="xbdm" title="性别"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">学历：</label>
+								<div class="col-sm-4">
+									<div class="XLDM-DIV dropdown">
+										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
+											<span id="xldm-title">选择分类</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防岗位类别：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xfgwlbdm" id="xfgwlbdm" value="" />
+									<div class="XFGWFLYDM-DIV dropdown">
+										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
+											<span id="xfgwlbdm-title">选择分类</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">出生_日期：</label>
+								<div class="col-sm-4">
+									<input type="text" class="laydate-icon layer-date form-control" id="csRq" name="csRq"  placeholder="请选择入党日期"
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">籍贯：</label>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="省/直辖市" name="province" id="province" title="省/直辖市" onchange="getXzqhdm(this,'city')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'jgdm')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="区/县" name="jgdm" title="区/县" id="jgdm"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">行政区划：</label>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="省/直辖市" name="province" id="province2" title="省/直辖市" onchange="getXzqhdm(this,'city2')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city2" onchange="getXzqhdm(this,'xzqhdm')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">居住_地址名称：</label>
+								<div class="col-sm-4">
+									<input id="jzhDzmc" name="jzhDzmc" class="form-control" type="text">
+								</div>
+								<label class="col-sm-2 control-label">通信地址：</label>
+								<div class="col-sm-4">
+									<input id="txdz" name="txdz" class="form-control" type="text" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">邮政编码：</label>
+								<div class="col-sm-4">
+									<input id="yzbm" name="yzbm" class="form-control" type="text">
+								</div>
+								<label class="col-sm-2 control-label">联系电话：</label>
+								<div class="col-sm-4">
+									<input id="yddh" name="yddh" class="form-control" type="text" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">家庭_联系电话：</label>
+								<div class="col-sm-4">
+									<input id="jtLxdh" name="jtLxdh" class="form-control" type="text">
+								</div>
+								<label class="col-sm-2 control-label">办公_联系电话：</label>
+								<div class="col-sm-4">
+									<input id="bgLxdh" name="bgLxdh" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">单位名称：</label>
+								<div class="col-sm-4">
+									<input id="dwmc" name="dwmc" class="form-control" type="text" required>
+								</div>
+								<label class="col-sm-2 control-label">是否队伍内部专家：</label>
+								<div class="col-sm-4">
+
+									<select data-placeholder="是否队伍内部专家" name="sfdwnbzjPdbz" title="是否队伍内部专家" id="sfdwnbzjPdbz"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防专家领域类别：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xfzjlylbdm" id="xfzjlylbdm" value="" />
+									<div class="XFZJLYLBDM-DIV dropdown">
+										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
+											<span id="xfzjlylbdm-title">选择分类</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">消防救援机构：</label>
+								<div class="col-sm-4">
+									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+										id="xfjyjgTywysbmName" name="deptName" class="form-control" type="text"
+										style="cursor: pointer;" onclick="openDept('xfjyjgTywysbm')"
+										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">备注：</label>
+								<div class="col-sm-10">
+									<textarea id="bz" name="bz" class="form-control" ></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">照片：</label>
+								<div class="col-sm-10">
+									<input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/mhjyzj/add.js">
+	</script>
+</body>
+</html>

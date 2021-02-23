@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="wxxfzTywysbm" name="wxxfzTywysbm" th:value="${wxxfz.wxxfzTywysbm}"  type="hidden">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">名称：</label>
+								<div class="col-sm-4">
+									<input id="mc" name="mc" class="form-control" type="text" th:value="${wxxfz.mc}" required>
+								</div>
+								<label class="col-sm-2 control-label">人数：</label>
+								<div class="col-sm-4">
+									<input id="rs" name="rs" class="form-control" type="text" th:value="${wxxfz.rs}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地址名称：</label>
+								<div class="col-sm-4">
+									<input id="dzmc" name="dzmc" class="form-control" type="text" th:value="${wxxfz.dzmc}" required>
+								</div>
+								<label class="col-sm-2 control-label">值班人电话：</label>
+								<div class="col-sm-4">
+									<input id="zbLxdh" name="zbLxdh" class="form-control" type="text" th:value="${wxxfz.zbLxdh}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">行政区划：</label>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="provinceVal" th:value="${province}"/>
+									<select data-placeholder="省/直辖市" name="province" id="province" title="省/直辖市" onchange="getXzqhdm(this,'city')"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="cityVal" th:value="${city}"/>
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'xzqhdm')"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<input type="hidden" id="xzqhdmVal" th:value="${wxxfz.xzqhdm}"/>
+									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">装备_简要情况：</label>
+								<div class="col-sm-10">
+									<textarea id="zbJyqk" name="zbJyqk" class="form-control" th:text="${wxxfz.zbJyqk}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">负责人姓名：</label>
+								<div class="col-sm-4">
+									<input id="fzrXm" name="fzrXm" class="form-control" type="text" th:value="${wxxfz.fzrXm}" required>
+								</div>
+								<label class="col-sm-2 control-label">负责人电话：</label>
+								<div class="col-sm-4">
+									<input id="fzrLxdh" name="fzrLxdh" class="form-control" type="text" th:value="${wxxfz.fzrLxdh}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地球精度：</label>
+								<div class="col-sm-4">
+									<input id="dqjd" name="dqjd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly" placeholder="请选择" th:value="${wxxfz.dqjd}" required>
+								</div>
+								<label class="col-sm-2 control-label">地球纬度：</label>
+								<div class="col-sm-4">
+									<input id="dqwd" name="dqwd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly" placeholder="请选择" th:value="${wxxfz.dqwd}" required>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/wxxfz/edit.js">
+	</script>
+</body>
+</html>

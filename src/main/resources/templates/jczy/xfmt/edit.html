@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
+							<input id="qsmtTywysbm" name="qsmtTywysbm" th:value="${xfmt.qsmtTywysbm}" type="hidden">
+							<input id="sykyztlbdmVal" th:value="${xfmt.sykyztlbdm}" type="hidden">
+							<input type="hidden" id="cityVal" th:value="${city}"/>
+							<input type="hidden" id="provinceVal" th:value="${province}"/>
+							<input type="hidden" id="xzqhdmVal" th:value="${xfmt.xzqhdm}"/>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防码头名称：</label>
+								<div class="col-sm-4">
+									<input id="mc" name="mc" class="form-control" type="text" th:value="${xfmt.mc}" />
+								</div>
+								<label class="col-sm-2 control-label">消防码头可用状态：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择可用状态" required >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地址名称：</label>
+								<div class="col-sm-10">
+									<input id="dzmc" name="dzmc" class="form-control" type="text" th:value="${xfmt.dzmc}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地球经度：</label>
+								<div class="col-sm-4">
+									<input id="dqjd" name="dqjd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+										   readonly="readonly" placeholder="请选择" title="请在地图上选择消防码头位置" required th:value="${xfmt.dqjd}" >
+								</div>
+								<label class="col-sm-2 control-label">地球纬度：</label>
+								<div class="col-sm-4">
+									<input id="dqwd" name="dqwd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+										   readonly="readonly" placeholder="请选择" title="请在地图上选择消防码头位置" required th:value="${xfmt.dqwd}" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">所在水源名称：</label>
+								<div class="col-sm-4">
+									<input id="szsyMc" name="szsyMc" class="form-control" type="text" th:value="${xfmt.szsyMc}">
+								</div>
+								<label class="col-sm-2 control-label">所属路段名称：</label>
+								<div class="col-sm-4">
+									<input id="ssldMc" name="ssldMc" class="form-control" type="text" th:value="${xfmt.ssldMc}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">取水形式简要情况：</label>
+								<div class="col-sm-10">
+									<textarea id="qsxsJyqk" name="qsxsJyqk" class="form-control" th:text="${xfmt.qsxsJyqk}"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">取水高度：</label>
+								<div class="col-sm-4">
+									<input id="qsGd" name="qsGd" class="form-control" type="number" th:value="${xfmt.qsGd}">
+								</div>
+								<label class="col-sm-2 control-label">水源标高差高度：</label>
+								<div class="col-sm-4">
+									<input id="sybgcGd" name="sybgcGd" class="form-control" type="number" th:value="${xfmt.sybgcGd}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">停车位置地点名称：</label>
+								<div class="col-sm-4">
+									<input id="tcwzDdmc" name="tcwzDdmc" class="form-control" type="text" th:value="${xfmt.tcwzDdmc}">
+								</div>
+								<label class="col-sm-2 control-label">停车数量：</label>
+								<div class="col-sm-4">
+									<input id="tcSl" name="tcSl" class="form-control" type="number" th:value="${xfmt.tcSl}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">管理单位名称：</label>
+								<div class="col-sm-4">
+									<input id="glDwmc" name="glDwmc" class="form-control" type="text" th:value="${xfmt.glDwmc}">
+								</div>
+								<label class="col-sm-2 control-label">消防救援机构：</label>
+								<div class="col-sm-2">
+									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${xfmt.xfjyjgTywysbm}"> <input
+										id="deptName" name="deptName" class="form-control" type="text"
+										style="cursor: pointer;" onclick="openDept()"
+										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${xfmt.xfjyjg}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">行政区划：</label>
+								<div class="col-sm-3">
+									<select data-placeholder="省/直辖市" name="province" title="省/直辖市"
+											class="form-control chosen-select" tabindex="2">
+										<option value="">山东省</option>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'xzqhdm')"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-4">
+									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">建造日期：</label>
+								<div class="col-sm-2">
+									<input type="text" class="laydate-icon layer-date form-control" id="jizRq" name="jizRq" placeholder="请选择建造日期"
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期" required th:value="${xfmt.jizRq}==null?null:${#dates.format(xfmt.jizRq,'yyyy-MM-dd')}"/>
+								</div>
+								<label class="col-sm-2 control-label">启用日期：</label>
+								<div class="col-sm-2">
+									<input type="text" class="laydate-icon layer-date form-control" id="qyRq" name="qyRq" placeholder="请选择启用日期"
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期" required th:value="${xfmt.qyRq}==null?null:${#dates.format(xfmt.qyRq,'yyyy-MM-dd')}"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">实景图：</label>
+								<div class="col-sm-4">
+									<input id='input-id' multiple type="file" name="sjFile" data-show-caption="true"/>
+								</div>
+								<label class="col-sm-2 control-label">方位图：</label>
+								<div class="col-sm-4">
+									<input id='input-id1' multiple type="file" name="fwFile" data-show-caption="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script th:inline="javascript">
+		var xfmtsjtList = [[${xfmtsjtList}]];
+		var xfmtfwtList = [[${xfmtfwtList}]];
+	</script>
+	<script type="text/javascript" src="/js/appjs/jczy/xfmt/edit.js">
+	</script>
+</body>
+</html>
