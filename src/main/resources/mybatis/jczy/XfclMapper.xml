@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.XfclDao">
+
+	<select id="get" resultType="com.smart119.jczy.domain.XfclDO">
+		SELECT
+			t.`XFCL_TYWYSBM`,
+			t.`XFZBLXDM`,
+			t.`XFCLZZGNDM`,
+			t.`XFCLDJDM`,
+			t.`XFJYJG_TYWYSBM`,
+			t.`JDCHPHM`,
+			t.`CLSBDH`,
+			t.`DWSB_SIMKKH`,
+			t.`GGXH`,
+			t.`CKJ_JE`,
+			t.`SCCJ_DWMC`,
+			t.`JDCCSYSLBDM`,
+			t.`CLQWZTLBDM`,
+			t.`SFDYCDCL_TYWYSBM`,
+			t.`BZ`,
+			t.`JDCFDJDDJH`,
+			t.`ZZS_RJ`,
+			t.`ZZALPM_RJ`,
+			t.`ZZBLPM_RJ`,
+			t.`CCRQ`,
+			t.`ZBRQ`,
+			t.`BFRQ`,
+			t.`SFZP_PDBZ`,
+			t.`SFYYXL_PDBZ`,
+			t.`FZR_XM`,
+			t.`FZR_LXDH`,
+			t.`CLXNZB_JYQK`,
+			t.`cdate`,
+			t.`cperson`,
+			t.`status`,
+			dept.`dwmc` XFJYJG,
+			d.`name` XFZBLX,
+			d1.`name` CLQWZTLB
+		FROM
+			jczy_xfcl t
+			LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+			left join sys_dict d on t.XFZBLXDM=d.`value` and d.description='消防装备器材分类与代码'
+			left join sys_dict d1 on t.CLQWZTLBDM=d1.`value` and d1.description='车辆勤务状态类别代码'
+		WHERE
+			t.XFCL_TYWYSBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.jczy.domain.XfclDO">
+		SELECT
+		t.`XFCL_TYWYSBM`,
+		t.`XFZBLXDM`,
+		t.`XFCLZZGNDM`,
+		t.`XFCLDJDM`,
+		t.`XFJYJG_TYWYSBM`,
+		t.`JDCHPHM`,
+		t.`CLSBDH`,
+		t.`DWSB_SIMKKH`,
+		t.`GGXH`,
+		t.`CKJ_JE`,
+		t.`SCCJ_DWMC`,
+		t.`JDCCSYSLBDM`,
+		t.`CLQWZTLBDM`,
+		t.`SFDYCDCL_TYWYSBM`,
+		t.`BZ`,
+		t.`JDCFDJDDJH`,
+		t.`ZZS_RJ`,
+		t.`ZZALPM_RJ`,
+		t.`ZZBLPM_RJ`,
+		t.`CCRQ`,
+		t.`ZBRQ`,
+		t.`BFRQ`,
+		t.`SFZP_PDBZ`,
+		t.`SFYYXL_PDBZ`,
+		t.`FZR_XM`,
+		t.`FZR_LXDH`,
+		t.`CLXNZB_JYQK`,
+		t.`cdate`,
+		t.`cperson`,
+		t.`status`,
+		dept.`dwmc` XFJYJG,
+		d.`name` XFZBLX,
+		d1.`name` CLQWZTLB,
+		d2.`name` XFCLZZGN,
+		d3.`name` XFCLDJ
+		FROM
+		jczy_xfcl t
+		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		left join sys_dict d on t.XFZBLXDM=d.`value` and d.description='消防装备器材分类与代码'
+		left join sys_dict d1 on t.CLQWZTLBDM=d1.`value` and d1.description='车辆勤务状态类别代码'
+		left join sys_dict d2 on t.XFCLZZGNDM=d2.`value` and d2.description='消防车辆作战功能代码'
+		left join sys_dict d3 on t.XFCLDJDM=d3.`value` and d3.description='消防车辆等级代码'
+		where t.status=0
+		          <if test="xfclTywysbm != null and xfclTywysbm != ''"> and t.XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		  		  <if test="xfzblxdm != null and xfzblxdm != ''"> and t.XFZBLXDM = #{xfzblxdm} </if>
+		  		  <if test="xfclzzgndm != null and xfclzzgndm != ''"> and t.XFCLZZGNDM = #{xfclzzgndm} </if>
+		  		  <if test="xfcldjdm != null and xfcldjdm != ''"> and t.XFCLDJDM = #{xfcldjdm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and t.XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+					<if test="deptList != null and deptList.size() > 0">and t.XFJYJG_TYWYSBM in
+						<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+							#{item.xfjyjgTywysbm}
+						</foreach>
+					</if>
+		  		  <if test="jdchphm != null and jdchphm != ''"> and t.JDCHPHM = #{jdchphm} </if>
+		  		  <if test="clsbdh != null and clsbdh != ''"> and t.CLSBDH = #{clsbdh} </if>
+		  		  <if test="dwsbSimkkh != null and dwsbSimkkh != ''"> and t.DWSB_SIMKKH = #{dwsbSimkkh} </if>
+		  		  <if test="ggxh != null and ggxh != ''"> and t.GGXH = #{ggxh} </if>
+		  		  <if test="ckjJe != null and ckjJe != ''"> and t.CKJ_JE = #{ckjJe} </if>
+		  		  <if test="sccjDwmc != null and sccjDwmc != ''"> and t.SCCJ_DWMC = #{sccjDwmc} </if>
+		  		  <if test="jdccsyslbdm != null and jdccsyslbdm != ''"> and t.JDCCSYSLBDM = #{jdccsyslbdm} </if>
+		  		  <if test="clqwztlbdm != null and clqwztlbdm != ''"> and t.CLQWZTLBDM = #{clqwztlbdm} </if>
+		  		  <if test="sfdycdclTywysbm != null and sfdycdclTywysbm != ''"> and t.SFDYCDCL_TYWYSBM = #{sfdycdclTywysbm} </if>
+		  		  <if test="bz != null and bz != ''"> and t.BZ = #{bz} </if>
+		  		  <if test="jdcfdjddjh != null and jdcfdjddjh != ''"> and t.JDCFDJDDJH = #{jdcfdjddjh} </if>
+		  		  <if test="zzsRj != null and zzsRj != ''"> and t.ZZS_RJ = #{zzsRj} </if>
+		  		  <if test="zzalpmRj != null and zzalpmRj != ''"> and t.ZZALPM_RJ = #{zzalpmRj} </if>
+		  		  <if test="zzblpmRj != null and zzblpmRj != ''"> and t.ZZBLPM_RJ = #{zzblpmRj} </if>
+		  		  <if test="ccrq != null and ccrq != ''"> and t.CCRQ = #{ccrq} </if>
+		  		  <if test="zbrq != null and zbrq != ''"> and t.ZBRQ = #{zbrq} </if>
+		  		  <if test="bfrq != null and bfrq != ''"> and t.BFRQ = #{bfrq} </if>
+		  		  <if test="sfzpPdbz != null and sfzpPdbz != ''"> and t.SFZP_PDBZ = #{sfzpPdbz} </if>
+		  		  <if test="sfyyxlPdbz != null and sfyyxlPdbz != ''"> and t.SFYYXL_PDBZ = #{sfyyxlPdbz} </if>
+		  		  <if test="fzrXm != null and fzrXm != ''"> and t.FZR_XM = #{fzrXm} </if>
+		  		  <if test="fzrLxdh != null and fzrLxdh != ''"> and t.FZR_LXDH = #{fzrLxdh} </if>
+		  		  <if test="clxnzbJyqk != null and clxnzbJyqk != ''"> and t.CLXNZB_JYQK = #{clxnzbJyqk} </if>
+		  		  <if test="cdate != null and cdate != ''"> and t.cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and t.cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and t.status = #{status} </if>
+		          <if test="xfzblxdmname != null and xfzblxdmname != ''"> and d.name like '%${xfzblxdmname}%' </if>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t.cdate desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="carlist" resultType="com.smart119.jczy.domain.XfclDO">
+		SELECT
+		t.`XFCL_TYWYSBM`,
+		t.`XFZBLXDM`,
+		t.`XFCLZZGNDM`,
+		t.`XFCLDJDM`,
+		t.`XFJYJG_TYWYSBM`,
+		t.`JDCHPHM`,
+		t.`CLSBDH`,
+		t.`DWSB_SIMKKH`,
+		t.`GGXH`,
+		t.`CKJ_JE`,
+		t.`SCCJ_DWMC`,
+		t.`JDCCSYSLBDM`,
+		t.`CLQWZTLBDM`,
+		t.`SFDYCDCL_TYWYSBM`,
+		t.`BZ`,
+		t.`JDCFDJDDJH`,
+		t.`ZZS_RJ`,
+		t.`ZZALPM_RJ`,
+		t.`ZZBLPM_RJ`,
+		t.`CCRQ`,
+		t.`ZBRQ`,
+		t.`BFRQ`,
+		t.`SFZP_PDBZ`,
+		t.`SFYYXL_PDBZ`,
+		t.`FZR_XM`,
+		t.`FZR_LXDH`,
+		t.`CLXNZB_JYQK`,
+		t.`cdate`,
+		t.`cperson`,
+		t.`status`,
+		dept.`dwmc` XFJYJG,
+		d.`name` XFZBLX,
+		d1.`name` CLQWZTLB,
+		d2.`name` XFCLZZGN,
+		d3.`name` XFCLDJ
+		FROM
+		jczy_xfcl t
+		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		left join sys_dict d on t.XFZBLXDM=d.`value` and d.description='消防装备器材分类与代码'
+		left join sys_dict d1 on t.CLQWZTLBDM=d1.`value` and d1.description='车辆勤务状态类别代码'
+		left join sys_dict d2 on t.XFCLZZGNDM=d2.`value` and d2.description='消防车辆作战功能代码'
+		left join sys_dict d3 on t.XFCLDJDM=d3.`value` and d3.description='消防车辆等级代码'
+		where t.status=0
+		<if test="xfclTywysbm != null and xfclTywysbm != ''"> and t.XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		<if test="xfzblxdm != null and xfzblxdm != ''"> and t.XFZBLXDM = #{xfzblxdm} </if>
+		<if test="xfclzzgndm != null and xfclzzgndm != ''"> and t.XFCLZZGNDM = #{xfclzzgndm} </if>
+		<if test="xfcldjdm != null and xfcldjdm != ''"> and t.XFCLDJDM = #{xfcldjdm} </if>
+		<if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and t.XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		<if test="deptList != null and deptList.size() > 0">and t.XFJYJG_TYWYSBM in
+			<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+				#{item.xfjyjgTywysbm}
+			</foreach>
+		</if>
+		<if test="jdchphm != null and jdchphm != ''"> and t.JDCHPHM = #{jdchphm} </if>
+		<if test="clsbdh != null and clsbdh != ''"> and t.CLSBDH = #{clsbdh} </if>
+		<if test="dwsbSimkkh != null and dwsbSimkkh != ''"> and t.DWSB_SIMKKH = #{dwsbSimkkh} </if>
+		<if test="ggxh != null and ggxh != ''"> and t.GGXH = #{ggxh} </if>
+		<if test="ckjJe != null and ckjJe != ''"> and t.CKJ_JE = #{ckjJe} </if>
+		<if test="sccjDwmc != null and sccjDwmc != ''"> and t.SCCJ_DWMC = #{sccjDwmc} </if>
+		<if test="jdccsyslbdm != null and jdccsyslbdm != ''"> and t.JDCCSYSLBDM = #{jdccsyslbdm} </if>
+		<if test="clqwztlbdm != null and clqwztlbdm != ''"> and t.CLQWZTLBDM = #{clqwztlbdm} </if>
+		<if test="sfdycdclTywysbm != null and sfdycdclTywysbm != ''"> and t.SFDYCDCL_TYWYSBM = #{sfdycdclTywysbm} </if>
+		<if test="bz != null and bz != ''"> and t.BZ = #{bz} </if>
+		<if test="jdcfdjddjh != null and jdcfdjddjh != ''"> and t.JDCFDJDDJH = #{jdcfdjddjh} </if>
+		<if test="zzsRj != null and zzsRj != ''"> and t.ZZS_RJ = #{zzsRj} </if>
+		<if test="zzalpmRj != null and zzalpmRj != ''"> and t.ZZALPM_RJ = #{zzalpmRj} </if>
+		<if test="zzblpmRj != null and zzblpmRj != ''"> and t.ZZBLPM_RJ = #{zzblpmRj} </if>
+		<if test="ccrq != null and ccrq != ''"> and t.CCRQ = #{ccrq} </if>
+		<if test="zbrq != null and zbrq != ''"> and t.ZBRQ = #{zbrq} </if>
+		<if test="bfrq != null and bfrq != ''"> and t.BFRQ = #{bfrq} </if>
+		<if test="sfzpPdbz != null and sfzpPdbz != ''"> and t.SFZP_PDBZ = #{sfzpPdbz} </if>
+		<if test="sfyyxlPdbz != null and sfyyxlPdbz != ''"> and t.SFYYXL_PDBZ = #{sfyyxlPdbz} </if>
+		<if test="fzrXm != null and fzrXm != ''"> and t.FZR_XM = #{fzrXm} </if>
+		<if test="fzrLxdh != null and fzrLxdh != ''"> and t.FZR_LXDH = #{fzrLxdh} </if>
+		<if test="clxnzbJyqk != null and clxnzbJyqk != ''"> and t.CLXNZB_JYQK = #{clxnzbJyqk} </if>
+		<if test="cdate != null and cdate != ''"> and t.cdate = #{cdate} </if>
+		<if test="cperson != null and cperson != ''"> and t.cperson = #{cperson} </if>
+		<if test="status != null and status != ''"> and t.status = #{status} </if>
+		<if test="xfzblxdmname != null and xfzblxdmname != ''"> and d.name like '%${xfzblxdmname}%' </if>
+		<choose>
+			<when test="sort != null and sort.trim() != ''">
+				order by ${sort} ${order}
+			</when>
+			<otherwise>
+				order by t.cdate desc
+			</otherwise>
+		</choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_xfcl where status=0
+		  		  <if test="xfclTywysbm != null and xfclTywysbm != ''"> and XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		  		  <if test="xfzblxdm != null and xfzblxdm != ''"> and XFZBLXDM = #{xfzblxdm} </if>
+		  		  <if test="xfclzzgndm != null and xfclzzgndm != ''"> and XFCLZZGNDM = #{xfclzzgndm} </if>
+		  		  <if test="xfcldjdm != null and xfcldjdm != ''"> and XFCLDJDM = #{xfcldjdm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+					<if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+						<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+							#{item.xfjyjgTywysbm}
+						</foreach>
+					</if>
+		  		  <if test="jdchphm != null and jdchphm != ''"> and JDCHPHM = #{jdchphm} </if>
+		  		  <if test="clsbdh != null and clsbdh != ''"> and CLSBDH = #{clsbdh} </if>
+		  		  <if test="dwsbSimkkh != null and dwsbSimkkh != ''"> and DWSB_SIMKKH = #{dwsbSimkkh} </if>
+		  		  <if test="ggxh != null and ggxh != ''"> and GGXH = #{ggxh} </if>
+		  		  <if test="ckjJe != null and ckjJe != ''"> and CKJ_JE = #{ckjJe} </if>
+		  		  <if test="sccjDwmc != null and sccjDwmc != ''"> and SCCJ_DWMC = #{sccjDwmc} </if>
+		  		  <if test="jdccsyslbdm != null and jdccsyslbdm != ''"> and JDCCSYSLBDM = #{jdccsyslbdm} </if>
+		  		  <if test="clqwztlbdm != null and clqwztlbdm != ''"> and CLQWZTLBDM = #{clqwztlbdm} </if>
+		  		  <if test="sfdycdclTywysbm != null and sfdycdclTywysbm != ''"> and SFDYCDCL_TYWYSBM = #{sfdycdclTywysbm} </if>
+		  		  <if test="bz != null and bz != ''"> and BZ = #{bz} </if>
+		  		  <if test="jdcfdjddjh != null and jdcfdjddjh != ''"> and JDCFDJDDJH = #{jdcfdjddjh} </if>
+		  		  <if test="zzsRj != null and zzsRj != ''"> and ZZS_RJ = #{zzsRj} </if>
+		  		  <if test="zzalpmRj != null and zzalpmRj != ''"> and ZZALPM_RJ = #{zzalpmRj} </if>
+		  		  <if test="zzblpmRj != null and zzblpmRj != ''"> and ZZBLPM_RJ = #{zzblpmRj} </if>
+		  		  <if test="ccrq != null and ccrq != ''"> and CCRQ = #{ccrq} </if>
+		  		  <if test="zbrq != null and zbrq != ''"> and ZBRQ = #{zbrq} </if>
+		  		  <if test="bfrq != null and bfrq != ''"> and BFRQ = #{bfrq} </if>
+		  		  <if test="sfzpPdbz != null and sfzpPdbz != ''"> and SFZP_PDBZ = #{sfzpPdbz} </if>
+		  		  <if test="sfyyxlPdbz != null and sfyyxlPdbz != ''"> and SFYYXL_PDBZ = #{sfyyxlPdbz} </if>
+		  		  <if test="fzrXm != null and fzrXm != ''"> and FZR_XM = #{fzrXm} </if>
+		  		  <if test="fzrLxdh != null and fzrLxdh != ''"> and FZR_LXDH = #{fzrLxdh} </if>
+		  		  <if test="clxnzbJyqk != null and clxnzbJyqk != ''"> and CLXNZB_JYQK = #{clxnzbJyqk} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+	</select>
+	<select id="carlistcount" resultType="int">
+		select count(*) from jczy_xfcl where status=0
+		<if test="xfclTywysbm != null and xfclTywysbm != ''"> and XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		<if test="xfzblxdm != null and xfzblxdm != ''"> and XFZBLXDM = #{xfzblxdm} </if>
+		<if test="xfclzzgndm != null and xfclzzgndm != ''"> and XFCLZZGNDM = #{xfclzzgndm} </if>
+		<if test="xfcldjdm != null and xfcldjdm != ''"> and XFCLDJDM = #{xfcldjdm} </if>
+		<if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		<if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+			<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+				#{item.xfjyjgTywysbm}
+			</foreach>
+		</if>
+		<if test="jdchphm != null and jdchphm != ''"> and JDCHPHM = #{jdchphm} </if>
+		<if test="clsbdh != null and clsbdh != ''"> and CLSBDH = #{clsbdh} </if>
+		<if test="dwsbSimkkh != null and dwsbSimkkh != ''"> and DWSB_SIMKKH = #{dwsbSimkkh} </if>
+		<if test="ggxh != null and ggxh != ''"> and GGXH = #{ggxh} </if>
+		<if test="ckjJe != null and ckjJe != ''"> and CKJ_JE = #{ckjJe} </if>
+		<if test="sccjDwmc != null and sccjDwmc != ''"> and SCCJ_DWMC = #{sccjDwmc} </if>
+		<if test="jdccsyslbdm != null and jdccsyslbdm != ''"> and JDCCSYSLBDM = #{jdccsyslbdm} </if>
+		<if test="clqwztlbdm != null and clqwztlbdm != ''"> and CLQWZTLBDM = #{clqwztlbdm} </if>
+		<if test="sfdycdclTywysbm != null and sfdycdclTywysbm != ''"> and SFDYCDCL_TYWYSBM = #{sfdycdclTywysbm} </if>
+		<if test="bz != null and bz != ''"> and BZ = #{bz} </if>
+		<if test="jdcfdjddjh != null and jdcfdjddjh != ''"> and JDCFDJDDJH = #{jdcfdjddjh} </if>
+		<if test="zzsRj != null and zzsRj != ''"> and ZZS_RJ = #{zzsRj} </if>
+		<if test="zzalpmRj != null and zzalpmRj != ''"> and ZZALPM_RJ = #{zzalpmRj} </if>
+		<if test="zzblpmRj != null and zzblpmRj != ''"> and ZZBLPM_RJ = #{zzblpmRj} </if>
+		<if test="ccrq != null and ccrq != ''"> and CCRQ = #{ccrq} </if>
+		<if test="zbrq != null and zbrq != ''"> and ZBRQ = #{zbrq} </if>
+		<if test="bfrq != null and bfrq != ''"> and BFRQ = #{bfrq} </if>
+		<if test="sfzpPdbz != null and sfzpPdbz != ''"> and SFZP_PDBZ = #{sfzpPdbz} </if>
+		<if test="sfyyxlPdbz != null and sfyyxlPdbz != ''"> and SFYYXL_PDBZ = #{sfyyxlPdbz} </if>
+		<if test="fzrXm != null and fzrXm != ''"> and FZR_XM = #{fzrXm} </if>
+		<if test="fzrLxdh != null and fzrLxdh != ''"> and FZR_LXDH = #{fzrLxdh} </if>
+		<if test="clxnzbJyqk != null and clxnzbJyqk != ''"> and CLXNZB_JYQK = #{clxnzbJyqk} </if>
+		<if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		<if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		<if test="status != null and status != ''"> and status = #{status} </if>
+	</select>
+	<insert id="save" parameterType="com.smart119.jczy.domain.XfclDO">
+		insert into jczy_xfcl
+		(
+			`XFCL_TYWYSBM`, 
+			`XFZBLXDM`, 
+			`XFCLZZGNDM`, 
+			`XFCLDJDM`, 
+			`XFJYJG_TYWYSBM`, 
+			`JDCHPHM`, 
+			`CLSBDH`, 
+			`DWSB_SIMKKH`, 
+			`GGXH`, 
+			`CKJ_JE`, 
+			`SCCJ_DWMC`, 
+			`JDCCSYSLBDM`, 
+			`CLQWZTLBDM`, 
+			`SFDYCDCL_TYWYSBM`, 
+			`BZ`, 
+			`JDCFDJDDJH`, 
+			`ZZS_RJ`, 
+			`ZZALPM_RJ`, 
+			`ZZBLPM_RJ`, 
+			`CCRQ`, 
+			`ZBRQ`, 
+			`BFRQ`, 
+			`SFZP_PDBZ`, 
+			`SFYYXL_PDBZ`, 
+			`FZR_XM`, 
+			`FZR_LXDH`, 
+			`CLXNZB_JYQK`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{xfclTywysbm}, 
+			#{xfzblxdm}, 
+			#{xfclzzgndm}, 
+			#{xfcldjdm}, 
+			#{xfjyjgTywysbm}, 
+			#{jdchphm}, 
+			#{clsbdh}, 
+			#{dwsbSimkkh}, 
+			#{ggxh}, 
+			#{ckjJe}, 
+			#{sccjDwmc}, 
+			#{jdccsyslbdm}, 
+			#{clqwztlbdm}, 
+			#{sfdycdclTywysbm}, 
+			#{bz}, 
+			#{jdcfdjddjh}, 
+			#{zzsRj}, 
+			#{zzalpmRj}, 
+			#{zzblpmRj}, 
+			#{ccrq}, 
+			#{zbrq}, 
+			#{bfrq}, 
+			#{sfzpPdbz}, 
+			#{sfyyxlPdbz}, 
+			#{fzrXm}, 
+			#{fzrLxdh}, 
+			#{clxnzbJyqk}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.jczy.domain.XfclDO">
+		update jczy_xfcl 
+		<set>
+			<if test="xfzblxdm != null">`XFZBLXDM` = #{xfzblxdm}, </if>
+			<if test="xfclzzgndm != null">`XFCLZZGNDM` = #{xfclzzgndm}, </if>
+			<if test="xfcldjdm != null">`XFCLDJDM` = #{xfcldjdm}, </if>
+			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm}, </if>
+			<if test="jdchphm != null">`JDCHPHM` = #{jdchphm}, </if>
+			<if test="clsbdh != null">`CLSBDH` = #{clsbdh}, </if>
+			<if test="dwsbSimkkh != null">`DWSB_SIMKKH` = #{dwsbSimkkh}, </if>
+			<if test="ggxh != null">`GGXH` = #{ggxh}, </if>
+			<if test="ckjJe != null">`CKJ_JE` = #{ckjJe}, </if>
+			<if test="ckjJe == null">`CKJ_JE` = NULL, </if>
+			<if test="sccjDwmc != null">`SCCJ_DWMC` = #{sccjDwmc}, </if>
+			<if test="jdccsyslbdm != null">`JDCCSYSLBDM` = #{jdccsyslbdm}, </if>
+			<if test="clqwztlbdm != null">`CLQWZTLBDM` = #{clqwztlbdm}, </if>
+			<if test="sfdycdclTywysbm != null">`SFDYCDCL_TYWYSBM` = #{sfdycdclTywysbm}, </if>
+			<if test="bz != null">`BZ` = #{bz}, </if>
+			<if test="jdcfdjddjh != null">`JDCFDJDDJH` = #{jdcfdjddjh}, </if>
+			<if test="zzsRj != null">`ZZS_RJ` = #{zzsRj}, </if>
+			<if test="zzsRj == null">`ZZS_RJ` = NULL, </if>
+			<if test="zzalpmRj != null">`ZZALPM_RJ` = #{zzalpmRj}, </if>
+			<if test="zzalpmRj == null">`ZZALPM_RJ` = NULL, </if>
+			<if test="zzblpmRj != null">`ZZBLPM_RJ` = #{zzblpmRj}, </if>
+			<if test="zzblpmRj == null">`ZZBLPM_RJ` = NULL, </if>
+			<if test="ccrq != null">`CCRQ` = #{ccrq}, </if>
+			<if test="zbrq != null">`ZBRQ` = #{zbrq}, </if>
+			<if test="bfrq != null">`BFRQ` = #{bfrq}, </if>
+			<if test="sfzpPdbz != null">`SFZP_PDBZ` = #{sfzpPdbz}, </if>
+			<if test="sfyyxlPdbz != null">`SFYYXL_PDBZ` = #{sfyyxlPdbz}, </if>
+			<if test="fzrXm != null">`FZR_XM` = #{fzrXm}, </if>
+			<if test="fzrLxdh != null">`FZR_LXDH` = #{fzrLxdh}, </if>
+			<if test="clxnzbJyqk != null">`CLXNZB_JYQK` = #{clxnzbJyqk}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where XFCL_TYWYSBM = #{xfclTywysbm}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_xfcl where XFCL_TYWYSBM = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jczy_xfcl where XFCL_TYWYSBM in 
+		<foreach item="xfclTywysbm" collection="array" open="(" separator="," close=")">
+			#{xfclTywysbm}
+		</foreach>
+	</delete>
+
+</mapper>

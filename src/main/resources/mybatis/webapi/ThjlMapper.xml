@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.ThjlDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.ThjlDO">
+		select `THJL_TYWYSBM`,`DHHJLXDM`,`ZJHM_LXDH`,`BJHM_LXDH`,`XFRY_TYWYSBM`,`ZL_RQSJ`,`JIT_RQSJ`,`GJ_RQSJ`,`LYWJ_MC`,`DZWJLXDM`,`LYWJ_DZWJWZ`,`YYZYNR_JYQK`,`cdate`,`cperson`,`status` from jqxx_thjl where THJL_TYWYSBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.ThjlDO">
+		select `THJL_TYWYSBM`,`DHHJLXDM`,`ZJHM_LXDH`,`BJHM_LXDH`,`XFRY_TYWYSBM`,`ZL_RQSJ`,`JIT_RQSJ`,`GJ_RQSJ`,`LYWJ_MC`,`DZWJLXDM`,`LYWJ_DZWJWZ`,`YYZYNR_JYQK`,`cdate`,`cperson`,`status` from jqxx_thjl
+        <where>
+		  		  <if test="thjlTywysbm != null and thjlTywysbm != ''"> and THJL_TYWYSBM = #{thjlTywysbm} </if>
+		  		  <if test="dhhjlxdm != null and dhhjlxdm != ''"> and DHHJLXDM = #{dhhjlxdm} </if>
+		  		  <if test="zjhmLxdh != null and zjhmLxdh != ''"> and ZJHM_LXDH = #{zjhmLxdh} </if>
+		  		  <if test="bjhmLxdh != null and bjhmLxdh != ''"> and BJHM_LXDH = #{bjhmLxdh} </if>
+		  		  <if test="xfryTywysbm != null and xfryTywysbm != ''"> and XFRY_TYWYSBM = #{xfryTywysbm} </if>
+		  		  <if test="zlRqsj != null and zlRqsj != ''"> and ZL_RQSJ = #{zlRqsj} </if>
+		  		  <if test="jitRqsj != null and jitRqsj != ''"> and JIT_RQSJ = #{jitRqsj} </if>
+		  		  <if test="gjRqsj != null and gjRqsj != ''"> and GJ_RQSJ = #{gjRqsj} </if>
+		  		  <if test="lywjMc != null and lywjMc != ''"> and LYWJ_MC = #{lywjMc} </if>
+		  		  <if test="dzwjlxdm != null and dzwjlxdm != ''"> and DZWJLXDM = #{dzwjlxdm} </if>
+		  		  <if test="lywjDzwjwz != null and lywjDzwjwz != ''"> and LYWJ_DZWJWZ = #{lywjDzwjwz} </if>
+		  		  <if test="yyzynrJyqk != null and yyzynrJyqk != ''"> and YYZYNR_JYQK = #{yyzynrJyqk} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by THJL_TYWYSBM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_thjl
+		 <where>
+		  		  <if test="thjlTywysbm != null and thjlTywysbm != ''"> and THJL_TYWYSBM = #{thjlTywysbm} </if>
+		  		  <if test="dhhjlxdm != null and dhhjlxdm != ''"> and DHHJLXDM = #{dhhjlxdm} </if>
+		  		  <if test="zjhmLxdh != null and zjhmLxdh != ''"> and ZJHM_LXDH = #{zjhmLxdh} </if>
+		  		  <if test="bjhmLxdh != null and bjhmLxdh != ''"> and BJHM_LXDH = #{bjhmLxdh} </if>
+		  		  <if test="xfryTywysbm != null and xfryTywysbm != ''"> and XFRY_TYWYSBM = #{xfryTywysbm} </if>
+		  		  <if test="zlRqsj != null and zlRqsj != ''"> and ZL_RQSJ = #{zlRqsj} </if>
+		  		  <if test="jitRqsj != null and jitRqsj != ''"> and JIT_RQSJ = #{jitRqsj} </if>
+		  		  <if test="gjRqsj != null and gjRqsj != ''"> and GJ_RQSJ = #{gjRqsj} </if>
+		  		  <if test="lywjMc != null and lywjMc != ''"> and LYWJ_MC = #{lywjMc} </if>
+		  		  <if test="dzwjlxdm != null and dzwjlxdm != ''"> and DZWJLXDM = #{dzwjlxdm} </if>
+		  		  <if test="lywjDzwjwz != null and lywjDzwjwz != ''"> and LYWJ_DZWJWZ = #{lywjDzwjwz} </if>
+		  		  <if test="yyzynrJyqk != null and yyzynrJyqk != ''"> and YYZYNR_JYQK = #{yyzynrJyqk} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.smart119.webapi.domain.ThjlDO">
+		insert into jqxx_thjl
+		(
+			`THJL_TYWYSBM`, 
+			`DHHJLXDM`, 
+			`ZJHM_LXDH`, 
+			`BJHM_LXDH`, 
+			`XFRY_TYWYSBM`, 
+			`ZL_RQSJ`, 
+			`JIT_RQSJ`, 
+			`GJ_RQSJ`, 
+			`LYWJ_MC`, 
+			`DZWJLXDM`, 
+			`LYWJ_DZWJWZ`, 
+			`YYZYNR_JYQK`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{thjlTywysbm}, 
+			#{dhhjlxdm}, 
+			#{zjhmLxdh}, 
+			#{bjhmLxdh}, 
+			#{xfryTywysbm}, 
+			#{zlRqsj}, 
+			#{jitRqsj}, 
+			#{gjRqsj}, 
+			#{lywjMc}, 
+			#{dzwjlxdm}, 
+			#{lywjDzwjwz}, 
+			#{yyzynrJyqk}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.smart119.webapi.domain.ThjlDO">
+		update jqxx_thjl
+		<set>
+			<if test="dhhjlxdm != null">`DHHJLXDM` = #{dhhjlxdm}, </if>
+			<if test="zjhmLxdh != null">`ZJHM_LXDH` = #{zjhmLxdh}, </if>
+			<if test="bjhmLxdh != null">`BJHM_LXDH` = #{bjhmLxdh}, </if>
+			<if test="xfryTywysbm != null">`XFRY_TYWYSBM` = #{xfryTywysbm}, </if>
+			<if test="zlRqsj != null">`ZL_RQSJ` = #{zlRqsj}, </if>
+			<if test="jitRqsj != null">`JIT_RQSJ` = #{jitRqsj}, </if>
+			<if test="gjRqsj != null">`GJ_RQSJ` = #{gjRqsj}, </if>
+			<if test="lywjMc != null">`LYWJ_MC` = #{lywjMc}, </if>
+			<if test="dzwjlxdm != null">`DZWJLXDM` = #{dzwjlxdm}, </if>
+			<if test="lywjDzwjwz != null">`LYWJ_DZWJWZ` = #{lywjDzwjwz}, </if>
+			<if test="yyzynrJyqk != null">`YYZYNR_JYQK` = #{yyzynrJyqk}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where THJL_TYWYSBM = #{thjlTywysbm}
+	</update>
+
+	<delete id="remove">
+		delete from jqxx_thjl where THJL_TYWYSBM = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from jqxx_thjl where THJL_TYWYSBM in
+		<foreach item="thjlTywysbm" collection="array" open="(" separator="," close=")">
+			#{thjlTywysbm}
+		</foreach>
+	</delete>
+
+	<select id="thjlcx" resultType="java.util.HashMap">
+		SELECT
+		DATE_FORMAT(thjl.JIT_RQSJ,'%Y-%m-%d %H:%i:%s') as jjsj,
+		DATE_FORMAT(thjl.ZL_RQSJ,'%Y-%m-%d %H:%i:%s') as bjsj,
+		'电话' as bjfs,
+		thjl.ZJHM_LXDH as dhhm
+		FROM jqxx_thjl thjl
+		where thjl.THJL_TYWYSBM = #{value}
+	</select>
+
+	<select id="dzwjwz" resultType="java.util.HashMap">
+		SELECT
+		DATE_FORMAT(thjl.JIT_RQSJ,'%Y-%m-%d %H:%i:%s') as jjsj,
+		DATE_FORMAT(thjl.ZL_RQSJ,'%Y-%m-%d %H:%i:%s') as bjsj,
+		thjl.LYWJ_DZWJWZ as dzwjwz,
+		'电话' as bjfs,
+		thjl.ZJHM_LXDH as dhhm,
+		jbxx.BJ_TYWYSBM as bjTywysbm,
+		jbxx.MC as mc,
+		jbxx.DDMC as ddmc,
+		jbxx.JQFLYDM as jqflydm,
+		jbxx.JQDJDM as jqdjdm,
+		jbxx.JQZT_LBDM as jqztLbdm,
+		jbxx.JQZT_RQSJ as jqztRqsj,
+		jbxx.JQDX_TYWYSBM as jqdxTywysbm,
+		jbxx.JQDX_MC as jqdxMc,
+		jbxx.JQDX_JYQK as jqdxJyqk,
+		jbxx.JQ_JYQK as jqJyqk,
+		jbxx.JQBSLBDM as jqbslbdm,
+		jbxx.LC as lc,
+		jbxx.DQJD as dqjd,
+		jbxx.DQWD as dqwd,
+		jbxx.BJRXM as bjrxm,
+		jbxx.BJDH as bjdh,
+		jbxx.BJFSLBDM as bjfslbdm,
+		jbxx.BJSJ as bjsj,
+		jbxx.LASJ as lasj,
+		jbxx.JASJ as jasj,
+		jbxx.JSMLSJ as jsmlsj,
+		jbxx.CDSJ as cdsj,
+		jbxx.DCSJ as dcsj,
+		jbxx.ZDZKSJ as adaksj,
+		jbxx.CSSJ as cssj,
+		jbxx.HSKZSJ as hskzsj,
+		jbxx.JBPMSJ as jbpmsj,
+		jbxx.TSSJ as tssj,
+		jbxx.GDSJ as gdsj,
+		jbxx.ZTFHSJ as ztfhsj,
+		jbxx.XFJYJG_TYWYSBM as xfjyjgTywysbm,
+		jbxx.XZQHDM as xzqhdm,
+		jbxx.JZJGLXDM as jzjglxdm,
+		jbxx.YWQKDM as ywqkdm,
+		jbxx.ZHCSDM as zhcsdm,
+		jbxx.RSWDM as rswdm,
+		jbxx.BKRS as bkrs,
+		jbxx.RYSW as rysw
+		FROM jqxx_thjl thjl
+		LEFT JOIN jqxx_bjjl bjjl
+		on bjjl.THJL_TYWYSBM = thjl.THJL_TYWYSBM
+		LEFT JOIN jqxx_jbxx jbxx
+		on jbxx.BJ_TYWYSBM = bjjl.BJ_TYWYSBM
+		where jbxx.JQ_TYWYSBM = #{value}
+	</select>
+
+	<!--用警情id 查询出来消防报警记录通话转义文字信息-->
+	<select id="zywzList" resultType="java.util.HashMap">
+		SELECT zywz.id,zywz.thdxlx,zywz.zywz,zywz.zysj
+		FROM jqxx_thjl_zywz zywz
+		LEFT JOIN jqxx_jbxx jbxx
+		on jbxx.BJ_TYWYSBM = zywz.BJ_TYWYSBM
+		where jbxx.JQ_TYWYSBM=#{value}
+		ORDER BY zywz.zysj
+	</select>
+
+	<!--用警情id 查询出来警情地址提取信息-->
+	<select id="tqdzList" resultType="java.util.HashMap">
+		SELECT tqdz.id,tqdz.tqdz
+		FROM jqxx_thjl_tqdz tqdz
+		LEFT JOIN jqxx_jbxx jbxx
+		on jbxx.BJ_TYWYSBM = tqdz.BJ_TYWYSBM
+		where jbxx.JQ_TYWYSBM=#{value}
+	</select>
+
+
+	<select id="tqysList" resultType="java.util.HashMap">
+		SELECT tqys.id,tqys.yslx,tqys.ysz
+		FROM jqxx_thjl_tqys tqys
+		LEFT JOIN jqxx_jbxx jbxx
+		on jbxx.BJ_TYWYSBM = tqys.BJ_TYWYSBM
+		where jbxx.JQ_TYWYSBM=#{value}
+	</select>
+
+	<select id="findThjlTywysbm" resultType="java.util.HashMap">
+		SELECT jbxx.BJ_TYWYSBM from jqxx_jbxx jbxx
+		where jbxx.JQ_TYWYSBM=#{value}
+	</select>
+
+</mapper>

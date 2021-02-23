@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.BcbdDao">
+
+    <select id="get" resultType="com.smart119.jczy.domain.BcbdDO">
+		select `BCBD_ID`,`BCBD_MC`,`BCBDLXDM`,`cdate`,`cpserson`,`status`,`BCBD_MS` from jczy_bcbd where BCBD_ID = #{value}
+	</select>
+
+    <select id="list" resultType="com.smart119.jczy.domain.BcbdDO">
+        select bc.`BCBD_ID`,bc.`BCBD_MC`,d.name as `BCBDLXDM`,bc.`cdate`,bc.`cpserson`,bc.`status`,bc.`BCBD_MS`  from jczy_bcbd bc
+        LEFT JOIN  sys_dict d ON bc.BCBDLXDM = d.value
+        WHERE  d.type = 'BCBDLXDM'
+        <if test="bcbdMc != null and bcbdMc != ''">and bc.BCBD_MC like '%${bcbdMc}%' </if>
+
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by bc.BCBD_ID desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from jczy_bcbd
+        <where>
+            <if test="bcbdId != null and bcbdId != ''">and BCBD_ID = #{bcbdId}</if>
+            <if test="bcbdMc != null and bcbdMc != ''">and BCBD_MC = #{bcbdMc}</if>
+            <if test="bcbdlxdm != null and bcbdlxdm != ''">and BCBDLXDM = #{bcbdlxdm}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="cpserson != null and cpserson != ''">and cpserson = #{cpserson}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+        </where>
+    </select>
+
+    <select id="checkExist" resultType="int">
+       SELECT COUNT(*) FROM jqxx_jqcjdp_bcbd where BCBD_ID = #{bcbdId} and JQ_TYWYSBM = #{jqTywysbm}
+    </select>
+
+    <select id="listWithQuery" resultType="com.smart119.jczy.domain.BcbdDO">
+	SELECT b.BCBD_ID,b.BCBD_MC,dict.name AS BCBD_LX ,zzdy.ZZDYMC, COUNT(zzdy.ZZDYMC) AS SL FROM jczy_bcbd b
+	LEFT JOIN sys_dict dict ON b.BCBDLXDM = dict.id
+	LEFT JOIN jczy_bcbd_zzdy bz ON b.BCBD_ID = bz.BCBD_ID
+	LEFT JOIN jczy_zzdy zzdy ON bz.ZZDY_TYWYBS = zzdy.ZZDY_TYWYBS
+	GROUP BY b.BCBD_ID
+	</select>
+
+    <select id="selXfclByBcbdId" resultType="com.smart119.jczy.domain.XfclDO">
+        SELECT cl.*,d.`name` XFZBLX,dept.DWMC XFJYJG FROM jczy_bcbd b
+        LEFT JOIN sys_dict dict ON b.BCBDLXDM = dict.id
+        LEFT JOIN jczy_bcbd_zzdy bz ON b.BCBD_ID = bz.BCBD_ID
+        LEFT JOIN jczy_zzdy zzdy ON bz.ZZDY_TYWYBS = zzdy.ZZDY_TYWYBS
+        LEFT JOIN jczy_zzdy_xfcl zzdycl ON zzdy.ZZDY_TYWYBS = zzdycl.ZZDY_TYWYBS
+        LEFT JOIN jczy_xfcl cl ON zzdycl.XFCL_TYWYSBM = cl.XFCL_TYWYSBM
+        LEFT JOIN sys_dict d ON cl.XFZBLXDM=d.`value` AND d.type='XFZBLXDM'
+        LEFT JOIN sys_dept dept ON dept.XFJYJG_TYWYSBM = cl.XFJYJG_TYWYSBM
+        WHERE  b.BCBD_ID = #{bcbdId}
+	</select>
+
+    <select id="getZZDY" resultType="java.util.HashMap">
+        SELECT t.ZZDY_TYWYBS AS id ,t.ZZDYLXDM AS VALUE ,CONCAT(t.ZZDYMC,'-',dept.DWMC)AS NAME
+        FROM  jczy_zzdy  t
+        LEFT JOIN sys_dept dept
+        ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+    </select>
+
+
+
+    <insert id="save" parameterType="com.smart119.jczy.domain.BcbdDO">
+		insert into jczy_bcbd
+		(
+			`BCBD_ID`, 
+			`BCBD_MC`, 
+			`BCBDLXDM`, 
+			`cdate`, 
+			`cpserson`,
+			`BCBD_MS`,
+			`status`
+		)
+		values
+		(
+			#{bcbdId}, 
+			#{bcbdMc}, 
+			#{bcbdlxdm}, 
+			now(),
+			#{cpserson},
+			#{bcbdms},
+			#{status}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.smart119.jczy.domain.BcbdDO">
+        update jczy_bcbd
+        <set>
+            <if test="bcbdMc != null">`BCBD_MC` = #{bcbdMc},</if>
+            <if test="bcbdlxdm != null">`BCBDLXDM` = #{bcbdlxdm},</if>
+            <if test="cdate != null">`cdate` = #{cdate},</if>
+            <if test="cpserson != null">`cpserson` = #{cpserson},</if>
+            <if test="bcbdms != null">`BCBD_MS` = #{bcbdms},</if>
+            <if test="status != null">`status` = #{status}</if>
+        </set>
+        where BCBD_ID = #{bcbdId}
+    </update>
+
+    <delete id="remove">
+		delete from jczy_bcbd where BCBD_ID = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from jczy_bcbd where BCBD_ID in
+        <foreach item="bcbdId" collection="array" open="(" separator="," close=")">
+            #{bcbdId}
+        </foreach>
+    </delete>
+
+</mapper>

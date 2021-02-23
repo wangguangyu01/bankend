@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.ZzdyXfclDao">
+
+	<select id="get" resultType="com.smart119.jczy.domain.ZzdyXfclDO">
+		select `id`,`ZZDY_TYWYBS`,`XFCL_TYWYSBM` from jczy_zzdy_xfcl where id = #{value}
+	</select>
+	<select id="getZzdyxfcl" resultType="com.smart119.jczy.domain.ZzdyXfclDO">
+		SELECT
+		zzdyxfcl.`id`,
+		zzdyxfcl.`ZZDY_TYWYBS`,
+		xfcl.`XFCL_TYWYSBM` ,
+		dic.`name` xfzblx ,
+		CONCAT( dic.`name`, '-', dic2.`name`,'-', xfcl.JDCHPHM) xfclname
+	FROM
+		jczy_zzdy_xfcl zzdyxfcl
+		LEFT JOIN jczy_xfcl xfcl ON zzdyxfcl.XFCL_TYWYSBM = xfcl.XFCL_TYWYSBM
+		LEFT JOIN sys_dict dic ON  xfcl.XFZBLXDM = dic.VALUE AND dic.type = 'XFZBLXDM'
+		LEFT JOIN sys_dict dic2 ON  xfcl.XFCLDJDM = dic2.VALUE AND dic2.type = 'XFCLDJDM'
+
+		where zzdyxfcl.ZZDY_TYWYBS = #{value}
+	</select>
+	<select id="list" resultType="com.smart119.jczy.domain.ZzdyXfclDO">
+		select `id`,`ZZDY_TYWYBS`,`XFCL_TYWYSBM` from jczy_zzdy_xfcl
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and ZZDY_TYWYBS = #{zzdyTywybs} </if>
+		  		  <if test="xfclTywysbm != null and xfclTywysbm != ''"> and XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_zzdy_xfcl
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and ZZDY_TYWYBS = #{zzdyTywybs} </if>
+		  		  <if test="xfclTywysbm != null and xfclTywysbm != ''"> and XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.jczy.domain.ZzdyXfclDO">
+		insert into jczy_zzdy_xfcl
+		(
+			`id`, 
+			`ZZDY_TYWYBS`, 
+			`XFCL_TYWYSBM`
+		)
+		values
+		(
+			#{id}, 
+			#{zzdyTywybs}, 
+			#{xfclTywysbm}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.jczy.domain.ZzdyXfclDO">
+		update jczy_zzdy_xfcl 
+		<set>
+			<if test="zzdyTywybs != null">`ZZDY_TYWYBS` = #{zzdyTywybs}, </if>
+			<if test="xfclTywysbm != null">`XFCL_TYWYSBM` = #{xfclTywysbm}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_zzdy_xfcl where id = #{value}
+	</delete>
+
+	<delete id="removeZzdy">
+		delete from jczy_zzdy_xfcl where ZZDY_TYWYBS = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from jczy_zzdy_xfcl where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

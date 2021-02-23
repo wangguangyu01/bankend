@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.ZyxxDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.ZyxxDO">
+		select `JXXXZYBM`,`JQ_TYWYSBM`,`XFJYJG_TYWYSBM`,`ZYUSER`,`ZYCREAD`,`ZYPLACE`,`ZYSH`,`ZYTEXT`,`ZYPHONE` from jqxx_zyxx where JXXXZYBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.ZyxxDO">
+		select `JXXXZYBM`,`JQ_TYWYSBM`,`XFJYJG_TYWYSBM`,`ZYUSER`,`ZYCREAD`,`ZYPLACE`,`ZYSH`,`ZYTEXT`,`ZYPHONE` from jqxx_zyxx
+        <where>  
+		  		  <if test="jxxxzybm != null and jxxxzybm != ''"> and JXXXZYBM = #{jxxxzybm} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		  		  <if test="zyuser != null and zyuser != ''"> and ZYUSER = #{zyuser} </if>
+		  		  <if test="zycread != null and zycread != ''"> and ZYCREAD = #{zycread} </if>
+		  		  <if test="zyplace != null and zyplace != ''"> and ZYPLACE = #{zyplace} </if>
+		  		  <if test="zysh != null and zysh != ''"> and ZYSH = #{zysh} </if>
+		  		  <if test="zytext != null and zytext != ''"> and ZYTEXT = #{zytext} </if>
+		  		  <if test="zyphone != null and zyphone != ''"> and ZYPHONE = #{zyphone} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by JXXXZYBM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="getlist" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		zyxx.`JXXXZYBM`,
+		zyxx.`JQ_TYWYSBM`,
+		zyxx.`XFJYJG_TYWYSBM`,
+		zyxx.`ZYUSER`,
+		zyxx.`ZYCREAD`,
+		zyxx.`ZYPLACE`,
+		zyxx.`ZYSH`,
+		zyxx.`ZYTEXT`,
+		zyxx.`ZYPHONE`,
+		dept.`DWMC`
+		 from jqxx_zyxx zyxx
+		 left  join sys_dept dept on zyxx.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
+		<where>
+			<if test="jxxxzybm != null and jxxxzybm != ''"> and zyxx.JXXXZYBM = #{jxxxzybm} </if>
+			<if test="jqTywysbm != null and jqTywysbm != ''"> and zyxx.JQ_TYWYSBM = #{jqTywysbm} </if>
+			<if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and zyxx.XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+			<if test="zyuser != null and zyuser != ''"> and zyxx.ZYUSER = #{zyuser} </if>
+			<if test="zycread != null and zycread != ''"> and zyxx.ZYCREAD = #{zycread} </if>
+			<if test="zyplace != null and zyplace != ''"> and zyxx.ZYPLACE = #{zyplace} </if>
+			<if test="zysh != null and zysh != ''"> and zyxx.ZYSH = #{zysh} </if>
+			<if test="zytext != null and zytext != ''"> and zyxx.ZYTEXT = #{zytext} </if>
+			<if test="zyphone != null and zyphone != ''"> and zyxx.ZYPHONE = #{zyphone} </if>
+		</where>
+	</select>
+
+
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_zyxx
+		 <where>  
+		  		  <if test="jxxxzybm != null and jxxxzybm != ''"> and JXXXZYBM = #{jxxxzybm} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		  		  <if test="zyuser != null and zyuser != ''"> and ZYUSER = #{zyuser} </if>
+		  		  <if test="zycread != null and zycread != ''"> and ZYCREAD = #{zycread} </if>
+		  		  <if test="zyplace != null and zyplace != ''"> and ZYPLACE = #{zyplace} </if>
+		  		  <if test="zysh != null and zysh != ''"> and ZYSH = #{zysh} </if>
+		  		  <if test="zytext != null and zytext != ''"> and ZYTEXT = #{zytext} </if>
+		  		  <if test="zyphone != null and zyphone != ''"> and ZYPHONE = #{zyphone} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.smart119.webapi.domain.ZyxxDO">
+		insert into jqxx_zyxx
+		(
+			`JXXXZYBM`, 
+			`JQ_TYWYSBM`, 
+			`XFJYJG_TYWYSBM`, 
+			`ZYUSER`, 
+			`ZYCREAD`, 
+			`ZYPLACE`, 
+			`ZYSH`, 
+			`ZYTEXT`, 
+			`ZYPHONE`,
+			`ZYLXUSER`
+		)
+		values
+		(
+			#{jxxxzybm}, 
+			#{jqTywysbm}, 
+			#{xfjyjgTywysbm}, 
+			#{zyuser}, 
+			#{zycread}, 
+			#{zyplace}, 
+			#{zysh}, 
+			#{zytext}, 
+			#{zyphone},
+			#{zylxuser}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.webapi.domain.ZyxxDO">
+		update jqxx_zyxx 
+		<set>
+			<if test="jqTywysbm != null">`JQ_TYWYSBM` = #{jqTywysbm}, </if>
+			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm}, </if>
+			<if test="zyuser != null">`ZYUSER` = #{zyuser}, </if>
+			<if test="zycread != null">`ZYCREAD` = #{zycread}, </if>
+			<if test="zyplace != null">`ZYPLACE` = #{zyplace}, </if>
+			<if test="zysh != null">`ZYSH` = #{zysh}, </if>
+			<if test="zytext != null">`ZYTEXT` = #{zytext}, </if>
+			<if test="zyphone != null">`ZYPHONE` = #{zyphone}</if>
+		</set>
+		where JXXXZYBM = #{jxxxzybm}
+	</update>
+	
+	<delete id="remove">
+		delete from jqxx_zyxx where JXXXZYBM = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jqxx_zyxx where JXXXZYBM in 
+		<foreach item="jxxxzybm" collection="array" open="(" separator="," close=")">
+			#{jxxxzybm}
+		</foreach>
+	</delete>
+
+</mapper>

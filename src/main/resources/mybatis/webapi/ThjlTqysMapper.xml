@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.ThjlTqysDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.ThjlTqysDO">
+		select `id`,`BJ_TYWYSBM`,`yslx`,`ysz`,`cdate`,`cperson`,`status` from jqxx_thjl_tqys where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.ThjlTqysDO">
+		select `id`,`BJ_TYWYSBM`,`yslx`,`ysz`,`cdate`,`cperson`,`status` from jqxx_thjl_tqys
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bjTywysbm != null and bjTywysbm != ''"> and BJ_TYWYSBM = #{bjTywysbm} </if>
+		  		  <if test="yslx != null and yslx != ''"> and yslx = #{yslx} </if>
+		  		  <if test="ysz != null and ysz != ''"> and ysz = #{ysz} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_thjl_tqys
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="bjTywysbm != null and bjTywysbm != ''"> and BJ_TYWYSBM = #{bjTywysbm} </if>
+		  		  <if test="yslx != null and yslx != ''"> and yslx = #{yslx} </if>
+		  		  <if test="ysz != null and ysz != ''"> and ysz = #{ysz} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.webapi.domain.ThjlTqysDO">
+		insert into jqxx_thjl_tqys
+		(
+			`id`, 
+			`BJ_TYWYSBM`,
+			`yslx`, 
+			`ysz`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{id}, 
+			#{bjTywysbm},
+			#{yslx}, 
+			#{ysz}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.webapi.domain.ThjlTqysDO">
+		update jqxx_thjl_tqys 
+		<set>
+			<if test="bjTywysbm != null">`BJ_TYWYSBM` = #{bjTywysbm}, </if>
+			<if test="yslx != null">`yslx` = #{yslx}, </if>
+			<if test="ysz != null">`ysz` = #{ysz}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jqxx_thjl_tqys where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jqxx_thjl_tqys where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

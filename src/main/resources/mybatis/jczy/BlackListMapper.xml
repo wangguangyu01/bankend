@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.BlackListDao">
+
+	<select id="get" resultType="com.smart119.jczy.domain.BlackListDO">
+		select `HMD_TYWYSBM`,`HMD_DHHM`,`HMD_XM`,`JL_RQ`,`HMD_SFLJ`,`STATE` from jczy_black_list where HMD_TYWYSBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.jczy.domain.BlackListDO">
+		select `HMD_TYWYSBM`,`HMD_DHHM`,`HMD_XM`,`JL_RQ`,`HMD_SFLJ`,`STATE` from jczy_black_list
+        <where>  
+		  		  <if test="hmdTywysbm != null and hmdTywysbm != ''"> and HMD_TYWYSBM = #{hmdTywysbm} </if>
+		  		  <if test="hmdDhhm != null and hmdDhhm != ''"> and HMD_DHHM = #{hmdDhhm} </if>
+		  		  <if test="hmdXm != null and hmdXm != ''"> and HMD_XM = #{hmdXm} </if>
+		  		  <if test="jlRq != null and jlRq != ''"> and JL_RQ = #{jlRq} </if>
+		  		  <if test="hmdSflj != null and hmdSflj != ''"> and HMD_SFLJ = #{hmdSflj} </if>
+		  		  <if test="state != null and state != ''"> and STATE = #{state} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by HMD_TYWYSBM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_black_list
+		 <where>  
+		  		  <if test="hmdTywysbm != null and hmdTywysbm != ''"> and HMD_TYWYSBM = #{hmdTywysbm} </if>
+		  		  <if test="hmdDhhm != null and hmdDhhm != ''"> and HMD_DHHM = #{hmdDhhm} </if>
+		  		  <if test="hmdXm != null and hmdXm != ''"> and HMD_XM = #{hmdXm} </if>
+		  		  <if test="jlRq != null and jlRq != ''"> and JL_RQ = #{jlRq} </if>
+		  		  <if test="hmdSflj != null and hmdSflj != ''"> and HMD_SFLJ = #{hmdSflj} </if>
+		  		  <if test="state != null and state != ''"> and STATE = #{state} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.jczy.domain.BlackListDO">
+		insert into jczy_black_list
+		(
+			`HMD_TYWYSBM`, 
+			`HMD_DHHM`, 
+			`HMD_XM`, 
+			`JL_RQ`, 
+			`HMD_SFLJ`, 
+			`STATE`
+		)
+		values
+		(
+			#{hmdTywysbm}, 
+			#{hmdDhhm}, 
+			#{hmdXm}, 
+			#{jlRq}, 
+			#{hmdSflj}, 
+			#{state}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.jczy.domain.BlackListDO">
+		update jczy_black_list 
+		<set>
+			<if test="hmdDhhm != null">`HMD_DHHM` = #{hmdDhhm}, </if>
+			<if test="hmdXm != null">`HMD_XM` = #{hmdXm}, </if>
+			<if test="jlRq != null">`JL_RQ` = #{jlRq}, </if>
+			<if test="hmdSflj != null">`HMD_SFLJ` = #{hmdSflj}, </if>
+			<if test="state != null">`STATE` = #{state}</if>
+		</set>
+		where HMD_TYWYSBM = #{hmdTywysbm}
+	</update>
+
+	<update id="updateByPhoneNumber" parameterType="com.smart119.jczy.domain.BlackListDO">
+		update jczy_black_list
+		<set>
+			<if test="xsjhsc != null">`XSJHSC` = #{xsjhsc}, </if>
+		</set>
+		SSJH = '1' ,SSJHKSSJ = now(),
+		where  HMD_DHHM = #{hmdDhhm}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_black_list where HMD_TYWYSBM = #{value}
+	</delete>
+
+	<delete id="removeByPhoneNumber">
+		delete from jczy_black_list where HMD_DHHM = #{phoneNumber}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jczy_black_list where HMD_TYWYSBM in 
+		<foreach item="hmdTywysbm" collection="array" open="(" separator="," close=")">
+			#{hmdTywysbm}
+		</foreach>
+	</delete>
+
+</mapper>

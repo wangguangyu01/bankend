@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.common.dao.AttachmentDao">
+
+	<select id="get" resultType="com.smart119.common.domain.AttachmentDO">
+		select `attachment_id`,`name`,`code`,`path`,`fid`,`f_type`,`status` from sys_attachment where attachment_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.common.domain.AttachmentDO">
+		select `attachment_id`,`name`,`code`,`path`,`fid`,`f_type`,`status` from sys_attachment
+        <where>  
+		  		  <if test="attachmentId != null and attachmentId != ''"> and attachment_id = #{attachmentId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="code != null and code != ''"> and code = #{code} </if>
+		  		  <if test="path != null and path != ''"> and path = #{path} </if>
+		  		  <if test="fid != null and fid != ''"> and fid = #{fid} </if>
+		  		  <if test="fType != null and fType != ''"> and f_type = #{fType} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by attachment_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from sys_attachment
+		 <where>  
+		  		  <if test="attachmentId != null and attachmentId != ''"> and attachment_id = #{attachmentId} </if>
+		  		  <if test="name != null and name != ''"> and name = #{name} </if>
+		  		  <if test="code != null and code != ''"> and code = #{code} </if>
+		  		  <if test="path != null and path != ''"> and path = #{path} </if>
+		  		  <if test="fid != null and fid != ''"> and fid = #{fid} </if>
+		  		  <if test="fType != null and fType != ''"> and f_type = #{fType} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.common.domain.AttachmentDO">
+		insert into sys_attachment
+		(
+			`attachment_id`, 
+			`name`, 
+			`code`, 
+			`path`, 
+			`fid`, 
+			`f_type`, 
+			`status`,
+			`creatime`
+		)
+		values
+		(
+			#{attachmentId}, 
+			#{name}, 
+			#{code}, 
+			#{path}, 
+			#{fid}, 
+			#{fType}, 
+			#{status},
+			#{creatime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.common.domain.AttachmentDO">
+		update sys_attachment 
+		<set>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="path != null">`path` = #{path}, </if>
+			<if test="fid != null">`fid` = #{fid}, </if>
+			<if test="fType != null">`f_type` = #{fType}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where attachment_id = #{attachmentId}
+	</update>
+	
+	<delete id="remove">
+		delete from sys_attachment where attachment_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sys_attachment where attachment_id in 
+		<foreach item="attachmentId" collection="array" open="(" separator="," close=")">
+			#{attachmentId}
+		</foreach>
+	</delete>
+
+</mapper>

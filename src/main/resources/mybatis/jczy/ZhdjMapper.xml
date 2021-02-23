@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.ZhdjDao">
+
+	<select id="get" resultType="com.smart119.jczy.domain.ZhdjDO">
+		select `id`,`zhlx`,`zhdj`,`zhcs`,`bkrsLow`,`bkrsUpp`,`cdate`,`status`,`cperson` from jczy_zhdj where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.jczy.domain.ZhdjDO">
+		select
+		zhdj.`id`,
+		dict1.`name` as zhlx,
+		dict2.`name` as zhdj,
+		dict3.`name` as zhcs,
+		`bkrsLow`,
+		`bkrsUpp`,
+		`cdate`,
+		`status`,
+		`cperson`
+		from jczy_zhdj zhdj
+		LEFT JOIN sys_dict dict1
+		on dict1.`value` = zhdj.zhlx and dict1.type='JQFLYDM' and dict1.`value` != ''
+		LEFT JOIN sys_dict dict2
+		on dict2.`value` = zhdj.zhdj and dict2.type='JQDJDM' and dict2.`value` != ''
+		LEFT JOIN sys_dict dict3
+		on dict3.`value` = zhdj.zhcs and dict3.type='ZHCS' and dict3.`value` != ''
+		<where>
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="zhlx != null and zhlx != ''"> and zhlx = #{zhlx} </if>
+		  		  <if test="zhdj != null and zhdj != ''"> and zhdj = #{zhdj} </if>
+		  		  <if test="zhcs != null and zhcs != ''"> and zhcs = #{zhcs} </if>
+		  		  <if test="bkrslow != null and bkrslow != ''"> and bkrsLow = #{bkrslow} </if>
+		  		  <if test="bkrsupp != null and bkrsupp != ''"> and bkrsUpp = #{bkrsupp} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		</where>
+		order by zhcs,CAST(zhdj as SIGNED)
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_zhdj
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="zhlx != null and zhlx != ''"> and zhlx = #{zhlx} </if>
+		  		  <if test="zhdj != null and zhdj != ''"> and zhdj = #{zhdj} </if>
+		  		  <if test="zhcs != null and zhcs != ''"> and zhcs = #{zhcs} </if>
+		  		  <if test="bkrslow != null and bkrslow != ''"> and bkrsLow = #{bkrslow} </if>
+		  		  <if test="bkrsupp != null and bkrsupp != ''"> and bkrsUpp = #{bkrsupp} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.jczy.domain.ZhdjDO">
+		insert into jczy_zhdj
+		(
+			`id`, 
+			`zhlx`, 
+			`zhdj`, 
+			`zhcs`, 
+			`bkrsLow`, 
+			`bkrsUpp`, 
+			`cdate`, 
+			`status`, 
+			`cperson`
+		)
+		values
+		(
+			#{id}, 
+			#{zhlx}, 
+			#{zhdj}, 
+			#{zhcs}, 
+			#{bkrslow}, 
+			#{bkrsupp}, 
+			#{cdate}, 
+			#{status}, 
+			#{cperson}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.jczy.domain.ZhdjDO">
+		update jczy_zhdj 
+		<set>
+			<if test="zhlx != null">`zhlx` = #{zhlx}, </if>
+			<if test="zhdj != null">`zhdj` = #{zhdj}, </if>
+			<if test="zhcs != null">`zhcs` = #{zhcs}, </if>
+			<if test="bkrslow != null">`bkrsLow` = #{bkrslow}, </if>
+			<if test="bkrsupp != null">`bkrsUpp` = #{bkrsupp}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_zhdj where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jczy_zhdj where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+	<select id="findZhdj" resultType="com.smart119.jczy.domain.ZhdjDO">
+		SELECT *
+		FROM `jczy_zhdj`
+		where `zhlx` = #{zhlx}
+		AND `zhcs` =#{zhcs}
+		and (`bkrsLow` &lt;= #{bkrs} and `bkrsUpp` &gt;= #{bkrs})
+	</select>
+
+</mapper>

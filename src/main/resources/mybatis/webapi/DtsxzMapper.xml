@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.DtsxzDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.DtsxzDO">
+		select `DTSXZ_TYWYSBM`,`DTSX_TYWYSBM`,`JQ_TYWYSBM`,`SXM`,`SXZ`,`cdate`,`cperson`,`status` from jqxx_dtsxz where DTSXZ_TYWYSBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.DtsxzDO">
+		select `DTSXZ_TYWYSBM`,`DTSX_TYWYSBM`,`JQ_TYWYSBM`,`SXM`,`SXZ`,`cdate`,`cperson`,`status` from jqxx_dtsxz
+        <where>
+		  		  <if test="dtsxzTywysbm != null and dtsxzTywysbm != ''"> and DTSXZ_TYWYSBM = #{dtsxzTywysbm} </if>
+		  		  <if test="dtsxTywysbm != null and dtsxTywysbm != ''"> and DTSX_TYWYSBM = #{dtsxTywysbm} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="sxm != null and sxm != ''"> and SXM = #{sxm} </if>
+		  		  <if test="sxz != null and sxz != ''"> and SXZ = #{sxz} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by DTSXZ_TYWYSBM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_dtsxz
+		 <where>
+		  		  <if test="dtsxzTywysbm != null and dtsxzTywysbm != ''"> and DTSXZ_TYWYSBM = #{dtsxzTywysbm} </if>
+		  		  <if test="dtsxTywysbm != null and dtsxTywysbm != ''"> and DTSX_TYWYSBM = #{dtsxTywysbm} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="sxm != null and sxm != ''"> and SXM = #{sxm} </if>
+		  		  <if test="sxz != null and sxz != ''"> and SXZ = #{sxz} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.smart119.webapi.domain.DtsxzDO">
+		insert into jqxx_dtsxz
+		(
+			`DTSXZ_TYWYSBM`,
+			`DTSX_TYWYSBM`,
+			`JQ_TYWYSBM`,
+			`SXM`,
+			`SXZ`,
+			`cdate`,
+			`cperson`,
+			`status`
+		)
+		values
+		(
+			#{dtsxzTywysbm},
+			#{dtsxTywysbm},
+			#{jqTywysbm},
+			#{sxm},
+			#{sxz},
+			#{cdate},
+			#{cperson},
+			#{status}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.smart119.webapi.domain.DtsxzDO">
+		update jqxx_dtsxz
+		<set>
+			<if test="dtsxTywysbm != null">`DTSX_TYWYSBM` = #{dtsxTywysbm}, </if>
+			<if test="jqTywysbm != null">`JQ_TYWYSBM` = #{jqTywysbm}, </if>
+			<if test="sxm != null">`SXM` = #{sxm}, </if>
+			<if test="sxz != null">`SXZ` = #{sxz}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where DTSXZ_TYWYSBM = #{dtsxzTywysbm}
+	</update>
+
+	<delete id="remove">
+		delete from jqxx_dtsxz where DTSXZ_TYWYSBM = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from jqxx_dtsxz where DTSXZ_TYWYSBM in
+		<foreach item="dtsxzTywysbm" collection="array" open="(" separator="," close=")">
+			#{dtsxzTywysbm}
+		</foreach>
+	</delete>
+
+	<select id="getJqDtsxByJqTywysbmAndZhcsId" resultType="com.smart119.webapi.domain.DtsxzDO">
+		select s.DTSX_TYWYSBM,s.SXM,z.SXZ from jqxx_dtsx s
+		left join jqxx_dtsxz z on s.DTSX_TYWYSBM=z.DTSX_TYWYSBM and z.JQ_TYWYSBM=#{jqTywysbm}
+		where s.ZHCS_ID=#{zhcsId} and s.status=0
+	</select>
+
+</mapper>

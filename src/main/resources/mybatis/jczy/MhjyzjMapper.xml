@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.MhjyzjDao">
+
+    <select id="get" resultType="com.smart119.jczy.domain.MhjyzjDO">
+		select `MHJYZJ_TYWYSBM`,`GMSFHM`,`XM`,`XBDM`,`XLDM`,`XFGWLBDM`,`JGDM`,`CS_RQ`,`JZH_DZMC`,`TXDZ`,`YZBM`,`YDDH`,`JT_LXDH`,`BG_LXDH`,`DWMC`,`BZ`,`SFDWNBZJ_PDBZ`,`XFZJLYLBDM`,`XFJYJG_TYWYSBM`,`XZQHDM`,`cdate`,`status`,`cperson` from jczy_mhjyzj where MHJYZJ_TYWYSBM = #{value}
+	</select>
+
+    <select id="list" resultType="com.smart119.jczy.domain.MhjyzjDO">
+        select
+        `MHJYZJ_TYWYSBM`,`GMSFHM`,`XM`,
+        dict_xb.`name` as `XBDM`,`XLDM`,`XFGWLBDM`,`JGDM`,
+        `CS_RQ`,`JZH_DZMC`,mhjyzj.`TXDZ`,mhjyzj.`YZBM`,
+        `YDDH`,`JT_LXDH`,`BG_LXDH`,mhjyzj.`DWMC`,
+        mhjyzj.`BZ`,`SFDWNBZJ_PDBZ`,dict_zjly.`name` as `XFZJLYLBDM`,
+        dept.dwmc as `XFJYJG_TYWYSBM`,mhjyzj.`XZQHDM`,mhjyzj.`cdate`,
+        mhjyzj.`status`,mhjyzj.`cperson`
+        from jczy_mhjyzj mhjyzj
+        LEFT JOIN sys_dict dict_xb
+        on dict_xb.`value` = mhjyzj.XBDM
+        LEFT JOIN sys_dict dict_zjly
+        on dict_zjly.`value` = mhjyzj.XFZJLYLBDM
+        LEFT JOIN sys_dept dept
+        on dept.XFJYJG_TYWYSBM = mhjyzj.XFJYJG_TYWYSBM
+        <where>
+            and dict_xb.description = '性别代码'
+            and dict_zjly.description='消防专家领域类别代码'
+            <if test="mhjyzjTywysbm != null and mhjyzjTywysbm != ''">and MHJYZJ_TYWYSBM = #{mhjyzjTywysbm}</if>
+            <if test="gmsfhm != null and gmsfhm != ''">and GMSFHM = #{gmsfhm}</if>
+            <if test="xm != null and xm != ''">and XM like '%${xm}%'</if>
+            <if test="xbdm != null and xbdm != ''">and XBDM = #{xbdm}</if>
+            <if test="xldm != null and xldm != ''">and XLDM = #{xldm}</if>
+            <if test="xfgwlbdm != null and xfgwlbdm != ''">and XFGWLBDM = #{xfgwlbdm}</if>
+            <if test="jgdm != null and jgdm != ''">and JGDM = #{jgdm}</if>
+            <if test="csRq != null and csRq != ''">and CS_RQ = #{csRq}</if>
+            <if test="jzhDzmc != null and jzhDzmc != ''">and JZH_DZMC = #{jzhDzmc}</if>
+            <if test="txdz != null and txdz != ''">and TXDZ = #{txdz}</if>
+            <if test="yzbm != null and yzbm != ''">and YZBM = #{yzbm}</if>
+            <if test="yddh != null and yddh != ''">and YDDH = #{yddh}</if>
+            <if test="jtLxdh != null and jtLxdh != ''">and JT_LXDH = #{jtLxdh}</if>
+            <if test="bgLxdh != null and bgLxdh != ''">and BG_LXDH = #{bgLxdh}</if>
+            <if test="dwmc != null and dwmc != ''">and DWMC = #{dwmc}</if>
+            <if test="bz != null and bz != ''">and BZ = #{bz}</if>
+            <if test="sfdwnbzjPdbz != null and sfdwnbzjPdbz != ''">and SFDWNBZJ_PDBZ = #{sfdwnbzjPdbz}</if>
+            <if test="xfzjlylbdm != null and xfzjlylbdm != ''">and XFZJLYLBDM = #{xfzjlylbdm}</if>
+            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+            <if test="deptList != null and deptList.size() > 0">and mhjyzj.XFJYJG_TYWYSBM in
+                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.xfjyjgTywysbm}
+                </foreach>
+            </if>
+            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by MHJYZJ_TYWYSBM desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from jczy_mhjyzj
+        <where>
+            <if test="mhjyzjTywysbm != null and mhjyzjTywysbm != ''">and MHJYZJ_TYWYSBM = #{mhjyzjTywysbm}</if>
+            <if test="gmsfhm != null and gmsfhm != ''">and GMSFHM = #{gmsfhm}</if>
+            <if test="xm != null and xm != ''">and XM = #{xm}</if>
+            <if test="xbdm != null and xbdm != ''">and XBDM = #{xbdm}</if>
+            <if test="xldm != null and xldm != ''">and XLDM = #{xldm}</if>
+            <if test="xfgwlbdm != null and xfgwlbdm != ''">and XFGWLBDM = #{xfgwlbdm}</if>
+            <if test="jgdm != null and jgdm != ''">and JGDM = #{jgdm}</if>
+            <if test="csRq != null and csRq != ''">and CS_RQ = #{csRq}</if>
+            <if test="jzhDzmc != null and jzhDzmc != ''">and JZH_DZMC = #{jzhDzmc}</if>
+            <if test="txdz != null and txdz != ''">and TXDZ = #{txdz}</if>
+            <if test="yzbm != null and yzbm != ''">and YZBM = #{yzbm}</if>
+            <if test="yddh != null and yddh != ''">and YDDH = #{yddh}</if>
+            <if test="jtLxdh != null and jtLxdh != ''">and JT_LXDH = #{jtLxdh}</if>
+            <if test="bgLxdh != null and bgLxdh != ''">and BG_LXDH = #{bgLxdh}</if>
+            <if test="dwmc != null and dwmc != ''">and DWMC = #{dwmc}</if>
+            <if test="bz != null and bz != ''">and BZ = #{bz}</if>
+            <if test="sfdwnbzjPdbz != null and sfdwnbzjPdbz != ''">and SFDWNBZJ_PDBZ = #{sfdwnbzjPdbz}</if>
+            <if test="xfzjlylbdm != null and xfzjlylbdm != ''">and XFZJLYLBDM = #{xfzjlylbdm}</if>
+            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+            <if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.xfjyjgTywysbm}
+                </foreach>
+            </if>
+            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.smart119.jczy.domain.MhjyzjDO">
+		insert into jczy_mhjyzj
+		(
+			`MHJYZJ_TYWYSBM`, 
+			`GMSFHM`, 
+			`XM`, 
+			`XBDM`, 
+			`XLDM`, 
+			`XFGWLBDM`, 
+			`JGDM`, 
+			`CS_RQ`, 
+			`JZH_DZMC`, 
+			`TXDZ`, 
+			`YZBM`, 
+			`YDDH`, 
+			`JT_LXDH`, 
+			`BG_LXDH`, 
+			`DWMC`, 
+			`BZ`, 
+			`SFDWNBZJ_PDBZ`, 
+			`XFZJLYLBDM`, 
+			`XFJYJG_TYWYSBM`, 
+			`XZQHDM`, 
+			`cdate`, 
+			`status`, 
+			`cperson`
+		)
+		values
+		(
+			#{mhjyzjTywysbm},
+			#{gmsfhm}, 
+			#{xm}, 
+			#{xbdm}, 
+			#{xldm}, 
+			#{xfgwlbdm}, 
+			#{jgdm}, 
+			#{csRq}, 
+			#{jzhDzmc}, 
+			#{txdz}, 
+			#{yzbm}, 
+			#{yddh}, 
+			#{jtLxdh}, 
+			#{bgLxdh}, 
+			#{dwmc}, 
+			#{bz}, 
+			#{sfdwnbzjPdbz}, 
+			#{xfzjlylbdm}, 
+			#{xfjyjgTywysbm}, 
+			#{xzqhdm}, 
+			#{cdate}, 
+			#{status}, 
+			#{cperson}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.smart119.jczy.domain.MhjyzjDO">
+        update jczy_mhjyzj
+        <set>
+            <if test="gmsfhm != null">`GMSFHM` = #{gmsfhm},</if>
+            <if test="xm != null">`XM` = #{xm},</if>
+            <if test="xbdm != null">`XBDM` = #{xbdm},</if>
+            <if test="xldm != null">`XLDM` = #{xldm},</if>
+            <if test="xfgwlbdm != null">`XFGWLBDM` = #{xfgwlbdm},</if>
+            <if test="jgdm != null">`JGDM` = #{jgdm},</if>
+            <if test="csRq != null">`CS_RQ` = #{csRq},</if>
+            <if test="jzhDzmc != null">`JZH_DZMC` = #{jzhDzmc},</if>
+            <if test="txdz != null">`TXDZ` = #{txdz},</if>
+            <if test="yzbm != null">`YZBM` = #{yzbm},</if>
+            <if test="yddh != null">`YDDH` = #{yddh},</if>
+            <if test="jtLxdh != null">`JT_LXDH` = #{jtLxdh},</if>
+            <if test="bgLxdh != null">`BG_LXDH` = #{bgLxdh},</if>
+            <if test="dwmc != null">`DWMC` = #{dwmc},</if>
+            <if test="bz != null">`BZ` = #{bz},</if>
+            <if test="sfdwnbzjPdbz != null">`SFDWNBZJ_PDBZ` = #{sfdwnbzjPdbz},</if>
+            <if test="xfzjlylbdm != null">`XFZJLYLBDM` = #{xfzjlylbdm},</if>
+            <if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm},</if>
+            <if test="xzqhdm != null">`XZQHDM` = #{xzqhdm},</if>
+            <if test="cdate != null">`cdate` = #{cdate},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="cperson != null">`cperson` = #{cperson}</if>
+        </set>
+        where MHJYZJ_TYWYSBM = #{mhjyzjTywysbm}
+    </update>
+
+    <delete id="remove">
+		delete from jczy_mhjyzj where MHJYZJ_TYWYSBM = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from jczy_mhjyzj where MHJYZJ_TYWYSBM in
+        <foreach item="mhjyzjTywysbm" collection="array" open="(" separator="," close=")">
+            #{mhjyzjTywysbm}
+        </foreach>
+    </delete>
+
+    <select id="yjxfzjlb" resultType="java.util.HashMap">
+		SELECT dict1.id,dict1.`name`
+		from sys_dict dict1
+		LEFT JOIN sys_dict dict2
+		on dict2.id = dict1.parent_id
+		where dict2.parent_id=0 and dict2.type='XFZJLYLBDM'
+	</select>
+
+    <select id="mhjyzjBylyfl" resultType="java.util.HashMap">
+		SELECT mhzj.xm,mhzj.yddh,dict.name
+		from jczy_mhjyzj mhzj
+		LEFT JOIN sys_dict dict
+		on dict.value = mhzj.xfzjlylbdm
+		where (dict.id=#{value} or dict.parent_id=#{value})
+	</select>
+</mapper>

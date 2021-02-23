@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.TrsyDao">
+
+    <select id="get" resultType="com.smart119.jczy.domain.TrsyDO">
+		select t.`TRSY_TYWYSBM`,t.`MC`,t.`GD`,t.`SYLXDM`,t.`DZMC`,t.`RJ`,t.`MJ`,t.`DQJD`,t.`DQWD`,t.`SZQK_JYQK`,t.`SJBH_JYQK`,t.`SYKYZTLBDM`,t.`YWKSQ_PDBZ`,t.`KSQKD_JYQK`,
+		t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG
+		from jczy_trsy t
+		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		where t.TRSY_TYWYSBM = #{value}
+	</select>
+
+    <select id="list" resultType="com.smart119.jczy.domain.TrsyDO">
+        select
+        `TRSY_TYWYSBM`,`MC`,`GD`,`SYLXDM`,`DZMC`,`RJ`,`MJ`,`DQJD`,`DQWD`,`SZQK_JYQK`,`SJBH_JYQK`,`SYKYZTLBDM`,`YWKSQ_PDBZ`,`KSQKD_JYQK`,`XFJYJG_TYWYSBM`,`XZQHDM`,`JIZ_RQ`,`QY_RQ`
+        from jczy_trsy
+        <where>
+            <if test="trsyTywysbm != null and trsyTywysbm != ''">and TRSY_TYWYSBM = #{trsyTywysbm}</if>
+            <if test="mc != null and mc != ''">and MC = #{mc}</if>
+            <if test="gd != null and gd != ''">and GD = #{gd}</if>
+            <if test="sylxdm != null and sylxdm != ''">and SYLXDM = #{sylxdm}</if>
+            <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
+            <if test="rj != null and rj != ''">and RJ = #{rj}</if>
+            <if test="mj != null and mj != ''">and MJ = #{mj}</if>
+            <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
+            <if test="szqkJyqk != null and szqkJyqk != ''">and SZQK_JYQK = #{szqkJyqk}</if>
+            <if test="sjbhJyqk != null and sjbhJyqk != ''">and SJBH_JYQK = #{sjbhJyqk}</if>
+            <if test="sykyztlbdm != null and sykyztlbdm != ''">and SYKYZTLBDM = #{sykyztlbdm}</if>
+            <if test="ywksqPdbz != null and ywksqPdbz != ''">and YWKSQ_PDBZ = #{ywksqPdbz}</if>
+            <if test="ksqkdJyqk != null and ksqkdJyqk != ''">and KSQKD_JYQK = #{ksqkdJyqk}</if>
+            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+            <if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.xfjyjgTywysbm}
+                </foreach>
+            </if>
+            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
+            <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
+            <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by TRSY_TYWYSBM desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from jczy_trsy
+        <where>
+            <if test="trsyTywysbm != null and trsyTywysbm != ''">and TRSY_TYWYSBM = #{trsyTywysbm}</if>
+            <if test="mc != null and mc != ''">and MC = #{mc}</if>
+            <if test="gd != null and gd != ''">and GD = #{gd}</if>
+            <if test="sylxdm != null and sylxdm != ''">and SYLXDM = #{sylxdm}</if>
+            <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
+            <if test="rj != null and rj != ''">and RJ = #{rj}</if>
+            <if test="mj != null and mj != ''">and MJ = #{mj}</if>
+            <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
+            <if test="szqkJyqk != null and szqkJyqk != ''">and SZQK_JYQK = #{szqkJyqk}</if>
+            <if test="sjbhJyqk != null and sjbhJyqk != ''">and SJBH_JYQK = #{sjbhJyqk}</if>
+            <if test="sykyztlbdm != null and sykyztlbdm != ''">and SYKYZTLBDM = #{sykyztlbdm}</if>
+            <if test="ywksqPdbz != null and ywksqPdbz != ''">and YWKSQ_PDBZ = #{ywksqPdbz}</if>
+            <if test="ksqkdJyqk != null and ksqkdJyqk != ''">and KSQKD_JYQK = #{ksqkdJyqk}</if>
+            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+            <if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.xfjyjgTywysbm}
+                </foreach>
+            </if>
+            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
+            <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
+            <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.smart119.jczy.domain.TrsyDO">
+		insert into jczy_trsy
+		(
+			`TRSY_TYWYSBM`, 
+			`MC`, 
+			`GD`, 
+			`SYLXDM`, 
+			`DZMC`, 
+			`RJ`, 
+			`MJ`, 
+			`DQJD`, 
+			`DQWD`, 
+			`SZQK_JYQK`, 
+			`SJBH_JYQK`, 
+			`SYKYZTLBDM`, 
+			`YWKSQ_PDBZ`, 
+			`KSQKD_JYQK`, 
+			`XFJYJG_TYWYSBM`, 
+			`XZQHDM`, 
+			`JIZ_RQ`, 
+			`QY_RQ`
+		)
+		values
+		(
+			#{trsyTywysbm}, 
+			#{mc}, 
+			#{gd}, 
+			#{sylxdm}, 
+			#{dzmc}, 
+			#{rj}, 
+			#{mj}, 
+			#{dqjd}, 
+			#{dqwd}, 
+			#{szqkJyqk}, 
+			#{sjbhJyqk}, 
+			#{sykyztlbdm}, 
+			#{ywksqPdbz}, 
+			#{ksqkdJyqk}, 
+			#{xfjyjgTywysbm}, 
+			#{xzqhdm}, 
+			#{jizRq}, 
+			#{qyRq}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.smart119.jczy.domain.TrsyDO">
+        update jczy_trsy
+        <set>
+            <if test="mc != null">`MC` = #{mc},</if>
+            <if test="gd != null">`GD` = #{gd},</if>
+            <if test="sylxdm != null">`SYLXDM` = #{sylxdm},</if>
+            <if test="dzmc != null">`DZMC` = #{dzmc},</if>
+            <if test="rj != null">`RJ` = #{rj},</if>
+            <if test="mj != null">`MJ` = #{mj},</if>
+            <if test="dqjd != null">`DQJD` = #{dqjd},</if>
+            <if test="dqwd != null">`DQWD` = #{dqwd},</if>
+            <if test="szqkJyqk != null">`SZQK_JYQK` = #{szqkJyqk},</if>
+            <if test="sjbhJyqk != null">`SJBH_JYQK` = #{sjbhJyqk},</if>
+            <if test="sykyztlbdm != null">`SYKYZTLBDM` = #{sykyztlbdm},</if>
+            <if test="ywksqPdbz != null">`YWKSQ_PDBZ` = #{ywksqPdbz},</if>
+            <if test="ksqkdJyqk != null">`KSQKD_JYQK` = #{ksqkdJyqk},</if>
+            <if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm},</if>
+            <if test="xzqhdm != null">`XZQHDM` = #{xzqhdm},</if>
+            <if test="jizRq != null">`JIZ_RQ` = #{jizRq},</if>
+            <if test="qyRq != null">`QY_RQ` = #{qyRq}</if>
+        </set>
+        where TRSY_TYWYSBM = #{trsyTywysbm}
+    </update>
+
+    <delete id="remove">
+		delete from jczy_trsy where TRSY_TYWYSBM = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from jczy_trsy where TRSY_TYWYSBM in
+        <foreach item="trsyTywysbm" collection="array" open="(" separator="," close=")">
+            #{trsyTywysbm}
+        </foreach>
+    </delete>
+
+    <select id="getTrsyByRange" resultType="com.smart119.jczy.domain.TrsyDO">
+		select t.`TRSY_TYWYSBM`,t.`MC`,t.`GD`,t.`SYLXDM`,t.`DZMC`,t.`RJ`,t.`MJ`,t.`DQJD`,t.`DQWD`,t.`SZQK_JYQK`,t.`SJBH_JYQK`,t.`SYKYZTLBDM`,t.`YWKSQ_PDBZ`,t.`KSQKD_JYQK`,
+		t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG,
+		ROUND(
+		6378.138 * 2 * ASIN(
+		SQRT(
+		POW( SIN( ( t.DQWD * PI( ) / 180- #{wd} * PI( ) / 180 ) / 2 ), 2 ) + COS( t.DQJD * PI( ) / 180 ) * COS( #{jd} * PI( ) / 180 ) * POW( SIN( ( t.DQJD * PI( ) / 180- #{jd} * PI( ) / 180 ) / 2 ), 2 )
+		)
+		) * 1000
+		) AS distance
+		from jczy_trsy t
+		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		HAVING distance <![CDATA[ <= ]]> #{distance}
+	</select>
+
+</mapper>

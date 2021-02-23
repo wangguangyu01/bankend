@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.JqgdDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.JqgdDO">
+		select `JQGDJL_TYWYSBM`,`JQ_TYWYSBM`,`CDCL_SL`,`JQDJDM`,`BKRY_RS`,`DCRY_RS`,`QZSS_RS`,`DWSS_RS`,`QZSW_RS`,`DWSW_RS`,`QZSL_RS`,`DWSL_RS`,`RS_MJ`,`CCSS_JYQK`,`ZHYY_JYQK`,`GDR_XM`,`RQSJ`,`BZ`,`cdate`,`cperson`,`status` from jczy_jqgd where JQGDJL_TYWYSBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.JqgdDO">
+		select `JQGDJL_TYWYSBM`,`JQ_TYWYSBM`,`CDCL_SL`,`JQDJDM`,`BKRY_RS`,`DCRY_RS`,`QZSS_RS`,`DWSS_RS`,`QZSW_RS`,`DWSW_RS`,`QZSL_RS`,`DWSL_RS`,`RS_MJ`,`CCSS_JYQK`,`ZHYY_JYQK`,`GDR_XM`,`RQSJ`,`BZ`,`cdate`,`cperson`,`status` from jczy_jqgd
+        <where>  
+		  		  <if test="jqgdjlTywysbm != null and jqgdjlTywysbm != ''"> and JQGDJL_TYWYSBM = #{jqgdjlTywysbm} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="cdclSl != null and cdclSl != ''"> and CDCL_SL = #{cdclSl} </if>
+		  		  <if test="jqdjdm != null and jqdjdm != ''"> and JQDJDM = #{jqdjdm} </if>
+		  		  <if test="bkryRs != null and bkryRs != ''"> and BKRY_RS = #{bkryRs} </if>
+		  		  <if test="dcryRs != null and dcryRs != ''"> and DCRY_RS = #{dcryRs} </if>
+		  		  <if test="qzssRs != null and qzssRs != ''"> and QZSS_RS = #{qzssRs} </if>
+		  		  <if test="dwssRs != null and dwssRs != ''"> and DWSS_RS = #{dwssRs} </if>
+		  		  <if test="qzswRs != null and qzswRs != ''"> and QZSW_RS = #{qzswRs} </if>
+		  		  <if test="dwswRs != null and dwswRs != ''"> and DWSW_RS = #{dwswRs} </if>
+		  		  <if test="qzslRs != null and qzslRs != ''"> and QZSL_RS = #{qzslRs} </if>
+		  		  <if test="dwslRs != null and dwslRs != ''"> and DWSL_RS = #{dwslRs} </if>
+		  		  <if test="rsMj != null and rsMj != ''"> and RS_MJ = #{rsMj} </if>
+		  		  <if test="ccssJyqk != null and ccssJyqk != ''"> and CCSS_JYQK = #{ccssJyqk} </if>
+		  		  <if test="zhyyJyqk != null and zhyyJyqk != ''"> and ZHYY_JYQK = #{zhyyJyqk} </if>
+		  		  <if test="gdrXm != null and gdrXm != ''"> and GDR_XM = #{gdrXm} </if>
+		  		  <if test="rqsj != null and rqsj != ''"> and RQSJ = #{rqsj} </if>
+		  		  <if test="bz != null and bz != ''"> and BZ = #{bz} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by JQGDJL_TYWYSBM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_jqgd
+		 <where>  
+		  		  <if test="jqgdjlTywysbm != null and jqgdjlTywysbm != ''"> and JQGDJL_TYWYSBM = #{jqgdjlTywysbm} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="cdclSl != null and cdclSl != ''"> and CDCL_SL = #{cdclSl} </if>
+		  		  <if test="jqdjdm != null and jqdjdm != ''"> and JQDJDM = #{jqdjdm} </if>
+		  		  <if test="bkryRs != null and bkryRs != ''"> and BKRY_RS = #{bkryRs} </if>
+		  		  <if test="dcryRs != null and dcryRs != ''"> and DCRY_RS = #{dcryRs} </if>
+		  		  <if test="qzssRs != null and qzssRs != ''"> and QZSS_RS = #{qzssRs} </if>
+		  		  <if test="dwssRs != null and dwssRs != ''"> and DWSS_RS = #{dwssRs} </if>
+		  		  <if test="qzswRs != null and qzswRs != ''"> and QZSW_RS = #{qzswRs} </if>
+		  		  <if test="dwswRs != null and dwswRs != ''"> and DWSW_RS = #{dwswRs} </if>
+		  		  <if test="qzslRs != null and qzslRs != ''"> and QZSL_RS = #{qzslRs} </if>
+		  		  <if test="dwslRs != null and dwslRs != ''"> and DWSL_RS = #{dwslRs} </if>
+		  		  <if test="rsMj != null and rsMj != ''"> and RS_MJ = #{rsMj} </if>
+		  		  <if test="ccssJyqk != null and ccssJyqk != ''"> and CCSS_JYQK = #{ccssJyqk} </if>
+		  		  <if test="zhyyJyqk != null and zhyyJyqk != ''"> and ZHYY_JYQK = #{zhyyJyqk} </if>
+		  		  <if test="gdrXm != null and gdrXm != ''"> and GDR_XM = #{gdrXm} </if>
+		  		  <if test="rqsj != null and rqsj != ''"> and RQSJ = #{rqsj} </if>
+		  		  <if test="bz != null and bz != ''"> and BZ = #{bz} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.webapi.domain.JqgdDO">
+		insert into jczy_jqgd
+		(
+			`JQGDJL_TYWYSBM`, 
+			`JQ_TYWYSBM`, 
+			`CDCL_SL`, 
+			`JQDJDM`, 
+			`BKRY_RS`, 
+			`DCRY_RS`, 
+			`QZSS_RS`, 
+			`DWSS_RS`, 
+			`QZSW_RS`, 
+			`DWSW_RS`, 
+			`QZSL_RS`, 
+			`DWSL_RS`, 
+			`RS_MJ`, 
+			`CCSS_JYQK`, 
+			`ZHYY_JYQK`, 
+			`GDR_XM`, 
+			`RQSJ`, 
+			`BZ`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{jqgdjlTywysbm}, 
+			#{jqTywysbm}, 
+			#{cdclSl}, 
+			#{jqdjdm}, 
+			#{bkryRs}, 
+			#{dcryRs}, 
+			#{qzssRs}, 
+			#{dwssRs}, 
+			#{qzswRs}, 
+			#{dwswRs}, 
+			#{qzslRs}, 
+			#{dwslRs}, 
+			#{rsMj}, 
+			#{ccssJyqk}, 
+			#{zhyyJyqk}, 
+			#{gdrXm}, 
+			#{rqsj}, 
+			#{bz}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.webapi.domain.JqgdDO">
+		update jczy_jqgd 
+		<set>
+			<if test="jqTywysbm != null">`JQ_TYWYSBM` = #{jqTywysbm}, </if>
+			<if test="cdclSl != null">`CDCL_SL` = #{cdclSl}, </if>
+			<if test="jqdjdm != null">`JQDJDM` = #{jqdjdm}, </if>
+			<if test="bkryRs != null">`BKRY_RS` = #{bkryRs}, </if>
+			<if test="dcryRs != null">`DCRY_RS` = #{dcryRs}, </if>
+			<if test="qzssRs != null">`QZSS_RS` = #{qzssRs}, </if>
+			<if test="dwssRs != null">`DWSS_RS` = #{dwssRs}, </if>
+			<if test="qzswRs != null">`QZSW_RS` = #{qzswRs}, </if>
+			<if test="dwswRs != null">`DWSW_RS` = #{dwswRs}, </if>
+			<if test="qzslRs != null">`QZSL_RS` = #{qzslRs}, </if>
+			<if test="dwslRs != null">`DWSL_RS` = #{dwslRs}, </if>
+			<if test="rsMj != null">`RS_MJ` = #{rsMj}, </if>
+			<if test="ccssJyqk != null">`CCSS_JYQK` = #{ccssJyqk}, </if>
+			<if test="zhyyJyqk != null">`ZHYY_JYQK` = #{zhyyJyqk}, </if>
+			<if test="gdrXm != null">`GDR_XM` = #{gdrXm}, </if>
+			<if test="rqsj != null">`RQSJ` = #{rqsj}, </if>
+			<if test="bz != null">`BZ` = #{bz}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where JQGDJL_TYWYSBM = #{jqgdjlTywysbm}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_jqgd where JQGDJL_TYWYSBM = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jczy_jqgd where JQGDJL_TYWYSBM in 
+		<foreach item="jqgdjlTywysbm" collection="array" open="(" separator="," close=")">
+			#{jqgdjlTywysbm}
+		</foreach>
+	</delete>
+
+</mapper>

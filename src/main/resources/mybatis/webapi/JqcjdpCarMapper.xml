@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.JqcjdpCarDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.JqcjdpCarDO">
+		select `DPCL_TYWYSBM`,`DPDZ_TYWYSBM`,`JQCJDP_TYWYSBM`,`JQCJDPCL_DPSJ`,`DPCL_GGYJ`,`DPCL_GGZT`,`DPCL_GXFS`,`JQCJDPCLXGYY_BZ`,`JQCJDPCLZTGX_BZ`,`JQCJDPCLZTLBDM`,`XFJYCL_TYWYSBM`,`cdate`,`cperson`,`status` from jqxx_jqcjdp_car where DPCL_TYWYSBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.JqcjdpCarDO">
+		select `DPCL_TYWYSBM`,`DPDZ_TYWYSBM`,`JQCJDP_TYWYSBM`,`JQCJDPCL_DPSJ`,`DPCL_GGYJ`,`DPCL_GGZT`,`DPCL_GXFS`,`JQCJDPCLXGYY_BZ`,`JQCJDPCLZTGX_BZ`,`JQCJDPCLZTLBDM`,`XFJYCL_TYWYSBM`,`cdate`,`cperson`,`status` from jqxx_jqcjdp_car
+        <where>  
+		  		  <if test="dpclTywysbm != null and dpclTywysbm != ''"> and DPCL_TYWYSBM = #{dpclTywysbm} </if>
+		  		  <if test="dpdzTywysbm != null and dpdzTywysbm != ''"> and DPDZ_TYWYSBM = #{dpdzTywysbm} </if>
+		  		  <if test="jqcjdpTywysbm != null and jqcjdpTywysbm != ''"> and JQCJDP_TYWYSBM = #{jqcjdpTywysbm} </if>
+		  		  <if test="jqcjdpclDpsj != null and jqcjdpclDpsj != ''"> and JQCJDPCL_DPSJ = #{jqcjdpclDpsj} </if>
+		  		  <if test="dpclGgyj != null and dpclGgyj != ''"> and DPCL_GGYJ = #{dpclGgyj} </if>
+		  		  <if test="dpclGgzt != null and dpclGgzt != ''"> and DPCL_GGZT = #{dpclGgzt} </if>
+		  		  <if test="dpclGxfs != null and dpclGxfs != ''"> and DPCL_GXFS = #{dpclGxfs} </if>
+		  		  <if test="jqcjdpclxgyyBz != null and jqcjdpclxgyyBz != ''"> and JQCJDPCLXGYY_BZ = #{jqcjdpclxgyyBz} </if>
+		  		  <if test="jqcjdpclztgxBz != null and jqcjdpclztgxBz != ''"> and JQCJDPCLZTGX_BZ = #{jqcjdpclztgxBz} </if>
+		  		  <if test="jqcjdpclztlbdm != null and jqcjdpclztlbdm != ''"> and JQCJDPCLZTLBDM = #{jqcjdpclztlbdm} </if>
+		  		  <if test="xfjyclTywysbm != null and xfjyclTywysbm != ''"> and XFJYCL_TYWYSBM = #{xfjyclTywysbm} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by DPCL_TYWYSBM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_jqcjdp_car
+		 <where>  
+		  		  <if test="dpclTywysbm != null and dpclTywysbm != ''"> and DPCL_TYWYSBM = #{dpclTywysbm} </if>
+		  		  <if test="dpdzTywysbm != null and dpdzTywysbm != ''"> and DPDZ_TYWYSBM = #{dpdzTywysbm} </if>
+		  		  <if test="jqcjdpTywysbm != null and jqcjdpTywysbm != ''"> and JQCJDP_TYWYSBM = #{jqcjdpTywysbm} </if>
+		  		  <if test="jqcjdpclDpsj != null and jqcjdpclDpsj != ''"> and JQCJDPCL_DPSJ = #{jqcjdpclDpsj} </if>
+		  		  <if test="dpclGgyj != null and dpclGgyj != ''"> and DPCL_GGYJ = #{dpclGgyj} </if>
+		  		  <if test="dpclGgzt != null and dpclGgzt != ''"> and DPCL_GGZT = #{dpclGgzt} </if>
+		  		  <if test="dpclGxfs != null and dpclGxfs != ''"> and DPCL_GXFS = #{dpclGxfs} </if>
+		  		  <if test="jqcjdpclxgyyBz != null and jqcjdpclxgyyBz != ''"> and JQCJDPCLXGYY_BZ = #{jqcjdpclxgyyBz} </if>
+		  		  <if test="jqcjdpclztgxBz != null and jqcjdpclztgxBz != ''"> and JQCJDPCLZTGX_BZ = #{jqcjdpclztgxBz} </if>
+		  		  <if test="jqcjdpclztlbdm != null and jqcjdpclztlbdm != ''"> and JQCJDPCLZTLBDM = #{jqcjdpclztlbdm} </if>
+		  		  <if test="xfjyclTywysbm != null and xfjyclTywysbm != ''"> and XFJYCL_TYWYSBM = #{xfjyclTywysbm} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.webapi.domain.JqcjdpCarDO">
+		insert into jqxx_jqcjdp_car
+		(
+			`DPCL_TYWYSBM`, 
+			`DPDZ_TYWYSBM`, 
+			`JQCJDP_TYWYSBM`, 
+			`JQCJDPCL_DPSJ`, 
+			`DPCL_GGYJ`, 
+			`DPCL_GGZT`, 
+			`DPCL_GXFS`, 
+			`JQCJDPCLXGYY_BZ`, 
+			`JQCJDPCLZTGX_BZ`, 
+			`JQCJDPCLZTLBDM`, 
+			`XFJYCL_TYWYSBM`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{dpclTywysbm}, 
+			#{dpdzTywysbm}, 
+			#{jqcjdpTywysbm}, 
+			#{jqcjdpclDpsj}, 
+			#{dpclGgyj}, 
+			#{dpclGgzt}, 
+			#{dpclGxfs}, 
+			#{jqcjdpclxgyyBz}, 
+			#{jqcjdpclztgxBz}, 
+			#{jqcjdpclztlbdm}, 
+			#{xfjyclTywysbm}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.webapi.domain.JqcjdpCarDO">
+		update jqxx_jqcjdp_car 
+		<set>
+			<if test="dpdzTywysbm != null">`DPDZ_TYWYSBM` = #{dpdzTywysbm}, </if>
+			<if test="jqcjdpTywysbm != null">`JQCJDP_TYWYSBM` = #{jqcjdpTywysbm}, </if>
+			<if test="jqcjdpclDpsj != null">`JQCJDPCL_DPSJ` = #{jqcjdpclDpsj}, </if>
+			<if test="dpclGgyj != null">`DPCL_GGYJ` = #{dpclGgyj}, </if>
+			<if test="dpclGgzt != null">`DPCL_GGZT` = #{dpclGgzt}, </if>
+			<if test="dpclGxfs != null">`DPCL_GXFS` = #{dpclGxfs}, </if>
+			<if test="jqcjdpclxgyyBz != null">`JQCJDPCLXGYY_BZ` = #{jqcjdpclxgyyBz}, </if>
+			<if test="jqcjdpclztgxBz != null">`JQCJDPCLZTGX_BZ` = #{jqcjdpclztgxBz}, </if>
+			<if test="jqcjdpclztlbdm != null">`JQCJDPCLZTLBDM` = #{jqcjdpclztlbdm}, </if>
+			<if test="xfjyclTywysbm != null">`XFJYCL_TYWYSBM` = #{xfjyclTywysbm}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where DPCL_TYWYSBM = #{dpclTywysbm}
+	</update>
+
+	<delete id="remove">
+		delete from jqxx_jqcjdp_car where DPCL_TYWYSBM = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jqxx_jqcjdp_car where DPCL_TYWYSBM in 
+		<foreach item="dpclTywysbm" collection="array" open="(" separator="," close=")">
+			#{dpclTywysbm}
+		</foreach>
+	</delete>
+
+
+	<select id="dzclCount" resultType="java.util.HashMap">
+    SELECT DISTINCT
+    (select count(B.DPDZ_TYWYSBM)  FROM
+	jqxx_jqcjdp A,
+	jqxx_jqcjdp_dz B WHERE
+	A.JQCJDP_TYWYSBM = B.DP_TYWYSBM  AND  A.JQ_TYWYSBM=#{jqTywysbm} AND A.`status`='0' AND B.`status`='0'
+    ) AS ZDCOUNT,
+    (select count(C.DPCL_TYWYSBM)  FROM
+	jqxx_jqcjdp A,
+	jqxx_jqcjdp_car C WHERE
+	A.JQCJDP_TYWYSBM = C.JQCJDP_TYWYSBM  AND  A.JQ_TYWYSBM=#{jqTywysbm}  AND A.`status`='0' AND C.`status`='0'
+    ) AS CARCOUNT
+    FROM
+	jqxx_jqcjdp A
+	</select>
+
+</mapper>

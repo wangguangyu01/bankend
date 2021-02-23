@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.ZzdyDao">
+
+	<select id="get" resultType="com.smart119.jczy.domain.ZzdyDO">
+		select
+		jczy_zzdy.`ZZDY_TYWYBS`,
+		jczy_zzdy.`ZZDYMC`,
+		jczy_zzdy.`ZZDYLXDM`,
+		jczy_zzdy.`BZSL`,
+		jczy_zzdy.`ZZRW`,
+		jczy_zzdy.`cdate`,
+		jczy_zzdy.`status`,
+		jczy_zzdy.`cperson`,
+		jczy_zzdy.`XFJYJG_TYWYSBM`,
+		  dic.`name`  as zzdylxdmname ,
+	      dept.`DWMC`  as xfjyjgTywysbmname,
+	      GROUP_CONCAT( xfcl.XFCL_TYWYSBM ) XFCL_TYWYSBM
+		  from jczy_zzdy
+		  left join sys_dict dic on jczy_zzdy.ZZDYLXDM=dic.value and dic.type='ZZDYLXDM'
+		  left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
+		  LEFT JOIN jczy_zzdy_xfcl xfcl ON jczy_zzdy.ZZDY_TYWYBS = xfcl.ZZDY_TYWYBS
+		  where jczy_zzdy.ZZDY_TYWYBS = #{value}
+
+          GROUP BY  jczy_zzdy.ZZDY_TYWYBS
+
+	</select>
+
+	<select id="list" resultType="com.smart119.jczy.domain.ZzdyDO">
+		select
+		jczy_zzdy.`ZZDY_TYWYBS`,
+		jczy_zzdy.`ZZDYMC`,
+		jczy_zzdy.`ZZDYLXDM`,
+		jczy_zzdy.`BZSL`,
+		jczy_zzdy.`ZZRW`,
+		jczy_zzdy.`cdate`,
+		jczy_zzdy.`status`,
+		jczy_zzdy.`cperson`,
+		jczy_zzdy.`XFJYJG_TYWYSBM`,
+		  dic.`name`  as zzdylxdmname ,
+	      dept.`DWMC`  as xfjyjgTywysbmname
+		  from jczy_zzdy
+		  left join sys_dict dic on jczy_zzdy.ZZDYLXDM=dic.value and dic.type='ZZDYLXDM'
+		  left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
+        <where>  
+		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and jczy_zzdy.ZZDY_TYWYBS =${zzdyTywybs} </if>
+		  		  <if test="zzdymc != null and zzdymc != ''"> and jczy_zzdy.ZZDYMC like '%${zzdymc}%' </if>
+		  		  <if test="zzdylxdm != null and zzdylxdm != ''"> and jczy_zzdy.ZZDYLXDM = #{zzdylxdm} </if>
+		  		  <if test="bzsl != null and bzsl != ''"> and jczy_zzdy.BZSL = #{bzsl} </if>
+		  		  <if test="zzrw != null and zzrw != ''"> and jczy_zzdy.ZZRW = #{zzrw} </if>
+		  		  <if test="cdate != null and cdate != ''"> and jczy_zzdy.cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and jczy_zzdy.status = #{status} </if>
+                    <if test="deptList != null and deptList.size() > 0">and jczy_zzdy.XFJYJG_TYWYSBM in
+                        <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                            #{item.xfjyjgTywysbm}
+                        </foreach>
+                    </if>
+		  		  <if test="cperson != null and cperson != ''"> and jczy_zzdy.cperson = #{cperson} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by jczy_zzdy.ZZDY_TYWYBS desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_zzdy
+		 <where>  
+		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and ZZDY_TYWYBS = #{zzdyTywybs} </if>
+		  		  <if test="zzdymc != null and zzdymc != ''"> and ZZDYMC = #{zzdymc} </if>
+		  		  <if test="zzdylxdm != null and zzdylxdm != ''"> and ZZDYLXDM = #{zzdylxdm} </if>
+		  		  <if test="bzsl != null and bzsl != ''"> and BZSL = #{bzsl} </if>
+		  		  <if test="zzrw != null and zzrw != ''"> and ZZRW = #{zzrw} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+				  <if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+					 <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+						 #{item.xfjyjgTywysbm}
+					 </foreach>
+			      </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.jczy.domain.ZzdyDO">
+		insert into jczy_zzdy
+		(
+			`ZZDY_TYWYBS`, 
+			`ZZDYMC`, 
+			`ZZDYLXDM`, 
+			`BZSL`, 
+			`ZZRW`, 
+			`cdate`, 
+			`status`, 
+			`cperson`, 
+			`XFJYJG_TYWYSBM`
+		)
+		values
+		(
+			#{zzdyTywybs}, 
+			#{zzdymc}, 
+			#{zzdylxdm}, 
+			#{bzsl}, 
+			#{zzrw}, 
+			#{cdate}, 
+			#{status}, 
+			#{cperson}, 
+			#{xfjyjgTywysbm}
+		)
+	</insert>
+	<insert id="saveCL" parameterType="java.util.HashMap">
+		insert into jczy_zzdy_xfcl
+		(
+			`id`,
+			`ZZDY_TYWYBS`,
+			`XFJYJG_TYWYSBM`
+		)
+		values
+		(
+			#{id},
+			#{ZZDY_TYWYBS},
+			#{XFJYJG_TYWYSBM}
+		)
+	</insert>
+
+
+	<update id="update" parameterType="com.smart119.jczy.domain.ZzdyDO">
+		update jczy_zzdy 
+		<set>
+			<if test="zzdymc != null">`ZZDYMC` = #{zzdymc}, </if>
+			<if test="zzdylxdm != null">`ZZDYLXDM` = #{zzdylxdm}, </if>
+			<if test="bzsl != null">`BZSL` = #{bzsl}, </if>
+			<if test="zzrw != null">`ZZRW` = #{zzrw}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm}</if>
+		</set>
+		where ZZDY_TYWYBS = #{zzdyTywybs}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_zzdy where ZZDY_TYWYBS = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jczy_zzdy where ZZDY_TYWYBS in 
+		<foreach item="zzdyTywybs" collection="array" open="(" separator="," close=")">
+			#{zzdyTywybs}
+		</foreach>
+	</delete>
+
+	<select id="deptList"  resultType="com.smart119.system.domain.DeptDO">
+		SELECT dept.XFJYJG_TYWYSBM ,dept.DWMC ,dept.DQJD ,dept.DQWD
+		from jczy_zzdy zzdy
+		LEFT JOIN sys_dept dept
+		on dept.XFJYJG_TYWYSBM = zzdy.XFJYJG_TYWYSBM
+		<where>
+			<if test="zzdymc != null and zzdymc != ''"> and zzdy.ZZDYMC like '${zzdymc}' </if>
+			<if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and dept.XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		</where>
+		GROUP BY zzdy.XFJYJG_TYWYSBM
+	</select>
+
+    <select id="zzdyListByJg" resultType="java.util.HashMap" >
+        SELECT
+        zzdy.zzdymc ,
+        zzdy.ZZDY_TYWYBS as zzdyTywyds,
+        case when cjzzdy.JQCJDP_ZZDY_ID is null then 0 else 1 end  as sfyp,
+        (select case count(*) when 0 then 1 else 0 end as sfkycd
+        from jczy_xfcl xfcl
+        LEFT JOIN jczy_zzdy_xfcl cjcar
+        on cjcar.XFCL_TYWYSBM = xfcl.XFCL_TYWYSBM
+        where cjcar.ZZDY_TYWYBS = zzdy.ZZDY_TYWYBS
+        and xfcl.CLQWZTLBDM != 200
+        )as sfkp
+        from jczy_zzdy zzdy
+        LEFT JOIN jqxx_jqcjdp_zzdy cjzzdy
+        on zzdy.ZZDY_TYWYBS = cjzzdy.ZZDY_TYWYBS and cjzzdy.JQ_TYWYSBM=#{jqTywysbm}
+        where zzdy.XFJYJG_TYWYSBM=#{xfjyjgTywysbm}
+    </select>
+
+
+    <select id="xfclListByZzdy" resultType="java.util.HashMap" >
+        select
+		xfcl.XFCL_TYWYSBM as xfclTywysbm,
+		dict.`name` as xfzblx,
+		xfcl.XFZBLXDM as xfzblxdm,
+		xfcl.XFCLZZGNDM as xfclzzgndm,
+		xfcl.XFCLDJDM as xfcldjdm,
+		xfcl.XFJYJG_TYWYSBM as xfjyjgTywysbm,
+		xfcl.JDCHPHM as jdchphm,
+		xfcl.CLSBDH as clsbdh,
+		xfcl.DWSB_SIMKKH as dwsbSimkkh,
+		xfcl.GGXH as ggxh,
+		xfcl.CKJ_JE as ckjJe,
+		xfcl.SCCJ_DWMC as sccjDwmc,
+		xfcl.JDCCSYSLBDM as jddcsyslbdm,
+		xfcl.CLQWZTLBDM as clqwztlbdm,
+		xfcl.SFDYCDCL_TYWYSBM as sfdycdclTywysbm,
+		xfcl.BZ as bz,
+		xfcl.JDCFDJDDJH as jdcfdjddjh,
+		xfcl.ZZS_RJ as zzsRj,
+		xfcl.ZZALPM_RJ as zzalpmTj,
+		xfcl.ZZBLPM_RJ as zzblpmRj,
+		xfcl.CCRQ as ccrq,
+		xfcl.ZBRQ as zbrq,
+		xfcl.BFRQ as bfrq,
+		xfcl.SFZP_PDBZ as sfzp_pdbz,
+		xfcl.SFYYXL_PDBZ as sfyyxlPdbz,
+		xfcl.FZR_XM as fzrXm,
+		xfcl.FZR_LXDH as fzrLxdh,
+		xfcl.CLXNZB_JYQK as clxnzb_jyqk,
+		dept.DWMC as xfjyjg
+		from jczy_xfcl xfcl
+		LEFT JOIN jczy_zzdy_xfcl cjcar
+		on cjcar.XFCL_TYWYSBM = xfcl.XFCL_TYWYSBM
+		LEFT JOIN sys_dict dict
+		on dict.value = xfcl.xfzblxdm
+		LEFT JOIN sys_dept dept
+		on dept.XFJYJG_TYWYSBM = xfcl.XFJYJG_TYWYSBM
+        where cjcar.ZZDY_TYWYBS = #{value}
+        and dict.type='XFZBLXDM'
+    </select>
+
+	<select id="deptByXfjyjgTywysbm" resultType="com.smart119.system.domain.DeptDO">
+		SELECT dept.XFJYJG_TYWYSBM ,dept.DWMC ,dept.DQJD ,dept.DQWD
+		from sys_dept dept
+		where dept.XFJYJG_TYWYSBM = #{value}
+	</select>
+
+</mapper>

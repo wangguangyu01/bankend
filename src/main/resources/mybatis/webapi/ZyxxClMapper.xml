@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.ZyxxClDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.ZyxxClDO">
+		select `ID`,`JXXXZYBM`,`XFZBLXDM`,`ZYCOUNT` from jqxx_zyxx_cl where ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.ZyxxClDO">
+		select `ID`,`JXXXZYBM`,`XFZBLXDM`,`ZYCOUNT` from jqxx_zyxx_cl
+        <where>  
+		  		  <if test="id != null and id != ''"> and ID = #{id} </if>
+		  		  <if test="jxxxzybm != null and jxxxzybm != ''"> and JXXXZYBM = #{jxxxzybm} </if>
+		  		  <if test="xfzblxdm != null and xfzblxdm != ''"> and XFZBLXDM = #{xfzblxdm} </if>
+		  		  <if test="zycount != null and zycount != ''"> and ZYCOUNT = #{zycount} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	<select id="getList" parameterType="java.lang.String" resultType="java.util.Map">
+		select
+		cl.`ID`,
+		cl.`JXXXZYBM`,
+		cl.`XFZBLXDM`,
+		cl.`ZYCOUNT`,
+		dic.`name`
+		from jqxx_zyxx_cl cl
+		left  join sys_dict dic on cl.XFZBLXDM=dic.`value` and dic.type='XFZBLXDM'
+		where  cl.JXXXZYBM = #{jxxxzybm}
+
+	</select>
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_zyxx_cl
+		 <where>  
+		  		  <if test="id != null and id != ''"> and ID = #{id} </if>
+		  		  <if test="jxxxzybm != null and jxxxzybm != ''"> and JXXXZYBM = #{jxxxzybm} </if>
+		  		  <if test="xfzblxdm != null and xfzblxdm != ''"> and XFZBLXDM = #{xfzblxdm} </if>
+		  		  <if test="zycount != null and zycount != ''"> and ZYCOUNT = #{zycount} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.webapi.domain.ZyxxClDO">
+		insert into jqxx_zyxx_cl
+		(
+			`ID`, 
+			`JXXXZYBM`, 
+			`XFZBLXDM`, 
+			`ZYCOUNT`
+		)
+		values
+		(
+			#{id}, 
+			#{jxxxzybm}, 
+			#{xfzblxdm}, 
+			#{zycount}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.webapi.domain.ZyxxClDO">
+		update jqxx_zyxx_cl 
+		<set>
+			<if test="jxxxzybm != null">`JXXXZYBM` = #{jxxxzybm}, </if>
+			<if test="xfzblxdm != null">`XFZBLXDM` = #{xfzblxdm}, </if>
+			<if test="zycount != null">`ZYCOUNT` = #{zycount}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jqxx_zyxx_cl where ID = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jqxx_zyxx_cl where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

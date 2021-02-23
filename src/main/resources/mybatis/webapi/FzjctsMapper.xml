@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.FzjctsDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.FzjctsDO">
+		select `FZJCTS_ID`,`FZJC_ID`,`JQ_TYWYSBM`,`TSSJ`,`TSR`,`cdate`,`cperson`,`status` from jqxx_fzjcts where FZJCTS_ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.FzjctsDO">
+		select `FZJCTS_ID`,`FZJC_ID`,`JQ_TYWYSBM`,`TSSJ`,`TSR`,`cdate`,`cperson`,`status` from jqxx_fzjcts
+        <where>  
+		  		  <if test="fzjctsId != null and fzjctsId != ''"> and FZJCTS_ID = #{fzjctsId} </if>
+		  		  <if test="fzjcId != null and fzjcId != ''"> and FZJC_ID = #{fzjcId} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="tssj != null and tssj != ''"> and TSSJ = #{tssj} </if>
+		  		  <if test="tsr != null and tsr != ''"> and TSR = #{tsr} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by FZJCTS_ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_fzjcts
+		 <where>  
+		  		  <if test="fzjctsId != null and fzjctsId != ''"> and FZJCTS_ID = #{fzjctsId} </if>
+		  		  <if test="fzjcId != null and fzjcId != ''"> and FZJC_ID = #{fzjcId} </if>
+		  		  <if test="jqTywysbm != null and jqTywysbm != ''"> and JQ_TYWYSBM = #{jqTywysbm} </if>
+		  		  <if test="tssj != null and tssj != ''"> and TSSJ = #{tssj} </if>
+		  		  <if test="tsr != null and tsr != ''"> and TSR = #{tsr} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.webapi.domain.FzjctsDO">
+		insert into jqxx_fzjcts
+		(
+			`FZJCTS_ID`, 
+			`FZJC_ID`, 
+			`JQ_TYWYSBM`, 
+			`TSSJ`, 
+			`TSR`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{fzjctsId}, 
+			#{fzjcId}, 
+			#{jqTywysbm}, 
+			#{tssj}, 
+			#{tsr}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.webapi.domain.FzjctsDO">
+		update jqxx_fzjcts 
+		<set>
+			<if test="fzjcId != null">`FZJC_ID` = #{fzjcId}, </if>
+			<if test="jqTywysbm != null">`JQ_TYWYSBM` = #{jqTywysbm}, </if>
+			<if test="tssj != null">`TSSJ` = #{tssj}, </if>
+			<if test="tsr != null">`TSR` = #{tsr}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where FZJCTS_ID = #{fzjctsId}
+	</update>
+	
+	<delete id="remove">
+		delete from jqxx_fzjcts where FZJCTS_ID = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jqxx_fzjcts where FZJCTS_ID in 
+		<foreach item="fzjctsId" collection="array" open="(" separator="," close=")">
+			#{fzjctsId}
+		</foreach>
+	</delete>
+
+	<select id="getFzjcTslistByJqTywysbm" resultType="com.smart119.webapi.domain.FzjctsDO">
+		SELECT
+		f.FZJC_ID,f.BT,d.`name` FZJCLX,f.FZJCNR,ts.TSSJ
+		FROM
+		jqxx_fzjcts ts
+		LEFT JOIN jczy_fzjc f on f.FZJC_ID=ts.FZJC_ID
+		left join sys_dict d on f.FZJCLXDM=d.`value` and d.type='FZJCLXDM'
+		where ts.JQ_TYWYSBM=#{jqTywysbm}
+		order by ts.TSSJ desc
+	</select>
+
+</mapper>

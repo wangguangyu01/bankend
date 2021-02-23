@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.YjlddwDao">
+
+    <select id="get" resultType="com.smart119.jczy.domain.YjlddwDO">
+        SELECT
+        t.`YJLDDW_TYWYSBM`,
+        t.`DWMC`,
+        t.`DZMC`,
+        t.`YJLDDWLBDM`,
+        t.`CZHM`,
+        t.`YJFWNR_JYQK`,
+        t.`DW_JYQK`,
+        t.`LXR_XM`,
+        t.`LXR_LXDH`,
+        t.`DQJD`,
+        t.`DQWD`,
+        t.`XFJYJG_TYWYSBM`,
+        t.`XZQHDM`,
+        t.`cdate`,
+        t.`cperson`,
+        t.`status`,
+        dept.`dwmc` XFJYJG
+        FROM
+        jczy_yjlddw t
+        LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+        where t.YJLDDW_TYWYSBM = #{value}
+    </select>
+
+    <select id="list" resultType="com.smart119.jczy.domain.YjlddwDO">
+        SELECT
+        t.`YJLDDW_TYWYSBM`,
+        t.`DWMC`,
+        t.`DZMC`,
+        t.`YJLDDWLBDM`,
+        t.`CZHM`,
+        t.`YJFWNR_JYQK`,
+        t.`DW_JYQK`,
+        t.`LXR_XM`,
+        t.`LXR_LXDH`,
+        t.`DQJD`,
+        t.`DQWD`,
+        t.`XFJYJG_TYWYSBM`,
+        t.`XZQHDM`,
+        t.`cdate`,
+        t.`cperson`,
+        t.`status`,
+        d.`name` area,
+        d1.`name` city,
+        d2.`name` province,
+        dept.`dwmc` XFJYJG,
+        d3.`name` YJLDDWLB
+        FROM
+        jczy_yjlddw t
+        LEFT JOIN sys_dict d ON t.XZQHDM = d.`value`
+        LEFT JOIN sys_dict d1 ON d1.id = d.parent_id
+        LEFT JOIN sys_dict d2 ON d2.id = d1.parent_id
+        LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+        left join sys_dict d3 on d3.`value`=t.YJLDDWLBDM and d3.parent_id=(SELECT `id` from `sys_dict` where type='YJLDDWLBDM' and parent_id='0')
+        where t.`status`=0
+
+            <if test="yjlddwTywysbm != null and yjlddwTywysbm != ''">and t.YJLDDW_TYWYSBM = #{yjlddwTywysbm}</if>
+            <if test="dwmc != null and dwmc != ''">and t.DWMC like '%${dwmc}%'</if>
+            <if test="dzmc != null and dzmc != ''">and t.DZMC = #{dzmc}</if>
+            <if test="yjlddwlbdm != null and yjlddwlbdm != ''">and t.YJLDDWLBDM = #{yjlddwlbdm}</if>
+            <if test="czhm != null and czhm != ''">and t.CZHM = #{czhm}</if>
+            <if test="yjfwnrJyqk != null and yjfwnrJyqk != ''">and t.YJFWNR_JYQK = #{yjfwnrJyqk}</if>
+            <if test="dwJyqk != null and dwJyqk != ''">and t.DW_JYQK = #{dwJyqk}</if>
+            <if test="lxrXm != null and lxrXm != ''">and t.LXR_XM = #{lxrXm}</if>
+            <if test="lxrLxdh != null and lxrLxdh != ''">and t.LXR_LXDH = #{lxrLxdh}</if>
+            <if test="dqjd != null and dqjd != ''">and t.DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and t.DQWD = #{dqwd}</if>
+            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and t.XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+            <if test="deptList != null and deptList.size() > 0">and t.XFJYJG_TYWYSBM in
+                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.xfjyjgTywysbm}
+                </foreach>
+            </if>
+            <if test="xzqhdm != null and xzqhdm != ''">and t.XZQHDM = #{xzqhdm}</if>
+            <if test="cdate != null and cdate != ''">and t.cdate = #{cdate}</if>
+            <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
+            <if test="status != null and status != ''">and t.status = #{status}</if>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by t.cdate desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from jczy_yjlddw where status=0
+            <if test="yjlddwTywysbm != null and yjlddwTywysbm != ''">and YJLDDW_TYWYSBM = #{yjlddwTywysbm}</if>
+            <if test="dwmc != null and dwmc != ''">and DWMC like '%${dwmc}%'</if>
+            <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
+            <if test="yjlddwlbdm != null and yjlddwlbdm != ''">and YJLDDWLBDM = #{yjlddwlbdm}</if>
+            <if test="czhm != null and czhm != ''">and CZHM = #{czhm}</if>
+            <if test="yjfwnrJyqk != null and yjfwnrJyqk != ''">and YJFWNR_JYQK = #{yjfwnrJyqk}</if>
+            <if test="dwJyqk != null and dwJyqk != ''">and DW_JYQK = #{dwJyqk}</if>
+            <if test="lxrXm != null and lxrXm != ''">and LXR_XM = #{lxrXm}</if>
+            <if test="lxrLxdh != null and lxrLxdh != ''">and LXR_LXDH = #{lxrLxdh}</if>
+            <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
+            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+            <if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.xfjyjgTywysbm}
+                </foreach>
+            </if>
+            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+    </select>
+
+    <insert id="save" parameterType="com.smart119.jczy.domain.YjlddwDO">
+		insert into jczy_yjlddw
+		(
+			`YJLDDW_TYWYSBM`, 
+			`DWMC`, 
+			`DZMC`, 
+			`YJLDDWLBDM`, 
+			`CZHM`, 
+			`YJFWNR_JYQK`, 
+			`DW_JYQK`, 
+			`LXR_XM`, 
+			`LXR_LXDH`, 
+			`DQJD`, 
+			`DQWD`, 
+			`XFJYJG_TYWYSBM`, 
+			`XZQHDM`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{yjlddwTywysbm}, 
+			#{dwmc}, 
+			#{dzmc}, 
+			#{yjlddwlbdm}, 
+			#{czhm}, 
+			#{yjfwnrJyqk}, 
+			#{dwJyqk}, 
+			#{lxrXm}, 
+			#{lxrLxdh}, 
+			#{dqjd}, 
+			#{dqwd}, 
+			#{xfjyjgTywysbm}, 
+			#{xzqhdm}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.smart119.jczy.domain.YjlddwDO">
+        update jczy_yjlddw
+        <set>
+            <if test="dwmc != null">`DWMC` = #{dwmc},</if>
+            <if test="dzmc != null">`DZMC` = #{dzmc},</if>
+            <if test="yjlddwlbdm != null">`YJLDDWLBDM` = #{yjlddwlbdm},</if>
+            <if test="czhm != null">`CZHM` = #{czhm},</if>
+            <if test="yjfwnrJyqk != null">`YJFWNR_JYQK` = #{yjfwnrJyqk},</if>
+            <if test="dwJyqk != null">`DW_JYQK` = #{dwJyqk},</if>
+            <if test="lxrXm != null">`LXR_XM` = #{lxrXm},</if>
+            <if test="lxrLxdh != null">`LXR_LXDH` = #{lxrLxdh},</if>
+            <if test="dqjd != null">`DQJD` = #{dqjd},</if>
+            <if test="dqwd != null">`DQWD` = #{dqwd},</if>
+            <if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm},</if>
+            <if test="xzqhdm != null">`XZQHDM` = #{xzqhdm},</if>
+            <if test="cdate != null">`cdate` = #{cdate},</if>
+            <if test="cperson != null">`cperson` = #{cperson},</if>
+            <if test="status != null">`status` = #{status}</if>
+        </set>
+        where YJLDDW_TYWYSBM = #{yjlddwTywysbm}
+    </update>
+
+    <delete id="remove">
+		delete from jczy_yjlddw where YJLDDW_TYWYSBM = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from jczy_yjlddw where YJLDDW_TYWYSBM in
+        <foreach item="yjlddwTywysbm" collection="array" open="(" separator="," close=")">
+            #{yjlddwTywysbm}
+        </foreach>
+    </delete>
+
+</mapper>

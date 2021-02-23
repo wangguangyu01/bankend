@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.XfrycdxxDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.XfrycdxxDO">
+		select `XFRY_CDDM`,`XFJG_CDDM`,`RYLB`,`XFJYRY_TYWYSBM`,`XFCL_TYWYSBM`,`created_dt`,`parent_id`,`detachment_id` from jqxx_xfrycdxx where XFRY_CDDM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.XfrycdxxDO">
+		select `XFRY_CDDM`,`XFJG_CDDM`,`RYLB`,`XFJYRY_TYWYSBM`,`XFCL_TYWYSBM`,`created_dt`,`parent_id`,`detachment_id` from jqxx_xfrycdxx
+        <where>  
+		  		  <if test="xfryCddm != null and xfryCddm != ''"> and XFRY_CDDM = #{xfryCddm} </if>
+		  		  <if test="xfjgCddm != null and xfjgCddm != ''"> and XFJG_CDDM = #{xfjgCddm} </if>
+		  		  <if test="rylb != null and rylb != ''"> and RYLB = #{rylb} </if>
+		  		  <if test="xfjyryTywysbm != null and xfjyryTywysbm != ''"> and XFJYRY_TYWYSBM = #{xfjyryTywysbm} </if>
+		  		  <if test="xfclTywysbm != null and xfclTywysbm != ''"> and XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		  		  <if test="createdDt != null and createdDt != ''"> and created_dt = #{createdDt} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
+		  		  <if test="detachmentId != null and detachmentId != ''"> and detachment_id = #{detachmentId} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by XFRY_CDDM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_xfrycdxx
+		 <where>  
+		  		  <if test="xfryCddm != null and xfryCddm != ''"> and XFRY_CDDM = #{xfryCddm} </if>
+		  		  <if test="xfjgCddm != null and xfjgCddm != ''"> and XFJG_CDDM = #{xfjgCddm} </if>
+		  		  <if test="rylb != null and rylb != ''"> and RYLB = #{rylb} </if>
+		  		  <if test="xfjyryTywysbm != null and xfjyryTywysbm != ''"> and XFJYRY_TYWYSBM = #{xfjyryTywysbm} </if>
+		  		  <if test="xfclTywysbm != null and xfclTywysbm != ''"> and XFCL_TYWYSBM = #{xfclTywysbm} </if>
+		  		  <if test="createdDt != null and createdDt != ''"> and created_dt = #{createdDt} </if>
+		  		  <if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
+		  		  <if test="detachmentId != null and detachmentId != ''"> and detachment_id = #{detachmentId} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.webapi.domain.XfrycdxxDO">
+		insert into jqxx_xfrycdxx
+		(
+			`XFRY_CDDM`, 
+			`XFJG_CDDM`, 
+			`RYLB`, 
+			`XFJYRY_TYWYSBM`, 
+			`XFCL_TYWYSBM`, 
+			`created_dt`, 
+			`parent_id`, 
+			`detachment_id`
+		)
+		values
+		(
+			#{xfryCddm}, 
+			#{xfjgCddm}, 
+			#{rylb}, 
+			#{xfjyryTywysbm}, 
+			#{xfclTywysbm}, 
+			#{createdDt}, 
+			#{parentId}, 
+			#{detachmentId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.webapi.domain.XfrycdxxDO">
+		update jqxx_xfrycdxx 
+		<set>
+			<if test="xfjgCddm != null">`XFJG_CDDM` = #{xfjgCddm}, </if>
+			<if test="rylb != null">`RYLB` = #{rylb}, </if>
+			<if test="xfjyryTywysbm != null">`XFJYRY_TYWYSBM` = #{xfjyryTywysbm}, </if>
+			<if test="xfclTywysbm != null">`XFCL_TYWYSBM` = #{xfclTywysbm}, </if>
+			<if test="createdDt != null">`created_dt` = #{createdDt}, </if>
+			<if test="parentId != null">`parent_id` = #{parentId}, </if>
+			<if test="detachmentId != null">`detachment_id` = #{detachmentId}</if>
+		</set>
+		where XFRY_CDDM = #{xfryCddm}
+	</update>
+	
+	<delete id="remove">
+		delete from jqxx_xfrycdxx where XFRY_CDDM = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jqxx_xfrycdxx where XFRY_CDDM in 
+		<foreach item="xfryCddm" collection="array" open="(" separator="," close=")">
+			#{xfryCddm}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.JqcjdpDzDao">
+
+	<select id="get" resultType="com.smart119.webapi.domain.JqcjdpDzDO">
+		select `DPDZ_TYWYSBM`,`DP_TYWYSBM`,`XFJYJG_TYWYSBM`,`XFJYJGJL`,`XFJYJGJSJJ`,`XFJYJGJSZT`,`XFJYJGTJHLDSL`,`XFJYJGYJDCSJ`,`cperson`,`cdate`,`status` from jqxx_jqcjdp_dz where DPDZ_TYWYSBM = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.webapi.domain.JqcjdpDzDO">
+		select `DPDZ_TYWYSBM`,`DP_TYWYSBM`,`XFJYJG_TYWYSBM`,`XFJYJGJL`,`XFJYJGJSJJ`,`XFJYJGJSZT`,`XFJYJGTJHLDSL`,`XFJYJGYJDCSJ`,`cperson`,`cdate`,`status` from jqxx_jqcjdp_dz
+        <where>
+		  		  <if test="dpdzTywysbm != null and dpdzTywysbm != ''"> and DPDZ_TYWYSBM = #{dpdzTywysbm} </if>
+		  		  <if test="dpTywysbm != null and dpTywysbm != ''"> and DP_TYWYSBM = #{dpTywysbm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		  		  <if test="xfjyjgjl != null and xfjyjgjl != ''"> and XFJYJGJL = #{xfjyjgjl} </if>
+		  		  <if test="xfjyjgjsjj != null and xfjyjgjsjj != ''"> and XFJYJGJSJJ = #{xfjyjgjsjj} </if>
+		  		  <if test="xfjyjgjszt != null and xfjyjgjszt != ''"> and XFJYJGJSZT = #{xfjyjgjszt} </if>
+		  		  <if test="xfjyjgtjhldsl != null and xfjyjgtjhldsl != ''"> and XFJYJGTJHLDSL = #{xfjyjgtjhldsl} </if>
+		  		  <if test="xfjyjgyjdcsj != null and xfjyjgyjdcsj != ''"> and XFJYJGYJDCSJ = #{xfjyjgyjdcsj} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by DPDZ_TYWYSBM desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<select id="count" resultType="int">
+		select count(*) from jqxx_jqcjdp_dz
+		 <where>
+		  		  <if test="dpdzTywysbm != null and dpdzTywysbm != ''"> and DPDZ_TYWYSBM = #{dpdzTywysbm} </if>
+		  		  <if test="dpTywysbm != null and dpTywysbm != ''"> and DP_TYWYSBM = #{dpTywysbm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		  		  <if test="xfjyjgjl != null and xfjyjgjl != ''"> and XFJYJGJL = #{xfjyjgjl} </if>
+		  		  <if test="xfjyjgjsjj != null and xfjyjgjsjj != ''"> and XFJYJGJSJJ = #{xfjyjgjsjj} </if>
+		  		  <if test="xfjyjgjszt != null and xfjyjgjszt != ''"> and XFJYJGJSZT = #{xfjyjgjszt} </if>
+		  		  <if test="xfjyjgtjhldsl != null and xfjyjgtjhldsl != ''"> and XFJYJGTJHLDSL = #{xfjyjgtjhldsl} </if>
+		  		  <if test="xfjyjgyjdcsj != null and xfjyjgyjdcsj != ''"> and XFJYJGYJDCSJ = #{xfjyjgyjdcsj} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+
+	<insert id="save" parameterType="com.smart119.webapi.domain.JqcjdpDzDO">
+		insert into jqxx_jqcjdp_dz
+		(
+			`DPDZ_TYWYSBM`,
+			`DP_TYWYSBM`,
+			`XFJYJG_TYWYSBM`,
+			`XFJYJGJL`,
+			`XFJYJGJSJJ`,
+			`XFJYJGJSZT`,
+			`XFJYJGTJHLDSL`,
+			`XFJYJGYJDCSJ`,
+			`cperson`,
+			`cdate`,
+			`status`
+		)
+		values
+		(
+			#{dpdzTywysbm},
+			#{dpTywysbm},
+			#{xfjyjgTywysbm},
+			#{xfjyjgjl},
+			#{xfjyjgjsjj},
+			#{xfjyjgjszt},
+			#{xfjyjgtjhldsl},
+			#{xfjyjgyjdcsj},
+			#{cperson},
+			#{cdate},
+			#{status}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.smart119.webapi.domain.JqcjdpDzDO">
+		update jqxx_jqcjdp_dz
+		<set>
+			<if test="dpTywysbm != null">`DP_TYWYSBM` = #{dpTywysbm}, </if>
+			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm}, </if>
+			<if test="xfjyjgjl != null">`XFJYJGJL` = #{xfjyjgjl}, </if>
+			<if test="xfjyjgjsjj != null">`XFJYJGJSJJ` = #{xfjyjgjsjj}, </if>
+			<if test="xfjyjgjszt != null">`XFJYJGJSZT` = #{xfjyjgjszt}, </if>
+			<if test="xfjyjgtjhldsl != null">`XFJYJGTJHLDSL` = #{xfjyjgtjhldsl}, </if>
+			<if test="xfjyjgyjdcsj != null">`XFJYJGYJDCSJ` = #{xfjyjgyjdcsj}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where DPDZ_TYWYSBM = #{dpdzTywysbm}
+	</update>
+
+	<delete id="remove">
+		delete from jqxx_jqcjdp_dz where DPDZ_TYWYSBM = #{value}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from jqxx_jqcjdp_dz where DPDZ_TYWYSBM in
+		<foreach item="dpdzTywysbm" collection="array" open="(" separator="," close=")">
+			#{dpdzTywysbm}
+		</foreach>
+	</delete>
+
+	<select id="getDzNameGroup"  parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT
+		GROUP_CONCAT(dz.DWJC)  as dwjc
+		FROM
+		sys_dept dz
+		WHERE
+		dz.XFJYJG_TYWYSBM IN (${dzid})
+	</select>
+
+	<select id="getDzCarListByJdId" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT
+	dz.*,
+	dept.DWMC,
+	dept.DWJC,
+	t.JDCHPHM,
+	d.`name` XFZBLX,car.XFJYCL_TYWYSBM
+FROM
+	jqxx_jqcjdp_dz dz
+	LEFT JOIN jqxx_jqcjdp dp on dp.JQCJDP_TYWYSBM=dz.DP_TYWYSBM
+	LEFT JOIN jqxx_jqcjdp_car car ON car.DPDZ_TYWYSBM = dz.DPDZ_TYWYSBM
+	LEFT JOIN jczy_xfcl t ON t.XFCL_TYWYSBM = car.XFJYCL_TYWYSBM
+	LEFT JOIN sys_dept dept ON dept.XFJYJG_TYWYSBM = dz.XFJYJG_TYWYSBM
+	LEFT JOIN sys_dict d ON t.XFZBLXDM = d.`value`
+	AND d.description = '消防装备器材分类与代码'
+WHERE
+	t.STATUS =0 and dp.JQ_TYWYSBM=#{value}
+	</select>
+
+	<select id="getDzListByDzId" parameterType="java.lang.String" resultType="java.util.Map">
+		select * from sys_dept i where i.XFJYJG_TYWYSBM in (${value});
+	</select>
+</mapper>
