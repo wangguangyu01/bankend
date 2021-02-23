@@ -1,6 +1,8 @@
 package com.smart119.jczy.controller;
 
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.service.AttachmentService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 
@@ -36,6 +39,9 @@ public class XfclController extends BaseController{
 
 	@Autowired
 	private DeptService deptService;
+
+	@Autowired
+	private AttachmentService attachmentService;
 
 	@GetMapping()
 	@RequiresPermissions("jczy:xfcl:xfcl")
@@ -94,6 +100,11 @@ public class XfclController extends BaseController{
 	@RequiresPermissions("jczy:xfcl:edit")
 	String edit(@PathVariable("xfclTywysbm") String xfclTywysbm,Model model){
 		XfclDO xfcl = xfclService.get(xfclTywysbm);
+		Map m = new HashMap();
+		m.put("fid",xfcl.getXfclTywysbm());
+		m.put("fType","xfcl");
+		List<AttachmentDO> attachmentDOList = attachmentService.list(m);
+		model.addAttribute("attachmentDOList", attachmentDOList);
 		model.addAttribute("xfcl", xfcl);
 	    return "jczy/xfcl/edit";
 	}
@@ -110,12 +121,15 @@ public class XfclController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfcl:add")
-	public String save( XfclDO xfcl){
+	public String save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfclDO xfcl){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfcl.setXfclTywysbm(id);
 		xfcl.setCdate(new Date());
 		xfcl.setCperson(getUserId()+"");
 		xfcl.setStatus(0);
+		if(files!=null && files.length>0) {
+			attachmentService.ftpUpload(files, id, "xfcl");
+		}
 		if(xfclService.save(xfcl)>0){
 			return id;
 		}

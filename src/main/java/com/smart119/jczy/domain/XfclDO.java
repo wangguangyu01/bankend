@@ -1,6 +1,7 @@
 package com.smart119.jczy.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -10,14 +11,14 @@ import java.util.List;
 
 /**
  * 消防车辆基本信息
- * 
+ *
  * @author liangsl
  * @email 1992lcg@163.com
  * @date 2021-01-15 11:28:42
  */
 public class XfclDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//消防车辆_通用唯一识别码
 	private String xfclTywysbm;
 	//消防装备器材分类与代码
@@ -102,7 +103,57 @@ public class XfclDO implements Serializable {
 	//0 未调派 1已调派
 	private int dpFlag;
 
+	//车辆名称
+	private String clmc;
+	//长度
+	private Double cd;
+	//宽度
+	private Double kd;
+	//高度
+	private Double gd;
+	//重量
+	private Double zl;
 
+
+	public Double getGd() {
+		return gd;
+	}
+
+	public void setGd(Double gd) {
+		this.gd = gd;
+	}
+
+	public String getClmc() {
+		return clmc;
+	}
+
+	public void setClmc(String clmc) {
+		this.clmc = clmc;
+	}
+
+	public Double getCd() {
+		return cd;
+	}
+
+	public void setCd(Double cd) {
+		this.cd = cd;
+	}
+
+	public Double getKd() {
+		return kd;
+	}
+
+	public void setKd(Double kd) {
+		this.kd = kd;
+	}
+
+	public Double getZl() {
+		return zl;
+	}
+
+	public void setZl(Double zl) {
+		this.zl = zl;
+	}
 
 	/**
 	 * 设置：消防车辆_通用唯一识别码

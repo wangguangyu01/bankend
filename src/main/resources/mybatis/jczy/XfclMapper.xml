@@ -6,6 +6,11 @@
 	<select id="get" resultType="com.smart119.jczy.domain.XfclDO">
 		SELECT
 			t.`XFCL_TYWYSBM`,
+			t.`CLMC`,
+            t.`CD`,
+            t.`KD`,
+            t.`ZL`,
+            t.`GD`,
 			t.`XFZBLXDM`,
 			t.`XFCLZZGNDM`,
 			t.`XFCLDJDM`,
@@ -35,6 +40,10 @@
 			t.`cdate`,
 			t.`cperson`,
 			t.`status`,
+			t.`CLMC`,
+			t.`CD`,
+			t.`KD`,
+			t.`ZL`,
 			dept.`dwmc` XFJYJG,
 			d.`name` XFZBLX,
 			d1.`name` CLQWZTLB
@@ -50,6 +59,11 @@
 	<select id="list" resultType="com.smart119.jczy.domain.XfclDO">
 		SELECT
 		t.`XFCL_TYWYSBM`,
+		t.`CLMC`,
+		t.`CD`,
+		t.`KD`,
+		t.`ZL`,
+		t.`GD`,
 		t.`XFZBLXDM`,
 		t.`XFCLZZGNDM`,
 		t.`XFCLDJDM`,
@@ -127,6 +141,7 @@
 		  		  <if test="cdate != null and cdate != ''"> and t.cdate = #{cdate} </if>
 		  		  <if test="cperson != null and cperson != ''"> and t.cperson = #{cperson} </if>
 		  		  <if test="status != null and status != ''"> and t.status = #{status} </if>
+		          <if test="clmc != null and clmc != ''"> and t.CLMC = #{clmc} </if>
 		          <if test="xfzblxdmname != null and xfzblxdmname != ''"> and d.name like '%${xfzblxdmname}%' </if>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -143,6 +158,11 @@
 	<select id="carlist" resultType="com.smart119.jczy.domain.XfclDO">
 		SELECT
 		t.`XFCL_TYWYSBM`,
+		t.`CLMC`,
+		t.`CD`,
+		t.`KD`,
+		t.`ZL`,
+		t.`GD`,
 		t.`XFZBLXDM`,
 		t.`XFCLZZGNDM`,
 		t.`XFCLDJDM`,
@@ -220,6 +240,7 @@
 		<if test="cdate != null and cdate != ''"> and t.cdate = #{cdate} </if>
 		<if test="cperson != null and cperson != ''"> and t.cperson = #{cperson} </if>
 		<if test="status != null and status != ''"> and t.status = #{status} </if>
+		<if test="clmc != null and clmc != ''"> and t.CLMC = #{clmc} </if>
 		<if test="xfzblxdmname != null and xfzblxdmname != ''"> and d.name like '%${xfzblxdmname}%' </if>
 		<choose>
 			<when test="sort != null and sort.trim() != ''">
@@ -269,6 +290,7 @@
 		  		  <if test="clxnzbJyqk != null and clxnzbJyqk != ''"> and CLXNZB_JYQK = #{clxnzbJyqk} </if>
 		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
 		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		<if test="clmc != null and clmc != ''"> and t.CLMC = #{clmc} </if>
 		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 	</select>
 	<select id="carlistcount" resultType="int">
@@ -312,74 +334,84 @@
 	<insert id="save" parameterType="com.smart119.jczy.domain.XfclDO">
 		insert into jczy_xfcl
 		(
-			`XFCL_TYWYSBM`, 
-			`XFZBLXDM`, 
-			`XFCLZZGNDM`, 
-			`XFCLDJDM`, 
-			`XFJYJG_TYWYSBM`, 
-			`JDCHPHM`, 
-			`CLSBDH`, 
-			`DWSB_SIMKKH`, 
-			`GGXH`, 
-			`CKJ_JE`, 
-			`SCCJ_DWMC`, 
-			`JDCCSYSLBDM`, 
-			`CLQWZTLBDM`, 
-			`SFDYCDCL_TYWYSBM`, 
-			`BZ`, 
-			`JDCFDJDDJH`, 
-			`ZZS_RJ`, 
-			`ZZALPM_RJ`, 
-			`ZZBLPM_RJ`, 
-			`CCRQ`, 
-			`ZBRQ`, 
-			`BFRQ`, 
-			`SFZP_PDBZ`, 
-			`SFYYXL_PDBZ`, 
-			`FZR_XM`, 
-			`FZR_LXDH`, 
-			`CLXNZB_JYQK`, 
-			`cdate`, 
-			`cperson`, 
-			`status`
+			`XFCL_TYWYSBM`,
+			`XFZBLXDM`,
+			`XFCLZZGNDM`,
+			`XFCLDJDM`,
+			`XFJYJG_TYWYSBM`,
+			`JDCHPHM`,
+			`CLSBDH`,
+			`DWSB_SIMKKH`,
+			`GGXH`,
+			`CKJ_JE`,
+			`SCCJ_DWMC`,
+			`JDCCSYSLBDM`,
+			`CLQWZTLBDM`,
+			`SFDYCDCL_TYWYSBM`,
+			`BZ`,
+			`JDCFDJDDJH`,
+			`ZZS_RJ`,
+			`ZZALPM_RJ`,
+			`ZZBLPM_RJ`,
+			`CCRQ`,
+			`ZBRQ`,
+			`BFRQ`,
+			`SFZP_PDBZ`,
+			`SFYYXL_PDBZ`,
+			`FZR_XM`,
+			`FZR_LXDH`,
+			`CLXNZB_JYQK`,
+			`cdate`,
+			`cperson`,
+			`status`,
+			`CLMC`,
+			`CD`,
+			`KD`,
+			`ZL`,
+			`GD`
 		)
 		values
 		(
-			#{xfclTywysbm}, 
-			#{xfzblxdm}, 
-			#{xfclzzgndm}, 
-			#{xfcldjdm}, 
-			#{xfjyjgTywysbm}, 
-			#{jdchphm}, 
-			#{clsbdh}, 
-			#{dwsbSimkkh}, 
-			#{ggxh}, 
-			#{ckjJe}, 
-			#{sccjDwmc}, 
-			#{jdccsyslbdm}, 
-			#{clqwztlbdm}, 
-			#{sfdycdclTywysbm}, 
-			#{bz}, 
-			#{jdcfdjddjh}, 
-			#{zzsRj}, 
-			#{zzalpmRj}, 
-			#{zzblpmRj}, 
-			#{ccrq}, 
-			#{zbrq}, 
-			#{bfrq}, 
-			#{sfzpPdbz}, 
-			#{sfyyxlPdbz}, 
-			#{fzrXm}, 
-			#{fzrLxdh}, 
-			#{clxnzbJyqk}, 
-			#{cdate}, 
-			#{cperson}, 
-			#{status}
+			#{xfclTywysbm},
+			#{xfzblxdm},
+			#{xfclzzgndm},
+			#{xfcldjdm},
+			#{xfjyjgTywysbm},
+			#{jdchphm},
+			#{clsbdh},
+			#{dwsbSimkkh},
+			#{ggxh},
+			#{ckjJe},
+			#{sccjDwmc},
+			#{jdccsyslbdm},
+			#{clqwztlbdm},
+			#{sfdycdclTywysbm},
+			#{bz},
+			#{jdcfdjddjh},
+			#{zzsRj},
+			#{zzalpmRj},
+			#{zzblpmRj},
+			#{ccrq},
+			#{zbrq},
+			#{bfrq},
+			#{sfzpPdbz},
+			#{sfyyxlPdbz},
+			#{fzrXm},
+			#{fzrLxdh},
+			#{clxnzbJyqk},
+			#{cdate},
+			#{cperson},
+			#{status},
+			#{clmc},
+			#{cd},
+			#{kd},
+			#{zl},
+			#{gd}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.smart119.jczy.domain.XfclDO">
-		update jczy_xfcl 
+		update jczy_xfcl
 		<set>
 			<if test="xfzblxdm != null">`XFZBLXDM` = #{xfzblxdm}, </if>
 			<if test="xfclzzgndm != null">`XFCLZZGNDM` = #{xfclzzgndm}, </if>
@@ -413,17 +445,22 @@
 			<if test="clxnzbJyqk != null">`CLXNZB_JYQK` = #{clxnzbJyqk}, </if>
 			<if test="cdate != null">`cdate` = #{cdate}, </if>
 			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="clmc != null">`CLMC` = #{clmc}, </if>
+			<if test="cd != null">`CD` = #{cd}, </if>
+			<if test="kd != null">`KD` = #{kd}, </if>
+			<if test="zl != null">`ZL` = #{zl}, </if>
+			<if test="gd != null">`GD` = #{gd}, </if>
 			<if test="status != null">`status` = #{status}</if>
 		</set>
 		where XFCL_TYWYSBM = #{xfclTywysbm}
 	</update>
-	
+
 	<delete id="remove">
 		delete from jczy_xfcl where XFCL_TYWYSBM = #{value}
 	</delete>
-	
+
 	<delete id="batchRemove">
-		delete from jczy_xfcl where XFCL_TYWYSBM in 
+		delete from jczy_xfcl where XFCL_TYWYSBM in
 		<foreach item="xfclTywysbm" collection="array" open="(" separator="," close=")">
 			#{xfclTywysbm}
 		</foreach>

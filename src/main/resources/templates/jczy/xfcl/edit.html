@@ -64,9 +64,13 @@
                         <input id="jdccsyslbdmVal" th:value="${xfcl.jdccsyslbdm}" type="hidden">
 
                         <div class="form-group">
+                            <input type="hidden" id="childAttr" value="yes" class="xfzblxdm"/>
+                            <label class="col-sm-2 control-label">车辆名称：</label>
+                            <div class="col-sm-2">
+                                <input id="clmc" name="clmc" th:value="${xfcl.clmc}" class="form-control" type="text">
+                            </div>
                             <label class="col-sm-2 control-label">消防装备器材分类：</label>
                             <div class="col-sm-2">
-                                <input type="hidden" id="childAttr" value="yes" class="xfzblxdm"/>
                                 <div class="XFZBLXDM-DIV dropdown">
                                     <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-white"  style="width: 100%;text-align: left;"><span id="xfzblxdm-title" th:text="${xfcl.xfzblx}">--请选择--</span> <span class="caret pull-right" style="position: relative;top: 10px;"></span></a>
                                 </div>
@@ -75,12 +79,6 @@
                             <label class="col-sm-2 control-label">消防车辆作战功能：</label>
                             <div class="col-sm-2">
                                 <select class="form-control" id="xfclzzgndm" name="xfclzzgndm" title="请选择消防车辆作战功能" required>
-                                    <option value="">--请选择--</option>
-                                </select>
-                            </div>
-                            <label class="col-sm-2 control-label">消防车辆等级：</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="xfcldjdm" name="xfcldjdm" title="请选择消防车辆等级" required>
                                     <option value="">--请选择--</option>
                                 </select>
                             </div>
@@ -107,13 +105,29 @@
                             <div class="col-sm-2">
                                 <input id="dwsbSimkkh" name="dwsbSimkkh" class="form-control" type="text" th:value="${xfcl.dwsbSimkkh}">
                             </div>
-                            <label class="col-sm-2 control-label">规格型号：</label>
+                            <label class="col-sm-2 control-label">消防车辆等级：</label>
                             <div class="col-sm-2">
-                                <input id="ggxh" name="ggxh" class="form-control" type="text" th:value="${xfcl.ggxh}">
+                                <select class="form-control" id="xfcldjdm" name="xfcldjdm" title="请选择消防车辆等级" required>
+                                    <option value="">--请选择--</option>
+                                </select>
                             </div>
                             <label class="col-sm-2 control-label">机动车发动机（电动机）号：</label>
                             <div class="col-sm-2">
                                 <input id="jdcfdjddjh" name="jdcfdjddjh" class="form-control" type="text" th:value="${xfcl.jdcfdjddjh}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">长度：</label>
+                            <div class="col-sm-2">
+                                <input id="cd" name="cd" class="form-control"  th:value="${xfcl.cd}" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">宽度：</label>
+                            <div class="col-sm-2">
+                                <input id="kd" name="kd" class="form-control"  th:value="${xfcl.kd}" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">高度：</label>
+                            <div class="col-sm-2">
+                                <input id="gd" name="gd" class="form-control" th:value="${xfcl.gd}" type="number" min="0">
                             </div>
                         </div>
                         <div class="form-group">
@@ -162,6 +176,16 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="sfyyxlPdbz" value="1" th:checked="${xfcl.sfyyxlPdbz=='1'}"/> 否
                                 </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">规格型号：</label>
+                            <div class="col-sm-2">
+                                <input id="ggxh" name="ggxh"   th:value="${xfcl.ggxh}" type="text"class="form-control">
+                            </div>
+                            <label class="col-sm-2 control-label">重量：</label>
+                            <div class="col-sm-2">
+                                <input id="zl" name="zl"  type="text"  th:value="${xfcl.zl}" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -222,6 +246,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">照片：</label>
+                            <div class="col-sm-10">
+                                <input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="col-sm-10 col-sm-offset-2">
                                 <button type="submit" class="btn btn-primary">提交</button>
                             </div>
@@ -234,6 +264,9 @@
 </div>
 <div th:include="include::footer"></div>
 <script type="text/javascript" src="/js/appjs/jczy/xfcl/edit.js">
+</script>
+<script th:inline="javascript">
+    var attachmentDOList = [[${attachmentDOList}]];
 </script>
 </body>
 </html>
