@@ -53,6 +53,10 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="signupForm">
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">车辆名称：</label>
+                            <div class="col-sm-2">
+                                <input id="clmc" name="clmc" class="form-control" type="text">
+                            </div>
                             <label class="col-sm-2 control-label">消防装备器材分类：</label>
                             <div class="col-sm-2">
                                 <input type="hidden" id="childAttr" value="yes" class="xfzblxdm"/>
@@ -70,12 +74,12 @@
                                     <option value="">--请选择--</option>
                                 </select>
                             </div>
-                            <label class="col-sm-2 control-label">消防车辆等级：</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="xfcldjdm" name="xfcldjdm" title="请选择消防车辆等级" required>
-                                    <option value="">--请选择--</option>
-                                </select>
-                            </div>
+<!--                            <label class="col-sm-2 control-label">消防车辆等级：</label>-->
+<!--                            <div class="col-sm-2">-->
+<!--                                <select class="form-control" id="xfcldjdm" name="xfcldjdm" title="请选择消防车辆等级" required>-->
+<!--                                    <option value="">&#45;&#45;请选择&#45;&#45;</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">消防救援机构：</label>
@@ -99,13 +103,29 @@
                             <div class="col-sm-2">
                                 <input id="dwsbSimkkh" name="dwsbSimkkh" class="form-control" type="text">
                             </div>
-                            <label class="col-sm-2 control-label">规格型号：</label>
+                            <label class="col-sm-2 control-label">消防车辆等级：</label>
                             <div class="col-sm-2">
-                                <input id="ggxh" name="ggxh" class="form-control" type="text">
+                                <select class="form-control" id="xfcldjdm" name="xfcldjdm" title="请选择消防车辆等级" required>
+                                    <option value="">--请选择--</option>
+                                </select>
                             </div>
                             <label class="col-sm-2 control-label">机动车发动机（电动机）号：</label>
                             <div class="col-sm-2">
                                 <input id="jdcfdjddjh" name="jdcfdjddjh" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">长度：</label>
+                            <div class="col-sm-2">
+                                <input id="cd" name="cd" class="form-control" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">宽度：</label>
+                            <div class="col-sm-2">
+                                <input id="kd" name="kd" class="form-control" type="number" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">高度：</label>
+                            <div class="col-sm-2">
+                                <input id="gd" name="gd" class="form-control" type="number" min="0">
                             </div>
                         </div>
                         <div class="form-group">
@@ -154,6 +174,16 @@
                                 <label class="radio-inline">
                                     <input type="radio" name="sfyyxlPdbz" value="1"/> 否
                                 </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        <label class="col-sm-2 control-label">规格型号：</label>
+                            <div class="col-sm-2">
+                                <input id="ggxh" name="ggxh"  type="text"class="form-control">
+                        </div>
+                            <label class="col-sm-2 control-label">重量：</label>
+                            <div class="col-sm-2">
+                                <input id="zl" name="zl"  type="text" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -211,6 +241,12 @@
                             <label class="col-sm-2 control-label">车辆性能指标_简要情况：</label>
                             <div class="col-sm-10">
                                 <textarea id="clxnzbJyqk" name="clxnzbJyqk" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">照片：</label>
+                            <div class="col-sm-10">
+                                <input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
                             </div>
                         </div>
                         <div class="form-group">
