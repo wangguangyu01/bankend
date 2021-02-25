@@ -141,7 +141,10 @@ public class XfclController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfcl:edit")
-	public String update( XfclDO xfcl){
+	public String update( @RequestPart(value = "file", required = false) MultipartFile[] files,XfclDO xfcl){
+		if(files!=null && files.length>0) {
+			attachmentService.ftpUpload(files, xfcl.getXfclTywysbm(), "xfcl");
+		}
 		xfclService.update(xfcl);
 		return xfcl.getXfclTywysbm();
 	}

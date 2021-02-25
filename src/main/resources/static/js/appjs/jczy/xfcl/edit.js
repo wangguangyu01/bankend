@@ -63,29 +63,21 @@ function initFileInput(ctrlName) {
 
 }
 function update() {
-	$.ajax({
-		cache : true,
-		type : "POST",
-		url : "/jczy/xfcl/update",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
-		error : function(request) {
-			parent.layer.alert("Connection error");
-		},
-		success : function(data) {
-			if (data != "") {
-				parent.layer.msg("操作成功");
-				parent.reLoad();
-				var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-				parent.layer.close(index);
+    $("#signupForm").ajaxSubmit({
+        type : "POST",
+        url : "/jczy/xfcl/update",
+        success : function(data) {
+            if (data != "") {
+                parent.layer.msg("操作成功");
+                parent.reLoad();
+                var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                parent.layer.close(index);
                 saveCllxSX(data);
-			} else {
-				parent.layer.alert(data.msg)
-			}
-
-		}
-	});
-
+            } else {
+                parent.layer.alert(data.msg)
+            }
+        }
+    })
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
