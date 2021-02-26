@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.ZxDao">
+
+	<select id="get" resultType="com.smart119.jczy.domain.ZxDO">
+		select `id`,`ZXHM`,`ZXMM`,`XFJYJG_TYWYSBM`,`IP`,`USER_ID`,`DHHM`,`ZT`,`cdate`,`status`,`cperson` from jczy_zx where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.jczy.domain.ZxDO">
+		select
+		zx.`id`,
+		zx.`ZXHM`,
+		zx.`ZXMM`,
+		dept.DWMC as `XFJYJG_TYWYSBM`,
+		zx.`IP`,
+		zx.`USER_ID`,
+		zx.`DHHM`,
+		dict.`name` as `ZT`,
+		zx.`cdate`,
+		zx.`status`,
+		zx.`cperson`
+		from jczy_zx zx
+		LEFT JOIN sys_dept dept
+		on dept.XFJYJG_TYWYSBM = zx.XFJYJG_TYWYSBM
+		LEFT JOIN sys_dict dict
+		on zx.ZT = dict.`value` AND dict.type='zxzt'
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="zxhm != null and zxhm != ''"> and ZXHM = #{zxhm} </if>
+		  		  <if test="zxmm != null and zxmm != ''"> and ZXMM = #{zxmm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		  		  <if test="ip != null and ip != ''"> and IP = #{ip} </if>
+		  		  <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+		  		  <if test="dhhm != null and dhhm != ''"> and DHHM = #{dhhm} </if>
+		  		  <if test="zt != null and zt != ''"> and ZT = #{zt} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_zx
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="zxhm != null and zxhm != ''"> and ZXHM = #{zxhm} </if>
+		  		  <if test="zxmm != null and zxmm != ''"> and ZXMM = #{zxmm} </if>
+		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
+		  		  <if test="ip != null and ip != ''"> and IP = #{ip} </if>
+		  		  <if test="userId != null and userId != ''"> and USER_ID = #{userId} </if>
+		  		  <if test="dhhm != null and dhhm != ''"> and DHHM = #{dhhm} </if>
+		  		  <if test="zt != null and zt != ''"> and ZT = #{zt} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.jczy.domain.ZxDO">
+		insert into jczy_zx
+		(
+			`id`, 
+			`ZXHM`, 
+			`ZXMM`, 
+			`XFJYJG_TYWYSBM`, 
+			`IP`, 
+			`USER_ID`, 
+			`DHHM`, 
+			`ZT`, 
+			`cdate`, 
+			`status`, 
+			`cperson`
+		)
+		values
+		(
+			#{id}, 
+			#{zxhm}, 
+			#{zxmm}, 
+			#{xfjyjgTywysbm}, 
+			#{ip}, 
+			#{userId}, 
+			#{dhhm}, 
+			#{zt}, 
+			#{cdate}, 
+			#{status}, 
+			#{cperson}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.jczy.domain.ZxDO">
+		update jczy_zx 
+		<set>
+			<if test="zxhm != null">`ZXHM` = #{zxhm}, </if>
+			<if test="zxmm != null">`ZXMM` = #{zxmm}, </if>
+			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm}, </if>
+			<if test="ip != null">`IP` = #{ip}, </if>
+			<if test="userId != null">`USER_ID` = #{userId}, </if>
+			<if test="dhhm != null">`DHHM` = #{dhhm}, </if>
+			<if test="zt != null">`ZT` = #{zt}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_zx where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jczy_zx where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
