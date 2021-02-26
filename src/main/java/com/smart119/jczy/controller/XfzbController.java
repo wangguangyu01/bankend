@@ -2,26 +2,25 @@ package com.smart119.jczy.controller;
 
 import java.util.*;
 
+import com.alibaba.fastjson.JSON;
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.service.AttachmentService;
+import com.smart119.jczy.domain.XfclDO;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.XfzbDO;
 import com.smart119.jczy.service.XfzbService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 消防装备器材基本信息
@@ -39,6 +38,8 @@ public class XfzbController extends BaseController{
 	private XfzbService xfzbService;
 	@Autowired
 	private DeptService deptService;
+	@Autowired
+	private AttachmentService attachmentService;
 
 	@GetMapping()
 	@RequiresPermissions("jczy:xfzb:xfzb")
@@ -75,6 +76,11 @@ public class XfzbController extends BaseController{
 	@RequiresPermissions("jczy:xfzb:edit")
 	String edit(@PathVariable("xfzbTywysbm") String xfzbTywysbm,Model model){
 		XfzbDO xfzb = xfzbService.get(xfzbTywysbm);
+		Map m = new HashMap();
+		m.put("fid",xfzbTywysbm);
+		m.put("fType","xfzb");
+		List<AttachmentDO> attachmentDOList = attachmentService.list(m);
+		model.addAttribute("attachmentDOList", JSON.toJSONString(attachmentDOList));
 		model.addAttribute("xfzb", xfzb);
 	    return "jczy/xfzb/edit";
 	}
@@ -100,12 +106,15 @@ public class XfzbController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfzb:add")
-	public R save(XfzbDO xfzb){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files,XfzbDO xfzb){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfzb.setXfzbTywysbm(id);
 		xfzb.setCdate(new Date());
 		xfzb.setCperson(getUserId()+"");
 		xfzb.setStatus(0);
+		if(files!=null && files.length>0) {
+			attachmentService.ftpUpload(files, id, "xfzb");
+		}
 		if(xfzbService.save(xfzb)>0){
 			return R.ok();
 		}
@@ -134,11 +143,13 @@ public class XfzbController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfzb:edit")
-	public R update( XfzbDO xfzb){
+	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,XfzbDO xfzb){
+		if(files!=null && files.length>0) {
+			attachmentService.ftpUpload(files, xfzb.getXfzbTywysbm(), "xfzb");
+		}
 		xfzbService.update(xfzb);
 		return R.ok();
 	}
-
 	/**
 	 * 删除
 	 */

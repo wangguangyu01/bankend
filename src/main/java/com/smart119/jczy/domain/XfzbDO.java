@@ -1,6 +1,7 @@
 package com.smart119.jczy.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -81,6 +82,10 @@ public class XfzbDO implements Serializable {
 	private Integer wxSl;
 	//在途_数量
 	private Integer ztSl;
+	//装备性能简要情况
+	private String zbxnzbJyqk;
+	//备注
+	private String bz;
 	//创建时间
 	private Date cdate;
 	//创建人
@@ -95,6 +100,22 @@ public class XfzbDO implements Serializable {
 	private String xfzbztlb;
 
 	private String xfzblx;
+
+	public String getZbxnzbJyqk() {
+		return zbxnzbJyqk;
+	}
+
+	public void setZbxnzbJyqk(String zbxnzbJyqk) {
+		this.zbxnzbJyqk = zbxnzbJyqk;
+	}
+
+	public String getBz() {
+		return bz;
+	}
+
+	public void setBz(String bz) {
+		this.bz = bz;
+	}
 
 	/**
 	 * 设置：消防装备_通用唯一识别码

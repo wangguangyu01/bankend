@@ -34,6 +34,8 @@
             t.`ZZ_SL`,
             t.`WX_SL`,
             t.`ZT_SL`,
+            t.`ZBXNZB_JYQK`,
+            t.`BZ`,
             t.`cdate`,
             t.`cperson`,
             t.`status`,
@@ -81,6 +83,8 @@
         t.`ZZ_SL`,
         t.`WX_SL`,
         t.`ZT_SL`,
+        t.`ZBXNZB_JYQK`,
+        t.`BZ`,
         t.`cdate`,
         t.`cperson`,
         t.`status`,
@@ -217,9 +221,11 @@
 			`LY_SL`, 
 			`ZZ_SL`, 
 			`WX_SL`, 
-			`ZT_SL`, 
+			`ZT_SL`,
+			`ZBXNZB_JYQK`,
+            `BZ`,
 			`cdate`, 
-			`cperson`, 
+			`cperson`,
 			`status`
 		)
 		values
@@ -252,7 +258,9 @@
 			#{lySl}, 
 			#{zzSl}, 
 			#{wxSl}, 
-			#{ztSl}, 
+			#{ztSl},
+			#{zbxnzbJyqk},
+			#{bz},
 			#{cdate}, 
 			#{cperson}, 
 			#{status}
@@ -290,6 +298,8 @@
             <if test="zzSl != null">`ZZ_SL` = #{zzSl},</if>
             <if test="wxSl != null">`WX_SL` = #{wxSl},</if>
             <if test="ztSl != null">`ZT_SL` = #{ztSl},</if>
+            <if test="wxSl != null">`ZBXNZB_JYQK` = #{zbxnzbJyqk},</if>
+            <if test="ztSl != null">`BZ` = #{bz},</if>
             <if test="cdate != null">`cdate` = #{cdate},</if>
             <if test="cperson != null">`cperson` = #{cperson},</if>
             <if test="status != null">`status` = #{status}</if>
