@@ -59,7 +59,7 @@ function save() {
         type : "POST",
         url : "/jczy/xfzb/save",
         success : function(data) {
-            if (data != "") {
+            if (data.code == 0) {
                 parent.layer.msg("操作成功");
                 parent.reLoad();
                 var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
