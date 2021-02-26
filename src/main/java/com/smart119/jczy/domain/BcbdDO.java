@@ -38,6 +38,16 @@ public class BcbdDO implements Serializable {
 
 	private String zzdyid;
 
+	private String xfjyjgtywysbm;
+
+	public String getXfjyjgtywysbm() {
+		return xfjyjgtywysbm;
+	}
+
+	public void setXfjyjgtywysbm(String xfjyjgtywysbm) {
+		this.xfjyjgtywysbm = xfjyjgtywysbm;
+	}
+
 	public String getZzdyid() {
 		return zzdyid;
 	}
