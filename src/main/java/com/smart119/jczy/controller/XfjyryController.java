@@ -124,13 +124,13 @@ public class XfjyryController extends BaseController {
 
         model.addAttribute("province", province);  //籍贯代码-省
         model.addAttribute("city", city);  //籍贯代码-市
-
-        model.addAttribute("xfjyry", xfjyry);
         Map m = new HashMap();
         m.put("fid",xfjyry.getXfjyryTywysbm());
         m.put("fType","xfjyry");
         List<AttachmentDO> attachmentDOList = attachmentService.list(m);
         model.addAttribute("attachmentDOList", attachmentDOList);
+        model.addAttribute("xfjyry", xfjyry);
+
         return "jczy/xfjyry/edit";
     }
 

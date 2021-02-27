@@ -192,7 +192,7 @@
 		)
 		values
 		(
-			REPLACE(UUID(), '-', ''),
+            #{xfjyryTywysbm},
 			#{xm},
 			#{cyzjlxdm},
 			#{zjhm},
