@@ -3,36 +3,27 @@ package com.smart119.jczy.controller;
 import java.util.*;
 
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.MD5Utils;
-import com.smart119.jczy.domain.XfclDO;
 import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.DeptDO;
-import com.smart119.system.domain.RoleDO;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.service.RoleService;
 import com.smart119.system.service.UserService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 消防救援人员
@@ -57,7 +48,8 @@ public class XfjyryController extends BaseController {
 
     @Autowired
     private RoleService roleService;
-
+    @Autowired
+    private AttachmentService attachmentService;
 
     @GetMapping()
     @RequiresPermissions("jczy:xfjyry:xfjyry")
@@ -134,6 +126,11 @@ public class XfjyryController extends BaseController {
         model.addAttribute("city", city);  //籍贯代码-市
 
         model.addAttribute("xfjyry", xfjyry);
+        Map m = new HashMap();
+        m.put("fid",xfjyry.getXfjyryTywysbm());
+        m.put("fType","xfjyry");
+        List<AttachmentDO> attachmentDOList = attachmentService.list(m);
+        model.addAttribute("attachmentDOList", attachmentDOList);
         return "jczy/xfjyry/edit";
     }
 
@@ -196,22 +193,6 @@ public class XfjyryController extends BaseController {
      * 保存
      */
     @ResponseBody
-    @PostMapping("/save")
-    @RequiresPermissions("jczy:xfjyry:add")
-    public R save(XfjyryDO xfjyry) {
-
-        xfjyry.setCdate(new Date());
-        xfjyry.setCperson(getUser().getUserId().toString());
-        xfjyry.setStatus("0");
-        if (xfjyryService.save(xfjyry) > 0) {
-            return R.ok();
-        }
-        return R.error();
-    }
-    /**
-     * 保存
-     */
-    @ResponseBody
     @PostMapping("/zdsave")
     @RequiresPermissions("jczy:xfjyry:add")
     public R zdsave(@RequestBody XfjyryDO xfjyry) {
@@ -248,19 +229,42 @@ public class XfjyryController extends BaseController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("jczy:xfjyry:edit")
-    public R update(@RequestBody XfjyryDO xfjyry) {
+    public String update(@RequestPart(value = "file", required = false) MultipartFile[] files, XfjyryDO xfjyry) {
+        if(files!=null && files.length>0) {
+            attachmentService.ftpUpload(files, xfjyry.getXfjyryTywysbm(), "xfjyry");
+        }
         xfjyryService.update(xfjyry);
-        return R.ok();
+        return xfjyry.getXfjyryTywysbm();
     }
 
+    /**
+     * 保存
+     */
+    @ResponseBody
+    @PostMapping("/save")
+    @RequiresPermissions("jczy:xfjyry:add")
+    public String save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfjyryDO xfjyry){
+        String id = UUID.randomUUID().toString().replace("-", "");
+        xfjyry.setXfjyryTywysbm(id);
+        xfjyry.setCdate(new Date());
+        xfjyry.setCperson(getUser().getUserId().toString());
+        xfjyry.setStatus("0");
+        if (files != null && files.length > 0) {
+            attachmentService.ftpUpload(files, id, "xfjyry");
+        }
+        if (xfjyryService.save(xfjyry) > 0) {
+            return id;
+        }
+        return "";
+    }
     /**
      * 修改
      */
     @ResponseBody
     @RequestMapping("/updateForm")
     @RequiresPermissions("jczy:xfjyry:edit")
-    public R updateForm( XfjyryDO xfjyry) {
-        if(xfjyryService.update(xfjyry)> 0){
+    public R updateForm(XfjyryDO xfjyry) {
+        if (xfjyryService.update(xfjyry) > 0) {
             //获取姓名
             String xm = xfjyry.getXm();
             //获取实际所在部门
@@ -273,7 +277,7 @@ public class XfjyryController extends BaseController {
             //根据消防救援人员ID查出对应的系统用户
             UserDO userDO = userService.get(Long.parseLong(userid));
             userDO.setUsername(ydLxdh);
-            userDO.setPassword(MD5Utils.encrypt(ydLxdh,ydLxdh));
+            userDO.setPassword(MD5Utils.encrypt(ydLxdh, ydLxdh));
             userDO.setName(xm);
             DeptDO deptDO = deptService.getDeptId(sjszjgTywysbm);
             userDO.setDeptId(deptDO.getDeptId());
