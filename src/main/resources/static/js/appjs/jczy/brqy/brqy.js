@@ -1,6 +1,7 @@
 
 var prefix = "/jczy/brqy"
 $(function() {
+    getTreeData();
 	load();
     getSelectByType("ghljbrqylb","type",null);  //常用证件类型
 });
@@ -208,3 +209,42 @@ function closeBrqy(id) {
         });
     })
 }
+
+
+function getTreeData() {
+    $.ajax({
+        type : "GET",
+        url : "/system/sysDept/tree",
+        success : function(tree) {
+            loadTree(tree);
+        }
+    });
+}
+function loadTree(tree) {
+    $('#jstree').jstree({
+        'core' : {
+            'data' : tree
+        },
+        "plugins" : [ "search" ]
+    });
+    $('#jstree').jstree().open_all();
+}
+$('#jstree').on("changed.jstree", function(e, data) {
+    //data.node.original.attributes.xfjyjgTywysbm
+    if (data.selected == -1) {
+        var opt = {
+            query : {
+                deptId : '',
+            }
+        }
+        $('#exampleTable').bootstrapTable('refresh', opt);
+    } else {
+        var opt = {
+            query : {
+                deptId : data.selected[0],
+            }
+        }
+        $('#exampleTable').bootstrapTable('refresh',opt);
+    }
+
+});

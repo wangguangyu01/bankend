@@ -75,7 +75,7 @@ public class JbxxController extends BaseController {
         return "webapi/jbxx/add";
     }
 
-    @ApiOperation("历史警情查询（接警端）传{'offset':'0','limit':'10','ddmc  ':'地点名称','jqflydm ':'类别','jqdjdm ':'等级','jqztLbdm  ':'状态'}")
+    @ApiOperation("历史警情查询（接警端）传{'offset':'0','':'10','ddmc  ':'地点名称','jqflydm ':'类别','jqdjdm ':'等级','jqztLbdm  ':'状态'}")
     @ResponseBody
     @GetMapping("/jqlist")
 //	@RequiresPermissions("webapi:jbxx:jbxx")
@@ -88,7 +88,7 @@ public class JbxxController extends BaseController {
         return pageUtils;
     }
 
-    @ApiOperation("调派历史警情查询（队站接警受理台）传{'offset':'0','limit':'10','ddmc  ':'地点名称','jqflydm ':'类别','jqdjdm ':'等级','jqztLbdm  ':'状态'}")
+    @ApiOperation("调派历史警情查询（队站接警受理台）传{'offset':'0','':'10','ddmc  ':'地点名称','jqflydm ':'类别','jqdjdm ':'等级','jqztLbdm  ':'状态'}")
     @ResponseBody
     @GetMapping("/dpjqlist")
     public PageUtils dpjqlist(@RequestParam Map<String, Object> params) {

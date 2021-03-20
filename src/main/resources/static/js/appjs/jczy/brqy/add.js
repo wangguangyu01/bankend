@@ -74,3 +74,4 @@ var openMap3 = function(){
         content:"/common/map3?pointsArr="+pointsArr
     })
 }
+
