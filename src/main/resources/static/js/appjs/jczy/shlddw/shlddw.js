@@ -1,9 +1,7 @@
 
-var prefix = "/jczy/brqy"
+var prefix = "/jczy/shlddw"
 $(function() {
-    getTreeData();
 	load();
-    getSelectByType("ghljbrqylb","type",null);  //常用证件类型
 });
 
 function load() {
@@ -34,8 +32,7 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset,
-								type:$("#type").val()
+								offset:params.offset
 					           // name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
@@ -47,39 +44,54 @@ function load() {
 						// sortOrder.
 						// 返回false将会终止请求
 						columns : [
-								{
-									field : 'type', 
-									title : '类型' 
+																{
+									field : 'dwmc', 
+									title : '单位名称' 
+								},
+																{
+									field : 'dwdz', 
+									title : '单位地址' 
 								},
 								{
-									field : 'remarks',
-									title : '备注'
+									field : 'lddwlb',
+									title : '联动单位类别'
+								},
+																	{
+									field : 'lxr', 
+									title : '联系人' 
+								},
+																{
+									field : 'lxdh', 
+									title : '联系电话' 
+								},
+																{
+									field : 'xfjyjgmc',
+									title : '所属队站'
 								},
 								{
-									field : 'status', 
-									title : '状态' 
+									field : 'area',
+									title : '股票代码',
+                                    formatter:function( value,row,index ){
+                                        //如何使用拿到的多个数据 直接返回拼接好的html;
+                                        var html = "<span>"+row["province"]+"</span><span>"+row["city"]+"</span><span>"+row["area"]+"</span>"
+                                        return html;
+                                    }
 								},
-								{
+																{
 									title : '操作',
 									field : 'id',
 									align : 'center',
 									formatter : function(value, row, index) {
 										var e = '<a class="btn btn-primary btn-sm '+s_edit_h+'" href="#" mce_href="#" title="编辑" onclick="edit(\''
-												+ row.id
+												+ row.shlddwTywysbm
 												+ '\')"><i class="fa fa-edit"></i></a> ';
 										var d = '<a class="btn btn-warning btn-sm '+s_remove_h+'" href="#" title="删除"  mce_href="#" onclick="remove(\''
-												+ row.id
+												+ row.shlddwTywysbm
 												+ '\')"><i class="fa fa-remove"></i></a> ';
-										console.log(row.status);
-										var f = '<a class="btn btn-success btn-sm" href="#" title="弃用"  mce_href="#" onclick="closeBrqy(\''
-												+ row.id
+										var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
+												+ row.shlddwTywysbm
 												+ '\')"><i class="fa fa-key"></i></a> ';
-										if(row.status=="失效"){
-                                            f = '<a class="btn btn-success btn-sm" href="#" title="启用"  mce_href="#" onclick="openBrqy(\''
-                                                + row.id
-                                                + '\')"><i class="fa fa-key"></i></a> ';
-										}
-										return e + f + d ;
+										return e + d ;
 									}
 								} ]
 					});
@@ -115,7 +127,7 @@ function remove(id) {
 			url : prefix+"/remove",
 			type : "post",
 			data : {
-				'id' : id
+				'shlddwTywysbm' : id
 			},
 			success : function(r) {
 				if (r.code==0) {
@@ -144,7 +156,7 @@ function batchRemove() {
 		var ids = new Array();
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
-			ids[i] = row['id'];
+			ids[i] = row['shlddwTywysbm'];
 		});
 		$.ajax({
 			type : 'POST',
@@ -165,86 +177,3 @@ function batchRemove() {
 
 	});
 }
-
-function openBrqy(id) {
-    layer.confirm('确定要开启此避让区域？', {
-        btn : [ '确定', '取消' ]
-    }, function() {
-        $.ajax({
-            url : prefix+"/open",
-            type : "post",
-            data : {
-                'id' : id
-            },
-            success : function(r) {
-                if (r.code==0) {
-                    layer.msg(r.msg);
-                    reLoad();
-                }else{
-                    layer.msg(r.msg);
-                }
-            }
-        });
-    })
-}
-
-function closeBrqy(id) {
-    layer.confirm('确定要关闭此避让区域？', {
-        btn : [ '确定', '取消' ]
-    }, function() {
-        $.ajax({
-            url : prefix+"/close",
-            type : "post",
-            data : {
-                'id' : id
-            },
-            success : function(r) {
-                if (r.code==0) {
-                    layer.msg(r.msg);
-                    reLoad();
-                }else{
-                    layer.msg(r.msg);
-                }
-            }
-        });
-    })
-}
-
-
-function getTreeData() {
-    $.ajax({
-        type : "GET",
-        url : "/system/sysDept/tree",
-        success : function(tree) {
-            loadTree(tree);
-        }
-    });
-}
-function loadTree(tree) {
-    $('#jstree').jstree({
-        'core' : {
-            'data' : tree
-        },
-        "plugins" : [ "search" ]
-    });
-    $('#jstree').jstree().open_all();
-}
-$('#jstree').on("changed.jstree", function(e, data) {
-    //data.node.original.attributes.xfjyjgTywysbm
-    if (data.selected == -1) {
-        var opt = {
-            query : {
-                deptId : '',
-            }
-        }
-        $('#exampleTable').bootstrapTable('refresh', opt);
-    } else {
-        var opt = {
-            query : {
-                deptId : data.selected[0],
-            }
-        }
-        $('#exampleTable').bootstrapTable('refresh',opt);
-    }
-
-});

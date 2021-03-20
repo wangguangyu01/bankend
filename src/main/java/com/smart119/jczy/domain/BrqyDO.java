@@ -31,7 +31,8 @@ public class BrqyDO implements Serializable {
 	private String status;
 	//创建人员
 	private String cperson;
-
+	//消防救援机构_通用唯一识别码
+	private String xfjyjgTywysbm;
 	/**
 	 * 设置：
 	 */
@@ -127,5 +128,13 @@ public class BrqyDO implements Serializable {
 	 */
 	public String getCperson() {
 		return cperson;
+	}
+
+	public String getXfjyjgTywysbm() {
+		return xfjyjgTywysbm;
+	}
+
+	public void setXfjyjgTywysbm(String xfjyjgTywysbm) {
+		this.xfjyjgTywysbm = xfjyjgTywysbm;
 	}
 }

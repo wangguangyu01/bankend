@@ -6,14 +6,15 @@
     <title>bootdo - 地图</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="favicon.ico">
     <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="/css/font-awesome.css?v=4.4.0" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/layui.css" rel="stylesheet">
     <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-    <link href="http://mapopen.cdn.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" type="text/css">
     <style  type="text/css">
         *{ margin:0px;padding:0}
         html,body{height:100%;width: 100%}
@@ -30,73 +31,61 @@
             left: 0;
             z-index: 555;
         }
-        .tangram-suggestion{
-            z-index: 555;
+        .input-item{
+            height: 2.2rem;
         }
-        ul li {list-style: none;}
-        .info {
-            z-index: 999;
-            width: auto;
-            min-width: 22rem;
-            padding: .75rem 1.25rem;
-            margin-left: 1.25rem;
+        .btn{
+            width: 6rem;
+            margin: 0 1rem 0 0rem;
+        }
+        .input-text{
+            width: 4rem;
+            margin-right:1rem;
+        }
+        .input-card{
+            height: 65px;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border-radius: .25rem;
+            width: 22rem;
+            border-width: 0;
+            border-radius: 0.4rem;
+            box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
             position: fixed;
             top: 1rem;
-            background-color: #fff;
-            border-radius: .25rem;
-            font-size: 14px;
-            color: #666;
-            box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
-        }
-        .drawing-panel {
-            z-index: 999;
-            position: fixed;
-            bottom: 3.5rem;
-            margin-left: 2.5rem;
-            padding-left: 0;
-            border-radius: .25rem;
-            height: 47px;
-            box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
-        }
-        .bmap-btn {
-            border-right: 1px solid #d2d2d2;
-            float: left;
-            width: 64px;
-            height: 100%;
-            background-image: url(//api.map.baidu.com/library/DrawingManager/1.4/src/bg_drawing_tool.png);
-            cursor: pointer;
-        }
-        .drawing-panel .bmap-marker {
-            background-position: -65px 0;
-        }
-        .drawing-panel .bmap-polyline {
-            background-position: -195px 0;
-        }
-        .drawing-panel .bmap-rectangle {
-            background-position: -325px 0;
-        }
-        .drawing-panel .bmap-polygon {
-            background-position: -260px 0;
-        }
-        .drawing-panel .bmap-circle {
-            background-position: -130px 0;
+            left: 1rem;
+            top: 1rem;
+            flex: 1 1 auto;
+            padding: 0.75rem 1.25rem;
         }
     </style>
-    <!--<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=您的密钥"></script>-->
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content maxHeight" id="app">
     <div class="row maxHeight">
-        <ul class = "drawing-panel">
-            <li class="bmap-btn bmap-polygon" disabled="disabled" id="polygon" @click="draw($event,map)"></li>
-        </ul>
         <div id="container"></div>
-        <div class="search-box">
-            <div id="r-result">搜索:<input type="text" id="suggestId" size="20" value="" style="width:150px;" /></div>
-            <div id="searchResultPanel" style="border:1px solid #C0C0C0;width:150px;height:auto; display:none;"></div>
+        <div class='info'>操作说明：区域通过点击来绘制</div>
+        <div class="input-card" style='width: 24rem;'>
+            <div class="input-item">
+                <!--<input type="radio" name='func' checked="" value='marker'><span class="input-text">画点</span>-->
+                <!--<input type="radio" name='func' value='polyline'><span class="input-text">画折线</span>-->
+                <input type="radio" checked name='func' value='polygon'><span class="input-text" style='width:5rem;'>画多边形</span>
+            </div>
+            <!--<div class="input-item">-->
+            <!--<input type="radio" name='func' value='rectangle'><span class="input-text">画矩形</span>-->
+            <!--<input type="radio" name='func' value='circle'><span class="input-text">画圆</span>-->
+            <!--</div>-->
+            <div class="input-item">
+                <button class="btn" onclick="polyEditor?polyEditor.open():polyEditor=undefined;editflag=true" style="margin-bottom: 5px">开始编辑</button>
+                <button class="btn" onclick="polyEditor.close();editflag=false">结束编辑</button>
+                <input id="clear" type="button" class="btn" value="清除" />
+                <!--<input id="close" type="button" class="btn" value="关闭绘图" />-->
+            </div>
         </div>
-
-
         <div class="footBtn">
             <button class="btn btn-primary" @click="createMarker">确定</button>
         </div>
@@ -104,8 +93,6 @@
 </div>
 
 <!-- 全局js -->
-<script src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=L63VqGA7HKUOLTTVkKCGwMxvdobIyHiy"></script>
-<script type="text/javascript" src="http://mapopen.cdn.bcebos.com/github/BMapGLLib/DrawingManager/src/DrawingManager.min.js"></script>
 <script src="/js/jquery.min.js?v=2.1.4"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="/js/bootstrap-paginator.min.js"></script>
@@ -114,14 +101,18 @@
 <script src="/js/plugins/clipboard/clipboard.min.js"></script>
 <script src="/js/plugins/layer/layer.min.js"></script>
 <script src="/js/vue.min.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=19c164c322b2e90bb896f8bfb07f4d1c&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=19c164c322b2e90bb896f8bfb07f4d1c&plugin=AMap.MouseTool&plugin=AMap.PolyEditor"></script>
+<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 
 <script th:inline="javascript">
     var points = [[${points}]];
     var brqyList = [[${brqyList}]];
+    var polyEditor;
+    var editflag =false //编辑状态
     var app = new Vue({
         el: '#app',
         data: {
-            drawingManager:null,
             limit: 12,
             offset: 0,
             total: 0,
@@ -132,163 +123,141 @@
             map:{},
             points:[],
             flag:true,
+
         },
         methods: {
-            overlaycomplete :function(e){
-                var _this = this;
-                var overlays = _this.map.getOverlays();
-                for(var i=0;i<overlays.length-1;i++){
-                    if(overlays[i].mytype && overlays[i].mytype=="self"){
-                        _this.map.removeOverlay(overlays[i]);
-                    }
-                }
-//
-                _this.points = [];
-                e.overlay.mytype="self";
-                var path = e.overlay.getPath();//Array<Point> 返回多边型的点数组
-                for(var i in path){
-                    _this.points.push({
-                        lat:path[i].lat,
-                        lng:path[i].lng
-                    })
-                }
-                var arr = document.getElementsByClassName('bmap-btn');
-                for(var i = 0; i<arr.length; i++) {
-                    arr[i].style.backgroundPositionY = '0';
-                }
-            },
             //开始绘制
-            draw:function (e,map,callback) {
-                var _this = this;
-                if(e.target){
-                    e = e.target;
-                }
-                var arr = document.getElementsByClassName('bmap-btn');
-                for(var i = 0; i<arr.length; i++) {
-                    arr[i].style.backgroundPositionY = '0';
-                }
-                e.style.backgroundPositionY = '-52px';
-                switch(e.id) {
-                    case 'polygon': {
-                        var drawingType = BMAP_DRAWING_POLYGON;
-                        break;
-                    }
-                }
-                _this.drawingManager.addEventListener('overlaycomplete', _this.overlaycomplete);
-                // 进行绘制
-                if (_this.drawingManager._isOpen && _this.drawingManager.getDrawingMode() === drawingType) {
-                    _this.drawingManager.close();
-                } else {
-                    _this.drawingManager.setDrawingMode(drawingType);
-                    _this.drawingManager.open();
-                }
-                //  callback();
-            },
-            /**
-             * 添加地图绘制工具
-             */
-            addDrawTool:function(map){
-                var styleOptions = {
-                    strokeColor: '#5E87DB',   // 边线颜色
-                    fillColor: '#5E87DB',     // 填充颜色。当参数为空时，圆形没有填充颜色
-                    strokeWeight: 2,          // 边线宽度，以像素为单位
-                    strokeOpacity: 1,         // 边线透明度，取值范围0-1
-                    fillOpacity: 0.2          // 填充透明度，取值范围0-1
-                };
-                var labelOptions = {
-                    borderRadius: '2px',
-                    background: '#FFFBCC',
-                    border: '1px solid #E1E1E1',
-                    color: '#703A04',
-                    fontSize: '12px',
-                    letterSpacing: '0',
-                    padding: '5px'
-                };
-                // 实例化鼠标绘制工具
-                var drawingManager = new BMapGLLib.DrawingManager(map, {
-                    // isOpen: true,        // 是否开启绘制模式
-                    enableCalculate: false, // 绘制是否进行测距测面
-                    enableSorption: true,   // 是否开启边界吸附功能
-                    sorptiondistance: 20,   // 边界吸附距离
-                    circleOptions: styleOptions,     // 圆的样式
-                    polylineOptions: styleOptions,   // 线的样式
-                    polygonOptions: styleOptions,    // 多边形的样式
-                    rectangleOptions: styleOptions,  // 矩形的样式
-                    labelOptions: labelOptions,      // label样式
-                });
-
-                return drawingManager;
-            },
             createMap:function (callback) {
-                function G(id) {
-                    return document.getElementById(id);
-                }
-
                 var _this = this;
-                var map = new BMapGL.Map("container");
-
-                // 创建地图实例
-//                var point = new BMapGL.Point(116.404, 39.915);
-                // 创建点坐标
-                map.centerAndZoom('临沂市', 12); // 初始化地图,设置中心点坐标和地图级别
-                map.enableScrollWheelZoom(true); // 开启鼠标滚轮缩放
-                _this.drawingManager = _this.addDrawTool(map);
-//                _this.draw(document.getElementById("polygon"),map,function () {
-//
-//                });
-                callback(map);
-                // 地图搜索poi
-                var ac = new BMapGL.Autocomplete(    //建立一个自动完成的对象
-                    {"input" : "suggestId"
-                        ,"location" : map
-                    });
-
-                ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-                    var str = "";
-                    var _value = e.fromitem.value;
-                    var value = "";
-                    if (e.fromitem.index > -1) {
-                        value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-                    }
-                    str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
-
-                    value = "";
-                    if (e.toitem.index > -1) {
-                        _value = e.toitem.value;
-                        value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-                    }
-                    str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
-                    G("searchResultPanel").innerHTML = str;
+                var center = [118.36594023480365, 35.11351000895431];
+                _this.map = new AMap.Map('container', {
+                    zoom:12,//级别
+                    center: center,//中心点坐标
                 });
-
-                var myValue;
-                ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
-                    var _value = e.item.value;
-                    myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-                    G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
-                    setPlace();
-                });
-
-                function setPlace(){
-                    map.clearOverlays();    //清除地图上所有覆盖物
-                    function myFun(){
-                        var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
-                        map.centerAndZoom(pp, 18);
-                        map.addOverlay(new BMapGL.Marker(pp));    //添加标注
-                        _this.marker.lng = pp.lng;
-                        _this.marker.lat = pp.lat;
+                var mouseTool = new AMap.MouseTool(_this.map);
+                //监听draw事件可获取画好的覆盖物
+                var overlays = [];
+                mouseTool.on('draw',function(e){
+                    overlays = [];
+                    console.log(11111111111)
+                    var arroverlays =  _this.map.getAllOverlays();
+                    console.log(arroverlays);
+                    for(var i in arroverlays){
+                        if(arroverlays[i].mytype =='self'){
+                            _this.map.remove(arroverlays[i]);
+                        }
                     }
-                    var local = new BMapGL.LocalSearch(map, { //智能搜索
-                        onSearchComplete: myFun
-                    });
-                    local.search(myValue);
+                    if(polyEditor){
+                        polyEditor.close();
+                        editflag=false
+                        polyEditor = undefined;
+                    }
+                    e.obj.mytype = 'self'
+                    overlays.push(e.obj);
+                    console.log(overlays)
+                    polyEditor = new AMap.PolyEditor(_this.map, overlays[0])
+                    polyEditor.on('addnode', function(event) {
+                        log.info('触发事件：addnode')
+                    })
 
+                    polyEditor.on('adjust', function(event) {
+                        log.info('触发事件：adjust')
+                    })
+
+                    polyEditor.on('removenode', function(event) {
+                        log.info('触发事件：removenode')
+                    })
+
+                    polyEditor.on('end', function(event) {
+                        log.info('触发事件： end')
+                        _this.points = [];
+                        console.log(event.target.getPath())
+                        var arr = event.target.getPath()
+                        for(var i in arr){
+                            _this.points.push({
+                                lat:parseFloat(arr[i].lat),
+                                lng:parseFloat(arr[i].lng)
+                            });
+                        }
+                    })
+                    _this.map.add(overlays[0]);
+                    polyEditor.open();
+                    editflag=true
+
+                })
+
+                function draw(type) {
+                    switch (type) {
+                        case 'marker': {
+                            mouseTool.marker({
+                                //同Marker的Option设置
+                            });
+                            break;
+                        }
+                        case 'polyline': {
+                            mouseTool.polyline({
+                                strokeColor: '#80d8ff'
+                                //同Polyline的Option设置
+                            });
+                            break;
+                        }
+                        case 'polygon': {
+                            mouseTool.polygon({
+                                fillColor: '#00b0ff',
+                                strokeColor: '#80d8ff'
+                                //同Polygon的Option设置
+                            });
+                            break;
+                        }
+                        case 'rectangle': {
+                            mouseTool.rectangle({
+                                fillColor: '#00b0ff',
+                                strokeColor: '#80d8ff'
+                                //同Polygon的Option设置
+                            });
+                            break;
+                        }
+                        case 'circle': {
+                            mouseTool.circle({
+                                fillColor: '#00b0ff',
+                                strokeColor: '#80d8ff'
+                                //同Circle的Option设置
+                            });
+                            break;
+                        }
+                    }
                 }
-                // 地图搜索poi =====end
+                var radios = document.getElementsByName('func');
+                for(var i=0;i<radios.length;i+=1){
+                    radios[i].onchange = function(e){
+
+                        draw(e.target.value)
+                    }
+                }
+                draw('polygon')
+                document.getElementById('clear').onclick = function(){
+                    if(polyEditor){
+                        polyEditor.close();
+                        editflag=false
+                        polyEditor = undefined;
+                    }
+                    var arroverlays =  _this.map.getAllOverlays();
+                    for(var i in arroverlays){
+                        if(arroverlays[i].mytype =='self'){
+                            _this.map.remove(arroverlays[i]);
+                        }
+                    }
+                    overlays = [];
+                }
+                callback();
             },
             createMarker:function () {
+                if(editflag){
+                    alert('编辑状态下不能保存')
+                    return;
+                }
                 if( typeof parent.saveRangeData =='function'){
-
+                    console.log(this.points)
                     parent.saveRangeData(this.points)
                 }
                 var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
@@ -297,66 +266,82 @@
         },
         mounted:function () {
             var _this = this;
-            this.createMap(function (mapdiv) {
-                _this.map = mapdiv;
+            this.createMap(function () {
                 if(points && points!=""){
-                    var point = points.split(";");
+                    var point = points.split(":");
                     var arr = [];
                     for(var i in point){
+                        console.log(parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0]))
                         _this.points.push({
                             lat:parseFloat(point[i].split(",")[0]),
                             lng:parseFloat(point[i].split(",")[1])
                         });
-                        arr.push( new BMapGL.Point(parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0])));
+                        arr.push([parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0])]);
                     }
-                    var polygon = new BMapGL.Polygon(arr,{
-                        strokeColor: 'blue',
-                        strokeWeight: 2,
-                        strokeOpacity: 0.5
-                    });
+                    var polygon = new AMap.Polygon({
+                        path: arr,
+                        fillColor: '#00b0ff',
+                        strokeColor: '#80d8ff'
+                    })
                     polygon.mytype = "self";
-                    mapdiv.addOverlay(polygon)
+
+
+                    polyEditor = new AMap.PolyEditor(_this.map, polygon)
+                    polyEditor.on('addnode', function(event) {
+                        log.info('触发事件：addnode')
+                    })
+
+                    polyEditor.on('adjust', function(event) {
+                        log.info('触发事件：adjust')
+                    })
+
+                    polyEditor.on('removenode', function(event) {
+                        log.info('触发事件：removenode')
+                    })
+
+                    polyEditor.on('end', function(event) {
+                        log.info('触发事件： end')
+                        _this.points = [];
+                        console.log(event.target.getPath())
+                        var arr = event.target.getPath()
+                        for(var i in arr){
+                            _this.points.push({
+                                lat:parseFloat(arr[i].lat),
+                                lng:parseFloat(arr[i].lng)
+                            });
+                        }
+                    })
+                    _this.map.add(polygon)
+                    polyEditor.open()
+                    editflag = true
                 }
+
                 for(var j in brqyList){
-                    points =  brqyList[j].coordinatesBaidu;
+                    points =  brqyList[j].coordinatesGaode;
                     var point = points.split(";");
                     var arr = [];
                     for(var i in point){
-//                        _this.points.push({
-//                            lat:parseFloat(point[i].split(",")[0]),
-//                            lng:parseFloat(point[i].split(",")[1])
-//                        });
-                        arr.push( new BMapGL.Point(parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0])));
+                        console.log(parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0]))
+                        _this.points.push({
+                            lat:parseFloat(point[i].split(",")[0]),
+                            lng:parseFloat(point[i].split(",")[1])
+                        });
+                        arr.push([parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0])]);
                     }
-                    var polygon = new BMapGL.Polygon(arr,{
-                        strokeColor: 'red',
-                        strokeWeight: 2,
-                        strokeOpacity: 0.5
-                    });
+                    var polygon = new AMap.Polygon({
+                        path: arr,
+                        fillColor: '#00b0ff',
+                        strokeColor: 'red'
+                    })
                     polygon.mytype = "other";
                     polygon.datainfo = brqyList[j];
-                    polygon.addEventListener("mouseover",function (e) {
-                        var point = new BMapGL.Point(e.latLng.lng, e.latLng.lat);
-                        var opts = {
-                            width: 200,
-                            height: 100,
-                            title: '详情信息'
-                        };
-                        console.log(e);
-                        var infoWindow = new BMapGL.InfoWindow(e.target.datainfo.type, opts);
-                        infoWindow.mytype="window";
-                        mapdiv.openInfoWindow(infoWindow, point);
-                    });
-                    polygon.addEventListener("click",function (e) {
-                        console.log(e.latLng.lng, e.latLng.lat)
-                    });
-                    mapdiv.addOverlay(polygon)
+                    _this.map.add(polygon)
                 }
             });
         }
     });
 </script>
-<script type="text/javascript">
+<script  type="text/javascript">
 
 </script>
 </body>

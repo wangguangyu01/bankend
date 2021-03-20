@@ -4,38 +4,26 @@
 <head th:include="include :: header"></head>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content ">
-		<div class="col-sm-3">
-			<div class="ibox ibox-body">
-				<div class="ibox-title">
-					<h5>选择部门</h5>
-				</div>
-				<div class="ibox-content">
-					<div id="jstree"></div>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-9">
+		<div class="col-sm-12">
 			<div class="ibox">
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button shiro:hasPermission="jczy:brqy:add" type="button" class="btn  btn-primary" onclick="add()">
+							<button shiro:hasPermission="jczy:shlddw:add" type="button" class="btn  btn-primary" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<button shiro:hasPermission="jczy:brqy:batchRemove" type="button" class="btn  btn-danger"
-								onclick="batchRemove()">
-								<i class="fa fa-trash" aria-hidden="true"></i>删除
-							</button>
+							<!--<button shiro:hasPermission="jczy:shlddw:batchRemove" type="button" class="btn  btn-danger"-->
+								<!--onclick="batchRemove()">-->
+								<!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
+							<!--</button>-->
 						</div>
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
-							<select class="form-control" id="type" name="type">
-								<option value="" >按避让类型查询</option>
-							</select>
+							<input id="dwmc" type="text" class="form-control"
+								   placeholder="按单位名称查询">
 						</div>
-
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
@@ -51,23 +39,23 @@
 				var s_resetPwd_h = 'hidden';
 			</script>
 		</div>
-		<div shiro:hasPermission="jczy:brqy:edit">
+		<div shiro:hasPermission="jczy:shlddw:edit">
 			<script type="text/javascript">
 				s_edit_h = '';
 			</script>
 		</div>
-		<div shiro:hasPermission="jczy:brqy:remove">
+		<div shiro:hasPermission="jczy:shlddw:remove">
 			<script type="text/javascript">
 				var s_remove_h = '';
 			</script>
 		</div>
-		<div shiro:hasPermission="jczy:brqy:resetPwd">
+		<div shiro:hasPermission="jczy:shlddw:resetPwd">
 			<script type="text/javascript">
 				var s_resetPwd_h = '';
 			</script>
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/jczy/brqy/brqy.js"></script>
+	<script type="text/javascript" src="/js/appjs/jczy/shlddw/shlddw.js"></script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 $().ready(function() {
+    getSelectByType("lddwlb","lddwlbdm",null);
+    getSelectByType("XZQHDM","province",null);  //区划代码（省）级联
 	validateRule();
-    getSelectByType("ghljbrqylb","type",null);  //常用证件类型
 });
 
 $.validator.setDefaults({
@@ -12,7 +13,7 @@ function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/jczy/brqy/save",
+		url : "/jczy/shlddw/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -49,29 +50,43 @@ function validateRule() {
 	})
 }
 
-
-var pointsArr = "";
-//保存辖区范围
-function saveRangeData(points) {
-    pointsArr = "";
-    for(var i in points){
-        var lat = points[i].lat;
-        var lng = points[i].lng;
-        pointsArr+=lat+","+lng+";";
-    }
-    pointsArr = pointsArr.substring(0,pointsArr.length-1);
-    $("#coordinatesBaidu").val(pointsArr);
-
+function getXzqhdm(obj,objId){
+    var id = $(obj).find("option:selected").attr("id");
+    console.log(id);
+    getSelectById(id,objId);
 }
 
 
-//绘制范围地图
-var openMap3 = function(){
+var openMap = function(){
+    var lng = $("#dqjd").val();
+    var lat = $("#dqwd").val();
     layer.open({
         type:2,
         title:"选择坐标点",
         area : [ '800px', '600px' ],
-        content:"/common/map3?pointsArr="+pointsArr
+        content:"/common/map?lng="+lng+"&lat="+lat
     })
 }
 
+
+function saveMarker(lng,lat){
+    console.log(lng,lat)
+    $("#dqjd").val(lng);
+    $("#dqwd").val(lat);
+}
+
+var openDept = function(objId){
+    inpId = objId;
+    layer.open({
+        type:2,
+        title:"选择消防救援机构",
+        area : [ '300px', '450px' ],
+        content:"/system/sysDept/treeView"
+    })
+}
+
+function loadDept( deptId,deptName,xfjyjgTywysbm){
+    //$("#deptId").val(deptId);
+    $("#"+inpId).val(xfjyjgTywysbm);
+    $("#"+inpId+"Name").val(deptName);
+}

@@ -4,7 +4,7 @@
 <mapper namespace="com.smart119.jczy.dao.BrqyDao">
 
 	<select id="get" resultType="com.smart119.jczy.domain.BrqyDO">
-		select `id`,`type`,`coordinates_baidu`,`coordinates_gaode`,`remarks`,`cdate`,`status`,`cperson` from jczy_brqy where id = #{value}
+		select `id`,`type`,`coordinates_baidu`,`coordinates_gaode`,`remarks`,`cdate`,`status`,`cperson`,`XFJYJG_TYWYSBM` from jczy_brqy where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.smart119.jczy.domain.BrqyDO">
@@ -33,6 +33,11 @@
 		  		  <if test="cdate != null and cdate != ''"> and brqy.cdate = #{cdate} </if>
 		  		  <if test="status != null and status != ''"> and brqy.status = #{status} </if>
 		  		  <if test="cperson != null and cperson != ''"> and brqy.cperson = #{cperson} </if>
+					<if test="deptList != null and deptList.size() > 0">and brqy.XFJYJG_TYWYSBM in
+						<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+							#{item.xfjyjgTywysbm}
+						</foreach>
+					</if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">

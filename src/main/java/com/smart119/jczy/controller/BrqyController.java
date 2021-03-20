@@ -1,14 +1,13 @@
 package com.smart119.jczy.controller;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.service.BaiduMapService;
+import com.smart119.common.service.DictService;
 import com.smart119.system.domain.DeptDO;
+import com.smart119.system.service.DeptService;
 import io.swagger.annotations.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +42,9 @@ public class BrqyController extends BaseController {
 	private BrqyService brqyService;
 
 	@Autowired
+	private DeptService deptService;
+
+	@Autowired
 	private BaiduMapService baiduMapService;
 	
 	@GetMapping()
@@ -57,6 +59,13 @@ public class BrqyController extends BaseController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
+		List<DeptDO> deptList = new ArrayList<>();
+		if(params.get("deptId")!=null && !params.get("deptId").equals("")){
+			deptList = deptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+		}else{
+			deptList = deptService.listChildren(getUser().getDeptId());
+		}
+		query.put("deptList",deptList);
 		List<BrqyDO> brqyList = brqyService.list(query);
 		int total = brqyService.count(query);
 		PageUtils pageUtils = new PageUtils(brqyList, total);
@@ -84,19 +93,14 @@ public class BrqyController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:brqy:add")
 	public R save( BrqyDO brqy){
+		String xfjyjgTywysbm = getUser().getXfjyjgTywysbm();
 		String userId = getUser().getUserId().toString();
 		String id = UUID.randomUUID().toString().replace("-", "");
-		String baiduJW = Exchange(brqy.getCoordinatesBaidu());
-		JSONObject baiduServer = baiduMapService.baiduZbToGaodeZb(baiduJW.replaceAll(";","|"));
-		String coordinatesGaode = "";
-		if(baiduServer!=null && "1".equals(baiduServer.get("status"))){
-			coordinatesGaode = Exchange(baiduServer.get("locations").toString());
-		}
 		brqy.setId(id);
-		brqy.setCoordinatesGaode(coordinatesGaode);
 		brqy.setCdate(new Date());
 		brqy.setCperson(userId);
 		brqy.setStatus("0");
+		brqy.setXfjyjgTywysbm(xfjyjgTywysbm);
 		if(brqyService.save(brqy)>0){
 			return R.ok();
 		}
