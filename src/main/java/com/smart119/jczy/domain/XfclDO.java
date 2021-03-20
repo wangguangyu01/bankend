@@ -113,6 +113,19 @@ public class XfclDO implements Serializable {
 	private Double gd;
 	//重量
 	private Double zl;
+	//车辆位置_地球经度
+	private Double clwzDqjd;
+	//车辆位置_地球纬度
+	private Double clwzDqwd;
+	//车辆位置采集时间
+	private Date clwzWzcjsj;
+	//负责人通用唯一识别码(消防救援人员通用唯一识别码)
+	private String fzrTywysbm;
+	//售后服务_单位名称
+	private String shfwDwmc;
+	//定位设备
+	private String dwsb;
+
 
 
 	public Double getGd() {
@@ -578,5 +591,53 @@ public class XfclDO implements Serializable {
 
 	public void setDpFlag(int dpFlag) {
 		this.dpFlag = dpFlag;
+	}
+
+	public Double getClwzDqjd() {
+		return clwzDqjd;
+	}
+
+	public void setClwzDqjd(Double clwzDqjd) {
+		this.clwzDqjd = clwzDqjd;
+	}
+
+	public Double getClwzDqwd() {
+		return clwzDqwd;
+	}
+
+	public void setClwzDqwd(Double clwzDqwd) {
+		this.clwzDqwd = clwzDqwd;
+	}
+
+	public Date getClwzWzcjsj() {
+		return clwzWzcjsj;
+	}
+
+	public void setClwzWzcjsj(Date clwzWzcjsj) {
+		this.clwzWzcjsj = clwzWzcjsj;
+	}
+
+	public String getFzrTywysbm() {
+		return fzrTywysbm;
+	}
+
+	public void setFzrTywysbm(String fzrTywysbm) {
+		this.fzrTywysbm = fzrTywysbm;
+	}
+
+	public String getShfwDwmc() {
+		return shfwDwmc;
+	}
+
+	public void setShfwDwmc(String shfwDwmc) {
+		this.shfwDwmc = shfwDwmc;
+	}
+
+	public String getDwsb() {
+		return dwsb;
+	}
+
+	public void setDwsb(String dwsb) {
+		this.dwsb = dwsb;
 	}
 }

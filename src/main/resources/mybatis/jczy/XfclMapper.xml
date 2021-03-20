@@ -44,6 +44,12 @@
 			t.`CD`,
 			t.`KD`,
 			t.`ZL`,
+			t.`CLWZ_DQJD`,
+			t.`CLWZ_DQWD`,
+			t.`CLWZ_WZCJSJ`,
+			t.`FZR_TYWYSBM`,
+			t.`SHFW_DWMC`,
+			t.`DWSB`,
 			dept.`dwmc` XFJYJG,
 			d.`name` XFZBLX,
 			d1.`name` CLQWZTLB
@@ -368,7 +374,13 @@
 			`CD`,
 			`KD`,
 			`ZL`,
-			`GD`
+			`GD`,
+			`CLWZ_DQJD`,
+			`CLWZ_DQWD`,
+			`CLWZ_WZCJSJ`,
+			`FZR_TYWYSBM`,
+			`SHFW_DWMC`,
+			`DWSB`
 		)
 		values
 		(
@@ -406,7 +418,13 @@
 			#{cd},
 			#{kd},
 			#{zl},
-			#{gd}
+			#{gd},
+			#{clwzDqjd},
+			#{clwzDqwd},
+			#{clwzWzcjsj},
+			#{fzrTywysbm},
+			#{shfwDwmc},
+			#{dwsb}
 		)
 	</insert>
 
@@ -450,6 +468,12 @@
 			<if test="kd != null">`KD` = #{kd}, </if>
 			<if test="zl != null">`ZL` = #{zl}, </if>
 			<if test="gd != null">`GD` = #{gd}, </if>
+			<if test="clwzDqjd != null">`CLWZ_DQJD` = #{clwzDqjd}, </if>
+			<if test="clwzDqwd != null">`CLWZ_DQWD` = #{clwzDqwd}, </if>
+			<if test="clwzWzcjsj != null">`CLWZ_WZCJSJ` = #{clwzWzcjsj}, </if>
+			<if test="fzrTywysbm != null">`FZR_TYWYSBM` = #{fzrTywysbm}, </if>
+			<if test="shfwDwmc != null">`SHFW_DWMC` = #{shfwDwmc}, </if>
+			<if test="dwsb != null">`DWSB` = #{dwsb}, </if>
 			<if test="status != null">`status` = #{status}</if>
 		</set>
 		where XFCL_TYWYSBM = #{xfclTywysbm}

@@ -214,3 +214,19 @@ function saveCllxSX(clId){
     }
 
 }
+
+var openRy = function(){
+    var xfjyjgTywysbm = $("#xfjyjgTywysbm").val();
+    layer.open({
+        type:2,
+        title:"选择人员",
+        area : [ '800px', '600px' ],
+        content:"/jczy/xfjyry/selectXfjyry?xfjyjgTywysbm="+xfjyjgTywysbm
+    })
+}
+
+function saveXfjyry(selectContent) {
+    $("#fzrTywysbm").val(selectContent.xfjyryTywysbm);
+    $("#fzrXm").val(selectContent.xm);
+    $("#fzrLxdh").val(selectContent.ydLxdh);
+}

@@ -315,4 +315,27 @@ public class XfjyryController extends BaseController {
         return R.ok();
     }
 
+    @GetMapping("/selectXfjyry")
+    String selectXfjyry(String xfjyjgTywysbm, Model model) {
+        model.addAttribute("xfjyjgTywysbm",xfjyjgTywysbm);
+        return "jczy/xfjyry/selectXfjyry";
+    }
+
+    @ResponseBody
+    @GetMapping("/selectXfjyryList")
+    public PageUtils selectXfjyryList(@RequestParam Map<String, Object> params) {
+        //查询列表数据
+        Query query = new Query(params);
+        List<DeptDO> deptList = new ArrayList<>();
+        if (params.get("xfjyjgTywysbm") != null && !params.get("xfjyjgTywysbm").equals("")) {
+            params.put("XFJYJG_TYWYSBM",params.get("xfjyjgTywysbm"));
+            deptList = deptService.listChildren(deptService.list(params).get(0).getDeptId());
+            query.put("deptList", deptList);
+        }
+        List<XfjyryDO> xfjyryList = xfjyryService.list(query);
+        int total = xfjyryService.count(query);
+        PageUtils pageUtils = new PageUtils(xfjyryList, total);
+        return pageUtils;
+    }
+
 }

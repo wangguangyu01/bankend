@@ -175,3 +175,34 @@ function initFileInput(ctrlName) {
 
 }
 
+var openMap = function(){
+    var lng = $("#clwzDqjd").val();
+    var lat = $("#clwzDqwd").val();
+    layer.open({
+        type:2,
+        title:"选择坐标点",
+        area : [ '800px', '600px' ],
+        content:"/common/map?lng="+lng+"&lat="+lat
+    })
+}
+
+function saveMarker(lng,lat){
+    $("#clwzDqjd").val(lng);
+    $("#clwzDqwd").val(lat);
+}
+
+var openRy = function(){
+    var xfjyjgTywysbm = $("#xfjyjgTywysbm").val();
+    layer.open({
+        type:2,
+        title:"选择人员",
+        area : [ '800px', '600px' ],
+        content:"/jczy/xfjyry/selectXfjyry?xfjyjgTywysbm="+xfjyjgTywysbm
+    })
+}
+
+function saveXfjyry(selectContent) {
+    $("#fzrTywysbm").val(selectContent.xfjyryTywysbm);
+    $("#fzrXm").val(selectContent.xm);
+    $("#fzrLxdh").val(selectContent.ydLxdh);
+}
