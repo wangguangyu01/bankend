@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 消防救援人员
@@ -30,4 +31,18 @@ public interface XfjyryDao {
 	int remove(String XFJYRY_TYWYSBM);
 	
 	int batchRemove(String[] xfjyryTywysbms);
+
+	/**
+	 * 删除掉消防救援人员与系统用户的关联关系
+	 * @param userIdList
+	 * @return
+	 */
+    int updateUserIdForNull(@Param("userIdList") List<String> userIdList);
+
+	/**
+	 * 根据主键，查找关联的全部UserId集合
+	 * @param xfjyryTywysbms
+	 * @return
+	 */
+	List<String> findUserIdByXfjyryTywysbms(String[] xfjyryTywysbms);
 }

@@ -24,6 +24,11 @@ public interface UserService {
 
 	int update(UserDO user);
 
+	/**
+	 * 删除用户，并更新掉【消防救援人员】表的关联关系
+	 * @param userId
+	 * @return
+	 */
 	int remove(Long userId);
 
 	int batchremove(Long[] userIds);

@@ -300,12 +300,7 @@ public class XfjyryController extends BaseController {
     @ResponseBody
     @RequiresPermissions("jczy:xfjyry:remove")
     public R remove(String xfjyryTywysbm) {
-        XfjyryDO xfjyryDO = xfjyryService.get(xfjyryTywysbm);
-
         if (xfjyryService.remove(xfjyryTywysbm) > 0) {
-            if(StringUtils.isNotBlank(xfjyryDO.getUserid())){
-                userService.remove(Long.parseLong(xfjyryDO.getUserid()));
-            }
             return R.ok();
         }
         return R.error();

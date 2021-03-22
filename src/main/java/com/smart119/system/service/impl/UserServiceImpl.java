@@ -8,6 +8,7 @@ import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.domain.FileDO;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
+import com.smart119.jczy.dao.XfjyryDao;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
@@ -44,6 +45,8 @@ public class UserServiceImpl implements UserService {
     private BootdoConfig bootdoConfig;
     @Autowired
     DeptService deptService;
+    @Autowired
+    private XfjyryDao xfjyryMapper;
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
@@ -116,8 +119,12 @@ public class UserServiceImpl implements UserService {
 
     //    @CacheEvict(value = "user")
     @Override
+    @Transactional
     public int remove(Long userId) {
         userRoleMapper.removeByUserId(userId);
+        List<String> list = new ArrayList<>();
+        list.add(userId.toString());
+        xfjyryMapper.updateUserIdForNull(list);
         return userMapper.remove(userId);
     }
 
@@ -164,6 +171,11 @@ public class UserServiceImpl implements UserService {
     public int batchremove(Long[] userIds) {
         int count = userMapper.batchRemove(userIds);
         userRoleMapper.batchRemoveByUserId(userIds);
+        List<String> list = new ArrayList<>();
+        for(Long u : userIds){
+            list.add(u.toString());
+        }
+        xfjyryMapper.updateUserIdForNull(list);
         return count;
     }
 

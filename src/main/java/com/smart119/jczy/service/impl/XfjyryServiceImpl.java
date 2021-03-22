@@ -1,13 +1,15 @@
 package com.smart119.jczy.service.impl;
 
 import com.smart119.common.utils.MD5Utils;
-import com.smart119.common.utils.StringUtils;
 import com.smart119.jczy.dao.XfjyryDao;
 import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.jczy.service.XfjyryService;
+import com.smart119.system.dao.UserDao;
+import com.smart119.system.dao.UserRoleDao;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,12 @@ import java.util.Map;
 public class XfjyryServiceImpl implements XfjyryService {
 	@Autowired
 	private XfjyryDao xfjyryDao;
+
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private UserRoleDao userRoleDao;
 
 	@Autowired
 	private DeptService deptService;
@@ -49,6 +57,7 @@ public class XfjyryServiceImpl implements XfjyryService {
 	@Transactional
 	@Override
 	public int save(XfjyryDO xfjyry){
+
 		if(StringUtils.equals(xfjyry.getIsCreateUser(),"1")){
 
 			//验证用户名是否重复
@@ -89,12 +98,29 @@ public class XfjyryServiceImpl implements XfjyryService {
 	}
 
 	@Override
+	@Transactional
 	public int remove(String xfjyryTywysbm){
+		XfjyryDO xfjyryDO = xfjyryDao.get(xfjyryTywysbm);
+		if(StringUtils.isNotBlank(xfjyryDO.getUserid())){
+			userService.remove(Long.parseLong(xfjyryDO.getUserid()));
+		}
 		return xfjyryDao.remove(xfjyryTywysbm);
 	}
 
 	@Override
+	@Transactional
 	public int batchRemove(String[] xfjyryTywysbms){
+		//根据xfjyryTywysbms查找userId的集合
+		List<String> userIdList = xfjyryDao.findUserIdByXfjyryTywysbms(xfjyryTywysbms);
+		Long [] userIdArry = new Long[userIdList.size()];
+		for(int i = 0; i < userIdList.size(); i++){
+			userIdArry[i] = Long.parseLong(userIdList.get(i));
+		}
+		//批量删除用户权限
+		userRoleDao.batchRemoveByUserId(userIdArry);
+		//批量删除用户
+		userDao.batchRemove(userIdArry);
+		//批量删除消防救援人员
 		return xfjyryDao.batchRemove(xfjyryTywysbms);
 	}
 

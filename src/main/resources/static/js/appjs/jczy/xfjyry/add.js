@@ -24,8 +24,21 @@ $().ready(function() {
     $("input[name='isCreateUser']").click(function(){
         if("1" == $('input:radio[name="isCreateUser"]:checked').val()){
             $('#roleDiv').show();
+            $('#ydLxdh').rules('add',{
+                remote:{
+                    url : "/sys/user/exit", // 后台处理程序
+                    type : "post", // 数据发送方式
+                    dataType : "json", // 接受数据格式
+                    data : { // 要传递的数据
+                        username : function() {
+                            return $("#ydLxdh").val();
+                        }
+                    }
+                }
+            });
         }else{
             $('#roleDiv').hide();
+            $('#ydLxdh').rules('remove','remote');
         }
     })
 
@@ -67,18 +80,7 @@ function validateRule() {
 				required : true
 			},
             ydLxdh : {
-                required : true,
-                minlength : 2,
-                remote : {
-                    url : "/sys/user/exit", // 后台处理程序
-                    type : "post", // 数据发送方式
-                    dataType : "json", // 接受数据格式
-                    data : { // 要传递的数据
-                        username : function() {
-                            return $("#ydLxdh").val();
-                        }
-                    }
-                }
+                required : true
             },
             isCreateUser : {
                 required : true
@@ -96,7 +98,7 @@ function validateRule() {
                 required : icon + "请选择是否创建用户"
             }
 		}
-	})
+    })
 }
 
 var openDept = function(objId){

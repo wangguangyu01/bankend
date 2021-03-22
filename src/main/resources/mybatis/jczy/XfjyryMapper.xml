@@ -149,6 +149,15 @@
             <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
         </where>
     </select>
+    <select id="findUserIdByXfjyryTywysbms" resultType="java.lang.String">
+        select `userid` from jczy_xfjyry
+        WHERE
+            XFJYRY_TYWYSBM in
+            <foreach item="xfjyryTywysbm" collection="array" open="(" separator="," close=")">
+                #{xfjyryTywysbm}
+            </foreach>
+            AND userid IS NOT NULL AND userid != ''
+    </select>
 
     <insert id="save" parameterType="com.smart119.jczy.domain.XfjyryDO">
 		insert into jczy_xfjyry
@@ -282,5 +291,13 @@
             #{xfjyryTywysbm}
         </foreach>
     </delete>
+
+
+    <update id="updateUserIdForNull">
+        update jczy_xfjyry set `userid` = NULL where `userid` IN
+        <foreach collection="userIdList" item="userid" open="(" separator="," close=")">
+            #{userid}
+        </foreach>
+    </update>
 
 </mapper>
