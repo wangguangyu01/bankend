@@ -58,7 +58,9 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-							<input type="hidden" id="xfjyryTywysbm" name="xfjyryTywysbm"th:value="${xfjyry.xfjyryTywysbm}" />
+							<input type="hidden" id="xfjyryTywysbm" name="xfjyryTywysbm" th:value="${xfjyry.xfjyryTywysbm}" />
+							<input type="hidden" id="userid" name="userid" th:value="${xfjyry.userid}" />
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">姓名：</label>
 								<div class="col-sm-4">
@@ -307,6 +309,21 @@
 									<input id="ydLxdh" name="ydLxdh" class="form-control" type="text" th:value="${xfjyry.ydLxdh}" required>
 								</div>
 
+							</div>
+							<div class="form-group" th:if="${#strings.isEmpty(xfjyry.userid)}" >
+								<label class="col-sm-2 control-label">是否添加用户:</label>
+								<div class="col-sm-4">
+									<label class="radio-inline"> <input type="radio" name="isCreateUser" value="1"/> 是</label>
+									<label class="radio-inline"> <input type="radio" name="isCreateUser" checked="checked" value="0"/> 否</label>
+								</div>
+							</div>
+							<div class="form-group" id="roleDiv" style="display: none;" >
+								<label class="col-sm-2 control-label">角色</label>
+								<div class="col-sm-8">
+									<label th:each="role:${roles}" class="checkbox-inline">
+										<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}">
+									</label>
+								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">内网_电子信箱：</label>

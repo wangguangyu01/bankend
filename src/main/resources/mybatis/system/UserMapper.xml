@@ -13,6 +13,7 @@
         from sys_user
         <where>
             <if test="userId != null and userId != ''">and user_id = #{userId}</if>
+            <if test="notThisUserId != null and notThisUserId != ''">and user_id != #{notThisUserId}</if>
             <if test="username != null and username != ''">and username = #{username}</if>
             <if test="name != null and name != ''">and name = #{name}</if>
             <if test="password != null and password != ''">and password = #{password}</if>

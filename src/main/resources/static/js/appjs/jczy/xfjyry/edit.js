@@ -25,6 +25,45 @@ $().ready(function() {
 
     $("#sfzjPdbz option[value='"+$("#sfzjPdbz_val").val()+"']").attr("selected","selected");  //是否专家
     initFileInput("input-id");
+
+    var userid = $('#userid').val();
+    if(userid != ""){
+        //用户不为空，验证ydLxdh是否存在其他用户重名
+        $('#ydLxdh').rules('add',{
+            remote:{
+                url : "/sys/user/exit", // 后台处理程序
+                type : "post", // 数据发送方式
+                dataType : "json", // 接受数据格式
+                data : { // 要传递的数据
+                    username : function() {
+                        return $("#ydLxdh").val();
+                    },
+                    notThisUserId : userid
+                }
+            }
+        });
+    }
+
+    $("input[name='isCreateUser']").click(function(){
+        if("1" == $('input:radio[name="isCreateUser"]:checked').val()){
+            $('#roleDiv').show();
+            $('#ydLxdh').rules('add',{
+                remote:{
+                    url : "/sys/user/exit", // 后台处理程序
+                    type : "post", // 数据发送方式
+                    dataType : "json", // 接受数据格式
+                    data : { // 要传递的数据
+                        username : function() {
+                            return $("#ydLxdh").val();
+                        }
+                    }
+                }
+            });
+        }else{
+            $('#roleDiv').hide();
+            $('#ydLxdh').rules('remove','remote');
+        }
+    })
 });
 
 $.validator.setDefaults({
@@ -59,12 +98,25 @@ function validateRule() {
 		rules : {
 			name : {
 				required : true
-			}
+			},
+            ydLxdh : {
+                required : true
+            },
+            isCreateUser : {
+                required : true
+            }
 		},
 		messages : {
 			name : {
 				required : icon + "请输入名字"
-			}
+			},
+            ydLxdh : {
+                required : icon + "请输入移动_联系电话",
+                remote : icon + "移动_联系电话已经存在"
+            },
+            isCreateUser : {
+                required : icon + "请选择是否创建用户"
+            }
 		}
 	})
 }

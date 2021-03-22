@@ -136,6 +136,11 @@ public class XfjyryController extends BaseController {
         model.addAttribute("attachmentDOList", attachmentDOList);
         model.addAttribute("xfjyry", xfjyry);
 
+        if(StringUtils.isBlank(xfjyry.getUserid())){
+            List<RoleDO> roles = roleService.list();
+            model.addAttribute("roles", roles);
+        }
+
         return "jczy/xfjyry/edit";
     }
 
