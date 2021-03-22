@@ -1,6 +1,7 @@
 var prefix = "/sys/menu"
 $(function() {
 	validateRule();
+  getAppList('appId',null);
 	//打开图标列表
     $("#ico-btn").click(function(){
         layer.open({
@@ -57,11 +58,37 @@ function validateRule() {
 		},
 		messages : {
 			name : {
-				required : icon + "请输入菜单名"
+				required : icon + "请输入名称"
 			},
 			type : {
-				required : icon + "请选择菜单类型"
+				required : icon + "请选择资源类型"
 			}
 		}
 	})
+}
+function getAppList(objId,selected){
+  $.ajax({
+    url : "/sys/appInfo/all",
+    type : "post",
+    data : "{\"status\":\"enable\"}",
+    contentType:"application/json",
+    success : function(result) {
+      if(result.code===0){
+        var list=result.data;
+        if(list!= null && list!=undefined && list.length>0){
+          $("#"+objId).empty();
+          $("#"+objId).append('<option value="" >--请选择--</option>');
+          $.each(list,function(i,item){
+            if(selected!=null && selected==item.value){
+              $("#"+objId).append('<option id="'+item.id+'" value="'+item.id+'" selected="selected">'+item.name+'</option>');
+            }else{
+              $("#"+objId).append('<option id="'+item.id+'" value="'+item.id+'">'+item.name+'</option>');
+            }
+          });
+        }
+      }else {
+        console.log("msg=="+result.msg);
+      }
+    }
+  });
 }

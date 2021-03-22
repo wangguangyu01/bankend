@@ -18,7 +18,7 @@ import redis.clients.jedis.JedisPoolConfig;
 public class RedisManager {
 
     @Value("${spring.redis.host}")
-    private String host = "127.0.0.1";
+    private String host;
 
     @Value("${spring.redis.port}")
     private int port = 6379;

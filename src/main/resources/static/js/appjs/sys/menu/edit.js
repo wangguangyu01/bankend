@@ -1,7 +1,8 @@
 var prefix = "/sys/menu"
 $(function() {
 	validateRule();
-
+	var appId=$("#appIdValue").val();
+  getAppList('appId',appId);
 	//打开图标列表
     $("#ico-btn").click(function(){
         layer.open({
@@ -88,4 +89,31 @@ function validateRule() {
 			}
 		}
 	})
+}
+
+function getAppList(objId,selected){
+  $.ajax({
+    url : "/sys/appInfo/all",
+    type : "post",
+    data : "{\"status\":\"enable\"}",
+    contentType:"application/json",
+    success : function(result) {
+      if(result.code===0){
+        var list=result.data;
+        if(list!= null && list!=undefined && list.length>0){
+          $("#"+objId).empty();
+          $("#"+objId).append('<option value="" >--请选择--</option>');
+          $.each(list,function(i,item){
+            if(selected!=null && selected==item.value){
+              $("#"+objId).append('<option id="'+item.id+'" value="'+item.id+'" selected="selected">'+item.name+'</option>');
+            }else{
+              $("#"+objId).append('<option id="'+item.id+'" value="'+item.id+'">'+item.name+'</option>');
+            }
+          });
+        }
+      }else {
+        console.log("msg=="+result.msg);
+      }
+    }
+  });
 }

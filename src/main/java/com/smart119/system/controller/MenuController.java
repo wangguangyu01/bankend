@@ -88,7 +88,7 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:edit")
 	@PostMapping("/update")
 	@ResponseBody
-	R update(MenuDO menu) {
+	public R update(MenuDO menu) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}

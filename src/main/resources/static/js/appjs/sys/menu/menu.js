@@ -61,20 +61,29 @@ var load = function () {
                             if (item.type === 2) {
                                 return '<span class="label label-warning">按钮</span>';
                             }
+                            if (item.type === 3) {
+                            return '<span class="label label-warning">接口</span>';
+                           }
                         }
                     },
                     {
                         title: '地址',
                         valign: 'center',
-                        width : '20%',
+                        width : '15%',
                         field: 'url'
                     },
                     {
                         title: '权限标识',
                         valign: 'center',
-                        width : '20%',
+                        width : '15%',
                         field: 'perms'
                     },
+                  {
+                    title: '所属应用',
+                    valign: 'center',
+                    width : '10%',
+                    field: 'appName'
+                  },
                     {
                         title: '操作',
                         field: 'id',

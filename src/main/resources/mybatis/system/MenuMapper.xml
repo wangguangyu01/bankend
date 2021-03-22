@@ -11,26 +11,30 @@
 
 	<select id="list" resultType="com.smart119.system.domain.MenuDO">
 		select
-		`menu_id`,`parent_id`,`name`,`url`,`perms`,`type`,`icon`,`order_num`,`gmt_create`,`gmt_modified`
-		from sys_menu
+		t.`menu_id`,t.`parent_id`,t.`name`,t.`url`,t.`perms`,t.`type`,t.`icon`,t.`order_num`,t.`gmt_create`,t.`gmt_modified`,app.`name` as app_name
+		from sys_menu t
+		left JOIN
+		sys_app_info app
+		ON
+		t.app_id=app.id
 		<where>
-			<if test="menuId != null and menuId != ''"> and menu_id = #{menuId} </if>
-			<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>
-			<if test="name != null and name != ''"> and name = #{name} </if>
-			<if test="url != null and url != ''"> and url = #{url} </if>
-			<if test="perms != null and perms != ''"> and perms = #{perms} </if>
-			<if test="type != null and type != ''"> and type = #{type} </if>
-			<if test="icon != null and icon != ''"> and icon = #{icon} </if>
-			<if test="orderNum != null and orderNum != ''"> and order_num = #{orderNum} </if>
-			<if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
-			<if test="gmtModified != null and gmtModified != ''"> and gmt_modified = #{gmtModified} </if>
+			<if test="menuId != null and menuId != ''"> and t.menu_id = #{menuId} </if>
+			<if test="parentId != null and parentId != ''"> and t.parent_id = #{parentId} </if>
+			<if test="name != null and name != ''"> and t.`name` = #{name} </if>
+			<if test="url != null and url != ''"> and t.url = #{url} </if>
+			<if test="perms != null and perms != ''"> and t.perms = #{perms} </if>
+			<if test="type != null and type != ''"> and t.type = #{type} </if>
+			<if test="icon != null and icon != ''"> and t.icon = #{icon} </if>
+			<if test="orderNum != null and orderNum != ''"> and t.order_num = #{orderNum} </if>
+			<if test="gmtCreate != null and gmtCreate != ''"> and t.gmt_create = #{gmtCreate} </if>
+			<if test="gmtModified != null and gmtModified != ''"> and t.gmt_modified = #{gmtModified} </if>
 		</where>
 		<choose>
 			<when test="sort != null and sort.trim() != ''">
-				order by ${sort} ${order}
+				order by t.${sort} ${order}
 			</when>
 			<otherwise>
-				order by menu_id desc
+				order by t.menu_id desc
 			</otherwise>
 		</choose>
 		<if test="offset != null and limit != null">
@@ -66,7 +70,8 @@
 		`icon`,
 		`order_num`,
 		`gmt_create`,
-		`gmt_modified`
+		`gmt_modified`,
+		`app_id`,
 		)
 		values
 		(
@@ -78,7 +83,8 @@
 		#{icon},
 		#{orderNum},
 		#{gmtCreate},
-		#{gmtModified}
+		#{gmtModified},
+		#{appId}
 		)
 	</insert>
 
@@ -94,6 +100,7 @@
 			<if test="orderNum != null">`order_num` = #{orderNum}, </if>
 			<if test="gmtCreate != null">`gmt_create` = #{gmtCreate}, </if>
 			<if test="gmtModified != null">`gmt_modified` = #{gmtModified}</if>
+			<if test="appId != null">`app_id` = #{appId}</if>
 		</set>
 		where menu_id = #{menuId}
 	</update>

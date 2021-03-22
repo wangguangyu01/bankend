@@ -22,6 +22,9 @@ import com.smart119.system.dao.UserDao;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.MenuService;
 
+/**
+ * @author ThinkPad
+ */
 public class UserRealm extends AuthorizingRealm {
 /*	@Autowired
 	UserDao userMapper;
