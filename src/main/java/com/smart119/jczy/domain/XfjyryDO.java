@@ -101,6 +101,15 @@ public class XfjyryDO implements Serializable {
 	//人员岗位类别-简化  1.指挥员| 2.驾驶员 |3.战斗员
 	private String rylbJh;
 
+	/**
+	 * 是否创建用户 0-否  1-是 (辅助字段，数据表无该字段)
+	 */
+	private String isCreateUser;
+	/**
+	 * 创建用户的权限数组 (辅助字段，数据表无该字段)
+	 */
+	private Long [] role;
+
 
 	public String getUserid() {
 		return userid;
@@ -545,5 +554,21 @@ public class XfjyryDO implements Serializable {
 
 	public void setRylbJh(String rylbJh) {
 		this.rylbJh = rylbJh;
+	}
+
+	public Long[] getRole() {
+		return role;
+	}
+
+	public void setRole(Long[] role) {
+		this.role = role;
+	}
+
+	public String getIsCreateUser() {
+		return isCreateUser;
+	}
+
+	public void setIsCreateUser(String isCreateUser) {
+		this.isCreateUser = isCreateUser;
 	}
 }

@@ -10,10 +10,12 @@ import com.smart119.common.utils.MD5Utils;
 import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.DeptDO;
+import com.smart119.system.domain.RoleDO;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.service.RoleService;
 import com.smart119.system.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -78,7 +80,10 @@ public class XfjyryController extends BaseController {
 
     @GetMapping("/add")
     @RequiresPermissions("jczy:xfjyry:add")
-    String add() {
+    String add(Model model) {
+        //查询现有角色
+        List<RoleDO> roles = roleService.list();
+        model.addAttribute("roles", roles);
         return "jczy/xfjyry/add";
     }
 
@@ -298,7 +303,9 @@ public class XfjyryController extends BaseController {
         XfjyryDO xfjyryDO = xfjyryService.get(xfjyryTywysbm);
 
         if (xfjyryService.remove(xfjyryTywysbm) > 0) {
-            userService.remove(Long.parseLong(xfjyryDO.getUserid()));
+            if(StringUtils.isNotBlank(xfjyryDO.getUserid())){
+                userService.remove(Long.parseLong(xfjyryDO.getUserid()));
+            }
             return R.ok();
         }
         return R.error();

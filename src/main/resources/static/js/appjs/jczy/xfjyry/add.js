@@ -19,6 +19,16 @@ $().ready(function() {
     getSelectAll("XFJYXJBDM","XFJYXJBDM-DIV","xfjyxjbdm","xfjyxjbdm-title");  //消防救援衔级别
     getSelectByType("rygwlb_jh","rylbJh",null);  //人员岗位简类
     initFileInput("input-id");
+
+
+    $("input[name='isCreateUser']").click(function(){
+        if("1" == $('input:radio[name="isCreateUser"]:checked').val()){
+            $('#roleDiv').show();
+        }else{
+            $('#roleDiv').hide();
+        }
+    })
+
 });
 
 $.validator.setDefaults({
@@ -55,12 +65,36 @@ function validateRule() {
 		rules : {
 			name : {
 				required : true
-			}
+			},
+            ydLxdh : {
+                required : true,
+                minlength : 2,
+                remote : {
+                    url : "/sys/user/exit", // 后台处理程序
+                    type : "post", // 数据发送方式
+                    dataType : "json", // 接受数据格式
+                    data : { // 要传递的数据
+                        username : function() {
+                            return $("#ydLxdh").val();
+                        }
+                    }
+                }
+            },
+            isCreateUser : {
+                required : true
+            }
 		},
 		messages : {
 			name : {
 				required : icon + "请输入姓名"
-			}
+			},
+            ydLxdh : {
+                required : icon + "请输入移动_联系电话",
+                remote : icon + "移动_联系电话已经存在"
+            },
+            isCreateUser : {
+                required : icon + "请选择是否创建用户"
+            }
 		}
 	})
 }

@@ -296,6 +296,21 @@
 
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">是否添加用户:</label>
+								<div class="col-sm-4">
+									<label class="radio-inline"> <input type="radio" name="isCreateUser" value="1"/> 是</label>
+									<label class="radio-inline"> <input type="radio" name="isCreateUser" value="0"/> 否</label>
+								</div>
+							</div>
+							<div class="form-group" id="roleDiv" style="display: none;" >
+								<label class="col-sm-2 control-label">角色</label>
+								<div class="col-sm-8">
+									<label th:each="role:${roles}" class="checkbox-inline">
+										<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}">
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-2 control-label">内网_电子信箱：</label>
 								<div class="col-sm-4">
 									<input id="nwDzxx" name="nwDzxx" class="form-control" type="text">
