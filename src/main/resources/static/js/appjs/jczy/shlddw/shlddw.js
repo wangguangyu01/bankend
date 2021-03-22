@@ -1,6 +1,7 @@
 
 var prefix = "/jczy/shlddw"
 $(function() {
+    getTreeData();
 	load();
 });
 
@@ -32,8 +33,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					           dwmc:$('#dwmc').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -70,7 +71,7 @@ function load() {
 								},
 								{
 									field : 'area',
-									title : '股票代码',
+									title : '行政区划',
                                     formatter:function( value,row,index ){
                                         //如何使用拿到的多个数据 直接返回拼接好的html;
                                         var html = "<span>"+row["province"]+"</span><span>"+row["city"]+"</span><span>"+row["area"]+"</span>"
@@ -177,3 +178,41 @@ function batchRemove() {
 
 	});
 }
+
+function getTreeData() {
+    $.ajax({
+        type : "GET",
+        url : "/system/sysDept/tree",
+        success : function(tree) {
+            loadTree(tree);
+        }
+    });
+}
+function loadTree(tree) {
+    $('#jstree').jstree({
+        'core' : {
+            'data' : tree
+        },
+        "plugins" : [ "search" ]
+    });
+    $('#jstree').jstree().open_all();
+}
+$('#jstree').on("changed.jstree", function(e, data) {
+    //data.node.original.attributes.xfjyjgTywysbm
+    if (data.selected == -1) {
+        var opt = {
+            query : {
+                deptId : '',
+            }
+        }
+        $('#exampleTable').bootstrapTable('refresh', opt);
+    } else {
+        var opt = {
+            query : {
+                deptId : data.selected[0],
+            }
+        }
+        $('#exampleTable').bootstrapTable('refresh',opt);
+    }
+
+});

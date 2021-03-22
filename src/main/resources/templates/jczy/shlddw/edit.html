@@ -18,7 +18,7 @@
 
 								<label class="col-sm-2 control-label">联动单位类别：</label>
 								<div class="col-sm-4">
-									<input id="lddwlbdm_val" class="form-control" type="text" th:value="${shlddw.lddwlbdm}" type="hidden">
+									<input id="lddwlbdm_val" class="form-control" th:value="${shlddw.lddwlbdm}" type="hidden">
 									<select data-placeholder="联动单位类别" name="lddwlbdm" title="联动单位类别" id="lddwlbdm"
 											class="form-control chosen-select" tabindex="2" required>
 										<option value="">--选择类别--</option>
@@ -41,8 +41,10 @@
 								<label class="col-sm-2 control-label">消防救援机构：</label>
 								<div class="col-sm-4">
 									<!--<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="form-control" type="text">-->
+
+									<!--th:value="${shlddw.xfjyjgTywysbm_name}"-->
 									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${shlddw.xfjyjgTywysbm}"> <input
-										id="xfjyjgTywysbmName" name="xfjyjgTywysbmName" class="form-control" type="text" th:value="${shlddw.xfjyjgTywysbm_name}"
+										id="xfjyjgTywysbmName" name="xfjyjgTywysbmName" class="form-control" type="text" th:value="${shlddw.xfjyjg}"
 										style="cursor: pointer;" onclick="openDept('xfjyjgTywysbm')"
 										readonly="readonly" placeholder="消防救援机构" title="消防救援机构" required>
 								</div>
@@ -96,7 +98,7 @@
 									</select>
 								</div>
 								<div class="col-sm-3">
-									<input type="hidden" id="xzqhdmVal" th:value="${xfjyry.xzqhdm}"/>
+									<input type="hidden" id="xzqhdmVal" th:value="${shlddw.xzqhdm}"/>
 									<select data-placeholder="区/县" name="xzqhdm" title="区/县" id="xzqhdm"
 											class="form-control chosen-select" tabindex="2" required>
 										<option value="">--选择类别--</option>
@@ -106,19 +108,19 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">保障能力_简要情况：</label>
 								<div class="col-sm-10">
-									<textarea id="bznlJyqk" name="bznlJyqk" class="form-control" th:text="${xfjyry.bznlJyqk}"></textarea>
+									<textarea id="bznlJyqk" name="bznlJyqk" class="form-control" th:text="${shlddw.bznlJyqk}"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">保障概述_简要情况：</label>
 								<div class="col-sm-10">
-									<textarea id="bzgsJyqk" name="bzgsJyqk" class="form-control" th:text="${xfjyry.bzgsJyqk}"></textarea>
+									<textarea id="bzgsJyqk" name="bzgsJyqk" class="form-control" th:text="${shlddw.bzgsJyqk}"></textarea>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">单位简要情况：</label>
 								<div class="col-sm-10">
-									<textarea id="dwjyqk" name="dwjyqk" class="form-control" th:text="${xfjyry.dwjyqk}"></textarea>
+									<textarea id="dwjyqk" name="dwjyqk" class="form-control" th:text="${shlddw.dwjyqk}"></textarea>
 								</div>
 							</div>
 																					<div class="form-group">

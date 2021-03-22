@@ -1,11 +1,11 @@
 package com.smart119.jczy.controller;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.service.DictService;
+import com.smart119.system.domain.DeptDO;
+import com.smart119.system.service.DeptService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -37,7 +37,11 @@ import com.smart119.common.utils.R;
 public class ShlddwController  extends BaseController {
 	@Autowired
 	private ShlddwService shlddwService;
-	
+	@Autowired
+	private DictService dictService;
+	@Autowired
+	private DeptService deptService;
+
 	@GetMapping()
 	@RequiresPermissions("jczy:shlddw:shlddw")
 	String Shlddw(){
@@ -50,6 +54,13 @@ public class ShlddwController  extends BaseController {
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
+		List<DeptDO> deptList = new ArrayList<>();
+		if(params.get("deptId")!=null && !params.get("deptId").equals("")){
+			deptList = deptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+		}else{
+			deptList = deptService.listChildren(getUser().getDeptId());
+		}
+		query.put("deptList",deptList);
 		List<ShlddwDO> shlddwList = shlddwService.list(query);
 		int total = shlddwService.count(query);
 		PageUtils pageUtils = new PageUtils(shlddwList, total);
@@ -66,6 +77,10 @@ public class ShlddwController  extends BaseController {
 	@RequiresPermissions("jczy:shlddw:edit")
 	String edit(@PathVariable("shlddwTywysbm") String shlddwTywysbm,Model model){
 		ShlddwDO shlddw = shlddwService.get(shlddwTywysbm);
+		String city = dictService.findParentValue(shlddw.getXzqhdm());
+		String province = dictService.findParentValue(city);
+		model.addAttribute("province", province);  //籍贯代码-省
+		model.addAttribute("city", city);  //籍贯代码-市
 		model.addAttribute("shlddw", shlddw);
 	    return "jczy/shlddw/edit";
 	}

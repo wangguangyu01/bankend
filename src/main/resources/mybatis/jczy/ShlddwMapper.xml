@@ -4,7 +4,34 @@
 <mapper namespace="com.smart119.jczy.dao.ShlddwDao">
 
 	<select id="get" resultType="com.smart119.jczy.domain.ShlddwDO">
-		select `SHLDDW_TYWYSBM`,`DWMC`,`LDDWLBDM`,`DWDZ`,`CZHM`,`XFJYJG_TYWYSBM`,`DWJYQK`,`BZNL_JYQK`,`BZGS_JYQK`,`LXR`,`LXDH`,`DQJD`,`DQWD`,`XZQHDM`,`cdate`,`status`,`cperson` from jczy_shlddw where SHLDDW_TYWYSBM = #{value}
+		select
+		shlddw.`SHLDDW_TYWYSBM`,
+		shlddw.`DWMC`,
+		shlddw.`LDDWLBDM`,
+		shlddw.`DWDZ`,
+		shlddw.`CZHM`,
+		shlddw.`XFJYJG_TYWYSBM`,
+		shlddw.`DWJYQK`,
+		shlddw.`BZNL_JYQK`,
+		shlddw.`BZGS_JYQK`,
+		shlddw.`LXR`,
+		shlddw.`LXDH`,
+		shlddw.`DQJD`,
+		shlddw.`DQWD`,
+		shlddw.`XZQHDM`,
+		shlddw.`cdate`,
+		shlddw.`status`,
+		shlddw.`cperson`,
+		dept.DWMC as xfjyjg,
+		d5.`name` as jgdm,
+        d6.`name` as city,
+        d7.`name` as province
+		from jczy_shlddw shlddw
+		LEFT JOIN sys_dept dept ON shlddw.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		LEFT JOIN sys_dict d5 ON shlddw.XZQHDM = d5.`value`
+        LEFT JOIN sys_dict d6 ON d6.id = d5.parent_id
+        LEFT JOIN sys_dict d7 ON d7.id = d6.parent_id
+		where SHLDDW_TYWYSBM = #{value}
 	</select>
 
 	<select id="list" resultType="com.smart119.jczy.domain.ShlddwDO">
@@ -58,6 +85,11 @@
 		  		  <if test="cdate != null and cdate != ''"> and shlddw.cdate = #{cdate} </if>
 		  		  <if test="status != null and status != ''"> and shlddw.status = #{status} </if>
 		  		  <if test="cperson != null and cperson != ''"> and shlddw.cperson = #{cperson} </if>
+					<if test="deptList != null and deptList.size() > 0">and shlddw.XFJYJG_TYWYSBM in
+						<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+							#{item.xfjyjgTywysbm}
+						</foreach>
+					</if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">

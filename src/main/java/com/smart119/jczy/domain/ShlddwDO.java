@@ -60,6 +60,9 @@ public class ShlddwDO implements Serializable {
 
 	private String province;
 
+	private String xfjyjg;
+
+
 
 	/**
 	 * 设置：社会联动单位统一唯一识别码
@@ -288,6 +291,14 @@ public class ShlddwDO implements Serializable {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public String getXfjyjg() {
+		return xfjyjg;
+	}
+
+	public void setXfjyjg(String xfjyjg) {
+		this.xfjyjg = xfjyjg;
 	}
 
 	public String getCity() {
