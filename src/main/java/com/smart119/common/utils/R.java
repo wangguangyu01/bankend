@@ -1,5 +1,9 @@
 package com.smart119.common.utils;
 
+import com.smart119.common.enums.ResponseStatusEnum;
+import org.springframework.util.ObjectUtils;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +55,33 @@ public class R extends HashMap<String, Object> {
 	@Override
 	public R put(String key, Object value) {
 		super.put(key, value);
+		return this;
+	}
+    /**
+     * 传入responseStatusEnum枚举
+     * @param responseStatusEnum
+     * @return
+     */
+    public static R error(ResponseStatusEnum responseStatusEnum) {
+        R r = new R();
+        r.put("code", responseStatusEnum.getCode());
+        r.put("msg", responseStatusEnum.getDesc());
+        return r;
+    }
+	public R setExtraNote(String extraNote) {
+		super.put("extraNote", extraNote);
+		return this;
+	}
+	public R setOnlyExtraNote(Object id) {
+		if(!ObjectUtils.isEmpty(id)) {
+			super.put("extraNote", new StringBuilder("数据唯一标识为 ").append(id).append(",").toString());
+		}
+		return this;
+	}
+	public R setOnlyExtraNote(Object[] id) {
+		if(!ObjectUtils.isEmpty(id)) {
+			super.put("extraNote", new StringBuilder("数据唯一标识为 ").append(Arrays.toString(id)).append(",").toString());
+		}
 		return this;
 	}
 }
