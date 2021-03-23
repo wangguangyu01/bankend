@@ -5,11 +5,22 @@ import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 日期处理
  */
 public class DateUtils {
+
+
+    /**
+     * yyyy-MM-dd HH:mm:ss校验格式
+     */
+    public final static String ELDATETIME = "^((\\d{2}(([02468][048])|([13579][26]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])))))|(\\d{2}(([02468][1235679])|([13579][01345789]))[\\-\\/\\s]?((((0?[13578])|(1[02]))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(3[01])))|(((0?[469])|(11))[\\-\\/\\s]?((0?[1-9])|([1-2][0-9])|(30)))|(0?2[\\-\\/\\s]?((0?[1-9])|(1[0-9])|(2[0-8]))))))(\\s(((0?[0-9])|([1-2][0-9]))\\:([0-5]?[0-9])((\\s)|(\\:([0-5]?[0-9])))))?$";
+
+
+
     private final static Logger logger = LoggerFactory.getLogger(DateUtils.class);
     /**
      * 时间格式(yyyy-MM-dd)
@@ -89,5 +100,26 @@ public class DateUtils {
         return r;
     }
     public static int xhTime(Date startDate) { long a = new Date().getTime(); long b = startDate.getTime(); int c = (int)((a - b) / 1000); return c; }
+
+    /**
+     * 校验日期时间格式的方法(只能校验格式, yyyy-MM-dd 或是yyyy-MM-dd HH:mm:ss)
+     * 如果校验完之后，加df.setLenient(true);将
+     * @param dateTimeStr
+     * @return
+     */
+    public static boolean validDateTime(String dateTimeStr) {
+        dateTimeStr = StringUtils.trim(dateTimeStr);
+        if (StringUtils.isBlank(dateTimeStr)) {
+            return false;
+        }
+        Pattern p = Pattern.compile(ELDATETIME);
+        Matcher m = p.matcher(dateTimeStr);
+        boolean flag = m.matches();
+        if (flag) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
