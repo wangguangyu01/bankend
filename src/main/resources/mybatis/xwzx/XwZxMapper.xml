@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.xwzx.dao.XwZxDao">
+
+    <select id="get" resultType="com.smart119.xwzx.domain.XwZxDO">
+		select `XW_ZX_ID`,`BT`,`ZX_NR`,`ZT`,`LL_CS`,`DZ_CS`,`DZ_USER_IDS`,`FBSJ`,`cdate`,`status`,`cpserson` from xw_zx where XW_ZX_ID = #{value}
+	</select>
+
+    <select id="list" resultType="com.smart119.xwzx.domain.XwZxDO">
+        select `XW_ZX_ID`,`BT`,`ZX_NR`,`ZT`,`LL_CS`,`DZ_CS`,`DZ_USER_IDS`,`FBSJ`,`cdate`,`status`,`cpserson` from xw_zx
+        <where>
+            `status`='0'
+            <if test="xwZxId != null and xwZxId != ''">and XW_ZX_ID = #{xwZxId}</if>
+            <if test="bt != null and bt != ''">and BT = #{bt}</if>
+            <if test="zxNr != null and zxNr != ''">and ZX_NR = #{zxNr}</if>
+            <if test="zt != null and zt != ''">and ZT = #{zt}</if>
+            <if test="llCs != null and llCs != ''">and LL_CS = #{llCs}</if>
+            <if test="dzCs != null and dzCs != ''">and DZ_CS = #{dzCs}</if>
+            <if test="dzUserIds != null and dzUserIds != ''">and DZ_USER_IDS = #{dzUserIds}</if>
+            <if test="fbsj != null and fbsj != ''">and FBSJ = #{fbsj}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="cpserson != null and cpserson != ''">and cpserson = #{cpserson}</if>
+            <if test="searchName != null and searchName != ''">and (BT like '%${searchName}%' or date_format(FBSJ,'%Y-%m-%d %H:%i:%s') like '%${searchName}%') </if>
+            <if test="searchZq != null and searchZq != ''">
+                <if test="searchZq == 1">
+                    and to_days(FBSJ) = to_days(now())
+                </if>
+                <if test="searchZq == 2">
+                    and DATE_SUB(CURDATE(), INTERVAL 3 DAY) <![CDATA[ <= ]]> date(FBSJ)
+                </if>
+                <if test="searchZq == 3">
+                    and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[ <= ]]> date(FBSJ)
+                </if>
+                <if test="searchZq == 4">
+                    and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[ <= ]]> date(FBSJ)
+                </if>
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by FBSJ desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from xw_zx
+        <where>
+            <if test="xwZxId != null and xwZxId != ''">and XW_ZX_ID = #{xwZxId}</if>
+            <if test="bt != null and bt != ''">and BT = #{bt}</if>
+            <if test="zxNr != null and zxNr != ''">and ZX_NR = #{zxNr}</if>
+            <if test="zt != null and zt != ''">and ZT = #{zt}</if>
+            <if test="llCs != null and llCs != ''">and LL_CS = #{llCs}</if>
+            <if test="dzCs != null and dzCs != ''">and DZ_CS = #{dzCs}</if>
+            <if test="dzUserIds != null and dzUserIds != ''">and DZ_USER_IDS = #{dzUserIds}</if>
+            <if test="fbsj != null and fbsj != ''">and FBSJ = #{fbsj}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="cpserson != null and cpserson != ''">and cpserson = #{cpserson}</if>
+            <if test="searchName != null and searchName != ''">and (BT like '%${searchName}%' or date_format(FBSJ,'%Y-%m-%d %H:%i:%s') like '%${searchName}%') </if>
+            <if test="searchZq != null and searchZq != ''">
+                <if test="searchZq == 1">
+                    and to_days(FBSJ) = to_days(now())
+                </if>
+                <if test="searchZq == 2">
+                    and DATE_SUB(CURDATE(), INTERVAL 3 DAY) <![CDATA[ <= ]]> date(FBSJ)
+                </if>
+                <if test="searchZq == 3">
+                    and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[ <= ]]> date(FBSJ)
+                </if>
+                <if test="searchZq == 4">
+                    and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[ <= ]]> date(FBSJ)
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.smart119.xwzx.domain.XwZxDO">
+		insert into xw_zx
+		(
+			`XW_ZX_ID`, 
+			`BT`, 
+			`ZX_NR`, 
+			`ZT`, 
+			`LL_CS`, 
+			`DZ_CS`, 
+			`DZ_USER_IDS`, 
+			`FBSJ`, 
+			`cdate`, 
+			`status`, 
+			`cpserson`
+		)
+		values
+		(
+			#{xwZxId}, 
+			#{bt}, 
+			#{zxNr}, 
+			#{zt}, 
+			#{llCs}, 
+			#{dzCs}, 
+			#{dzUserIds}, 
+			#{fbsj}, 
+			#{cdate}, 
+			#{status}, 
+			#{cpserson}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.smart119.xwzx.domain.XwZxDO">
+        update xw_zx
+        <set>
+            <if test="bt != null">`BT` = #{bt},</if>
+            <if test="zxNr != null">`ZX_NR` = #{zxNr},</if>
+            <if test="zt != null">`ZT` = #{zt},</if>
+            <if test="llCs != null">`LL_CS` = #{llCs},</if>
+            <if test="dzCs != null">`DZ_CS` = #{dzCs},</if>
+            <if test="dzUserIds != null">`DZ_USER_IDS` = #{dzUserIds},</if>
+            <if test="fbsj != null">`FBSJ` = #{fbsj},</if>
+            <if test="cdate != null">`cdate` = #{cdate},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="cpserson != null">`cpserson` = #{cpserson}</if>
+        </set>
+        where XW_ZX_ID = #{xwZxId}
+    </update>
+
+    <delete id="remove">
+		delete from xw_zx where XW_ZX_ID = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from xw_zx where XW_ZX_ID in
+        <foreach item="xwZxId" collection="array" open="(" separator="," close=")">
+            #{xwZxId}
+        </foreach>
+    </delete>
+
+</mapper>
