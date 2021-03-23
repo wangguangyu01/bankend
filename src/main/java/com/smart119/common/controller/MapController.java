@@ -63,9 +63,9 @@ public class MapController {
         params.put("status","0");
         List<BrqyDO> brqyDOS = brqyService.list(params);  //获得所有的避让区域
         if(brqyId!=null && !brqyId.equals("")){
-            brqyDOS = brqyDOS.parallelStream().filter(t->t.getCoordinatesBaidu()!=null && !brqyId.equals(t.getId())  ).collect(Collectors.toList());
+            brqyDOS = brqyDOS.parallelStream().filter(t->t.getCoordinatesGaode()!=null && !brqyId.equals(t.getId())  ).collect(Collectors.toList());
         }else{
-            brqyDOS = brqyDOS.parallelStream().filter(t->t.getCoordinatesBaidu()!=null).collect(Collectors.toList());
+            brqyDOS = brqyDOS.parallelStream().filter(t->t.getCoordinatesGaode()!=null).collect(Collectors.toList());
         }
         model.addAttribute("brqyList",brqyDOS);
         return "common/map/map3";

@@ -25,20 +25,20 @@
 		LEFT JOIN sys_dict dict
 		on brqy.type = dict.`value` and dict.type='ghljbrqylb'
         <where>  
-		  		  <if test="id != null and id != ''"> and brqy.id = #{id} </if>
-		  		  <if test="type != null and type != ''"> and brqy.type = #{type} </if>
-		  		  <if test="coordinatesBaidu != null and coordinatesBaidu != ''"> and brqy.coordinates_baidu = #{coordinatesBaidu} </if>
-		  		  <if test="coordinatesGaode != null and coordinatesGaode != ''"> and brqy.coordinates_gaode = #{coordinatesGaode} </if>
-		  		  <if test="remarks != null and remarks != ''"> and brqy.remarks = #{remarks} </if>
-		  		  <if test="cdate != null and cdate != ''"> and brqy.cdate = #{cdate} </if>
-		  		  <if test="status != null and status != ''"> and brqy.status = #{status} </if>
-		  		  <if test="cperson != null and cperson != ''"> and brqy.cperson = #{cperson} </if>
-					<if test="deptList != null and deptList.size() > 0">and brqy.XFJYJG_TYWYSBM in
-						<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
-							#{item.xfjyjgTywysbm}
-						</foreach>
-					</if>
-		  		</where>
+		  <if test="id != null and id != ''"> and brqy.id = #{id} </if>
+		  <if test="type != null and type != ''"> and brqy.type = #{type} </if>
+		  <if test="coordinatesBaidu != null and coordinatesBaidu != ''"> and brqy.coordinates_baidu = #{coordinatesBaidu} </if>
+		  <if test="coordinatesGaode != null and coordinatesGaode != ''"> and brqy.coordinates_gaode = #{coordinatesGaode} </if>
+		  <if test="remarks != null and remarks != ''"> and brqy.remarks = #{remarks} </if>
+		  <if test="cdate != null and cdate != ''"> and brqy.cdate = #{cdate} </if>
+		  <if test="status != null and status != ''"> and brqy.status = #{status} </if>
+		  <if test="cperson != null and cperson != ''"> and brqy.cperson = #{cperson} </if>
+			<if test="deptList != null and deptList.size() > 0">and brqy.XFJYJG_TYWYSBM in
+				<foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+					#{item.xfjyjgTywysbm}
+				</foreach>
+			</if>
+		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -76,7 +76,8 @@
 			`remarks`, 
 			`cdate`, 
 			`status`, 
-			`cperson`
+			`cperson`,
+			`XFJYJG_TYWYSBM`
 		)
 		values
 		(
@@ -87,7 +88,8 @@
 			#{remarks}, 
 			#{cdate}, 
 			#{status}, 
-			#{cperson}
+			#{cperson},
+			#{xfjyjgTywysbm}
 		)
 	</insert>
 	 
