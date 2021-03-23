@@ -6,6 +6,9 @@ $().ready(function() {
 	getSelectByType("JJSYZLXDM","jjsyzlxdm",$("#jjsyzlxdmVal").val());
 	getSelectByType("DWHZWHXFLYDM","dwhzwhxflydm",$("#dwhzwhxflydmVal").val());
 	getSelectByType("DWZRXZDM","dwzrxzdm",$("#dwzrxzdmVal").val());
+	getSelectByType("HXPZTLBDM","wxhxphxpztlbdm",$("#wxhxphxpztlbdmVal").val());
+	getSelectByType("WXHXPFLYDM","wxhxpwxhxpflydm",$("#wxhxpwxhxpflydmVal").val());
+	getSelectByType("HXPWXXLBDM","wxhxphxpwxxlbdm",$("#wxhxphxpwxxlbdmVal").val());
 });
 
 $.validator.setDefaults({

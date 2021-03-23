@@ -94,6 +94,89 @@ public class ZddwDO implements Serializable {
 
 	private String province;
 
+	//2021-3-19 产品原型增加属性
+	//消防控制室;
+	private String xfkzsjyqk;
+	//危险化学品名称
+	private String wxhxpmc;
+	//危险化学品分类
+
+	private String wxhxpwxhxpflydm;
+	//化学品状态
+	private String wxhxphxpztlbdm;
+	//危险化学品危险性
+	private String wxhxphxpwxxlbdm;
+	//数量
+	private String wxhxpsl;
+	//简要情况
+	private String wxhxpjyqk;
+	//地址名称
+	private String wxhxpdzmc;
+
+	public String getXfkzsjyqk() {
+		return xfkzsjyqk;
+	}
+
+	public void setXfkzsjyqk(String xfkzsjyqk) {
+		this.xfkzsjyqk = xfkzsjyqk;
+	}
+
+	public String getWxhxpwxhxpflydm() {
+		return wxhxpwxhxpflydm;
+	}
+
+	public void setWxhxpwxhxpflydm(String wxhxpwxhxpflydm) {
+		this.wxhxpwxhxpflydm = wxhxpwxhxpflydm;
+	}
+
+	public String getWxhxphxpztlbdm() {
+		return wxhxphxpztlbdm;
+	}
+
+	public void setWxhxphxpztlbdm(String wxhxphxpztlbdm) {
+		this.wxhxphxpztlbdm = wxhxphxpztlbdm;
+	}
+
+	public String getWxhxphxpwxxlbdm() {
+		return wxhxphxpwxxlbdm;
+	}
+
+	public void setWxhxphxpwxxlbdm(String wxhxphxpwxxlbdm) {
+		this.wxhxphxpwxxlbdm = wxhxphxpwxxlbdm;
+	}
+
+	public String getWxhxpsl() {
+		return wxhxpsl;
+	}
+
+	public void setWxhxpsl(String wxhxpsl) {
+		this.wxhxpsl = wxhxpsl;
+	}
+
+	public String getWxhxpjyqk() {
+		return wxhxpjyqk;
+	}
+
+	public void setWxhxpjyqk(String wxhxpjyqk) {
+		this.wxhxpjyqk = wxhxpjyqk;
+	}
+
+	public String getWxhxpmc() {
+		return wxhxpmc;
+	}
+
+	public void setWxhxpmc(String wxhxpmc) {
+		this.wxhxpmc = wxhxpmc;
+	}
+
+	public String getWxhxpdzmc() {
+		return wxhxpdzmc;
+	}
+
+	public void setWxhxpdzmc(String wxhxpdzmc) {
+		this.wxhxpdzmc = wxhxpdzmc;
+	}
+
 	public String getXfjyjg() {
 		return xfjyjg;
 	}

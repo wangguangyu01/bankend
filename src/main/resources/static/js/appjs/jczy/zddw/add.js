@@ -4,6 +4,11 @@ $().ready(function() {
 	getSelectByType("JJSYZLXDM","jjsyzlxdm",null);
 	getSelectByType("DWHZWHXFLYDM","dwhzwhxflydm",null);
 	getSelectByType("DWZRXZDM","dwzrxzdm",null);
+	getSelectByType("HXPZTLBDM","wxhxphxpztlbdm",null); //危险化学品状态类别
+	getSelectByType("WXHXPFLYDM","wxhxpwxhxpflydm",null); //危险化学品分类
+	getSelectByType("HXPWXXLBDM","wxhxphxpwxxlbdm",null); //化学品危险性分类
+
+
 });
 
 $.validator.setDefaults({

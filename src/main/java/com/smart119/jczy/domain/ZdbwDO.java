@@ -68,6 +68,38 @@ public class ZdbwDO implements Serializable {
 
 	private String province;
 
+	private String zddwMc; //重点单位名称;
+
+	//消防设施简要情况
+	private String xfssJyqk;
+
+	//消防控制室简要情况
+	private String xfkzsJyqk;
+
+	public String getXfssJyqk() {
+		return xfssJyqk;
+	}
+
+	public void setXfssJyqk(String xfssJyqk) {
+		this.xfssJyqk = xfssJyqk;
+	}
+
+	public String getXfkzsJyqk() {
+		return xfkzsJyqk;
+	}
+
+	public void setXfkzsJyqk(String xfkzsJyqk) {
+		this.xfkzsJyqk = xfkzsJyqk;
+	}
+
+	public String getZddwMc() {
+		return zddwMc;
+	}
+
+	public void setZddwMc(String zddwMc) {
+		this.zddwMc = zddwMc;
+	}
+
 	public String getCity() {
 		return city;
 	}

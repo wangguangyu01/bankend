@@ -117,5 +117,19 @@ function initFileInput(ctrlName) {
 			{caption: "Lighthouse.jpg", size: 549000, width: "120px", url: "/file-upload-batch/2", key: 2},
 		],
 	})
+}
+function openRy(){
+	var xfjyjgTywysbm = $("#xfjyjgTywysbm").val();
+	layer.open({
+		type:2,
+		title:"选择重点单位",
+		area : [ '800px', '600px' ],
+		content:"/jczy/zddw/selectZddw?xfjyjgTywysbm="+xfjyjgTywysbm
+	})
+}
 
+function saveZddw(selectContent) {
+	console.log(selectContent);
+	$("#dddwTywysbm").val(selectContent.zddwTywysbm);
+	$("#zddwMc").val(selectContent.dwmc);
 }
