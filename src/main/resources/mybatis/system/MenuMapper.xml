@@ -71,7 +71,7 @@
 		`order_num`,
 		`gmt_create`,
 		`gmt_modified`,
-		`app_id`,
+		`app_id`
 		)
 		values
 		(

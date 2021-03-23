@@ -17,5 +17,84 @@
 					<result property="createDate" column="create_date"/>
 			</resultMap>
 
+	<insert id="save"  parameterType="com.smart119.system.domain.AppInfoDO">
+		INSERT INTO sys_app_info (
+			`name`,
+			`type`,
+			app_desc,
+			app_key,
+			app_secret,
+			token,
+			`status`,
+			create_user,
+			create_date
+		)VALUES(
+			#{name},
+			#{type},
+			#{appDesc},
+			#{appKey},
+			#{appSecret},
+			#{token},
+			#{status},
+			#{createUser},
+			#{createDate}
+		)
+	</insert>
+	<update id="updateById" parameterType="com.smart119.system.domain.AppInfoDO">
+		UPDATE sys_app_info
+		<set>
+			<if test="#{name != null and name != ''}">
+				`name` = #{name},
+			</if>
+			<if test="#{type != null}">
+				`type` = #{type},
+			</if>
+			<if test="#{appDesc != null}">
+				app_desc = #{appDesc},
+			</if>
+			<if test="#{appKey != null and appKey != ''}">
+				app_key = #{appKey},
+			</if>
+			<if test="#{appSecret != null and appSecret != ''}">
+				app_secret = #{appSecret},
+			</if>
+			<if test="#{token != null}">
+				token = #{token},
+			</if>
+			<if test="#{status != null and status != ''}">
+				status = #{status},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	<select id="selectPageVo" resultType="com.smart119.system.domain.AppInfoDO">
+		SELECT
+			id,
+			`name`,
+			`type`,
+			app_desc AS 'appDesc',
+			app_key AS 'appKey',
+			app_secret AS 'appSecret',
+			token,
+			`status`,
+			create_user AS 'createUser',
+			create_date AS 'createDate'
+		FROM sys_app_info
+		<where>
+			<if test="params != null">
+				<if test="params.name!=null and params.name!=''">
+					AND `name` LIKE CONCAT ('%',#{params.name},'%')
+				</if>
+				<if test="params.type!=null">
+					AND `type` = #{params.type}
+				</if>
+				<if test="params.status!=null and params.status!=''">
+					AND `status` = #{params.status}
+				</if>
+			</if>
+		</where>
+
+	</select>
+
 
 </mapper>

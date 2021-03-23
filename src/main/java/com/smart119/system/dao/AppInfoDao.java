@@ -21,4 +21,8 @@ public interface AppInfoDao extends BaseMapper<AppInfoDO> {
 
     IPage<AppInfoDO> selectPageVo(@Param("page") Page<AppInfoDO> page,
         @Param("params") Map<String, Object> params);
+
+    int save(AppInfoDO appInfo);
+
+    int updateById(AppInfoDO appInfo);
 }

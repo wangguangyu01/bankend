@@ -1,5 +1,5 @@
 
-var prefix = "/webapi/appInfo"
+var prefix = "/sys/appInfo"
 $(function() {
 	load();
 });
@@ -32,8 +32,8 @@ function load() {
 							return {
 								//说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
 								limit: params.limit,
-								offset:params.offset
-					           // name:$('#searchName').val(),
+								offset:params.offset,
+					            name:$('#searchName').val(),
 					           // username:$('#searchName').val()
 							};
 						},
@@ -49,7 +49,7 @@ function load() {
 								},
 																{
 									field : 'id', 
-									title : '主键ID' 
+									title : '序号'
 								},
 																{
 									field : 'name', 
@@ -57,7 +57,14 @@ function load() {
 								},
 																{
 									field : 'type', 
-									title : '应用类型（0:系统内，1：第三方）' 
+									title : '应用类型',
+									formatter: function (value, row, index) {
+										if (value == 0) {
+											return '系统内';
+										} else if (value == 1) {
+											return '第三方';
+										}
+									}
 								},
 																{
 									field : 'appDesc', 
@@ -73,16 +80,23 @@ function load() {
 								},
 																{
 									field : 'token', 
-									title : ' 应用Token （可为空，如果是系统内则为空）' 
+									title : ' 应用Token'
 								},
 																{
 									field : 'status', 
-									title : '状态（enable:启用，disable:禁用）' 
+									title : '状态',
+									formatter: function (value, row, index) {
+										if (value == 'enable') {
+											return '启用';
+										} else if (value == 'disable') {
+											return '禁用';
+										}
+									}
 								},
-																{
+								/*								{
 									field : 'createUser', 
 									title : ' 创建用户' 
-								},
+								},*/
 																{
 									field : 'createDate', 
 									title : '创建时间' 

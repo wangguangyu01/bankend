@@ -9,10 +9,10 @@
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button shiro:hasPermission="webapi:appInfo:add" type="button" class="btn  btn-primary" onclick="add()">
+							<button shiro:hasPermission="sys:appInfo:add" type="button" class="btn  btn-primary" onclick="add()">
 								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<button shiro:hasPermission="webapi:appInfo:batchRemove" type="button" class="btn  btn-danger"
+							<button shiro:hasPermission="sys:appInfo:batchRemove" type="button" class="btn  btn-danger"
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
@@ -22,7 +22,7 @@
 						</div>
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="searchName" type="text" class="form-control"
-								placeholder="">
+								   placeholder="按应用名称查询">
 						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
@@ -39,23 +39,23 @@
 				var s_resetPwd_h = 'hidden';
 			</script>
 		</div>
-		<div shiro:hasPermission="webapi:appInfo:edit">
+		<div shiro:hasPermission="sys:appInfo:edit">
 			<script type="text/javascript">
 				s_edit_h = '';
 			</script>
 		</div>
-		<div shiro:hasPermission="webapi:appInfo:remove">
+		<div shiro:hasPermission="sys:appInfo:remove">
 			<script type="text/javascript">
 				var s_remove_h = '';
 			</script>
 		</div>
-		<div shiro:hasPermission="webapi:appInfo:resetPwd">
+		<div shiro:hasPermission="sys:appInfo:resetPwd">
 			<script type="text/javascript">
 				var s_resetPwd_h = '';
 			</script>
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/webapi/appInfo/appInfo.js"></script>
+	<script type="text/javascript" src="/js/appjs/sys/appInfo/appInfo.js"></script>
 </body>
 </html>

@@ -1,5 +1,21 @@
 $().ready(function() {
 	validateRule();
+	$("input[name='type']").click(function(){
+		disabledToken();
+	})
+	disabledToken();
+
+	function disabledToken(){
+		if("0" == $('input:radio[name="type"]:checked').val()){
+			$('#token').attr('disabled',"true");
+			$('#token').rules('remove','required');
+		}else{
+			$('#token').removeAttr("disabled");
+			$('#token').rules('add',{
+				required : true
+			});
+		}
+	}
 });
 
 $.validator.setDefaults({
@@ -11,7 +27,7 @@ function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/webapi/appInfo/update",
+		url : "/sys/appInfo/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -38,11 +54,35 @@ function validateRule() {
 		rules : {
 			name : {
 				required : true
+			},
+			type : {
+				required : true
+			},
+			appKey : {
+				required : true
+			},
+			appSecret : {
+				required : true
+			},
+			status : {
+				required : true
 			}
 		},
 		messages : {
 			name : {
-				required : icon + "请输入名字"
+				required : icon + "请输入应用名称"
+			},
+			type : {
+				required : icon + "请选择应用类型"
+			},
+			appKey : {
+				required : icon + "请输入应用key"
+			},
+			appSecret : {
+				required : icon + "请输入用秘钥"
+			},
+			status : {
+				required : icon + "请选择状态"
 			}
 		}
 	})
