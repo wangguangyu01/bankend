@@ -3,14 +3,16 @@ package com.smart119.system.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.smart119.common.enums.ResponseStatusEnum;
 import com.smart119.common.utils.PageUtils;
-import com.smart119.common.utils.ParamChangeUtil;
 import com.smart119.common.utils.R;
+import com.smart119.common.utils.StringUtils;
 import com.smart119.system.domain.TAuditLogEntity;
 import com.smart119.system.service.TAuditLogService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +27,7 @@ import java.util.Map;
  * @email 442365450@qq.com
  * @date 2019-08-04 22:19:55
  */
-@RestController
+@Controller
 @RequestMapping("sys/tauditlog")
 @Api(value = "sys/tauditlog", tags = "审计日志API")
 @Slf4j
@@ -33,18 +35,23 @@ public class TAuditLogController {
     @Autowired
     private TAuditLogService tAuditLogService;
     private static final Long MAX_RECODE = 10000L;
-
-    @PostMapping("/list")
+    @GetMapping
+    @RequiresPermissions("sys:tauditlog:tauditlog")
+    public String tauditlog(){
+        return "system/auditLog/auditLog";
+    }
+    @GetMapping("/list")
+    @ResponseBody
     @ApiOperation(value = "审计日志查询")
     @RequiresPermissions("sys:tauditlog:tauditlog")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "limit", value = "条数", required = true   ,paramType = "body"),
-            @ApiImplicitParam(name = "offset", value = "页数", required = true   ,paramType = "body"),
-            @ApiImplicitParam(name = "params", value = "json格式的查询参数",  paramType = "body")
+            @ApiImplicitParam(name = "limit", value = "条数", required = true   ,paramType = "url"),
+            @ApiImplicitParam(name = "offset", value = "页数", required = true   ,paramType = "url"),
+            @ApiImplicitParam(name = "sort", value = "排序" ,paramType = "url"),
+            @ApiImplicitParam(name = "keyword", value = "检索关键词",  paramType = "url")
     })
-    public R list(@RequestParam Map<String, Object> params){
-        //查询列表数据
-        QueryWrapper queryWrapper = new QueryWrapper();
+    public PageUtils list(@RequestParam Map<String, Object> params){
+        QueryWrapper<TAuditLogEntity> queryWrapper = new QueryWrapper();
         Object sort = params.get("sort");
         if(!ObjectUtils.isEmpty(sort)){
             Object order = params.get("order");
@@ -53,34 +60,57 @@ public class TAuditLogController {
             }else{
                 queryWrapper.orderByAsc(sort.toString());
             }
+        } else {
+            //默认排序字段
+            queryWrapper.orderByDesc("create_time");
         }
-        Object offset = params.get("offset");
-        Object limit = params.get("limit");
-        if(!ObjectUtils.isEmpty(offset) && !ObjectUtils.isEmpty(limit)){
-            queryWrapper.last("limit " + offset + "," + limit);
+        Object offsetObj = params.get("offset");
+        Object limitObj = params.get("limit");
+        int offset;
+        if(ObjectUtils.isEmpty(offsetObj)){
+            offset = 0;
+        }else{
+            offset = Integer.valueOf(offsetObj.toString());
         }
-        params.remove("sort");
-        params.remove("order");
-        params.remove("offset");
-        params.remove("limit");
-        params.forEach((s, o) -> {
-            queryWrapper.eq(ParamChangeUtil.humpToLine2(s), o);
-        });
-        PageUtils pageUtils = new PageUtils(tAuditLogService.list(queryWrapper), tAuditLogService.count(queryWrapper));
-        return R.ok(pageUtils);
+        int limit;
+        if(ObjectUtils.isEmpty(limitObj)){
+            limit = 10;
+        }else{
+            limit = Integer.valueOf(limitObj.toString());
+        }
+        queryWrapper.last("limit " + offset + "," + limit);
+        //remove后 切面记录审计日志时会缺少参数
+//        params.remove("sort");
+//        params.remove("order");
+//        params.remove("offset");
+//        params.remove("limit");
+        Object keywordObj = params.get("keyword");
+        QueryWrapper<TAuditLogEntity> countWrapper = null;
+        if(!ObjectUtils.isEmpty(keywordObj) && StringUtils.isNotBlank(keywordObj.toString())){
+            countWrapper = new QueryWrapper();
+            String v = keywordObj.toString();
+            //在这里维护需要检索的字段
+            String[] key = {"ip", "note", "operation_type", "bussiness", "uri", "real_url"};
+            for (String k : key) {
+                queryWrapper.like(k, v).or();
+                countWrapper.like(k, v).or();
+            }
+        }
+        PageUtils pageUtils = new PageUtils(tAuditLogService.list(queryWrapper), tAuditLogService.count(countWrapper));
+        return pageUtils;
     }
 
     /**
      * 更新
      */
-    @ApiOperation(value = "审计日志更新", httpMethod = "POST")
-    @PostMapping("/edit")
-    @RequiresPermissions("sys:tauditlog:edit")
-    public R edit(@RequestBody @ApiParam(name = "分页信息", value = "传入json格式", required = true) TAuditLogEntity tAuditLogEntity) {
-        log.debug("update TAuditLogEntity={}", tAuditLogEntity);
-        tAuditLogService.updateById(tAuditLogEntity);
-        return R.ok(tAuditLogEntity).setOnlyExtraNote(tAuditLogEntity.getId());
-    }
+//    @ApiOperation(value = "审计日志更新", httpMethod = "POST")
+//    @PostMapping("/edit")
+//    @RequiresPermissions("sys:tauditlog:edit")
+//    public R edit(@RequestBody @ApiParam(name = "分页信息", value = "传入json格式", required = true) TAuditLogEntity tAuditLogEntity) {
+//        log.debug("update TAuditLogEntity={}", tAuditLogEntity);
+//        tAuditLogService.updateById(tAuditLogEntity);
+//        return R.ok(tAuditLogEntity).setOnlyExtraNote(tAuditLogEntity.getId());
+//    }
 
     /**
      * 更新
@@ -216,16 +246,17 @@ public class TAuditLogController {
     @ApiOperation("查询详情")
     @GetMapping("/info/{id}")
     @RequiresPermissions("sys:tauditlog:info")
-    public R info(
-            @PathVariable("id") @ApiParam(name = "id", value = "id", required = true) Long id) {
+    public String info(@PathVariable("id") @ApiParam(name = "id", value = "id", required = true) Long id, Model model) {
         log.debug("info start:id={}", id);
         TAuditLogEntity tAuditLog = tAuditLogService.getById(id);
-        return R.ok(tAuditLog);
+        model.addAttribute("info", tAuditLog);
+        return "system/auditLog/info";
     }
 
     @GetMapping("/logbackup/{date}")
     @ApiOperation(value = "指定日期前日志备份", httpMethod = "GET")
     @RequiresPermissions("sys:tauditlog:logbackup")
+    @ResponseBody
     public R backLog(@PathVariable("date") @ApiParam(name = "date", value = "日期(yyyy-MM-dd)", required = true) String date) {
         Date dateTime = null;
         try {
