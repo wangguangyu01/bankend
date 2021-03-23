@@ -1,9 +1,11 @@
 package com.smart119.system.service;
 
+import io.swagger.models.auth.In;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import com.smart119.common.domain.Tree;
@@ -30,4 +32,5 @@ public interface MenuService {
 	MenuDO get(Long id);
 
 	Set<String> listPerms(Long userId);
+
 }

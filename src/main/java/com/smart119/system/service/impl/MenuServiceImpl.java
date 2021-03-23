@@ -8,6 +8,7 @@ import com.smart119.system.domain.MenuDO;
 import com.smart119.system.service.MenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,8 @@ public class MenuServiceImpl implements MenuService {
 	MenuDao menuMapper;
 	@Autowired
 	RoleMenuDao roleMenuMapper;
+	@Value("${appId}")
+	private Integer appId;
 
 	/**
 	 * @param
@@ -143,7 +146,12 @@ public class MenuServiceImpl implements MenuService {
 	@Override
 	public List<Tree<MenuDO>> listMenuTree(Long id) {
 		List<Tree<MenuDO>> trees = new ArrayList<Tree<MenuDO>>();
-		List<MenuDO> menuDOs = menuMapper.listMenuByUserId(id);
+		List<MenuDO> menuDOs=null;
+		if(Objects.nonNull(appId)){
+			menuDOs=menuMapper.listMenuByUserIdAppId(id,appId);
+    } else {
+       menuDOs = menuMapper.listMenuByUserId(id);
+		}
 		for (MenuDO sysMenuDO : menuDOs) {
 			Tree<MenuDO> tree = new Tree<MenuDO>();
 			tree.setId(sysMenuDO.getMenuId().toString());

@@ -2,7 +2,6 @@ package com.smart119.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.smart119.common.utils.PageUtils;
 import com.smart119.system.domain.AppInfoDO;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ import java.util.Map;
  * @email zhangshunhua@sz000673.com
  * @date 2021-03-22 16:30:18
  */
-public interface AppInfoService {
+public interface AppInfoService extends IService<AppInfoDO>{
 
 
 	IPage<AppInfoDO> queryPage(Map<String, Object> params);
@@ -26,6 +25,4 @@ public interface AppInfoService {
 	int remove(Integer id);
 
 	int batchRemove(Integer[] ids);
-
-	int save(AppInfoDO appInfoDO);
 }

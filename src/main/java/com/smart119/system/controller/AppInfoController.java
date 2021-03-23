@@ -7,16 +7,12 @@ import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.StringUtils;
 import com.smart119.system.domain.AppInfoDO;
 import com.smart119.system.service.AppInfoService;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,7 +85,7 @@ public class AppInfoController extends BaseController {
 	public R save(AppInfoDO appInfo){
 		appInfo.setCreateUser(getUser().getUserId().toString());
 		appInfo.setCreateDate(new Date());
-		if(appInfoService.save(appInfo) > 0){
+		if(appInfoService.save(appInfo)){
 			return R.ok();
 		}
 		return R.error();
@@ -130,5 +126,19 @@ public class AppInfoController extends BaseController {
 		appInfoService.batchRemove(ids);
 		return R.ok();
 	}
-	
+
+	@ApiOperation(value = "查询应用的所有记录")
+	@PostMapping("/all")
+	@RequiresPermissions("sys:appInfo:all")
+	@ResponseBody
+	public R list(@RequestBody AppInfoDO appInfo){
+		//查询列表数据
+		List<AppInfoDO> result=new ArrayList<>(0);
+		if(StringUtils.isNotBlank(appInfo.getStatus())){
+			QueryWrapper wrapper=new QueryWrapper();
+			wrapper.eq("status",appInfo.getStatus());
+			result=appInfoService.list(wrapper);
+		}
+		return R.ok(result);
+	}
 }
