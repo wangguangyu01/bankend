@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.smart119.common.utils.PageUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ import java.util.Map;
 
 
 @Service
-public class AppInfoServiceImpl implements AppInfoService {
+public class AppInfoServiceImpl extends ServiceImpl<AppInfoDao, AppInfoDO> implements AppInfoService {
 
 	@Autowired
 	private AppInfoDao appInfoDao;
@@ -56,10 +55,5 @@ public class AppInfoServiceImpl implements AppInfoService {
 		Collections.addAll(resultList, ids);
 		int deleteBatchrow = appInfoDao.deleteBatchIds(resultList);
 		return deleteBatchrow;
-	}
-
-	@Override
-	public int save(AppInfoDO appInfo) {
-		return appInfoDao.save(appInfo);
 	}
 }

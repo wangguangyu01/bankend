@@ -1,11 +1,13 @@
 package com.smart119.system.dao;
 
+import com.smart119.common.domain.Tree;
 import com.smart119.system.domain.MenuDO;
 
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 菜单管理
@@ -33,4 +35,12 @@ public interface MenuDao {
 	List<MenuDO> listMenuByUserId(Long id);
 	
 	List<String> listUserPerms(Long id);
+
+	/**
+	 * 根据用户Id和appId查询出菜单信息
+	 * @param id
+	 * @param appId
+	 * @return
+	 */
+	List<MenuDO> listMenuByUserIdAppId(@Param("id") Long id,@Param("appId") Integer appId);
 }

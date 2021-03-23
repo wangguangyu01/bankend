@@ -76,3 +76,5 @@ ftp:
 jasypt:
   encryptor:
     password: jasypt
+
+appId: 5
