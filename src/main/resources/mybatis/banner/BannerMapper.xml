@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.banner.dao.BannerDao">
+
+	<select id="get" resultType="com.smart119.banner.domain.BannerDO">
+		select `SC_BANNER_ID`,`BT`,`BANNER_LX_ID`,`FBSJ`,`ZT`,`PX`,`cdate`,`status`,`cperson` from sc_banner where SC_BANNER_ID = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.banner.domain.BannerDO">
+		select t.`SC_BANNER_ID`,t.`BT`,t.`BANNER_LX_ID`,t.`FBSJ`,t.`ZT`,t.`PX`,t.`cdate`,t.`status`,t.`cperson`,l.FLMC from sc_banner t
+		left join sc_banner_lx l on t.BANNER_LX_ID = l.banner_lx_id
+		<where>
+			t.`status`='0'
+			<if test="scBannerId != null and scBannerId != ''"> and t.SC_BANNER_ID = #{scBannerId} </if>
+		  		  <if test="bt != null and bt != ''"> and t.BT = #{bt} </if>
+		  		  <if test="bannerLxId != null and bannerLxId != ''"> and t.BANNER_LX_ID = #{bannerLxId} </if>
+		  		  <if test="fbsj != null and fbsj != ''"> and t.FBSJ = #{fbsj} </if>
+		  		  <if test="zt != null and zt != ''"> and t.ZT = #{zt} </if>
+		  		  <if test="px != null and px != ''"> and t.PX = #{px} </if>
+		  		  <if test="cdate != null and cdate != ''"> and t.cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and t.status = #{status} </if>
+		  		  <if test="cperson != null and cperson != ''"> and t.cperson = #{cperson} </if>
+				  <if test="searchName != null and searchName != ''"> and (t.BT like '%${searchName}%' or l.FLMC like '%${searchName}%' or date_format(t.FBSJ,'%Y-%m-%d %H:%i:%s') like '%${searchName}%') </if>
+					<if test="searchZq != null and searchZq != ''">
+						<if test="searchZq == 1">
+							and to_days(t.FBSJ) = to_days(now())
+						</if>
+						<if test="searchZq == 2">
+							and DATE_SUB(CURDATE(), INTERVAL 3 DAY) <![CDATA[ <= ]]> date(t.FBSJ)
+						</if>
+						<if test="searchZq == 3">
+							and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[ <= ]]> date(t.FBSJ)
+						</if>
+						<if test="searchZq == 4">
+							and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[ <= ]]> date(t.FBSJ)
+						</if>
+					</if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by t.PX
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sc_banner t left join sc_banner_lx l on t.BANNER_LX_ID = l.banner_lx_id
+		 <where>
+			 t.`status`='0'
+		  		  <if test="scBannerId != null and scBannerId != ''"> and t.SC_BANNER_ID = #{scBannerId} </if>
+		  		  <if test="bt != null and bt != ''"> and t.BT = #{bt} </if>
+		  		  <if test="bannerLxId != null and bannerLxId != ''"> and t.BANNER_LX_ID = #{bannerLxId} </if>
+		  		  <if test="fbsj != null and fbsj != ''"> and t.FBSJ = #{fbsj} </if>
+		  		  <if test="zt != null and zt != ''"> and t.ZT = #{zt} </if>
+		  		  <if test="px != null and px != ''"> and t.PX = #{px} </if>
+		  		  <if test="cdate != null and cdate != ''"> and t.cdate = #{cdate} </if>
+		  		  <if test="status != null and status != ''"> and t.status = #{status} </if>
+		  		  <if test="cperson != null and cperson != ''"> and t.cperson = #{cperson} </if>
+			      <if test="searchName != null and searchName != ''"> and (t.BT like '%${searchName}%' or l.FLMC like '%${searchName}%' or date_format(t.FBSJ,'%Y-%m-%d %H:%i:%s') like '%${searchName}%') </if>
+					 <if test="searchZq != null and searchZq != ''">
+						 <if test="searchZq == 1">
+							 and to_days(t.FBSJ) = to_days(now())
+						 </if>
+						 <if test="searchZq == 2">
+							 and DATE_SUB(CURDATE(), INTERVAL 3 DAY) <![CDATA[ <= ]]> date(t.FBSJ)
+						 </if>
+						 <if test="searchZq == 3">
+							 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <![CDATA[ <= ]]> date(t.FBSJ)
+						 </if>
+						 <if test="searchZq == 4">
+							 and DATE_SUB(CURDATE(), INTERVAL 30 DAY) <![CDATA[ <= ]]> date(t.FBSJ)
+						 </if>
+					 </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.banner.domain.BannerDO">
+		insert into sc_banner
+		(
+			`SC_BANNER_ID`, 
+			`BT`, 
+			`BANNER_LX_ID`, 
+			`FBSJ`, 
+			`ZT`, 
+			`PX`, 
+			`cdate`, 
+			`status`, 
+			`cperson`
+		)
+		values
+		(
+			#{scBannerId}, 
+			#{bt}, 
+			#{bannerLxId}, 
+			#{fbsj}, 
+			#{zt}, 
+			#{px}, 
+			#{cdate}, 
+			#{status}, 
+			#{cperson}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.banner.domain.BannerDO">
+		update sc_banner 
+		<set>
+			<if test="bt != null">`BT` = #{bt}, </if>
+			<if test="bannerLxId != null">`BANNER_LX_ID` = #{bannerLxId}, </if>
+			<if test="fbsj != null">`FBSJ` = #{fbsj}, </if>
+			<if test="zt != null">`ZT` = #{zt}, </if>
+			<if test="px != null">`PX` = #{px}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}</if>
+		</set>
+		where SC_BANNER_ID = #{scBannerId}
+	</update>
+	
+	<delete id="remove">
+		delete from sc_banner where SC_BANNER_ID = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sc_banner where SC_BANNER_ID in 
+		<foreach item="scBannerId" collection="array" open="(" separator="," close=")">
+			#{scBannerId}
+		</foreach>
+	</delete>
+
+</mapper>

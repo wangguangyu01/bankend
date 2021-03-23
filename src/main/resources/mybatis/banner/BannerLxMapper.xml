@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.banner.dao.BannerLxDao">
+
+	<select id="get" resultType="com.smart119.banner.domain.BannerLxDO">
+		select `banner_lx_id`,`FLMC`,`cdate`,`cperson`,`status` from sc_banner_lx where banner_lx_id = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.banner.domain.BannerLxDO">
+		select `banner_lx_id`,`FLMC`,`cdate`,`cperson`,`status` from sc_banner_lx
+        <where>  
+		  		  <if test="bannerLxId != null and bannerLxId != ''"> and banner_lx_id = #{bannerLxId} </if>
+		  		  <if test="flmc != null and flmc != ''"> and FLMC = #{flmc} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by banner_lx_id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from sc_banner_lx
+		 <where>  
+		  		  <if test="bannerLxId != null and bannerLxId != ''"> and banner_lx_id = #{bannerLxId} </if>
+		  		  <if test="flmc != null and flmc != ''"> and FLMC = #{flmc} </if>
+		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.banner.domain.BannerLxDO">
+		insert into sc_banner_lx
+		(
+			`banner_lx_id`, 
+			`FLMC`, 
+			`cdate`, 
+			`cperson`, 
+			`status`
+		)
+		values
+		(
+			#{bannerLxId}, 
+			#{flmc}, 
+			#{cdate}, 
+			#{cperson}, 
+			#{status}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.banner.domain.BannerLxDO">
+		update sc_banner_lx 
+		<set>
+			<if test="flmc != null">`FLMC` = #{flmc}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}, </if>
+			<if test="status != null">`status` = #{status}</if>
+		</set>
+		where banner_lx_id = #{bannerLxId}
+	</update>
+	
+	<delete id="remove">
+		delete from sc_banner_lx where banner_lx_id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from sc_banner_lx where banner_lx_id in 
+		<foreach item="bannerLxId" collection="array" open="(" separator="," close=")">
+			#{bannerLxId}
+		</foreach>
+	</delete>
+
+</mapper>

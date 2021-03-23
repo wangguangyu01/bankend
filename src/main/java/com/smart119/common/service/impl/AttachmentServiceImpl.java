@@ -81,7 +81,7 @@ public class AttachmentServiceImpl implements AttachmentService {
 			FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
 			conf.setServerLanguageCode("zh");
 			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
-			ftpClient.changeWorkingDirectory("pub");
+			//ftpClient.changeWorkingDirectory("pub");
 			if(ftpClient.listFiles(f_type).length==0){
 				ftpClient.makeDirectory(f_type);
 			}
