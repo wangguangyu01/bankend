@@ -213,6 +213,10 @@ ORDER BY i.sort ASC LIMIT 12,12    -- 未处理
 			and type = #{type}
 		</where>
 	</select>
+
+	<select id="getSelectByXfgwType" resultType="com.smart119.common.domain.DictDO">
+		SELECT `id`,`name`,`value` FROM `sys_dict` where  type='XFGWFLYDM' and parent_id !='0'
+	</select>
 </mapper>
 
 

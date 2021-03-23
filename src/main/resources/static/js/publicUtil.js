@@ -130,3 +130,26 @@ function addOnclick(divClass,inputId,spanId){
         }
     })
 }
+
+function getSelectByXfgwType(type,objId,selected){
+    $.ajax({
+        url : "/common/dict/getSelectByXfgwType",
+        type : "get",
+        data : {
+            'type' : type
+        },
+        success : function(list) {
+            if(list!=null && list!=undefined && list.length>0){
+                // $("#"+objId).empty();
+                // $("#"+objId).append('<option value="" >--请选择--</option>');
+                $.each(list,function(i,item){
+                    if(selected!=null && selected==item.value){
+                        $("#"+objId).append('<option id="'+item.id+'" value="'+item.value+'" selected="selected">'+item.name+'</option>');
+                    }else{
+                        $("#"+objId).append('<option id="'+item.id+'" value="'+item.value+'">'+item.name+'</option>');
+                    }
+                });
+            }
+        }
+    });
+}

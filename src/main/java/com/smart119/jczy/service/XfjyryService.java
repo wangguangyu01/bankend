@@ -18,6 +18,8 @@ public interface XfjyryService {
 	XfjyryDO get(String xfjyryTywysbm);
 	
 	List<XfjyryDO> list(Map<String, Object> map);
+
+	List<XfjyryDO> listOther(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	

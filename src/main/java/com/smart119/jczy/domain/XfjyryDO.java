@@ -1,6 +1,7 @@
 package com.smart119.jczy.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -15,8 +16,22 @@ import java.util.Date;
  * @email 1992lcg@163.com
  * @date 2021-01-15 10:53:18
  */
+
+@Data
 public class XfjyryDO implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+
+	//序号
+	private String  xh;
+
+	public String getXh() {
+		return xh;
+	}
+
+	public void setXh(String xh) {
+		this.xh = xh;
+	}
 
 	//消防救援人员_通用唯一识别码
 	private String xfjyryTywysbm;

@@ -19,21 +19,28 @@
 				<div class="ibox">
 					<div class="ibox-body">
 						<div class="fixed-table-toolbar">
-							<div class="columns pull-left">
-								<button shiro:hasPermission="jczy:xfjyry:add" type="button" class="btn  btn-primary" onclick="add()">
-									<i class="fa fa-plus" aria-hidden="true"></i>添加
-								</button>
-								<button shiro:hasPermission="system:xfjyry:batchRemove" type="button" class="btn  btn-danger"
-										onclick="batchRemove()">
-									<i class="fa fa-trash" aria-hidden="true"></i>删除
-								</button>
-							</div>
 							<div class="columns pull-right">
 								<button class="btn btn-success" onclick="reLoad()">查询</button>
 							</div>
+
+							<div class="columns pull-right">
+								<button class="btn btn-success" onclick="Excel()">导出</button>
+							</div>
+
+							<div class="columns pull-right col-md-2">
+								<select class="form-control" id="xfgwflydm" name="xfgwflydm">
+									<option value="">按岗位状态查询</option>
+								</select>
+							</div>
+
 							<div class="columns pull-right col-md-2 nopadding">
 								<input id="searchName" type="text" class="form-control"
 									   placeholder="按人员姓名查询">
+							</div>
+
+							<div class="columns pull-right col-md-2 nopadding">
+								<input id="sjszjg" type="text" class="form-control"
+									   placeholder="按单位查询">
 							</div>
 						</div>
 						<table id="exampleTable" data-mobile-responsive="false">
@@ -68,6 +75,6 @@
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/jczy/xfjyry/xfjyry.js"></script>
+	<script type="text/javascript" src="/js/appjs/jczy/txlxfjyry/txlxfjyry.js"></script>
 </body>
 </html>

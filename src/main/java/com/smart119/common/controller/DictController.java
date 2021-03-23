@@ -195,5 +195,10 @@ public class DictController extends BaseController {
 		List<Map<String, Object>> dictList = dictService.getChildAll(type);
 		return dictList;
 	}
-
+	@ResponseBody
+	@GetMapping("/getSelectByXfgwType")
+	public List<DictDO> getSelectByXfgwType(@RequestParam("type") String type) {
+		List<DictDO> dictList = dictService.getSelectByXfgwType(type);
+		return dictList;
+	}
 }

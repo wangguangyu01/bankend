@@ -43,6 +43,8 @@ public interface DictDao {
 
 	List<DictDO> listByParentValue(String value);
 
+	List<DictDO> getSelectByXfgwType(String type);
+
 	String findParentValue(String value);
 
 	List<DictDO> getDictListByType(String type);

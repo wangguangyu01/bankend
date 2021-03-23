@@ -51,6 +51,11 @@ public class XfjyryServiceImpl implements XfjyryService {
 	}
 
 	@Override
+	public List<XfjyryDO> listOther(Map<String, Object> map){
+		return xfjyryDao.listOther(map);
+	}
+
+	@Override
 	public int count(Map<String, Object> map){
 		return xfjyryDao.count(map);
 	}

@@ -148,6 +148,11 @@ public class DictServiceImpl implements DictService {
     }
 
     @Override
+    public List<DictDO> getSelectByXfgwType(String type) {
+        return dictDao.getSelectByXfgwType(type);
+    }
+
+    @Override
     public String findParentValue(String value) {
         return dictDao.findParentValue(value);
     }

@@ -5,39 +5,29 @@
 <body class="gray-bg">
 	<div class="wrapper wrapper-content ">
 		<div class="row">
-			<div class="col-sm-3">
-				<div class="ibox ibox-body">
-					<div class="ibox-title">
-						<h5>选择部门</h5>
-					</div>
-					<div class="ibox-content">
-						<div id="jstree"></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-sm-9">
+			<div class="col-sm-12">
 				<div class="ibox">
 					<div class="ibox-body">
 						<div class="fixed-table-toolbar">
-							<div class="columns pull-left">
-								<button shiro:hasPermission="jczy:xfjyry:add" type="button" class="btn  btn-primary" onclick="add()">
-									<i class="fa fa-plus" aria-hidden="true"></i>添加
-								</button>
-								<button shiro:hasPermission="system:xfjyry:batchRemove" type="button" class="btn  btn-danger"
-										onclick="batchRemove()">
-									<i class="fa fa-trash" aria-hidden="true"></i>删除
-								</button>
-							</div>
 							<div class="columns pull-right">
 								<button class="btn btn-success" onclick="reLoad()">查询</button>
 							</div>
-							<div class="columns pull-right col-md-2 nopadding">
+							<div class="columns pull-right col-md-2">
 								<input id="searchName" type="text" class="form-control"
 									   placeholder="按人员姓名查询">
 							</div>
+
+							<div class="columns pull-right col-md-2">
+								<input id="searchDw" type="text" class="form-control"
+									   placeholder="按单位查询">
+							</div>
 						</div>
-						<table id="exampleTable" data-mobile-responsive="false">
+						<input id="xfjyjgTywysbm" type="hidden" th:value="${xfjyjgTywysbm}">
+						<table id="exampleTable" data-mobile-responsive="true">
 						</table>
+						<div class="footBtn pull-right">
+							<button class="btn btn-primary" onclick="selectBtn()">确定</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -68,6 +58,6 @@
 		</div>
 	</div>
 	<div th:include="include :: footer"></div>
-	<script type="text/javascript" src="/js/appjs/jczy/xfjyry/xfjyry.js"></script>
+	<script type="text/javascript" src="/js/appjs/jczy/txlxfjyry/selectXfjyry.js"></script>
 </body>
 </html>
