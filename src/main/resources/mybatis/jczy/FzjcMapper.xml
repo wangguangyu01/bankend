@@ -3,6 +3,17 @@
 
 <mapper namespace="com.smart119.jczy.dao.FzjcDao">
 
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.smart119.jczy.domain.FzjcDO" id="fzjcMap">
+        <result property="fzjcId" column="FZJC_ID"/>
+        <result property="bt" column="BT"/>
+        <result property="fzjclxdm" column="FZJCLXDM"/>
+        <result property="fzjcnr" column="FZJCNR"/>
+        <result property="cdate" column="cdate"/>
+        <result property="cperson" column="cperson"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
     <select id="get" resultType="com.smart119.jczy.domain.FzjcDO">
         SELECT
             f.`FZJC_ID`,
@@ -56,6 +67,19 @@
             <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
             <if test="status != null and status != ''">and status = #{status}</if>
         </where>
+    </select>
+
+    <sql id="queryParam">
+        <if test="params != null">
+            <if test="params.bt != null and params.bt !=''">
+                and BT = #{params.bt}
+            </if>
+        </if>
+    </sql>
+
+    <select id="selectPageVo" resultMap="fzjcMap">
+        select FZJC_ID, bt, fzjclxdm, fzjcnr, cdate, cperson, status from jczy_fzjc
+        where 1=1 <include refid="queryParam"/>
     </select>
 
     <insert id="save" parameterType="com.smart119.jczy.domain.FzjcDO">

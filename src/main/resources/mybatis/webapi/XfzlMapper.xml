@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.XfzlDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.smart119.webapi.domain.XfzlDO" id="xfzlMap">
+        <result property="xfzlId" column="XFZL_ID"/>
+        <result property="bt" column="BT"/>
+        <result property="lx" column="LX"/>
+        <result property="nr" column="NR"/>
+        <result property="zt" column="ZT"/>
+        <result property="llcs" column="LLCS"/>
+        <result property="dzcs" column="DZCS"/>
+        <result property="fbsj" column="FBSJ"/>
+        <result property="cdate" column="cdate"/>
+        <result property="status" column="status"/>
+        <result property="cperson" column="cperson"/>
+    </resultMap>
+
+    <select id="queryXflzById" resultType="com.smart119.webapi.domain.XfzlDO">
+        select t.*,getAllDictByChildId(d.id) JQFL from xfzl t
+        left join sys_dict d on t.JQFLYDM= d.`value` and d.type='JQFLYDM'
+        where t.XFZL_ID=#{value}
+    </select>
+
+    <select id="queryXflzList" resultType="com.smart119.webapi.domain.XfzlDO">
+        select t.XFZL_ID as xfzlId,t.BT as bt, t.NR as nr,t.LX as lx,t.ZT as zt,t.LLCS as llcs,t.DZCS as dzcs,t.FBSJ as fbsj, t.cdate as  cdate, u.username as cpersonUserName from xfzl t left join sys_user u on t.cperson = u.user_id where 1=1
+        <if test="params.gjc != null and params.gjc != ''">and (t.BT LIKE CONCAT ('%',#{params.gjc},'%') or t.NR LIKE CONCAT ('%',#{params.gjc},'%'))</if>
+        <if test="params.lx != null and params.lx != ''">and t.LX = #{params.lx}</if>
+        order by t.LLCS+t.DZCS desc
+    </select>
+
+    <update id="updLlCs">
+        update xfzl set LLCS=LLCS+1 where XFZL_ID=#{value}
+    </update>
+
+    <update id="updDzCs">
+        update xfzl set DZCS=DZCS+1 where XFZL_ID=#{value}
+    </update>
+
+    <update id="updDzUserIds">
+        update xfzl set DZ_USER_IDS=#{dzUserIds} where XFZL_ID=#{xfzlId}
+    </update>
+
+
+</mapper>

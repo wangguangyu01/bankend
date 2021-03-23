@@ -62,4 +62,10 @@ public interface DictDao {
 
 	List<DictDO> findDictByTypeVal(Map<String, Object> map);
 
+	/**
+	 * 只根据数据字典的type查询数据字典，将其中value为空的去掉
+	 * @return
+	 */
+	List<DictDO> queryByDictType(String type);
+
 }

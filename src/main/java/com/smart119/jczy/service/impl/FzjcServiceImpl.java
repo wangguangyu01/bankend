@@ -1,6 +1,11 @@
 package com.smart119.jczy.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smart119.common.utils.PageMybatisPlusUtils;
+import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.UUIDGenerator;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +60,16 @@ public class FzjcServiceImpl implements FzjcService {
 	@Override
 	public int batchRemove(String[] fzjcIds){
 		return fzjcDao.batchRemove(fzjcIds);
+	}
+
+
+	@Override
+	public PageUtils queryPage(Map<String, Object> params) {
+		Page<FzjcDO> page = new Page();
+		PageMybatisPlusUtils.pageHelperUtils(params, page);
+		IPage<FzjcDO> pageVo = fzjcDao.selectPageVo(page, params);
+		return new PageUtils(pageVo.getRecords(),
+				NumberUtils.toInt(String.valueOf(pageVo.getTotal()), 0));
 	}
 	
 }

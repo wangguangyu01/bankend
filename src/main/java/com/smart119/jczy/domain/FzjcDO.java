@@ -1,5 +1,7 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,6 +14,7 @@ import java.util.Date;
  * @email wangguangyu@sz000673.com
  * @date 2021-02-02 10:22:35
  */
+@TableName("jczy_fzjc")
 public class FzjcDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
