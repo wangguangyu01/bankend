@@ -1,4 +1,5 @@
 var prefix = "/jczy/yjlddw"
+var zid;
 $(function () {
     getTreeData();
     load();
@@ -34,6 +35,7 @@ function load() {
                         limit: params.limit,
                         offset: params.offset,
                         dwmc:$('#searchName').val(),
+                        deptId: zid,
                         // username:$('#searchName').val()
                     };
                 },
@@ -199,21 +201,7 @@ function loadTree(tree) {
     $('#jstree').jstree().open_all();
 }
 $('#jstree').on("changed.jstree", function(e, data) {
-    //data.node.original.attributes.xfjyjgTywysbm
-    if (data.selected == -1) {
-        var opt = {
-            query : {
-                deptId : '',
-            }
-        }
-        $('#exampleTable').bootstrapTable('refresh', opt);
-    } else {
-        var opt = {
-            query : {
-                deptId : data.selected[0],
-            }
-        }
-        $('#exampleTable').bootstrapTable('refresh',opt);
-    }
-
+    $("#exampleTable").bootstrapTable('destroy');  // 销毁原表格
+    zid = data.selected[0],
+    load();
 });

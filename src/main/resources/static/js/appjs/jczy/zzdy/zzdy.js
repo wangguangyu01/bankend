@@ -1,5 +1,6 @@
 
 var prefix = "/webapi/zzdy"
+var zid;
 $(function() {
 	getTreeData();
 	load();
@@ -35,6 +36,7 @@ function load() {
 								limit: params.limit,
 								offset:params.offset,
 								zzdymc:$('#searchName').val(),
+                                deptId: zid
 					           // username:$('#searchName').val()
 							};
 						},
@@ -152,22 +154,9 @@ function loadTree(tree) {
     $("#jstree").jstree("select_node", deptId , false);
 }
 $('#jstree').on("changed.jstree", function(e, data) {
-	if (data.selected == -1) {
-		var opt = {
-			query : {
-				deptId : '',
-			}
-		}
-		$('#exampleTable').bootstrapTable('refresh', opt);
-	} else {
-		var opt = {
-			query : {
-				deptId : data.selected[0],
-			}
-		}
-		$('#exampleTable').bootstrapTable('refresh',opt);
-	}
-
+    $("#exampleTable").bootstrapTable('destroy');  // 销毁原表格
+    zid = data.selected[0],
+        load();
 });
 function edit(id) {
 	layer.open({

@@ -1,4 +1,5 @@
 var prefix = "/jczy/xfzb"
+var zid;
 $(function () {
     load();
     getSelectAll("XFZBLXDM","XFZBLXDM-DIV","xfzblxdm","xfzblxdm-title");
@@ -38,7 +39,8 @@ function load() {
                         xfzbMc: $("#xfzbMc").val(),
                         xfzblxdm: $("#xfzblxdm").val(),
                         xfzbztlbdm: $("#xfzbztlbdm").val(),
-                        xfjyjgTywysbm: $("#xfjyjgTywysbm").val()
+                        xfjyjgTywysbm: $("#xfjyjgTywysbm").val(),
+                        deptId: zid
                     };
                 },
                 // //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -192,22 +194,8 @@ function loadTree(tree) {
     $('#jstree').jstree().open_all();
 }
 $('#jstree').on("changed.jstree", function(e, data) {
-    //data.node.original.attributes.xfjyjgTywysbm
-    if (data.selected == -1) {
-        var opt = {
-            query : {
-                deptId : '',
-            }
-        }
-        $('#exampleTable').bootstrapTable('refresh', opt);
-    } else {
-        var opt = {
-            query : {
-                deptId : data.selected[0],
-            }
-        }
-        $('#exampleTable').bootstrapTable('refresh',opt);
-    }
-
+    $("#exampleTable").bootstrapTable('destroy');  // 销毁原表格
+    zid = data.selected[0],
+        load();
 });
 
