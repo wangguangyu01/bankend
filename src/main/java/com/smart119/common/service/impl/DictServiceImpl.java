@@ -239,4 +239,8 @@ public class DictServiceImpl implements DictService {
     }
 
 
+    @Override
+    public List<DictDO> queryByDictType(String type) {
+        return dictDao.queryByDictType(type);
+    }
 }

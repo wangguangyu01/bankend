@@ -7413,8 +7413,6 @@ body.skin-3 {
     min-height: 300px;
 }
 .addToolbarDiv {
-    display: block;
-    clear: both;
     margin-bottom: 10px;
     float: left;
 

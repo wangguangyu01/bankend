@@ -6,14 +6,16 @@
     <select id="get" resultType="com.smart119.jczy.domain.ZdbwDO">
 		select t.`ZDBW_TYWYSBM`,t.`DDDW_TYWYSBM`,t.`XFJYJG_TYWYSBM`,t.`MC`,t.`DDMC`,t.`BWSZ_LC`,t.`BWSZ_GD`,t.`JZJGLXDM`,t.`JZWSYXZDM`,t.`JZ_MJ`,t.`XFDT_SL`,t.`SSCK_SL`,t.`AQCK_SL`,
 		t.`MHSS_JYQK`,t.`WXX_JYQK`,t.`QLYY_JYQK`,t.`FFBSSL_JYQK`,t.`WXY_JYQK`,t.`HZ_JYQK`,t.`ZRR_XM`,t.`SFAQGL_JYQK`,t.`JZWNHDJDM`,t.`BZ` ,   dept.`dwmc` XFJYJG
+		,z.DWMC as zddwMC,t.XFSS_JYQK,t.XFKZS_JYQK
 		from jczy_zdbw  t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		left JOIN jczy_zddw z on t.DDDW_TYWYSBM = z.ZDDW_TYWYSBM
 		where t.ZDBW_TYWYSBM = #{value}
 	</select>
 
     <select id="list" resultType="com.smart119.jczy.domain.ZdbwDO">
         select
-        `ZDBW_TYWYSBM`,`DDDW_TYWYSBM`,`XFJYJG_TYWYSBM`,`MC`,`DDMC`,`BWSZ_LC`,`BWSZ_GD`,`JZJGLXDM`,`JZWSYXZDM`,`JZ_MJ`,`XFDT_SL`,`SSCK_SL`,`AQCK_SL`,`MHSS_JYQK`,`WXX_JYQK`,`QLYY_JYQK`,`FFBSSL_JYQK`,`WXY_JYQK`,`HZ_JYQK`,`ZRR_XM`,`SFAQGL_JYQK`,`JZWNHDJDM`,`BZ`
+        `ZDBW_TYWYSBM`,`DDDW_TYWYSBM`,`XFJYJG_TYWYSBM`,`MC`,`DDMC`,`BWSZ_LC`,`BWSZ_GD`,`JZJGLXDM`,`JZWSYXZDM`,`JZ_MJ`,`XFDT_SL`,`SSCK_SL`,`AQCK_SL`,`MHSS_JYQK`,`WXX_JYQK`,`QLYY_JYQK`,`FFBSSL_JYQK`,`WXY_JYQK`,`HZ_JYQK`,`ZRR_XM`,`SFAQGL_JYQK`,`JZWNHDJDM`,`BZ`,XFSS_JYQK,XFKZS_JYQK
         from jczy_zdbw
         <where>
             <if test="zdbwTywysbm != null and zdbwTywysbm != ''">and ZDBW_TYWYSBM = #{zdbwTywysbm}</if>
@@ -117,7 +119,9 @@
 			`ZRR_XM`, 
 			`SFAQGL_JYQK`, 
 			`JZWNHDJDM`, 
-			`BZ`
+			`BZ`,
+			`XFSS_JYQK`,
+			`XFKZS_JYQK`
 		)
 		values
 		(
@@ -143,7 +147,9 @@
 			#{zrrXm}, 
 			#{sfaqglJyqk}, 
 			#{jzwnhdjdm}, 
-			#{bz}
+			#{bz},
+			#{xfssJyqk},
+			#{xfkzsJyqk}
 		)
 	</insert>
 
@@ -172,6 +178,8 @@
             <if test="sfaqglJyqk != null">`SFAQGL_JYQK` = #{sfaqglJyqk},</if>
             <if test="jzwnhdjdm != null">`JZWNHDJDM` = #{jzwnhdjdm},</if>
             <if test="bz != null">`BZ` = #{bz}</if>
+            <if test="xfssJyqk != null">`XFSS_JYQK` = #{xfssJyqk}</if>
+            <if test="xfkzsJyqk != null">`XFKZS_JYQK` = #{xfkzsJyqk}</if>
         </set>
         where ZDBW_TYWYSBM = #{zdbwTywysbm}
     </update>

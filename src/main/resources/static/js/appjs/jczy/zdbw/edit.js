@@ -58,9 +58,6 @@ var openDept = function(){
 
 
 function loadDept( deptId,deptName,xfjyjgTywysbm){
-	alert(deptName);
-	alert(xfjyjgTywysbm)
-	//$("#deptId").val(deptId);
 	$("#xfjyjgTywysbm").val(xfjyjgTywysbm);
 	$("#deptName").val(deptName);
 }
@@ -110,5 +107,20 @@ function initFileInput(ctrlName,attachmentDOList) {
 		initialPreviewConfig: removeArry,
 		overwriteInitial: false
 	})
+}
 
+function openRy(){
+	var xfjyjgTywysbm = $("#xfjyjgTywysbm").val();
+	layer.open({
+		type:2,
+		title:"选择重点单位",
+		area : [ '800px', '600px' ],
+		content:"/jczy/zddw/selectZddw?xfjyjgTywysbm="+xfjyjgTywysbm
+	})
+}
+
+function saveZddw(selectContent) {
+	console.log(selectContent);
+	$("#dddwTywysbm").val(selectContent.zddwTywysbm);
+	$("#zddwMc").val(selectContent.dwmc);
 }

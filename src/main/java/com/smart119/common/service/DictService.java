@@ -75,4 +75,11 @@ public interface DictService {
 
 	List<DictDO> getSelectByXfgwType(String type);
 
+	/**
+	 * 根据type
+	 * @param type
+	 * @return
+	 */
+	List<DictDO> queryByDictType(String type);
+
 }

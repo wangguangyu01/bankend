@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.service.DictService;
+import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
 import io.swagger.annotations.*;
@@ -161,5 +162,20 @@ public class ZddwController extends BaseController{
 		zddwService.batchRemove(zddwTywysbms);
 		return R.ok();
 	}
-	
+
+	@GetMapping("/selectZddw")
+	String selectZddw(String xfjyjgTywysbm, Model model) {
+		model.addAttribute("xfjyjgTywysbm",xfjyjgTywysbm);
+		return "jczy/zddw/selectZddw";
+	}
+
+	@ResponseBody
+	@GetMapping("/selectZddwList")
+	public PageUtils selectZddwList(@RequestParam Map<String, Object> params) {
+		Query query = new Query(params);
+		List<ZddwDO> zddwList = zddwService.list(query);
+		int total = zddwService.count(query);
+		PageUtils pageUtils = new PageUtils(zddwList, total);
+		return pageUtils;
+	}
 }

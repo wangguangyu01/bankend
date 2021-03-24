@@ -14,19 +14,35 @@
 						<input id="jzjglxdmVal" th:value="${zdbw.jzjglxdm}" type="hidden">
 						<input id="jzwnhdjdmVal" th:value="${zdbw.jzwnhdjdm}" type="hidden">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">重点部位名称：</label>
+							<label class="col-sm-2 control-label">名称：</label>
 							<div class="col-sm-4">
 								<input id="mc" name="mc" class="form-control" type="text" th:value="${zdbw.mc}">
 							</div>
-							<label class="col-sm-2 control-label">重点部位地点：</label>
+							<label class="col-sm-2 control-label">地点名称：</label>
 							<div class="col-sm-4">
 								<input id="ddmc" name="ddmc" class="form-control" type="text" th:value="${zdbw.ddmc}">
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-2 control-label">重点单位：</label>
+							<div class="col-sm-2">
+								<div class="input-group">
+									<input id="dddwTywysbm" name="fzrTywysbm" type="hidden" class="form-control" th:value="${zdbw.dddwTywysbm}" placeholder="请选择">
+									<input id="zddwMc" name="zddwMc" type="text" class="form-control" th:value="${zdbw.zddwMc}"  placeholder="请选择" readonly>
+									<span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" onclick="openRy();">选择</button>
+                                    </span>
+								</div>
+							</div>
+							<label class="col-sm-2 control-label">责任人姓名：</label>
+							<div class="col-sm-4">
+								<input id="zrrXm" name="zrrXm" class="form-control" type="text" th:value="${zdbw.zrrXm}">
+							</div>
+						</div>
+						<div class="form-group">
 							<label class="col-sm-2 control-label">消防救援机构：</label>
 							<div class="col-sm-4">
-								<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+								<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${zdbw.xfjyjgTywysbm}" > <input
 									id="deptName" name="deptName" class="form-control" type="text"
 									style="cursor: pointer;" onclick="openDept()"
 									readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${zdbw.xfjyjg}">
@@ -113,9 +129,13 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">责任人姓名：</label>
+							<label class="col-sm-2 control-label">消防设施：</label>
 							<div class="col-sm-4">
-								<input id="zrrXm" name="zrrXm" class="form-control" type="text" th:value="${zdbw.zrrXm}">
+								<textarea id="xfssJyqk" name="xfssJyqk" class="form-control" th:text="${zdbw.xfssJyqk}"></textarea>
+							</div>
+							<label class="col-sm-2 control-label">消防控制室：</label>
+							<div class="col-sm-4">
+								<textarea id="sfkzsJyqk" name="sfkzsJyqk" class="form-control" th:text="${zdbw.xfkzsJyqk}"></textarea>
 							</div>
 						</div>
 						<div class="form-group">

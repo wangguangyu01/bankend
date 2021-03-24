@@ -11,7 +11,6 @@ import com.smart119.system.domain.UserDO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,18 +55,18 @@ public class FzjcController {
 	String Fzjc(){
 	    return "jczy/fzjc/fzjc";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:fzjc:fzjc")
 	public PageUtils list(@RequestParam Map<String, Object> params){
 		//查询列表数据
-        Query query = new Query(params);
-		List<FzjcDO> fzjcList = fzjcService.list(query);
-		int total = fzjcService.count(query);
-		PageUtils pageUtils = new PageUtils(fzjcList, total);
-		return pageUtils;
+		PageUtils page = fzjcService.queryPage(params);
+		return page;
 	}
+
+
+
 	
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:fzjc:add")

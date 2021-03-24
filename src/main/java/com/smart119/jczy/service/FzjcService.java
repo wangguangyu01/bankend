@@ -1,5 +1,6 @@
 package com.smart119.jczy.service;
 
+import com.smart119.common.utils.PageUtils;
 import com.smart119.jczy.domain.FzjcDO;
 
 import java.util.List;
@@ -27,4 +28,7 @@ public interface FzjcService {
 	int remove(String fzjcId);
 	
 	int batchRemove(String[] fzjcIds);
+
+
+	public PageUtils queryPage(Map<String, Object> params);
 }
