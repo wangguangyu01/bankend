@@ -177,8 +177,8 @@
             <if test="zrrXm != null">`ZRR_XM` = #{zrrXm},</if>
             <if test="sfaqglJyqk != null">`SFAQGL_JYQK` = #{sfaqglJyqk},</if>
             <if test="jzwnhdjdm != null">`JZWNHDJDM` = #{jzwnhdjdm},</if>
-            <if test="bz != null">`BZ` = #{bz}</if>
-            <if test="xfssJyqk != null">`XFSS_JYQK` = #{xfssJyqk}</if>
+            <if test="bz != null">`BZ` = #{bz},</if>
+            <if test="xfssJyqk != null">`XFSS_JYQK` = #{xfssJyqk},</if>
             <if test="xfkzsJyqk != null">`XFKZS_JYQK` = #{xfkzsJyqk}</if>
         </set>
         where ZDBW_TYWYSBM = #{zdbwTywysbm}

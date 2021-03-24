@@ -12,12 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.ZdbwDO;
 import com.smart119.common.utils.PageUtils;
@@ -114,7 +109,10 @@ public class ZdbwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zdbw:edit")
-	public R update( ZdbwDO zdbw){
+	public R update(@RequestPart(value = "tzFile", required = false) MultipartFile[] tzFiles , ZdbwDO zdbw){
+		if(tzFiles!=null && tzFiles.length>0) {
+			attachmentService.ftpUpload(tzFiles, zdbw.getZdbwTywysbm(), "zdbwtz");
+		}
 		zdbwService.update(zdbw);
 		return R.ok();
 	}
