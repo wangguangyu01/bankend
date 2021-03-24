@@ -5,11 +5,11 @@ $().ready(function() {
     getSelectAll("XFJYJGXZDM","XFJYJGXZDM-DIV","xfjyjgxzdm","xfjyjgxzdm-title");
     pointsArr = $("#zbfw").val();
     var xfjyjgxzdm = $("#xfjyjgxzdm").val();
-    if(xfjyjgxzdm.startsWith("90")){
+    /*if(xfjyjgxzdm.startsWith("90")){
         $("#zbfwDiv").show();
 	}else{
         $("#zbfwDiv").hide();
-	}
+	}*/
 });
 
 $.validator.setDefaults({
@@ -57,6 +57,15 @@ function validateRule() {
 			}
 		}
 	})
+}
+
+function changeval() {
+	var xfjyjgxzdm = $("#xfjyjgxzdm").val();
+	if(xfjyjgxzdm.startsWith("90") || xfjyjgxzdm.startsWith("50")){
+		$("#zbfwDiv").show()
+	}else{
+		$("#zbfwDiv").hide()
+	}
 }
 
 var openMap = function(){
