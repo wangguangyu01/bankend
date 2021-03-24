@@ -61,7 +61,7 @@ public class JqgdController extends BaseController {
 	 */
 	@ApiOperation("根据警情ID查询归档信息")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
 	})
 	//返回描述
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response=JqgdDO.class)})

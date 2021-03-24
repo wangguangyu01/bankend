@@ -179,7 +179,7 @@ public class BrqyController extends BaseController {
     @GetMapping( "/brqyList")
     @ResponseBody
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "避让区域类型", required = true, dataType = "String",paramType = "query")
+            @ApiImplicitParam(name = "type", value = "避让区域类型", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
     })
     @ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
     public R brqyList(@RequestParam Map<String, Object> params){

@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2021-01-28 13:48:30
  */
 
-@Mapper
+
 public interface SeatsDao {
 
 	SeatsDO get(String seatsid);

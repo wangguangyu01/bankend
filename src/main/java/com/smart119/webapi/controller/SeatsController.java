@@ -65,7 +65,7 @@ public class SeatsController extends BaseController {
             //@ApiImplicitParam(name = "Authorization", value = "认证Token", required = false, dataType = "String",paramType = "header"),
             //  @ApiImplicitParam(name = "seatstatus", value = "查询状态==0", required = true, dataType = "String", paramType = "query"),
             // @ApiImplicitParam(name = "offset", value = "第几页 0 ++", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "xfjyjgTywysbm", value = "组织机构ID", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "xfjyjgTywysbm", value = "组织机构ID", required = true, dataType = "String", dataTypeClass = String.class,paramType = "query"),
     })
     //不显示
     /*@ApiIgnore */
@@ -231,8 +231,8 @@ public class SeatsController extends BaseController {
 
     @ApiOperation(value = "app 警情文件上传", notes = "警情文件上传")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "JQ_TYWYSBM", value = "警情id", dataType = "String", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "type", value = "附件类型--jbxx", dataType = "String", required = true, paramType = "query"),
+            @ApiImplicitParam(name = "JQ_TYWYSBM", value = "警情id", dataType = "String", required = true, dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "type", value = "附件类型--jbxx", dataType = "String", required = true, dataTypeClass = String.class,paramType = "query"),
     })
     @ResponseBody
     @PostMapping(value = "/upload", headers = "content-type=multipart/form-data")

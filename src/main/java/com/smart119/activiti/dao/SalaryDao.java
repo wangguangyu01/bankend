@@ -12,7 +12,6 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-11-25 13:28:58
  */
-@Mapper
 public interface SalaryDao {
 
 	SalaryDO get(String id);

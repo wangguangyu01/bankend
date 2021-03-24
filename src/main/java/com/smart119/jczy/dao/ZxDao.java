@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email yangjiyu@sz000673.com
  * @date 2021-02-25 10:15:41
  */
-@Mapper
+
 public interface ZxDao {
 
 	ZxDO get(String id);

@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email test@raysdata.com
  * @date 2020-07-09 16:44:42
  */
-@Mapper
+
 public interface TAuditLogConfigDao extends BaseMapper<TAuditLogConfigEntity> {
 	
 }

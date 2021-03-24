@@ -132,10 +132,10 @@ public class ZhdjController extends BaseController {
 	@GetMapping( "/jqsjpd")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "zhlx", value = "灾害类型", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zhcs", value = "灾害场所", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zhdj", value = "灾害等级", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "bkrs", value = "被困人数", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "zhlx", value = "灾害类型", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zhcs", value = "灾害场所", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zhdj", value = "灾害等级", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "bkrs", value = "被困人数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
 	public R jqsjpd(@RequestParam Map<String, Object> params){

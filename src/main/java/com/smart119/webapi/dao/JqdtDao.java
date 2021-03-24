@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  * @email 123564081@qq.com
  * @date 2021-01-30 10:02:02
  */
-@Mapper
+
 public interface JqdtDao {
 
 	JqdtDO get(String jqdtId);

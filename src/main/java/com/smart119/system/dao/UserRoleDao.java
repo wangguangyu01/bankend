@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email 1992lcg@163.com
  * @date 2017-10-03 11:08:59
  */
-@Mapper
+
 public interface UserRoleDao {
 
 	UserRoleDO get(Long id);

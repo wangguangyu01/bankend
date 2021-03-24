@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email test@raysdata.com
  * @date 2020-08-18 11:04:46
  */
-@Mapper
+
 public interface TElementDirectionDao extends BaseMapper<TElementDirectionEntity> {
 	
 }

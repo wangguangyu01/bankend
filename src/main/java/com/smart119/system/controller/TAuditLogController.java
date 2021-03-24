@@ -45,10 +45,10 @@ public class TAuditLogController {
     @ApiOperation(value = "审计日志查询")
     @RequiresPermissions("sys:tauditlog:tauditlog")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "limit", value = "条数", required = true   ,paramType = "url"),
-            @ApiImplicitParam(name = "offset", value = "页数", required = true   ,paramType = "url"),
-            @ApiImplicitParam(name = "sort", value = "排序" ,paramType = "url"),
-            @ApiImplicitParam(name = "keyword", value = "检索关键词",  paramType = "url")
+            @ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "排序", dataType = "String",dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "keyword", value = "检索关键词",dataType = "String",dataTypeClass = String.class,paramType = "query")
     })
     public PageUtils list(@RequestParam Map<String, Object> params){
         QueryWrapper<TAuditLogEntity> queryWrapper = new QueryWrapper();

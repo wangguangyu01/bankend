@@ -185,8 +185,6 @@ public class MhjyzjController extends BaseController {
 	@ApiOperation("专家联动接口")
 	@GetMapping( "/zjldList")
 	@ResponseBody
-	@ApiImplicitParams({
-	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= MhjyzjDO.class)})
 	public PageUtils zjldList(){
 		List<Map<String,Object>> mhzjList = mhjyzjService.zjldList();  //这里要改成按照一级领域分组

@@ -12,7 +12,7 @@ import java.util.Map;
  * @email yangjiyu@sz000673.com
  * @date 2021-02-08 19:46:49
  */
-@Mapper
+
 public interface ZyxxDao {
 
 	ZyxxDO get(String jxxxzybm);

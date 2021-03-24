@@ -115,7 +115,7 @@ public class ZyxxController extends BaseController {
 	@GetMapping("/getlist")
 	@ApiOperation(value = "增援力量查询", notes = "备注")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jxxxzybm", value = "增援力量id", required = true, dataType = "String", paramType = "query"),
+			@ApiImplicitParam(name = "jxxxzybm", value = "增援力量id", required = true, dataType = "String",dataTypeClass = String.class, paramType = "query"),
 	})
 	public Map<String,Object> getlist(@RequestParam Map<String, Object> params){
 		Map<String,Object> map=new HashMap<>();

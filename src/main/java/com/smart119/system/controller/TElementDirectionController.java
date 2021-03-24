@@ -34,9 +34,9 @@ public class TElementDirectionController {
     @ApiOperation(value = "日志操作类型字典表列表")
     @RequiresPermissions("sys:tauditlog:tauditlog")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "limit", value = "条数", required = true    ,paramType = "body"),
-            @ApiImplicitParam(name = "offset", value = "页数", required = true    ,paramType = "body"),
-            @ApiImplicitParam(name = "params", value = "json格式的查询参数",  dataType = "String",paramType = "body")
+            @ApiImplicitParam(name = "limit", value = "条数", required = true    , dataType = "String",dataTypeClass = String.class,paramType = "body"),
+            @ApiImplicitParam(name = "offset", value = "页数", required = true    , dataType = "String",dataTypeClass = String.class,paramType = "body"),
+            @ApiImplicitParam(name = "params", value = "json格式的查询参数",  dataType = "String",dataTypeClass = String.class,paramType = "body")
     })
     public R list(@RequestParam Map<String, Object> params){
         //查询列表数据

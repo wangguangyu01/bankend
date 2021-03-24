@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email liangshengli@sz000673.com
  * @date 2021-03-22 14:45:03
  */
-@Mapper
+
 public interface BannerLxDao {
 
 	BannerLxDO get(String bannerLxId);

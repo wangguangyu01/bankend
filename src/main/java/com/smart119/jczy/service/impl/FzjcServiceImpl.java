@@ -2,6 +2,7 @@ package com.smart119.jczy.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.smart119.common.utils.PageMybatisPlusUtils;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.UUIDGenerator;
@@ -19,7 +20,7 @@ import com.smart119.jczy.service.FzjcService;
 
 
 @Service
-public class FzjcServiceImpl implements FzjcService {
+public class FzjcServiceImpl extends ServiceImpl<FzjcDao, FzjcDO> implements FzjcService {
 	@Autowired
 	private FzjcDao fzjcDao;
 	
@@ -37,18 +38,6 @@ public class FzjcServiceImpl implements FzjcService {
 	public int count(Map<String, Object> map){
 
 		return fzjcDao.count(map);
-	}
-	
-	@Override
-	public int save(FzjcDO fzjc){
-		fzjc.setFzjcId(UUIDGenerator.getUUID());
-		return fzjcDao.save(fzjc);
-	}
-	
-	@Override
-	public int update(FzjcDO fzjc){
-
-		return fzjcDao.update(fzjc);
 	}
 	
 	@Override

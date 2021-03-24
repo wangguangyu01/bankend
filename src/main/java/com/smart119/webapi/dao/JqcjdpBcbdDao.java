@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email yanyu@sz000673.com
  * @date 2021-01-30 12:40:38
  */
-@Mapper
+
 public interface JqcjdpBcbdDao {
 
 	JqcjdpBcbdDO get(String jqcjdpBcbdId);

@@ -80,7 +80,6 @@ public class BcbdController {
 	}
 
 	@ApiOperation("查询编程编队信息")
-	@ApiImplicitParams({})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= BlackListDO.class)})
 	@ResponseBody
 	@GetMapping("/listWithQuery")
@@ -96,8 +95,8 @@ public class BcbdController {
 	 */
 	@ApiOperation("编程编队确认接口")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情id", required = true, dataType = "String",paramType = "header"),
-			@ApiImplicitParam(name = "bcbdId", value = "编成id", required = true, dataType = "String",paramType = "header")
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情id", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header"),
+			@ApiImplicitParam(name = "bcbdId", value = "编成id", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "编程编队确认成功",response= R.class)})
 	@ResponseBody

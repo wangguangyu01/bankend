@@ -30,8 +30,8 @@ public class PddhController {
 
     @ApiOperation("排队电话查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String",paramType = "header"),
-            @ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",paramType = "header")
+            @ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header"),
+            @ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
     })
     @ResponseBody
     @GetMapping("/list")
@@ -53,8 +53,8 @@ public class PddhController {
 
     @ApiOperation("早释放电话查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String",paramType = "header"),
-            @ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",paramType = "header")
+            @ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String", dataTypeClass = String.class,paramType = "header"),
+            @ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
     })
     @ResponseBody
     @GetMapping("/zslist")

@@ -12,7 +12,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2021-01-15 11:28:42
  */
-@Mapper
+
 public interface XfclDao {
 
 	XfclDO get(String xfclTywysbm);

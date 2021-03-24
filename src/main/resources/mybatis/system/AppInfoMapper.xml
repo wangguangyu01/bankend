@@ -40,7 +40,7 @@
 			#{createDate}
 		)
 	</insert>
-	<update id="updateById" parameterType="com.smart119.system.domain.AppInfoDO">
+	<!--<update id="updateById" parameterType="com.smart119.system.domain.AppInfoDO">
 		UPDATE sys_app_info
 		<set>
 			<if test="#{name != null and name != ''}">
@@ -66,7 +66,7 @@
 			</if>
 		</set>
 		WHERE id = #{id}
-	</update>
+	</update>-->
 	<select id="selectPageVo" resultType="com.smart119.system.domain.AppInfoDO">
 		SELECT
 			id,

@@ -27,7 +27,7 @@ public interface FzjcDao extends BaseMapper<FzjcDO> {
 	
 	int save(FzjcDO fzjc);
 	
-	int update(FzjcDO fzjc);
+//	int update(FzjcDO fzjc);
 	
 	int remove(String FZJC_ID);
 	

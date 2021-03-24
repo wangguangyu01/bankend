@@ -13,7 +13,7 @@ import java.util.Map;
  * @email mrtidus@163.com
  * @date 2021-01-29 11:02:36
  */
-@Mapper
+
 public interface ZhjqDao {
 
 	ZhjqDO get(String id);

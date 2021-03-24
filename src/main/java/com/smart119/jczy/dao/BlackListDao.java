@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @email thrz@sz000673.com
  * @date 2021-01-26 17:14:46
  */
-@Mapper
+
 public interface BlackListDao {
 
 	BlackListDO get(String hmdTywysbm);

@@ -72,7 +72,7 @@ public class ZddwController extends BaseController{
 
 	@ApiOperation("查询重点单位信息")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "dwmc", value = "单位名称", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "dwmc", value = "单位名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ResponseBody
 	@GetMapping("/list")

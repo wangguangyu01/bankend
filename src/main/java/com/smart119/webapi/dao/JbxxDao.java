@@ -14,7 +14,7 @@ import java.util.Map;
  * @email yanyu@sz000673.com
  * @date 2021-01-28 11:48:41
  */
-@Mapper
+
 public interface JbxxDao {
 
 	JbxxDO get(String jqTywysbm);

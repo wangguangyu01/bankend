@@ -33,9 +33,9 @@ public class TAuditLogConfigController{
     @ApiOperation(value = "查询审计日志配置表列表")
     @RequiresPermissions("sys:tauditlogconfig:tauditlogconfig")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "limit", value = "条数", required = true    ,paramType = "body"),
-            @ApiImplicitParam(name = "offset", value = "页数", required = true    ,paramType = "body"),
-            @ApiImplicitParam(name = "params", value = "json格式的查询参数",  dataType = "String",paramType = "body")
+            @ApiImplicitParam(name = "limit", value = "条数", dataType = "String",dataTypeClass = String.class,required = true,paramType = "query"),
+            @ApiImplicitParam(name = "offset", value = "页数", required = true , dataType = "String",dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "params", value = "json格式的查询参数", dataType = "String",dataTypeClass = String.class,paramType = "query")
     })
     public R list(@RequestParam Map<String, Object> params){
         //查询列表数据

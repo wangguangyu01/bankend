@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  * @email 1992lcg@163.com
  * @date 2017-10-03 15:35:39
  */
-@Mapper
+
 public interface DeptDao {
 
 	DeptDO get(long deptId);

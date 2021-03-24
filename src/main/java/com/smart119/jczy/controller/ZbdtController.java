@@ -78,9 +78,9 @@ public class ZbdtController extends BaseController{
 	@ResponseBody
 	@GetMapping("/appList")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "limit", value = "分页-每页信息数量", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "offset", value = "分页-页码(从0开始)", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXm", value = "值班人姓名（查询用）", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "limit", value = "分页-每页信息数量", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "offset", value = "分页-页码(从0开始)", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXm", value = "值班人姓名（查询用）", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
 	public PageUtils appList(@RequestParam Map<String, Object> params){
@@ -126,9 +126,6 @@ public class ZbdtController extends BaseController{
 	@ApiOperation("值班动态动态信息查询")
 	@ResponseBody
 	@GetMapping("/appEdit")
-//	@ApiImplicitParams({
-//			@ApiImplicitParam(name = "zhbTywysbm", value = "值班_通用唯一识别码", required = true, dataType = "String",paramType = "query")
-//	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
 	public R appEdit(@ApiParam(value = "值班_通用唯一识别码",name = "zhbTywysbm") @RequestParam(value = "", required = true) String zhbTywysbm){
 		Map<String,Object> map = new HashMap<>();
@@ -162,18 +159,18 @@ public class ZbdtController extends BaseController{
 	@ResponseBody
 	@PostMapping("/app_save")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "zhbRq", value = "值班日期", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXm", value = "值班人姓名", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryLxdh", value = "值班人联系电话", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfzbjslbdm", value = "值班人员_消防值班角色类别代码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfzbjslb", value = "值班人员_消防值班角色类别", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfgwflydm", value = "值班人员_消防岗位分类与代码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfgwfly", value = "值班人员_消防岗位分类与", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryDwmc", value = "值班人员_单位名称", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zfbPdbs", value = "值班人员_正副班_判断标识", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "bz", value = "备注", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xzqhdm", value = "行政区划代码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbrzJyqk", value = "值班日志_简要情况", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "zhbRq", value = "值班日期", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXm", value = "值班人姓名", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryLxdh", value = "值班人联系电话", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfzbjslbdm", value = "值班人员_消防值班角色类别代码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfzbjslb", value = "值班人员_消防值班角色类别", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfgwflydm", value = "值班人员_消防岗位分类与代码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfgwfly", value = "值班人员_消防岗位分类与", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryDwmc", value = "值班人员_单位名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zfbPdbs", value = "值班人员_正副班_判断标识", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "bz", value = "备注", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xzqhdm", value = "行政区划代码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbrzJyqk", value = "值班日志_简要情况", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
 	public R app_save(@RequestBody Map<String, Object> params){
@@ -214,19 +211,19 @@ public class ZbdtController extends BaseController{
 	@ResponseBody
 	@PostMapping("/update")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "zhbTywysbm", value = "值班_通用唯一识别码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zhbRq", value = "值班日期", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXm", value = "值班人姓名", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryLxdh", value = "值班人联系电话", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfzbjslbdm", value = "值班人员_消防值班角色类别代码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfzbjslb", value = "值班人员_消防值班角色类别", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfgwflydm", value = "值班人员_消防岗位分类与代码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryXfgwfly", value = "值班人员_消防岗位分类与", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbryDwmc", value = "值班人员_单位名称", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zfbPdbs", value = "值班人员_正副班_判断标识", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "bz", value = "备注", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xzqhdm", value = "行政区划代码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "zbrzJyqk", value = "值班日志_简要情况", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "zhbTywysbm", value = "值班_通用唯一识别码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zhbRq", value = "值班日期", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXm", value = "值班人姓名", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryLxdh", value = "值班人联系电话", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfzbjslbdm", value = "值班人员_消防值班角色类别代码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfzbjslb", value = "值班人员_消防值班角色类别", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfgwflydm", value = "值班人员_消防岗位分类与代码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryXfgwfly", value = "值班人员_消防岗位分类与", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbryDwmc", value = "值班人员_单位名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zfbPdbs", value = "值班人员_正副班_判断标识", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "bz", value = "备注", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xzqhdm", value = "行政区划代码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "zbrzJyqk", value = "值班日志_简要情况", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
 	public R update(@RequestBody Map<String, Object> params){

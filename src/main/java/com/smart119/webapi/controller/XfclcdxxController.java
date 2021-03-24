@@ -133,7 +133,7 @@ public class XfclcdxxController extends BaseController{
 	@GetMapping( "/cdllcx")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= PageUtils.class)})
 	public PageUtils qyldList(@RequestParam Map<String, Object> params){
@@ -156,8 +156,8 @@ public class XfclcdxxController extends BaseController{
 	@GetMapping( "/cdclHxcx")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "xfclTywysbms", value = "消防车辆_通用唯一识别码(多个)", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "xfclTywysbms", value = "消防车辆_通用唯一识别码(多个)", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= PageUtils.class)})
 	public PageUtils cdclcx(@RequestParam Map<String, Object> params){
@@ -179,7 +179,7 @@ public class XfclcdxxController extends BaseController{
 	@GetMapping( "/czrycx")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= PageUtils.class)})
 	public PageUtils zjldList(@RequestParam Map<String, Object> params){
@@ -204,8 +204,8 @@ public class XfclcdxxController extends BaseController{
 	@ResponseBody
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= R.class)})
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "paramsJson", value = "确认车辆、确认人员拼装Json", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码 ", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "paramsJson", value = "确认车辆、确认人员拼装Json", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情_通用唯一识别码 ", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	public R cdllqr(@RequestBody Map<String, Object> params){
 		UserDO user =  getUser();

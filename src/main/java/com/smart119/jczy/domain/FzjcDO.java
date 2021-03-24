@@ -1,5 +1,7 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -19,6 +21,7 @@ public class FzjcDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//主键 uuid
+	@TableId(type = IdType.INPUT)
 	private String fzjcId;
 	//标题
 	private String bt;

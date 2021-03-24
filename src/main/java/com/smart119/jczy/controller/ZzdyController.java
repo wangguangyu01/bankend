@@ -181,11 +181,11 @@ public class ZzdyController extends BaseController {
 	@GetMapping( "/zzdyList")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "zzdymc", value = "作战单元名称", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构编码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情编码", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jd", value = "经度坐标", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "wd", value = "纬度坐标", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "zzdymc", value = "作战单元名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构编码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情编码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jd", value = "经度坐标", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "wd", value = "纬度坐标", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
 	public R zzdyList(@RequestParam Map<String, Object> params){
@@ -214,9 +214,9 @@ public class ZzdyController extends BaseController {
 	@GetMapping( "/lxtj_baidu")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqjd", value = "警情经度", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jqwd", value = "警情纬度", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构通用唯一识别码", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "jqjd", value = "警情经度", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jqwd", value = "警情纬度", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构通用唯一识别码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= HashMap.class)})
 	public Map<String,Object> lxtj_baidu(@RequestParam Map<String, Object> params){
@@ -239,9 +239,9 @@ public class ZzdyController extends BaseController {
 	@GetMapping( "/lxtj_gaode")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqjd", value = "警情经度", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jqwd", value = "警情纬度", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构通用唯一识别码", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "jqjd", value = "警情经度", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jqwd", value = "警情纬度", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构通用唯一识别码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= HashMap.class)})
 	public Map<String,Object> lxtj_gaode (@RequestParam Map<String, Object> params){
@@ -267,9 +267,9 @@ public class ZzdyController extends BaseController {
 	@GetMapping( "/lxtj_gaode_jc")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqjd", value = "警情经度", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jqwd", value = "警情纬度", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构通用唯一识别码", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "jqjd", value = "警情经度", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jqwd", value = "警情纬度", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "消防救援机构通用唯一识别码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= HashMap.class)})
 	public Map<String,Object> lxtj_gaode_jc (@RequestParam Map<String, Object> params){

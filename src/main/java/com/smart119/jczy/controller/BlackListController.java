@@ -45,8 +45,8 @@ public class BlackListController {
 
 	@ApiOperation("查询黑名单信息")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String",paramType = "header"),
-			@ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",paramType = "header")
+			@ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header"),
+			@ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
 	})
 	@ResponseBody
 	@GetMapping("/list")
@@ -99,8 +99,8 @@ public class BlackListController {
 
 	@ApiOperation("限时禁呼")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "phoneNumber", value = "电话号", required = true, dataType = "String",paramType = "header"),
-			@ApiImplicitParam(name = "xsjhsc", value = "禁呼时间", required = true, dataType = "String",paramType = "header")
+			@ApiImplicitParam(name = "phoneNumber", value = "电话号", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header"),
+			@ApiImplicitParam(name = "xsjhsc", value = "禁呼时间", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
 	})
 	@ResponseBody
 	@PostMapping("/updateByPhoneNumber")
@@ -126,7 +126,7 @@ public class BlackListController {
 
 	@ApiOperation("黑名单解锁")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "phoneNumber", value = "电话号", required = true, dataType = "String",paramType = "header")
+			@ApiImplicitParam(name = "phoneNumber", value = "电话号", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
 
 	})
 	@PostMapping( "/removeByPhoneNumber")

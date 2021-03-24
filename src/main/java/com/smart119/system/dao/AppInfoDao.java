@@ -23,6 +23,4 @@ public interface AppInfoDao extends BaseMapper<AppInfoDO> {
         @Param("params") Map<String, Object> params);
 
     int save(AppInfoDO appInfo);
-
-    int updateById(AppInfoDO appInfo);
 }

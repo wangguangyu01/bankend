@@ -105,18 +105,18 @@
 		)
 	</insert>
 
-    <update id="update" parameterType="com.smart119.jczy.domain.FzjcDO">
-        update jczy_fzjc
-        <set>
-            <if test="bt != null">`BT` = #{bt},</if>
-            <if test="fzjclxdm != null">`FZJCLXDM` = #{fzjclxdm},</if>
-            <if test="fzjcnr != null">`FZJCNR` = #{fzjcnr},</if>
-            <if test="cdate != null">`cdate` = #{cdate},</if>
-            <if test="cperson != null">`cperson` = #{cperson},</if>
-            <if test="status != null">`status` = #{status}</if>
-        </set>
-        where FZJC_ID = #{fzjcId}
-    </update>
+    <!--<update id="update" parameterType="com.smart119.jczy.domain.FzjcDO">-->
+        <!--update jczy_fzjc-->
+        <!--<set>-->
+            <!--<if test="bt != null">`BT` = #{bt},</if>-->
+            <!--<if test="fzjclxdm != null">`FZJCLXDM` = #{fzjclxdm},</if>-->
+            <!--<if test="fzjcnr != null">`FZJCNR` = #{fzjcnr},</if>-->
+            <!--<if test="cdate != null">`cdate` = #{cdate},</if>-->
+            <!--<if test="cperson != null">`cperson` = #{cperson},</if>-->
+            <!--<if test="status != null">`status` = #{status}</if>-->
+        <!--</set>-->
+        <!--where FZJC_ID = #{fzjcId}-->
+    <!--</update>-->
 
     <delete id="remove">
 		delete from jczy_fzjc where FZJC_ID = #{value}

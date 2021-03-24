@@ -27,8 +27,8 @@ public class MqController {
 
     @ApiOperation("消息推送到queue")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "queueName", value = "队列名称", required = true, dataType = "String",paramType = "header"),
-            @ApiImplicitParam(name = "message", value = "消息内容", required = true, dataType = "String",paramType = "header")
+            @ApiImplicitParam(name = "queueName", value = "队列名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header"),
+            @ApiImplicitParam(name = "message", value = "消息内容", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
     })
     @ResponseBody
     @PostMapping("/sendMessageToQueue")
@@ -40,8 +40,8 @@ public class MqController {
 
     @ApiOperation("消息推送到广播exchange")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "exchangeName", value = "路由名称", required = true, dataType = "String",paramType = "header"),
-            @ApiImplicitParam(name = "message", value = "消息内容", required = true, dataType = "String",paramType = "header")
+            @ApiImplicitParam(name = "exchangeName", value = "路由名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header"),
+            @ApiImplicitParam(name = "message", value = "消息内容", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
     })
     @ResponseBody
     @PostMapping("/sendMessageToExchange")

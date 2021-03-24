@@ -14,7 +14,7 @@ import org.apache.ibatis.annotations.Param;
  * @email yanyu@sz000673.com
  * @date 2021-01-28 12:06:29
  */
-@Mapper
+
 public interface DtsxzDao {
 
 	DtsxzDO get(String dtsxzTywysbm);

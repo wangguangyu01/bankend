@@ -1,5 +1,6 @@
 package com.smart119.jczy.controller;
 
+import com.smart119.common.utils.UUIDGenerator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -97,7 +98,8 @@ public class FzjcController {
 		fzjc.setCperson(user.getUsername());
 		fzjc.setCdate(new Date());
 		fzjc.setStatus(0);
-		if(fzjcService.save(fzjc)>0){
+		fzjc.setFzjcId(UUIDGenerator.getUUID());
+		if(fzjcService.save(fzjc)){
 			return R.ok();
 		}
 		return R.error();
@@ -113,7 +115,7 @@ public class FzjcController {
 		fzjc.setCperson(user.getUsername());
 		fzjc.setCdate(new Date());
 		fzjc.setStatus(0);
-		fzjcService.update(fzjc);
+		fzjcService.updateById(fzjc);
 		return R.ok();
 	}
 	

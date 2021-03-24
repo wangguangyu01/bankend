@@ -178,8 +178,8 @@ public class JqcjdpController extends BaseController {
 	 */
 	@ApiOperation("根据警情ID和机构识别编码查询被派信息")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "机构识别编码", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "机构识别编码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
 
 	})
 	//返回描述
@@ -258,9 +258,9 @@ public class JqcjdpController extends BaseController {
 	 */
 	@ApiOperation("根据警情ID和组织机构ID和调派ID查询被派信息")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "jqcjdpTywysbm", value = "调派ID", required = true, dataType = "String",paramType = "query"),
-			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "机构识别编码", required = true, dataType = "String",paramType = "query"),
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "jqcjdpTywysbm", value = "调派ID", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+			@ApiImplicitParam(name = "xfjyjgTywysbm", value = "机构识别编码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
 
 	})
 	//返回描述
@@ -441,7 +441,7 @@ public class JqcjdpController extends BaseController {
 	 */
 	@ApiOperation("力量出动验证接口")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",paramType = "query")
+			@ApiImplicitParam(name = "jqTywysbm", value = "警情ID", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 
 	})
 	//返回描述

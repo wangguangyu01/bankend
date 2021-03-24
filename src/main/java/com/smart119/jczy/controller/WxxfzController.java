@@ -143,8 +143,8 @@ public class WxxfzController extends BaseController {
 	@GetMapping( "/qyldList")
 	@ResponseBody
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "wxxfzMc", value = "微型消防站名称", required = true, dataType = "String",paramType = "header"),
-			@ApiImplicitParam(name = "xzqhdm", value = "行政区划代码", required = true, dataType = "String",paramType = "header")
+			@ApiImplicitParam(name = "wxxfzMc", value = "微型消防站名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header"),
+			@ApiImplicitParam(name = "xzqhdm", value = "行政区划代码", required = true, dataType = "String",dataTypeClass = String.class,paramType = "header")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= YjlddwDO.class)})
 	public PageUtils qyldList(@RequestParam Map<String, Object> params){
