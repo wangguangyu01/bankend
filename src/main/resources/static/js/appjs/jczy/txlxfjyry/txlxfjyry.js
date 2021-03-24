@@ -198,6 +198,7 @@ function Excel() {
         url: prefix + "/txlXfjyryExcel", // 服务器数据的加载地址
         type: "get",
         data: {
+            deptId: zid,
             'xm': $("#searchName").val(),
             'sjszjg' : $("#sjszjg").val(),
             'xfjyxjbdm' : $("#xfjyxjbdm").val()
