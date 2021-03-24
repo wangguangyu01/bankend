@@ -2,14 +2,15 @@ package com.smart119.system.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.smart119.common.utils.PageUtils;
-import com.smart119.common.utils.ParamChangeUtil;
 import com.smart119.common.utils.R;
+import com.smart119.common.utils.StringUtils;
 import com.smart119.system.domain.TAuditLogConfigEntity;
 import com.smart119.system.service.TAuditLogConfigService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ import java.util.Map;
  * 审计日志配置表
  *
  */
-@RestController
+@Controller
 @RequestMapping("sys/tauditlogconfig")
 @Api(value = "sys/tauditlogconfig", tags = "审计日志配置表管理 API")
 @Slf4j
@@ -28,18 +29,24 @@ public class TAuditLogConfigController{
     @Autowired
     private TAuditLogConfigService tAuditLogConfigService;
 
+    @GetMapping
+    @RequiresPermissions("sys:tauditlogconfig:tauditlogconfig")
+    public String tauditlogconfig(){
+        return "system/auditLogConfig/auditLogConfig";
+    }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ApiOperation(value = "查询审计日志配置表列表")
     @RequiresPermissions("sys:tauditlogconfig:tauditlogconfig")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "limit", value = "条数", dataType = "String",dataTypeClass = String.class,required = true,paramType = "query"),
-            @ApiImplicitParam(name = "offset", value = "页数", required = true , dataType = "String",dataTypeClass = String.class,paramType = "query"),
-            @ApiImplicitParam(name = "params", value = "json格式的查询参数", dataType = "String",dataTypeClass = String.class,paramType = "query")
+            @ApiImplicitParam(name = "limit", value = "条数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "offset", value = "页数", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "sort", value = "排序", dataType = "String",dataTypeClass = String.class,paramType = "query"),
+            @ApiImplicitParam(name = "keyword", value = "检索关键词",dataType = "String",dataTypeClass = String.class,paramType = "query")
     })
-    public R list(@RequestParam Map<String, Object> params){
-        //查询列表数据
-        QueryWrapper queryWrapper = new QueryWrapper();
+    @ResponseBody
+    public PageUtils list(@RequestParam Map<String, Object> params){
+        QueryWrapper<TAuditLogConfigEntity> queryWrapper = new QueryWrapper();
         Object sort = params.get("sort");
         if(!ObjectUtils.isEmpty(sort)){
             Object order = params.get("order");
@@ -48,21 +55,44 @@ public class TAuditLogConfigController{
             }else{
                 queryWrapper.orderByAsc(sort.toString());
             }
+        } else {
+            //默认排序字段
+            queryWrapper.orderByDesc("create_time");
         }
-        Object offset = params.get("offset");
-        Object limit = params.get("limit");
-        if(!ObjectUtils.isEmpty(offset) && !ObjectUtils.isEmpty(limit)){
-            queryWrapper.last("limit " + offset + "," + limit);
+        Object offsetObj = params.get("offset");
+        Object limitObj = params.get("limit");
+        int offset;
+        if(ObjectUtils.isEmpty(offsetObj)){
+            offset = 0;
+        }else{
+            offset = Integer.valueOf(offsetObj.toString());
         }
-        params.remove("sort");
-        params.remove("order");
-        params.remove("offset");
-        params.remove("limit");
-        params.forEach((s, o) -> {
-            queryWrapper.eq(ParamChangeUtil.humpToLine2(s), o);
-        });
-        PageUtils pageUtils = new PageUtils(tAuditLogConfigService.list(queryWrapper), tAuditLogConfigService.count(queryWrapper));
-        return R.ok(pageUtils);
+        int limit;
+        if(ObjectUtils.isEmpty(limitObj)){
+            limit = 10;
+        }else{
+            limit = Integer.valueOf(limitObj.toString());
+        }
+        queryWrapper.last("limit " + offset + "," + limit);
+        //remove后 切面记录审计日志时会缺少参数
+//        params.remove("sort");
+//        params.remove("order");
+//        params.remove("offset");
+//        params.remove("limit");
+        Object keywordObj = params.get("keyword");
+        QueryWrapper<TAuditLogConfigEntity> countWrapper = null;
+        if(!ObjectUtils.isEmpty(keywordObj) && StringUtils.isNotBlank(keywordObj.toString())){
+            countWrapper = new QueryWrapper();
+            String v = keywordObj.toString();
+            //在这里维护需要检索的字段
+            String[] key = {"url", "operation_type", "bussiness", "operation_code", "tag"};
+            for (String k : key) {
+                queryWrapper.like(k, v).or();
+                countWrapper.like(k, v).or();
+            }
+        }
+        PageUtils pageUtils = new PageUtils(tAuditLogConfigService.list(queryWrapper), tAuditLogConfigService.count(countWrapper));
+        return pageUtils;
     }
 
 

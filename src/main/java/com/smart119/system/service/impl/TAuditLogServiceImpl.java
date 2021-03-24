@@ -147,7 +147,6 @@ public class TAuditLogServiceImpl extends ServiceImpl<TAuditLogDao, TAuditLogEnt
                 UpdateWrapper updateWrapper = new UpdateWrapper();
                 updateWrapper.in("id",
                         dblist.stream().map(TAuditLogEntity::getId).collect(Collectors.toList()));
-                //删除数据库中已备份的日志(我也不知道这是什么需求?)
                 this.remove(updateWrapper);
             } catch (Exception e) {
                 e.printStackTrace();

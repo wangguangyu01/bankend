@@ -218,11 +218,22 @@ public class SysLogAspect implements Ordered {
                 JSONObject jsonObject = JSONObject.parseObject(retResult);
                 Integer code = jsonObject.getInteger("code");
                 extraNote = jsonObject.getString("extraNote");
-                if (code == 0) {
-                    result = EventResultEnum.SUCCESS.getCode();
+                if(code != null){
+                    if (code == 0) {
+                        result = EventResultEnum.SUCCESS.getCode();
+                    } else {
+                        result = EventResultEnum.ERROR.getCode();
+                    }
                 } else {
-                    result = EventResultEnum.ERROR.getCode();
+                    if(jsonObject.get("total") != null){
+                        result = EventResultEnum.SUCCESS.getCode();
+                    }else{
+                        result = EventResultEnum.ERROR.getCode();
+                        log.error("未知返回：{}", retResult);
+                    }
                 }
+
+
             } else {
                 if (operationCode.contains("export") || operationCode.endsWith("download")) {
                     result = EventResultEnum.SUCCESS.getCode();
