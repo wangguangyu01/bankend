@@ -202,7 +202,7 @@ function loadTree(tree) {
 $('#jstree').on("changed.jstree", function (e, data) {
     $("#exampleTable").bootstrapTable('destroy');  // 销毁原表格
     zid = data.selected[0],
-        load();
+    load();
 });
 
 function Excel() {
