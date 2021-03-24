@@ -6,6 +6,7 @@ import com.smart119.jczy.domain.XfjyryDO;
 import java.util.List;
 import java.util.Map;
 
+import com.smart119.jczy.domain.XfjyryExcelDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,7 +23,7 @@ public interface XfjyryDao {
 	
 	List<XfjyryDO> list(Map<String,Object> map);
 
-	List<XfjyryDO> listOther(Map<String,Object> map);
+	List<XfjyryExcelDO> listOther(Map<String,Object> map);
 	
 	int count(Map<String,Object> map);
 	

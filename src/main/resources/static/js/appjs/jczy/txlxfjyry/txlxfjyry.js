@@ -1,15 +1,10 @@
 var prefix = "/jczy/txlxfjyry"
 var zid;
-
-data= {
-    xm: $('#searchName').val(),
-    sjszjg: $('#sjszjg').val(),
-    xfgwflydm: $('#xfgwflydm').val()
-}
+var exportList;
 $(function () {
     getTreeData();
     load();
-    getSelectByXfgwType("XFGWFLYDM","xfgwflydm",null);
+    getSelectByXfjbType("XFJYXJBDM", "xfjyxjbdm", null);
 });
 
 function load() {
@@ -36,7 +31,7 @@ function load() {
                         offset: params.offset,
                         xm: $('#searchName').val(),
                         sjszjg: $('#sjszjg').val(),
-                        xfgwflydm:$('#xfgwflydm').val()
+                        xfjyxjbdm:$('#xfjyxjbdm').val()
                     };
                 },
 
@@ -63,32 +58,24 @@ function load() {
                         field: 'xm',
                         title: '姓名'
                     },
-                    {
-                        field: 'xbdm',
-                        title: '性别',
-                        formatter: function (value, row, index) {
-                            if (value == 1) {
-                                return '男';
-                            } else if (value == 2) {
-                                return '女';
-                            }
-                        }
-                    },
+
                     {
                         field: 'ydLxdh',
                         title: '移动电话'
                     },
+
                     {
-                        field: 'xfgwflmc',
-                        title: '消防岗位分类名称'
+                        field: 'bgLxdh',
+                        title: '固定电话'
                     },
+
                     {
                         field: 'xfjyxjb',
                         title: '消防救援衔级别'
                     },
                     {
                         field: 'sjszjg',
-                        title: '实际所在机构'
+                        title: '单位'
                     }]
             });
 }
@@ -206,19 +193,37 @@ $('#jstree').on("changed.jstree", function (e, data) {
 });
 
 function Excel() {
-    var xm = $("#searchName").val();
-    var sjszjg = $("#sjszjg").val();
-    var xfgwflydm = $("#xfgwflydm").val();
-        $.ajax({
-            //这个url根据你自己的环境去改一下就行了
-            url: prefix + "/txlXfjyryExcel", // 服务器数据的加载地址
-            data :{"xm":xm,"sjszjg":sjszjg,"xfgwflydm":xfgwflydm},
-            dataType:"json",
-            success:function(data){
-            },
-            error:function(err){
-                alert(err)
-            }
 
-        })
+    $.ajax({
+        url: prefix + "/txlXfjyryExcel", // 服务器数据的加载地址
+        type: "get",
+        data: {
+            'xm': $("#searchName").val(),
+            'sjszjg' : $("#sjszjg").val(),
+            'xfjyxjbdm' : $("#xfjyxjbdm").val()
+        },
+        success: function (r) {
+            exportList = r.data
+            // 列标题，逗号隔开，每一个逗号就是隔开一个单元格
+            let str = `姓名,移动电话,办公电话,消防救援级别,单位\n`;
+            // 增加\t为了不让表格显示科学计数法或者其他格式
+            debugger
+            for(let i = 0 ; i < exportList.length ; i++ ){
+                for(const key in exportList[i]){
+                    str+=`${exportList[i][key] + '\t'},`;
+                }
+                str+='\n';
+            }
+            // encodeURIComponent解决中文乱码
+            const uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+            // 通过创建a标签实现
+            const link = document.createElement("a");
+            link.href = uri;
+            // 对下载的文件命名
+            link.download =  "通讯录数据表.csv";
+            link.click();
+        }
+
+    });
 }
+

@@ -73,7 +73,7 @@ public interface DictService {
 
 	List<DictDO> findDictByTypeVal(Map<String, Object> map);
 
-	List<DictDO> getSelectByXfgwType(String type);
+	List<DictDO> getSelectByXfjbType(String type);
 
 	/**
 	 * 根据type

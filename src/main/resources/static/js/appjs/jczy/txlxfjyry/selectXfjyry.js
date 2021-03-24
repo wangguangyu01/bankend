@@ -26,7 +26,7 @@ function load() {
                         offset: params.offset,
                         xm: $('#searchName').val(),
                         sjszjg: $('#sjszjg').val(),
-                        xfgwflydm: $('#xfgwflydm').val(),
+                        xfjyxjbdm: $('#xfjyxjbdm').val(),
                         xfjyjgTywysbm:$('#xfjyjgTywysbm').val()
                     };
                 },
@@ -42,36 +42,24 @@ function load() {
                         field: 'xm',
                         title: '姓名'
                     },
-                    {
-                        field: 'xbdm',
-                        title: '性别',
-                        formatter: function (value, row, index) {
-                            if (value == 1) {
-                                return '男';
-                            } else if (value == 2) {
-                                return '女';
-                            }
-                        }
-                    },
+
                     {
                         field: 'ydLxdh',
                         title: '移动电话'
                     },
+
                     {
-                        field: 'xfgwflmc',
-                        title: '消防岗位分类名称'
+                        field: 'bgLxdh',
+                        title: '固定电话'
                     },
+
                     {
                         field: 'xfjyxjb',
                         title: '消防救援衔级别'
                     },
                     {
                         field: 'sjszjg',
-                        title: '实际所在机构'
-                    },
-                    {
-                        title: '选择',
-                        checkbox:true
+                        title: '单位'
                     }]
             });
 }

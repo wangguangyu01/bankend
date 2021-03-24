@@ -148,8 +148,8 @@ public class DictServiceImpl implements DictService {
     }
 
     @Override
-    public List<DictDO> getSelectByXfgwType(String type) {
-        return dictDao.getSelectByXfgwType(type);
+    public List<DictDO> getSelectByXfjbType(String type) {
+        return dictDao.getSelectByXfjbType(type);
     }
 
     @Override

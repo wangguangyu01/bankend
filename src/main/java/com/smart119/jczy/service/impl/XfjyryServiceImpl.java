@@ -3,6 +3,7 @@ package com.smart119.jczy.service.impl;
 import com.smart119.common.utils.MD5Utils;
 import com.smart119.jczy.dao.XfjyryDao;
 import com.smart119.jczy.domain.XfjyryDO;
+import com.smart119.jczy.domain.XfjyryExcelDO;
 import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.dao.UserDao;
 import com.smart119.system.dao.UserRoleDao;
@@ -51,7 +52,7 @@ public class XfjyryServiceImpl implements XfjyryService {
 	}
 
 	@Override
-	public List<XfjyryDO> listOther(Map<String, Object> map){
+	public List<XfjyryExcelDO> listOther(Map<String, Object> map){
 		return xfjyryDao.listOther(map);
 	}
 

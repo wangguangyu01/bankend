@@ -131,9 +131,9 @@ function addOnclick(divClass,inputId,spanId){
     })
 }
 
-function getSelectByXfgwType(type,objId,selected){
+function getSelectByXfjbType(type,objId,selected){
     $.ajax({
-        url : "/common/dict/getSelectByXfgwType",
+        url : "/common/dict/getSelectByXfjbType",
         type : "get",
         data : {
             'type' : type

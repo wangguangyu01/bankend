@@ -80,7 +80,6 @@
             <if test="xfjyryzwqkdm != null and xfjyryzwqkdm != ''">and t.XFJYRYZWQKDM = #{xfjyryzwqkdm}</if>
             <if test="xfgwflydm != null and xfgwflydm != ''">and t.XFGWFLYDM = #{xfgwflydm}</if>
             <if test="zyjszwlbdm != null and zyjszwlbdm != ''">and t.ZYJSZWLBDM = #{zyjszwlbdm}</if>
-            <if test="xfjyxjbdm != null and xfjyxjbdm != ''">and t.XFJYXJBDM = #{xfjyxjbdm}</if>
             <if test="bgLxdh != null and bgLxdh != ''">and t.BG_LXDH = #{bgLxdh}</if>
             <if test="ydLxdh != null and ydLxdh != ''">and t.YD_LXDH = #{ydLxdh}</if>
             <if test="hlwDzxx != null and hlwDzxx != ''">and t.HLW_DZXX = #{hlwDzxx}</if>
@@ -93,6 +92,7 @@
             <if test="status != null and status != ''">and t.status = #{status}</if>
             <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
             <if test="sjszjg != null and sjszjg != ''">and d.DWMC like '%${sjszjg}%'</if>
+            <if test="xfjyxjbdm != null and xfjyxjbdm != ''">and dict2.value  = #{xfjyxjbdm}</if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -137,7 +137,6 @@
             <if test="xfjyryzwqkdm != null and xfjyryzwqkdm != ''">and XFJYRYZWQKDM = #{xfjyryzwqkdm}</if>
             <if test="xfgwflydm != null and xfgwflydm != ''">and XFGWFLYDM = #{xfgwflydm}</if>
             <if test="zyjszwlbdm != null and zyjszwlbdm != ''">and ZYJSZWLBDM = #{zyjszwlbdm}</if>
-            <if test="xfjyxjbdm != null and xfjyxjbdm != ''">and XFJYXJBDM = #{xfjyxjbdm}</if>
             <if test="bgLxdh != null and bgLxdh != ''">and BG_LXDH = #{bgLxdh}</if>
             <if test="ydLxdh != null and ydLxdh != ''">and YD_LXDH = #{ydLxdh}</if>
             <if test="hlwDzxx != null and hlwDzxx != ''">and HLW_DZXX = #{hlwDzxx}</if>
@@ -301,44 +300,13 @@
         </foreach>
     </update>
 
-    <select id="listOther" resultType="com.smart119.jczy.domain.XfjyryDO">
+    <select id="listOther" resultType="com.smart119.jczy.domain.XfjyryExcelDO">
         SELECT
-        t.`XFJYRY_TYWYSBM`,
-        t.`XM`,
-        t.`CYZJLXDM`,
-        t.`ZJHM`,
-        t.`XBDM`,
-        t.`BZSZJG_TYWYSBM`,
-        t.`SJSZJG_TYWYSBM`,
-        t.`MZDM`,
-        t.`JGDM`,
-        t.`ZZMMDM`,
-        t.`RDRQ`,
-        t.`CSRQ`,
-        t.`XLDM`,
-        t.`XWDM`,
-        t.`XFZJLYLBDM`,
-        t.`HYZKDM`,
-        t.`YZBM`,
-        t.`XFJYRYLBDM`,
-        t.`XFJYRYZTDM`,
-        t.`XFJYRYZWQKDM`,
-        t.`XFGWFLYDM`,
-        t.`ZYJSZWLBDM`,
-        t.`XFJYXJBDM`,
-        t.`BG_LXDH`,
-        t.`YD_LXDH`,
-        t.`HLW_DZXX`,
-        t.`NW_DZXX`,
-        t.`TXDZ`,
-        t.`SFZJ_PDBZ`,
-        t.`BZ`,
-        t.`cdate`,
-        t.`status`,
-        t.`cperson` ,
-        d.DWMC SJSZJG,
-        dict1.name as xfgwflmc,
-        dict2.name as xfjyxjb
+        t.`XM` as xm,
+        t.`YD_LXDH` as ydLxdh,
+        t.`BG_LXDH` as bgLxdh,
+        dict2.name as xfjyxjb,
+        d.DWMC as sjszjg
         FROM
         jczy_xfjyry t
         left join sys_dept d on t.SJSZJG_TYWYSBM = d.XFJYJG_TYWYSBM
@@ -372,7 +340,6 @@
             <if test="xfjyryzwqkdm != null and xfjyryzwqkdm != ''">and t.XFJYRYZWQKDM = #{xfjyryzwqkdm}</if>
             <if test="xfgwflydm != null and xfgwflydm != ''">and t.XFGWFLYDM = #{xfgwflydm}</if>
             <if test="zyjszwlbdm != null and zyjszwlbdm != ''">and t.ZYJSZWLBDM = #{zyjszwlbdm}</if>
-            <if test="xfjyxjbdm != null and xfjyxjbdm != ''">and t.XFJYXJBDM = #{xfjyxjbdm}</if>
             <if test="bgLxdh != null and bgLxdh != ''">and t.BG_LXDH = #{bgLxdh}</if>
             <if test="ydLxdh != null and ydLxdh != ''">and t.YD_LXDH = #{ydLxdh}</if>
             <if test="hlwDzxx != null and hlwDzxx != ''">and t.HLW_DZXX = #{hlwDzxx}</if>
@@ -385,6 +352,7 @@
             <if test="status != null and status != ''">and t.status = #{status}</if>
             <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
             <if test="sjszjg != null and sjszjg != ''">and d.DWMC like '%${sjszjg}%'</if>
+            <if test="xfjyxjbdm != null and xfjyxjbdm != ''">and dict2.value  = #{xfjyxjbdm} </if>
         </where>
 
     </select>

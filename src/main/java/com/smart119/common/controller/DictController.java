@@ -196,9 +196,9 @@ public class DictController extends BaseController {
 		return dictList;
 	}
 	@ResponseBody
-	@GetMapping("/getSelectByXfgwType")
-	public List<DictDO> getSelectByXfgwType(@RequestParam("type") String type) {
-		List<DictDO> dictList = dictService.getSelectByXfgwType(type);
+	@GetMapping("/getSelectByXfjbType")
+	public List<DictDO> getSelectByXfjbType(@RequestParam("type") String type) {
+		List<DictDO> dictList = dictService.getSelectByXfjbType(type);
 		return dictList;
 	}
 }

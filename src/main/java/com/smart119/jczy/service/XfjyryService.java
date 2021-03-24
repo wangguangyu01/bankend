@@ -1,7 +1,7 @@
 package com.smart119.jczy.service;
 
 import com.smart119.jczy.domain.XfjyryDO;
-
+import com.smart119.jczy.domain.XfjyryExcelDO;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +19,7 @@ public interface XfjyryService {
 	
 	List<XfjyryDO> list(Map<String, Object> map);
 
-	List<XfjyryDO> listOther(Map<String, Object> map);
+	List<XfjyryExcelDO> listOther(Map<String, Object> map);
 	
 	int count(Map<String, Object> map);
 	
