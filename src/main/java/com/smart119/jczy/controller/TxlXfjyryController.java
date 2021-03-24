@@ -85,6 +85,13 @@ public class TxlXfjyryController extends BaseController {
     @RequiresPermissions("jczy:txlxfjyry:txlXfjyryExcel")
     public R exportStream(@RequestParam Map<String, Object> params){
         //查询列表数据
+        List<DeptDO> deptList = new ArrayList<>();
+        if (params.get("deptId") != null && !params.get("deptId").equals("")) {
+            deptList = deptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+        } else {
+            deptList = deptService.listChildren(getUser().getDeptId());
+        }
+        params.put("deptList", deptList);
         List<XfjyryExcelDO> xfjyryList = xfjyryService.listOther(params);
         return R.ok(xfjyryList);
     }
