@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style type="text/css">
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #fff;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">警情编号：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jqbh}">
+                            </div>
+                            <label class="col-sm-2 control-label">出动单号：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.cddh}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">命令到达时间：</label>
+                            <div class="col-sm-4">
+                                <label class="control-label"> 需查证 </label>
+                            </div>
+                            <label class="col-sm-2 control-label">出动时间：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${#dates.format(jqcjdpDzVo.cdsj, 'yyyy/MM/dd HH:mm:ss')}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">出动单类型：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jqcjdpDplxLabel}">
+                            </div>
+                            <label class="col-sm-2 control-label">出动状态：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.cdzt=='0'?'未出动':jqcjdpDzVo.cdzt=='1'?'已出动':''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">接警员：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jieJingYuanName}">
+                            </div>
+                            <label class="col-sm-2 control-label">警情标识：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jqbsLabel}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">报警方式：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.bjfsLabel}">
+                            </div>
+                            <label class="col-sm-2 control-label">报警电话：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.bjdh}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">报警时间：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:text="${#dates.format(jqcjdpDzVo.bjsj, 'yyyy/MM/dd HH:mm:ss')}">
+                            </div>
+                            <label class="col-sm-2 control-label">警情等级：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jqdjLabel}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">联系电话：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.lxdh}">
+                            </div>
+                            <label class="col-sm-2 control-label">警情类型：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jqflLabel}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">地址：</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.ddmc}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">燃烧物：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.rswLabel}">
+                            </div>
+                            <label class="col-sm-2 control-label">场所：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.zhcsLabel}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否重点单位：</label>
+                            <div class="col-sm-4">
+                                <label class="control-label"> 需查证 </label>
+                            </div>
+                            <label class="col-sm-2 control-label">警情对象：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jqdxMc}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">单位名称：</label>
+                            <div class="col-sm-4">
+                                <label class="control-label"> 需查证  </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">辖区中队：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.xqdzName}">
+                            </div>
+                            <label class="col-sm-2 control-label">就近中队：</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" th:value="${jqcjdpDzVo.jjdzName}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">警情描述：</label>
+                            <div class="col-sm-10">
+                                <textarea id="bz" name="bz" class="form-control" th:text="${jqcjdpDzVo.jqJyqk}" aria-required="true"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+
+
+</body>
+</html>

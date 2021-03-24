@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm" method="post">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">行数：</label>
+                            <div class="col-sm-8">
+                                <label class="radio-inline"> <input type="radio" name="typeForLine" value="0" checked="checked"/> 全部（最多一万行）</label>
+                                <label class="radio-inline"> <input type="radio" name="typeForLine" value="1"/> 指定<input id="lineNum" name="lineNum" type="text">行数</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">导出格式：</label>
+                            <div class="col-sm-8">
+                                <select name="exportFormat" title="导出格式" id="exportFormat" class="form-control chosen-select" tabindex="1" >
+                                    <option value="excel">Excel数据表（.xlsx）</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">&nbsp;&nbsp;导&nbsp;&nbsp;出&nbsp;&nbsp;</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/jqxx/taskManage/exportData.js"></script>
+</body>
+</html>
