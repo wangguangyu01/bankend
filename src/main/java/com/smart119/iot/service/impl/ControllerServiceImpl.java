@@ -56,7 +56,6 @@ public class ControllerServiceImpl  implements ControllerService {
 		return controllerDao.deleteById(id);
 	}
 
-
 	@Override
 	public int batchRemove(String[] ids) {
 		List<String> resultList = new ArrayList<>(ids.length);

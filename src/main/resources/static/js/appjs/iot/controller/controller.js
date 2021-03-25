@@ -1,6 +1,12 @@
 var prefix = "/iot/controller"
+var xfjyjgTywysbm;
 $(function () {
+    getTreeData();
     load();
+    getSelectAll("XFZBLXDM","XFZBLXDM-DIV","xfzblxdm","xfzblxdm-title");
+    getSelectByType("XFCLZZGNDM","xfclzzgndm",null);
+    getSelectByType("XFCLDJDM","xfcldjdm",null);
+    getSelectAll("CLQWZTLBDM","CLQWZTLBDM-DIV","clqwztlbdm","clqwztlbdm-title");
 });
 
 function load() {
@@ -31,7 +37,8 @@ function load() {
                     return {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
-                        offset: params.offset
+                        offset: params.offset,
+                        xfjyjgTywysbm: xfjyjgTywysbm
                         // name:$('#searchName').val(),
                         // username:$('#searchName').val()
                     };
@@ -46,9 +53,13 @@ function load() {
                     {
                         checkbox: true
                     },
+                    // {
+                    //     field: 'id',
+                    //     title: '主键'
+                    // },
                     {
-                        field: 'id',
-                        title: '主键'
+                        field: 'name',
+                        title: '名称'
                     },
                     {
                         field: 'ip',
@@ -59,16 +70,12 @@ function load() {
                         title: '端口'
                     },
                     {
-                        field: 'name',
-                        title: '名称'
-                    },
-                    {
                         field: 'status',
                         title: '状态'
                     },
                     {
-                        field: 'xfjyjgTywysbm',
-                        title: '救援机构通用唯一识别码'
+                        field: 'deptName',
+                        title: '消防救援机构'
                     },
                     {
                         field: 'createTime',
@@ -103,13 +110,43 @@ function reLoad() {
 }
 
 function add() {
-    layer.open({
-        type: 2,
-        title: '增加',
-        maxmin: true,
-        shadeClose: false, // 点击遮罩关闭层
-        area: ['800px', '520px'],
-        content: prefix + '/add' // iframe的url
+    var deptId = $("#jstree li[aria-selected='true']").attr("id");
+    if(deptId!=null && deptId!=null && deptId!=""){
+        //var deptId = $("#jstree li [aria-selected='true']").attr("id");
+        judge_add(deptId);
+    }else{
+        parent.layer.alert("请选择“消防救援站”后再操作！");
+    }
+    return;
+}
+
+//判断当前选中的组织机构是否为消防救援站
+function judge_add(deptId){
+    $.ajax({
+        type : "POST",
+        url : "/system/sysDept/isXfjyz",
+        data : {
+            deptId:deptId
+        },// 你的formid
+        async : false,
+        error : function(request) {
+            parent.layer.alert("选择的消防救援机构不是“消防救援站“");
+        },
+        success : function(data) {
+            if(data.code=="0"){
+                layer.open({
+                    type : 2,
+                    title : '增加',
+                    maxmin : true,
+                    shadeClose : false, // 点击遮罩关闭层
+                    area : ['90%', '90%'],
+                    content : prefix + '/add?deptId='+deptId // iframe的url
+                });
+            }else{
+                parent.layer.alert("选择的消防救援机构不是“消防救援站“");
+            }
+
+        }
     });
 }
 
@@ -184,3 +221,28 @@ function batchRemove() {
 
     });
 }
+
+function getTreeData() {
+    $.ajax({
+        type : "GET",
+        url : "/system/sysDept/tree",
+        success : function(tree) {
+            loadTree(tree);
+        }
+    });
+}
+function loadTree(tree) {
+    $('#jstree').jstree({
+        'core' : {
+            'data' : tree
+        },
+        "plugins" : [ "search" ]
+    });
+    $('#jstree').jstree().open_all();
+}
+$('#jstree').on("changed.jstree", function(e, data) {
+    $("#exampleTable").bootstrapTable('destroy');  // 销毁原表格
+    xfjyjgTywysbm = data.node.original.attributes.xfjyjgTywysbm;
+    load();
+
+});
