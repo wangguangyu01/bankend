@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * 中控器
- * 
+ *
  * @author zhangshunhua
  * @email zhangshunhua@sz000673.com
  * @date 2021-03-23 16:52:25
@@ -15,16 +15,16 @@ import java.util.Map;
 public interface ControllerService {
 
 
-	PageUtils queryPage(Map<String, Object> params);
+    PageUtils queryPage(Map<String, Object> params);
 
-	ControllerDO queryById(String id);
+    ControllerDO queryById(String id);
 
-	int save(ControllerDO controllerDO);
+    int save(ControllerDO controllerDO);
 
-	int update(ControllerDO controllerDO);
+    int update(ControllerDO controllerDO);
 
 
-	int remove(String id);
+    int remove(String id);
 
-	int batchRemove(String[] ids);
+    int batchRemove(String[] ids);
 }

@@ -7415,5 +7415,18 @@ body.skin-3 {
 .addToolbarDiv {
     margin-bottom: 10px;
     float: left;
+    width: 450px;
 
+}
+
+a.a_link_fa-plus:link{
+    color: #337ab7;
+    text-decoration: none
+}
+a.a_link_fa-plus:link,
+a.a_link_fa-plus:visited,
+a.a_link_fa-plus:hover,
+a.a_link_fa-plus:active{
+    color: #1ab394;
+    text-decoration: none
 }

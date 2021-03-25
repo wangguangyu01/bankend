@@ -5,6 +5,7 @@ import com.smart119.jczy.domain.WblxrDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smart119.jczy.domain.WblxrExcelDO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface WblxrDao extends BaseMapper<WblxrDO> {
     WblxrDO get(String zdbwTywysbm);
 
     List<WblxrDO> list(Map<String, Object> map);
+
+    List<WblxrExcelDO> listOther(Map<String, Object> map);
 
     int count(Map<String, Object> map);
 

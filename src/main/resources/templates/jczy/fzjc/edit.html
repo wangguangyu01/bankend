@@ -37,15 +37,16 @@
                         </div>-->
 						<div class="form-group">
 							<label class="col-sm-3 control-label">辅助决策内容：</label>
+                            <div class="addToolbarDiv form-group" style="width: 455px; margin-left: 15px">
+                                <div class="col-sm-8">
+                                    <textarea id="fzjcnr" style="display: none"  class="form-control" name="fzjcnr" required><p th:utext="${fzjc.fzjcnr}"></p></textarea>
+                                </div>
+                                <div id="editorEdit" class="textContainer">
+                                    <p th:utext="${fzjc.fzjcnr}"></p>
+                                </div>
+                            </div>
 						</div>
-						<div class="addToolbarDiv form-group">
-							<div class="col-sm-8">
-								<textarea id="fzjcnr" style="display: none"  class="form-control" name="fzjcnr" required><p th:utext="${fzjc.fzjcnr}"></p></textarea>
-							</div>
-							<div id="editorEdit" class="textContainer">
-                                <p th:utext="${fzjc.fzjcnr}"></p>
-							</div>
-						</div>
+
                         <!--<div class="form-group">
                             <label class="col-sm-3 control-label">创建时间：</label>
                             <div class="col-sm-8">
@@ -75,6 +76,7 @@
 								</select>
                             </div>
                         </div>-->
+                        <div style="clear: both"></div>
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button type="submit" class="btn btn-primary">提交</button>

@@ -112,4 +112,22 @@
 		</foreach>
 	</delete>
 
+
+	<select id="listOther" resultType="com.smart119.jczy.domain.WblxrExcelDO">
+		select `XM`,`DH`,`DZ`,`SR`,`YX`,`BZ` from txl_wblxr
+		<where>
+			<if test="wblxrId != null and wblxrId != ''"> and WBLXR_ID = #{wblxrId} </if>
+			<if test="xm != null and xm != ''"> and XM like '%${xm}%' </if>
+			<if test="dh != null and dh != ''"> and DH = #{dh} </if>
+			<if test="dz != null and dz != ''"> and DZ = #{dz} </if>
+			<if test="sr != null and sr != ''"> and SR = #{sr} </if>
+			<if test="yx != null and yx != ''"> and YX = #{yx} </if>
+			<if test="bz != null and bz != ''"> and BZ = #{bz} </if>
+			<if test="xfjyryTywysbm != null and xfjyryTywysbm != ''"> and XFJYRY_TYWYSBM = #{xfjyryTywysbm} </if>
+			<if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
+			<if test="status != null and status != ''"> and status = #{status} </if>
+			<if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+			and  status = '0'
+		</where>
+	</select>
 </mapper>
