@@ -28,6 +28,11 @@ public class WblxrServiceImpl implements WblxrService {
 	}
 
 	@Override
+	public List<WblxrDO> listOther(Map<String, Object> map){
+		return wblxrDao.listOther(map);
+	}
+
+	@Override
 	public int count(Map<String, Object> map){
 		return wblxrDao.count(map);
 	}

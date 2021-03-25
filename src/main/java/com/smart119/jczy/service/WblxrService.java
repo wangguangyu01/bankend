@@ -18,6 +18,8 @@ public interface WblxrService {
 
 	List<WblxrDO> list(Map<String, Object> map);
 
+	List<WblxrDO> listOther(Map<String, Object> map);
+
 	int count(Map<String, Object> map);
 
 	int save(WblxrDO wblxr);

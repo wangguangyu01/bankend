@@ -24,6 +24,8 @@ public interface WblxrDao extends BaseMapper<WblxrDO> {
 
     List<WblxrDO> list(Map<String, Object> map);
 
+    List<WblxrDO> listOther(Map<String, Object> map);
+
     int count(Map<String, Object> map);
 
     int save(WblxrDO wblxrDO);

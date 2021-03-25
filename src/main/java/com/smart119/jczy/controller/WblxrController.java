@@ -79,7 +79,7 @@ public class WblxrController  extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:wblxr:add")
-	public R save(@RequestParam(value = "file", required = false) MultipartFile[] files, WblxrDO wblxr){
+	public String save(@RequestParam(value = "file", required = false) MultipartFile[] files, WblxrDO wblxr){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		wblxr.setWblxrId(id);
 		wblxr.setCdate(new Date());
@@ -89,9 +89,9 @@ public class WblxrController  extends BaseController {
 			attachmentService.ftpUpload(files, id, "wblxr");
 		}
 		if(wblxrService.save(wblxr)>0){
-			return R.ok();
+			return id;
 		}
-		return R.error();
+		return "";
 	}
 	/**
 	 * 修改
@@ -131,4 +131,12 @@ public class WblxrController  extends BaseController {
 		return R.ok();
 	}
 
+	@ResponseBody
+	@GetMapping("/wblxrExcel")
+	@RequiresPermissions("jczy:wblxr:wblxrExcel")
+	public R exportStream(@RequestParam Map<String, Object> params){
+
+		List<WblxrDO> wblxrList = wblxrService.listOther(params);
+		return R.ok(wblxrList);
+	}
 }
