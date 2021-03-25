@@ -2,68 +2,125 @@
 <html>
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<style type="text/css">
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu > .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -6px;
+        margin-left: -1px;
+        -webkit-border-radius: 0 6px 6px 6px;
+        -moz-border-radius: 0 6px 6px;
+        border-radius: 0 6px 6px 6px;
+    }
+
+    .dropdown-submenu:hover > .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-submenu > a:after {
+        display: block;
+        content: " ";
+        float: right;
+        width: 0;
+        height: 0;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 5px 0 5px 5px;
+        border-left-color: #ccc;
+        margin-top: 5px;
+        margin-right: -10px;
+    }
+
+    .dropdown-submenu:hover > a:after {
+        border-left-color: #fff;
+    }
+
+    .dropdown-submenu.pull-left {
+        float: none;
+    }
+
+    .dropdown-submenu.pull-left > .dropdown-menu {
+        left: -100%;
+        margin-left: 10px;
+        -webkit-border-radius: 6px 0 6px 6px;
+        -moz-border-radius: 6px 0 6px 6px;
+        border-radius: 6px 0 6px 6px;
+    }
+</style>
 <body class="gray-bg">
-	<div class="wrapper wrapper-content ">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm">
-							<div class="form-group">	
-								<label class="col-sm-3 control-label">IP：</label>
-								<div class="col-sm-8">
-									<input id="ip" name="ip" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">端口：</label>
-								<div class="col-sm-8">
-									<input id="port" name="port" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">名称：</label>
-								<div class="col-sm-8">
-									<input id="name" name="name" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">状态：</label>
-								<div class="col-sm-8">
-									<input id="status" name="status" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">救援机构通用唯一识别码：</label>
-								<div class="col-sm-8">
-									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">创建时间：</label>
-								<div class="col-sm-8">
-									<input id="createTime" name="createTime" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">更新时间：</label>
-								<div class="col-sm-8">
-									<input id="updateTime" name="updateTime" class="form-control" type="text">
-								</div>
-							</div>
-																					<div class="form-group">
-								<div class="col-sm-8 col-sm-offset-3">
-									<button type="submit" class="btn btn-primary">提交</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-	</div>
-	</div>
-	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/iot/controller/add.js">
-	</script>
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">IP：</label>
+                            <div class="col-sm-8">
+                                <input id="ip" name="ip" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">端口：</label>
+                            <div class="col-sm-8">
+                                <input id="port" name="port" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">名称：</label>
+                            <div class="col-sm-8">
+                                <input id="name" name="name" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态：</label>
+                            <div class="col-sm-8">
+                                <input id="status" name="status" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">消防救援机构：</label>
+                            <div class="col-sm-8">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden">
+                                <input id="deptName" name="deptName" class="form-control" type="text"
+                                       style="cursor: pointer;"
+                                       readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <label class="col-sm-3 control-label">创建时间：</label>
+                            <div class="col-sm-8">
+                                <input id="createTime" name="createTime" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">更新时间：</label>
+                            <div class="col-sm-8">
+                                <input id="updateTime" name="updateTime" class="form-control" type="text">
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script th:inline="javascript">
+    var map = [[${map}]];
+    $('#xfjyjgTywysbm').val(map.xfjyjgTywysbm);
+    $('#deptName').val(map.deptName);
+</script>
+<script type="text/javascript" src="/js/appjs/iot/controller/add.js">
+</script>
 </body>
 </html>
