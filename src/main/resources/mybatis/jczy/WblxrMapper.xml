@@ -51,7 +51,7 @@
 		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
 		  		</where>
 	</select>
-	 
+
 	<insert id="save" parameterType="com.smart119.jczy.domain.WblxrDO">
 		insert into txl_wblxr
 		(

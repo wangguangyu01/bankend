@@ -208,7 +208,6 @@ function Excel() {
             // 列标题，逗号隔开，每一个逗号就是隔开一个单元格
             let str = `姓名,移动电话,办公电话,消防救援级别,单位\n`;
             // 增加\t为了不让表格显示科学计数法或者其他格式
-            debugger
             for(let i = 0 ; i < exportList.length ; i++ ){
                 for(const key in exportList[i]){
                     str+=`${exportList[i][key] + '\t'},`;
