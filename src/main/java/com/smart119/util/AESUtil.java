@@ -20,11 +20,16 @@ public class AESUtil {
     /**
      * 密钥
      */
-    private static String password = "HdypW1j2oxgHG3Z4";
+    public static String password = "HdypW1j2oxgHG3Z4";
 
 
-
-
+    /**
+     * AES-128-CBC 加密
+     * @param content
+     * @param password
+     * @return
+     * @throws Exception
+     */
     public static String encrypt(String content, String password) throws Exception {
         if (password == null) {
             System.out.print("Key为空null");
@@ -44,6 +49,13 @@ public class AESUtil {
         return new Base64().encode(encrypted);//此处使用BASE64做转码功能，同时能起到2次加密的作用。
     }
 
+    /**
+     * AES-128-CBC 解密
+     * @param content
+     * @param password
+     * @return
+     * @throws Exception
+     */
     public static String decrypt(String content, String password) throws Exception {
         try {
             // 判断Key是否正确
