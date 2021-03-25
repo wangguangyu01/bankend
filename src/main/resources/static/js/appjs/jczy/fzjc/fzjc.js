@@ -70,7 +70,7 @@ function load() {
 									title : '标题' 
 								},
 								{
-									field : 'fzjclxdm', 
+									field : 'fzjclxdmName',
 									title : '辅助决策类型'
 								},
 								// {

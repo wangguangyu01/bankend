@@ -29,4 +29,15 @@ public interface XfzlService {
 
 	int updDzUserIds(String dzUserIds, String xfzlId);
 
+
+	int save(XfzlDO xfzl, String userName);
+
+	/**
+	 * 修改消防战例
+	 * @param xfzl 消防战例
+	 * @param userName 用户名
+	 * @return
+	 */
+	int update(XfzlDO xfzl, String userName);
+
 }

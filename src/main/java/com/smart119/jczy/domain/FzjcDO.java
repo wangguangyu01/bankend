@@ -2,6 +2,7 @@ package com.smart119.jczy.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
@@ -37,6 +38,11 @@ public class FzjcDO implements Serializable {
 	private Integer status;
 
 	private String fzjclx;
+
+	@TableField(exist = false)
+	private String fzjclxdmName;
+
+
 
 	/**
 	 * 设置：主键 uuid
@@ -129,5 +135,13 @@ public class FzjcDO implements Serializable {
 
 	public void setFzjclx(String fzjclx) {
 		this.fzjclx = fzjclx;
+	}
+
+	public String getFzjclxdmName() {
+		return fzjclxdmName;
+	}
+
+	public void setFzjclxdmName(String fzjclxdmName) {
+		this.fzjclxdmName = fzjclxdmName;
 	}
 }

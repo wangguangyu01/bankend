@@ -36,11 +36,11 @@ $().ready(function() {
 	editor.config.uploadFileName = "file";
 	editor.config.uploadImgServer = '/common/sysFile/ftpUpload';
 	editor.config.uploadImgParams = {
-		f_type: 'fzjc',
+		f_type: 'xfzl_tp',
 	};
 	editor.config.uploadVideoServer = '/common/sysFile/ftpUpload';
 	editor.config.uploadVideoParams = {
-		f_type: 'fzjc',
+		f_type: 'xfzl_spyp',
 	};
 	// mp4正常，mov能上传，但是不能在谷歌浏览器不能正常播放，需要安装插件
 	editor.config.uploadVideoAccept = ['mp4', 'mov', 'rmvb', 'rm', 'wmv', 'avi', 'flv', '3gp'];
@@ -121,6 +121,8 @@ $().ready(function() {
 	editor.create();
 	fzjcnr.val(editor.txt.html());// 初始化 textarea 的值
 	validateRule();
+
+
 });
 
 $.validator.setDefaults({
@@ -128,13 +130,17 @@ $.validator.setDefaults({
 		save();
 	}
 });
+
 function save() {
+	var form = new FormData(document.forms.namedItem("myform"));
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/webapi/xfzl/save",
-		data : $('#signupForm').serialize(),// 你的formid
+		url : "/back/xfzl/save",
+		data : form,// 你的formid
 		async : false,
+		 processData: false,  // 告诉jQuery不要去处理发送的数据
+        contentType: false,
 		error : function(request) {
 			parent.layer.alert("Connection error");
 		},
@@ -152,19 +158,43 @@ function save() {
 		}
 	});
 
+
+
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
+			bt : {
 				required : true
 			}
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
+			bt : {
+				required : icon + "请输入标题"
 			}
 		}
 	})
 }
+
+/*$('a[name="plus-file"]').click(function () {
+	const fileLen = $('input[name="files"]').length;
+	if (fileLen < 5) {
+		const p  = $('#inputFile');
+		p.append('<input type="file" name="files" style="margin-top: 10px"/>');
+	}
+	return false;
+});*/
+
+
+/*
+$('a[name="remove-file"]').click(function () {
+	const fileLen = $('input[name="files"]').length;
+	if (fileLen > 1) {
+		const p  = $('#inputFile');
+		p.remove($('input[name="files"]')[fileLen -1]);
+	}
+	return false;
+});
+*/
+

@@ -77,9 +77,9 @@
         </if>
     </sql>
 
-    <select id="selectPageVo" resultMap="fzjcMap">
-        select FZJC_ID, bt, fzjclxdm, fzjcnr, cdate, cperson, status from jczy_fzjc
-        where 1=1 <include refid="queryParam"/>
+    <select id="selectPageVo" resultType="com.smart119.jczy.domain.FzjcDO">
+        select FZJC_ID as fzjcId, bt as bt, fzjclxdm as fzjclxdm, fzjcnr as fzjcnr, cdate as cdate, cperson as cperson, status as status, d.name as fzjclxdmName from jczy_fzjc fzjc, sys_dict d
+        where fzjc.FZJCLXDM = d.value and d.value != '' and d.value is not null and d.type = 'FZJCLXDM' <include refid="queryParam"/>
     </select>
 
     <insert id="save" parameterType="com.smart119.jczy.domain.FzjcDO">
