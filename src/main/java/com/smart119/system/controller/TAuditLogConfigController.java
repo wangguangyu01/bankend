@@ -5,7 +5,9 @@ import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.R;
 import com.smart119.common.utils.StringUtils;
 import com.smart119.system.domain.TAuditLogConfigEntity;
+import com.smart119.system.domain.TElementDirectionEntity;
 import com.smart119.system.service.TAuditLogConfigService;
+import com.smart119.system.service.TElementDirectionService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,7 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,6 +33,8 @@ import java.util.Map;
 public class TAuditLogConfigController{
     @Autowired
     private TAuditLogConfigService tAuditLogConfigService;
+    @Autowired
+    private TElementDirectionService tElementDirectionService;
 
     @GetMapping
     @RequiresPermissions("sys:tauditlogconfig:tauditlogconfig")
@@ -108,14 +115,32 @@ public class TAuditLogConfigController{
         return R.ok().setOnlyExtraNote(id);
     }
 
+    @GetMapping("/add")
+    @RequiresPermissions("sys:tauditlogconfig:add")
+    public ModelAndView add(ModelAndView modelAndView){
+        modelAndView.setViewName("system/auditLogConfig/addAndEdit");
+        getTElementDirection(modelAndView);
+        return modelAndView;
+    }
+    @GetMapping("/edit/{id}")
+    @RequiresPermissions("sys:tauditlogconfig:edit")
+    public ModelAndView edit(@PathVariable("id") Long id, ModelAndView modelAndView){
+        modelAndView.setViewName("system/auditLogConfig/addAndEdit");
+        getTElementDirection(modelAndView);
+        TAuditLogConfigEntity tAuditLogConfig = tAuditLogConfigService.getById(id);
+        modelAndView.addObject("info", tAuditLogConfig);
+        return modelAndView;
+    }
     /**
       * 保存
       */
     @ApiOperation("保存审计日志配置表详情")
     @PostMapping("/add")
     @RequiresPermissions("sys:tauditlogconfig:add")
-    public R add(@RequestBody @ApiParam(name = "审计日志配置表对象", value = "传入json格式", required = true) TAuditLogConfigEntity tAuditLogConfig){
+    @ResponseBody
+    public R add(@ApiParam(name = "审计日志配置表对象", value = "传入json格式", required = true) TAuditLogConfigEntity tAuditLogConfig){
         log.debug("save start:TAuditLogConfigEntity={}",tAuditLogConfig);
+        tAuditLogConfig.setCreateTime(new Date());
         tAuditLogConfigService.save(tAuditLogConfig);
         return R.ok().setOnlyExtraNote(tAuditLogConfig.getId());
     }
@@ -126,11 +151,26 @@ public class TAuditLogConfigController{
     @ApiOperation("修改审计日志配置表详情")
     @PostMapping("/edit")
     @RequiresPermissions("sys:tauditlogconfig:edit")
-    public R edit(@RequestBody @ApiParam(name = "审计日志配置表对象", value = "传入json格式", required = true) TAuditLogConfigEntity tAuditLogConfig){
+    @ResponseBody
+    public R edit(@ApiParam(name = "审计日志配置表对象", value = "传入json格式", required = true) TAuditLogConfigEntity tAuditLogConfig){
         log.debug("update start:TAuditLogConfigEntity={}",tAuditLogConfig);
+        tAuditLogConfig.setUpdateTime(new Date());
         tAuditLogConfigService.updateById(tAuditLogConfig);
         return R.ok().setOnlyExtraNote(tAuditLogConfig.getId());
     }
 
-
+    private void getTElementDirection(ModelAndView modelAndView){
+        List<TElementDirectionEntity> operationType = tElementDirectionService.lambdaQuery()
+                .eq(TElementDirectionEntity::getType, "operationType")
+                .list();
+        List<TElementDirectionEntity> eventType = tElementDirectionService.lambdaQuery()
+                .eq(TElementDirectionEntity::getType, "eventType")
+                .list();
+        List<TElementDirectionEntity> eventLevel = tElementDirectionService.lambdaQuery()
+                .eq(TElementDirectionEntity::getType, "eventLevel")
+                .list();
+        modelAndView.addObject("operationType", operationType);
+        modelAndView.addObject("eventType", eventType);
+        modelAndView.addObject("eventLevel", eventLevel);
+    }
 }

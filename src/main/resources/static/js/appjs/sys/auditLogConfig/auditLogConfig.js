@@ -114,10 +114,6 @@ function load() {
 									field : 'bussiness',
 									title : '菜单信息'
 								},
-                                {
-                                    field : 'operationCode',
-                                    title : '操作类型编码'
-                                },
 								{
 									field : 'tag',
 									title : '描述'
@@ -147,20 +143,20 @@ function add() {
 	// iframe层
 	layer.open({
 		type : 2,
-		title : '增加用户',
+		title : '增加配置',
 		maxmin : true,
 		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		area : [ '800px', '600px' ],
 		content : prefix + '/add'
 	});
 }
 function edit(id) {
 	layer.open({
 		type : 2,
-		title : '用户修改',
+		title : '修改配置',
 		maxmin : true,
 		shadeClose : true, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		area : [ '800px', '600px' ],
 		content : prefix + '/edit/' + id // iframe的url
 	});
 }
