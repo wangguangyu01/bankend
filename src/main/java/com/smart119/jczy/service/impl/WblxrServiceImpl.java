@@ -1,5 +1,6 @@
 package com.smart119.jczy.service.impl;
 
+import com.smart119.jczy.domain.WblxrExcelDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class WblxrServiceImpl implements WblxrService {
 	}
 
 	@Override
-	public List<WblxrDO> listOther(Map<String, Object> map){
+	public List<WblxrExcelDO> listOther(Map<String, Object> map){
 		return wblxrDao.listOther(map);
 	}
 

@@ -7,6 +7,7 @@ import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import com.smart119.jczy.domain.WblxrDO;
+import com.smart119.jczy.domain.WblxrExcelDO;
 import com.smart119.jczy.service.WblxrService;
 import com.smart119.system.service.DeptService;
 import com.sun.javafx.geom.transform.GeneralTransform3D;
@@ -136,7 +137,7 @@ public class WblxrController  extends BaseController {
 	@RequiresPermissions("jczy:wblxr:wblxrExcel")
 	public R exportStream(@RequestParam Map<String, Object> params){
 
-		List<WblxrDO> wblxrList = wblxrService.listOther(params);
+		List<WblxrExcelDO> wblxrList = wblxrService.listOther(params);
 		return R.ok(wblxrList);
 	}
 }

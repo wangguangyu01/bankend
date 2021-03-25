@@ -113,7 +113,7 @@
 	</delete>
 
 
-	<select id="listOther" resultType="com.smart119.jczy.domain.WblxrDO">
+	<select id="listOther" resultType="com.smart119.jczy.domain.WblxrExcelDO">
 		select `XM`,`DH`,`DZ`,`SR`,`YX`,`BZ` from txl_wblxr
 		<where>
 			<if test="wblxrId != null and wblxrId != ''"> and WBLXR_ID = #{wblxrId} </if>

@@ -1,6 +1,7 @@
 package com.smart119.jczy.service;
 
 import com.smart119.jczy.domain.WblxrDO;
+import com.smart119.jczy.domain.WblxrExcelDO;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ public interface WblxrService {
 
 	List<WblxrDO> list(Map<String, Object> map);
 
-	List<WblxrDO> listOther(Map<String, Object> map);
+	List<WblxrExcelDO> listOther(Map<String, Object> map);
 
 	int count(Map<String, Object> map);
 
