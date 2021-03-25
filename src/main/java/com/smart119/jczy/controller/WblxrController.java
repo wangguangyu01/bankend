@@ -1,20 +1,23 @@
 package com.smart119.jczy.controller;
 
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.service.AttachmentService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import com.smart119.jczy.domain.WblxrDO;
 import com.smart119.jczy.service.WblxrService;
 import com.smart119.system.service.DeptService;
+import com.sun.javafx.geom.transform.GeneralTransform3D;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 外部联系人
@@ -31,7 +34,7 @@ public class WblxrController  extends BaseController {
 	private WblxrService wblxrService;
 
 	@Autowired
-	private DeptService deptService;
+	private AttachmentService attachmentService;
 
 	@GetMapping()
 	@RequiresPermissions("jczy:wblxr:wblxr")
@@ -61,6 +64,11 @@ public class WblxrController  extends BaseController {
 	@RequiresPermissions("jczy:wblxr:edit")
 	String edit(@PathVariable("wblxrId") String wblxrId,Model model){
 		WblxrDO wblxr = wblxrService.get(wblxrId);
+		Map m = new HashMap();
+		m.put("fid",wblxr.getWblxrId());
+		m.put("fType","wblxr");
+		List<AttachmentDO> attachmentDOList = attachmentService.list(m);
+		model.addAttribute("attachmentDOList", attachmentDOList);
 		model.addAttribute("wblxr", wblxr);
 		return "jczy/wblxr/edit";
 	}
@@ -71,7 +79,15 @@ public class WblxrController  extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:wblxr:add")
-	public R save( WblxrDO wblxr){
+	public R save(@RequestParam(value = "file", required = false) MultipartFile[] files, WblxrDO wblxr){
+		String id = UUID.randomUUID().toString().replace("-", "");
+		wblxr.setWblxrId(id);
+		wblxr.setCdate(new Date());
+		wblxr.setStatus("0");
+		wblxr.setCperson(getUserId().toString());
+		if (files != null && files.length > 0) {
+			attachmentService.ftpUpload(files, id, "wblxr");
+		}
 		if(wblxrService.save(wblxr)>0){
 			return R.ok();
 		}
@@ -83,7 +99,10 @@ public class WblxrController  extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:wblxr:edit")
-	public R update( WblxrDO wblxr){
+	public R update(@RequestPart(value = "file", required = false) MultipartFile[] files,WblxrDO wblxr){
+		if(files!=null && files.length>0) {
+			attachmentService.ftpUpload(files, wblxr.getWblxrId(), "wblxr");
+		}
 		wblxrService.update(wblxr);
 		return R.ok();
 	}

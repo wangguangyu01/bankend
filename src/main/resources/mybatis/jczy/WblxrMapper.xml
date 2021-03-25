@@ -11,7 +11,7 @@
 		select `WBLXR_ID`,`XM`,`DH`,`DZ`,`SR`,`YX`,`BZ`,`XFJYRY_TYWYSBM`,`cdate`,`status`,`cperson` from txl_wblxr
         <where>  
 		  		  <if test="wblxrId != null and wblxrId != ''"> and WBLXR_ID = #{wblxrId} </if>
-		  		  <if test="xm != null and xm != ''"> and XM = #{xm} </if>
+		  		  <if test="xm != null and xm != ''"> and XM like '%${xm}%' </if>
 		  		  <if test="dh != null and dh != ''"> and DH = #{dh} </if>
 		  		  <if test="dz != null and dz != ''"> and DZ = #{dz} </if>
 		  		  <if test="sr != null and sr != ''"> and SR = #{sr} </if>
@@ -21,6 +21,7 @@
 		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
 		  		  <if test="status != null and status != ''"> and status = #{status} </if>
 		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
+			and  status = '0'
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">

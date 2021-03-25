@@ -8,7 +8,7 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm">
+						<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
 						<input id="wblxrId" name="wblxrId" th:value="${wblxr.wblxrId}"  type="hidden">
 							<div class="form-group">	
 								<label class="col-sm-3 control-label">姓名：</label>
@@ -46,30 +46,21 @@
 									<input id="bz" name="bz" th:value="${wblxr.bz}" class="form-control" type="text">
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-3 control-label">照片：</label>
+								<div class="col-sm-8">
+									<input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
+								</div>
+							</div>
+
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">消防救援人员_通用唯一识别码：</label>
 								<div class="col-sm-8">
 									<input id="xfjyryTywysbm" name="xfjyryTywysbm" th:value="${wblxr.xfjyryTywysbm}" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">创建时间：</label>
-								<div class="col-sm-8">
-									<input id="cdate" name="cdate" th:value="${wblxr.cdate}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">状态：</label>
-								<div class="col-sm-8">
-									<input id="status" name="status" th:value="${wblxr.status}" class="form-control" type="text">
-								</div>
-							</div>
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">创建人：</label>
-								<div class="col-sm-8">
-									<input id="cperson" name="cperson" th:value="${wblxr.cperson}" class="form-control" type="text">
-								</div>
-							</div>
+
 																					<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
 									<button type="submit" class="btn btn-primary">提交</button>
@@ -83,6 +74,9 @@
 	</div>
 	<div th:include="include::footer"></div>
 	<script type="text/javascript" src="/js/appjs/jczy/wblxr/edit.js">
+	</script>
+	<script th:inline="javascript">
+        var attachmentDOList = [[${attachmentDOList}]];
 	</script>
 </body>
 </html>
