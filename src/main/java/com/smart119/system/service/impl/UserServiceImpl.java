@@ -263,4 +263,22 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+    @Override
+    public List<UserDO> findByRoleId(Long roleId) {
+        return userMapper.findByRoleId(roleId);
+    }
+
+    @Override
+    public int removeUserRole(Long userId, Long roleId) {
+        return userRoleMapper.removeUserRole(userId,roleId);
+    }
+
+    @Override
+    @Transactional
+    public int addUserRole(String[] userIdArry, Long roleId) {
+        //为避免重复添加数据，此处先按照条件进行一遍删除
+        userRoleMapper.deleteByroleIdAndUserIdArry(roleId,userIdArry);
+        return userRoleMapper.saveByroleIdAndUserIdArry(roleId,userIdArry);
+    }
+
 }

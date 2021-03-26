@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style>
+    .labelName {
+        font-weight: initial;
+        margin: 5px 20px;
+        cursor:pointer;
+    }
+</style>
+<body class="gray-bg">
+<input id="roleId" th:value="${roleId}" type="hidden">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox ibox-body">
+                <div class="ibox-title">
+                    <h5>选择部门</h5>
+                </div>
+                <div class="ibox-content">
+                    <div id="jstree"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="ibox">
+                <div class="ibox-body">
+                    <div class="fixed-table-toolbar">
+                        <div class="columns pull-left">
+                            <button class="btn btn-success" onclick="addUserRole()">确定分配</button>
+                            <button class="btn btn-success" onclick="removeAll();">清除已选</button>
+                        </div>
+                        <div class="columns pull-right">
+                            <button class="btn btn-success" onclick="reLoad()">查询</button>
+                        </div>
+
+                        <div class="columns pull-right col-md-2 nopadding">
+                            <input id="searchName" type="text" class="form-control"
+                                   placeholder="姓名">
+                        </div>
+                    </div>
+                    <table id="exampleTable" data-mobile-responsive="true">
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox ibox-body">
+                <div class="ibox-title">
+                    <h5>已选人员</h5>
+                </div>
+                <div class="ibox-content">
+                    <div id="selectedDiv" style="min-height:500px;">
+                        <label class="labelName" history="true" style="color: #ff0000;font-weight:bold;" th:each="user:${userList}" th:text="${user.name}" th:id="${'userId_' + user.userId}" ></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/sys/role/addUserRoleForm.js"></script>
+</body>
+</html>
