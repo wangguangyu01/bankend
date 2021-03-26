@@ -60,11 +60,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDO> list(Map<String, Object> map) {
+    public List<UserDO> list(Map<String, Object> map,Long userDeptId) {
         String deptId = map.get("deptId").toString();
         if (StringUtils.isNotBlank(deptId)) {
+
             Long deptIdl = Long.valueOf(deptId);
             List<DeptDO> deptList =  deptService.listChildren(deptIdl);
+
+            if(!deptId.equals(userDeptId.toString())){
+                //如果查询部门ID与用户所在部门ID不一致，数据安全考虑，取两集合的交集。
+                List<DeptDO> deptFatherList =  deptService.listChildren(userDeptId);
+                deptList.retainAll(deptFatherList);
+            }
+
             //List<Long> childIds = deptService.listChildrenIds(deptIdl);
             //childIds.add(deptIdl);
             map.put("deptId", null);
@@ -97,6 +105,7 @@ public class UserServiceImpl implements UserService {
         }
         return count;
     }
+
 
     @Override
     public int update(UserDO user) {
@@ -279,6 +288,11 @@ public class UserServiceImpl implements UserService {
         //为避免重复添加数据，此处先按照条件进行一遍删除
         userRoleMapper.deleteByroleIdAndUserIdArry(roleId,userIdArry);
         return userRoleMapper.saveByroleIdAndUserIdArry(roleId,userIdArry);
+    }
+
+    @Override
+    public int batchRemoveUserRole(String[] userIdArry, Long roleId) {
+        return userRoleMapper.deleteByroleIdAndUserIdArry(roleId,userIdArry);
     }
 
 }
