@@ -88,9 +88,15 @@ public class ControllerPortController {
     @ApiParam(name = "id", value = "主键id", required = true)
     @GetMapping("/edit/{id}")
     @RequiresPermissions("iot:controllerPort:edit")
-    public R edit(@PathVariable("id") String id, Model model) {
+    public String edit(@PathVariable("id") String id, Model model) {
         ControllerPortDO controllerPort = controllerPortService.queryById(id);
-        return R.ok(controllerPort);
+        ControllerDO controllerDO = controllerService.queryById(controllerPort.getControllerId());
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("xfjyjgTywysbm", controllerDO.getXfjyjgTywysbm());
+        List<ControllerDO> controllerDOList = controllerService.list(params);
+        model.addAttribute("controllerDOList", controllerDOList);
+        model.addAttribute("controllerPort", controllerPort);
+        return "iot/controllerPort/edit";
     }
 
     /**
@@ -116,9 +122,11 @@ public class ControllerPortController {
      */
     @ApiOperation(value = "修改中控器端口信息")
     @ApiParam(name = "ControllerPort对象", value = "传入ControllerPort对象的json格式", required = true)
+    @ResponseBody
     @PostMapping("/update")
     @RequiresPermissions("iot:controllerPort:edit")
-    public R update(@RequestBody ControllerPortDO controllerPort) {
+    public R update(ControllerPortDO controllerPort) {
+        controllerPort.setUpdateTime(new Date());
         controllerPortService.update(controllerPort);
         return R.ok();
     }
