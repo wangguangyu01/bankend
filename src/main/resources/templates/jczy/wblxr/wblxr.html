@@ -26,12 +26,31 @@
 							<button class="btn btn-success" onclick="Excel()">导出</button>
 						</div>
 
+
+
 						<div class="columns pull-right col-md-2 nopadding">
 							<input id="searchName" type="text" class="form-control"
 								   placeholder="按人员姓名查询">
 						</div>
 
 					</div>
+					<div class="fixed-table-toolbar">
+						<!--下载excel-->
+						<input type="button" class="searchbtn search" value="下载Excel模板" onclick="downExcel()">
+						<!--导入excel-->
+						<div class="row" id="div3" style="width:450px;">
+							<br><span class="personattr" style="display: inline;">批量导入用户信息：</span>
+							<input type="hidden" name="excelUrl"  id="excelUrl"/>
+							<a href="javascript:void(0);" class="btn_addPic">
+								<span id="imgTitle" style="color: red ">上传excel表格前,请先下载excel模板</span>
+								<input type="file" name="logoFile" id="logoFile" onchange="setImg(this);" class="selectedLogoImgId">
+							</a>
+							<input type="hidden" name="excelUrlShow" id="excelUrlShow" style="width: 315px;">
+						</div>
+						<!--读取excel-->
+						<input type="submit" class="searchbtn search" value="导入用户信息" onclick="insertExcel()">
+					</div>
+
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
 				</div>
