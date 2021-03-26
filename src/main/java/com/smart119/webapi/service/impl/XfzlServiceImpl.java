@@ -6,13 +6,20 @@ import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.utils.PageMybatisPlusUtils;
 import com.smart119.common.utils.PageUtils;
+import com.smart119.common.utils.UUIDGenerator;
+import com.smart119.jczy.domain.XfclDO;
 import com.smart119.webapi.dao.XfzlDao;
 import com.smart119.webapi.domain.XfzlDO;
 import com.smart119.webapi.service.XfzlService;
 import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,4 +94,40 @@ public class XfzlServiceImpl implements XfzlService {
     }
 
 
+    @Override
+    public int save(XfzlDO xfzl, String userName){
+        xfzl.setXfzlId(UUIDGenerator.getUUID());
+        if ("0".equals(xfzl.getZt())) {
+            xfzl.setFbsj(new Date());
+        }
+        xfzl.setCdate(new Date());
+        xfzl.setCperson(userName);
+        int count = xfzlDao.insert(xfzl);
+        if (count > 0) {
+            if (!ObjectUtils.isEmpty(xfzl.getFiles())) {
+                attachmentService.ftpUpload(xfzl.getFiles(), xfzl.getXfzlId(),  "xfzl_slt");
+            }
+        }
+        return count;
+    }
+
+
+    @Override
+    public int update(XfzlDO xfzl, String userName) {
+        if (StringUtils.isBlank(xfzl.getXfzlId())) {
+            return 0;
+        }
+        XfzlDO xfzlDO = xfzlDao.selectById(xfzl.getXfzlId());
+        if (ObjectUtils.isEmpty(xfzlDO)) {
+            return 0;
+        }
+        BeanUtils.copyProperties(xfzl, xfzlDO);
+        int count  = xfzlDao.updateById(xfzlDO);
+        if (count > 0) {
+            if (!ObjectUtils.isEmpty(xfzl.getFiles())) {
+                attachmentService.ftpUpload(xfzl.getFiles(), xfzl.getXfzlId(),  "xfzl_slt");
+            }
+        }
+        return count;
+    }
 }

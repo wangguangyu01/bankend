@@ -56,4 +56,27 @@ public interface UserService {
 	 * @throws Exception
 	 */
     Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception;
+
+	/**
+	 * 根据权限ID查找用户列表
+	 * @param roleId
+	 * @return
+	 */
+	List<UserDO> findByRoleId(Long roleId);
+
+	/**
+	 * 删除用户角色
+	 * @param userId
+	 * @param roleId
+	 * @return
+	 */
+	int removeUserRole(Long userId, Long roleId);
+
+	/**
+	 * 批量添加同一角色的多个用户
+	 * @param userIdArry
+	 * @param roleId
+	 * @return
+	 */
+    int addUserRole(String[] userIdArry, Long roleId);
 }

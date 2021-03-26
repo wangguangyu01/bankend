@@ -84,31 +84,12 @@ function load() {
 						}
                     },
                     {
-                        field: 'jqflydm',
-                        title: '警情分类与代码'
-                    },
-                    {
-                        field: 'nr',
-                        title: '案例内容'
-                        /*formatter:function(value,row,index){
-                             //此处对value值做判断，不然value为空就会报错
-                            value = (row.nr == null || row.nr == '') ? '' : row.nr;
-                            var length = value.length;
-                            if(length > 7){
-                                return"<span title ='"+value+"'>" + value.substring(0, 7)+"....</span>"
-                            } else {
-                                return"<span title ='"+value+"'>" + value +"</span>"
-                            }
-
-                        }*/
-                    },
-                    {
                         field: 'zt',
                         title: '状态 ',
 						formatter : function(value, row, index) {
-							if (row.zt == '0') {
+							if (row.zt == '0' ) {
 								return "显示";
-							} else if (row.lx == '1') {
+							} else if (row.zt == '1') {
 								return "隐藏";
 							}
 						}
@@ -144,9 +125,6 @@ function load() {
                             var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
                                 + row.xfzlId
                                 + '\')"><i class="fa fa-remove"></i></a> ';
-                            var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-                                + row.xfzlId
-                                + '\')"><i class="fa fa-key"></i></a> ';
                             return e + d;
                         }
                     }]

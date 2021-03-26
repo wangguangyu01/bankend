@@ -28,6 +28,7 @@
 			<script type="text/javascript">
 				var s_edit_h = 'hidden';
 				var s_remove_h = 'hidden';
+				var s_assign_h = 'hidden';
 			</script>
 		</div>
 		<div shiro:hasPermission="sys:role:edit">
@@ -40,6 +41,12 @@
 				var s_remove_h = '';
 			</script>
 		</div>
+		<div shiro:hasPermission="sys:role:assign">
+			<script type="text/javascript">
+				s_assign_h = '';
+			</script>
+		</div>
+
 
 	</div>
 	<div th:include="include::footer"></div>

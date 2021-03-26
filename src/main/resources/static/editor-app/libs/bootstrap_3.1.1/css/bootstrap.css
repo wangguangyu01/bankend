@@ -1976,7 +1976,7 @@ select[multiple].input-lg {
 }
 .form-horizontal .form-group {
   margin-right: -15px;
-  margin-left: -15px;
+  margin-left: 15px;
 }
 .form-horizontal .form-control-static {
   padding-top: 7px;

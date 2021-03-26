@@ -1,12 +1,16 @@
 package com.smart119;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.FileUtil;
+import com.smart119.common.utils.PageUtils;
 import com.smart119.jczy.dao.FzjcDao;
 import com.smart119.jczy.domain.FzjcDO;
 import com.smart119.jczy.service.FzjcService;
+import com.smart119.webapi.dao.XfzlDao;
+import com.smart119.webapi.domain.XfzlDO;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
@@ -26,14 +30,16 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 class Smart119ApplicationTest {
 
-    @Resource
+    @Autowired
     private RedisTemplate redisTemplate;
 
     @Resource
@@ -45,6 +51,12 @@ class Smart119ApplicationTest {
     @Resource
     private BootdoConfig bootdoConfig;
 
+    @Resource
+    private FzjcService fzjcService;
+
+    @Resource
+    private XfzlDao xfzlDao;
+
     private String uploadPath = "/Users/wanggy/IdeaProjects/smart119_bms/smart119_bms/src/main/resources/static/img/";
 
 
@@ -53,13 +65,17 @@ class Smart119ApplicationTest {
         redisTemplate.opsForValue().set("fafa", "fafage");
         List list = dictService.listByParentType("FZJCLXDM");
         redisTemplate.delete("FZJCLXDM");
-        redisTemplate.opsForList().leftPushAll("FZJCLXDM", list);
+       // redisTemplate.opsForList().leftPushAll("FZJCLXDM", list);
 
     }
 
     @Test
     public void testList() {
-        List<FzjcDO> fzjcDOS = fzjcDao.list(null);
+        Map params = new HashMap();
+        params.put("offset", 0);
+        params.put("limit", 10);
+
+        PageUtils fzjcDOS = fzjcService.queryPage(params);
         Assert.assertNotNull(fzjcDOS);
     }
 
@@ -98,5 +114,12 @@ class Smart119ApplicationTest {
         */
 
     }
+
+
+    @Test
+   public void testQueryXflzList(){
+        Page<XfzlDO> page = new Page();
+        Map param = new HashMap();
+   }
 
 }

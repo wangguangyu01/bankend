@@ -5,7 +5,10 @@ import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.utils.R;
 import com.smart119.system.domain.RoleDO;
+import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.RoleService;
+import com.smart119.system.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,10 @@ public class RoleController extends BaseController {
 	String prefix = "system/role";
 	@Autowired
 	RoleService roleService;
+
+	@Autowired
+	UserService userService;
+
 
 	@RequiresPermissions("sys:role:role")
 	@GetMapping()
@@ -109,5 +116,70 @@ public class RoleController extends BaseController {
 			return R.ok();
 		}
 		return R.error();
+	}
+
+	@Log("分配角色")
+	@RequiresPermissions("sys:role:assign")
+	@GetMapping("/assign/{id}")
+	String assign(@PathVariable("id") Long id, Model model) {
+		RoleDO roleDO = roleService.get(id);
+		model.addAttribute("role", roleDO);
+		List<UserDO> userList = userService.findByRoleId(id);
+		return prefix + "/assign";
+	}
+
+	/**
+	 * 当前角色现存用户列表
+	 * @param id
+	 * @return
+	 */
+	@ResponseBody
+	@RequiresPermissions("sys:role:assign")
+	@GetMapping("/assign/{id}/userList")
+	List<UserDO> assignUserList(@PathVariable("id") Long id) {
+		List<UserDO> userList = userService.findByRoleId(id);
+		return userList;
+	}
+
+	@Log("删除用户角色")
+	@RequiresPermissions("sys:role:assign")
+	@PostMapping("/removeUserRole")
+	@ResponseBody
+	R removeUserRole(Long userId,Long roleId) {
+
+		if (userService.removeUserRole(userId,roleId) > 0) {
+			return R.ok();
+		} else {
+			return R.error(1, "删除用户角色失败");
+		}
+	}
+
+	@Log("添加用户角色页面")
+	@RequiresPermissions("sys:role:assign")
+	@GetMapping("/assign/{roleId}/addUserRoleForm")
+	String addUserRoleForm(@PathVariable("roleId") Long roleId, Model model) {
+		List<UserDO> userList = userService.findByRoleId(roleId);
+		model.addAttribute("userList", userList);
+		model.addAttribute("roleId", roleId);
+		return prefix + "/addUserRoleForm";
+	}
+
+
+	@Log("添加用户角色")
+	@RequiresPermissions("sys:role:remove")
+	@PostMapping("/assign/addUserRole")
+	@ResponseBody
+	R addUserRole(String userIds,Long roleId) {
+
+		String[] userIdArry = StringUtils.split(userIds,",");
+
+
+		int count = userService.addUserRole(userIdArry,roleId);
+
+		if (count > 0) {
+			return R.ok();
+		} else {
+			return R.error(1, "添加用户角色失败");
+		}
 	}
 }

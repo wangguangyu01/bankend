@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户与角色对应关系
@@ -40,4 +41,10 @@ public interface UserRoleDao {
 	int batchSave(List<UserRoleDO> list);
 
 	int batchRemoveByUserId(Long[] ids);
+
+    int removeUserRole(@Param("userId") Long userId,@Param("roleId") Long roleId);
+
+    int deleteByroleIdAndUserIdArry(@Param("roleId") Long roleId,@Param("userIdArry") String[] userIdArry);
+
+	int saveByroleIdAndUserIdArry(@Param("roleId") Long roleId,@Param("userIdArry") String[] userIdArry);
 }

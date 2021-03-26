@@ -40,15 +40,16 @@ public class AttachController extends BaseController {
 
     /**
      * 保存文件到数据库
+     *
      * @param oldName
      * @param newName
      * @param f_type
      * @param path
      * @return
      */
-    public String save(String oldName,String newName,String f_type,String path,String fid){
-        AttachmentDO attachment=new AttachmentDO();
-        String id= UUID.randomUUID().toString().trim().replaceAll("-", "");
+    public String save(String oldName, String newName, String f_type, String path, String fid) {
+        AttachmentDO attachment = new AttachmentDO();
+        String id = UUID.randomUUID().toString().trim().replaceAll("-", "");
         attachment.setAttachmentId(id);
         attachment.setName(oldName);
         attachment.setCode(newName);
@@ -62,6 +63,7 @@ public class AttachController extends BaseController {
 
     /**
      * 删除附件
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -69,18 +71,18 @@ public class AttachController extends BaseController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public void delete(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
-        String id=request.getParameter("id");
-        AttachmentDO attachment=attachmentService.get(id);
-        int result=attachmentService.remove(id);
-        if(result!=-1){
+    public void delete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        AttachmentDO attachment = attachmentService.get(id);
+        int result = attachmentService.remove(id);
+        if (result != -1) {
             File file = new File(attachment.getPath());
             // 路径为文件且不为空则进行删除
             if (file.isFile() && file.exists()) {
                 file.delete();
                 response.getWriter().write("{\"success\":true}");
             }
-        }else{
+        } else {
             response.getWriter().write("{\"files\":[{\"error\":\"文件删除异常\"}]}");
         }
 
@@ -88,6 +90,7 @@ public class AttachController extends BaseController {
 
     /**
      * 下载附件
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -95,13 +98,13 @@ public class AttachController extends BaseController {
      */
     @RequestMapping(value = "/download")
     @ResponseBody
-    public void download(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+    public void download(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //PrintWriter out = response.getWriter();
 
         //out.println(getServletContext().getRealPath("/"));
 
-        String id=request.getParameter("id");
-        AttachmentDO attachment=attachmentService.get(id);
+        String id = request.getParameter("id");
+        AttachmentDO attachment = attachmentService.get(id);
 
         //设置向浏览器端传送的文件格式
         response.setContentType("bin");
@@ -112,12 +115,12 @@ public class AttachController extends BaseController {
          * 文件名中，作为默认保存名。如果不设置的话，则会把Servlet的名称作为默认的保存名
          */
         filename = new String(filename.getBytes(), "ISO-8859-1");
-        response.setHeader("Content-disposition","attachment; filename="+filename);
+        response.setHeader("Content-disposition", "attachment; filename=" + filename);
 
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
 
-        try{
+        try {
             bis = new BufferedInputStream(new FileInputStream(attachment.getPath()));
             bos = new BufferedOutputStream(response.getOutputStream());
 
@@ -126,26 +129,26 @@ public class AttachController extends BaseController {
 
             response.addHeader("Content-Length", "" + bis.available());
 
-            while(-1 !=(bytesRead = (bis.read(buff, 0, buff.length)))){
+            while (-1 != (bytesRead = (bis.read(buff, 0, buff.length)))) {
                 bos.write(buff, 0, buff.length);
             }
-        }catch(Exception e){
-            logger.error("异常",new Exception(e));
+        } catch (Exception e) {
+            logger.error("异常", new Exception(e));
             e.printStackTrace();
-        }finally{
-            if(bis != null){
+        } finally {
+            if (bis != null) {
                 bis.close();
             }
-            if(bos != null){
+            if (bos != null) {
                 bos.close();
             }
         }
     }
 
 
-
     /**
      * 上传文件方法
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -157,10 +160,10 @@ public class AttachController extends BaseController {
             throws ServletException, IOException {
         FTPClient ftpClient = new FTPClient();
         FileInputStream fis = null;
-        String message="{\"files\":[";
-        String filename="";
-        String fileOldName="";
-        String f_type="";
+        String message = "{\"files\":[";
+        String filename = "";
+        String fileOldName = "";
+        String f_type = "";
         try {
             ftpClient.connect(ftpConfig.getIp());
             ftpClient.login(ftpConfig.getUser(), ftpConfig.getPassword());
@@ -177,10 +180,10 @@ public class AttachController extends BaseController {
                 //文件名  fileNames.substring(0,split)
                 //文件格式   fileNames.substring(split+1,fileNames.length())
                 //文件内容 file.getBytes()
-                filename = System.currentTimeMillis()+"."+fileNames.substring(split+1,fileNames.length());
+                filename = System.currentTimeMillis() + "." + fileNames.substring(split + 1, fileNames.length());
                 fileOldName = fileNames;
                 //发送到远程服务器上
-                InputStream uploadedStream =file.getInputStream();
+                InputStream uploadedStream = file.getInputStream();
 
 //                ftpClient.changeWorkingDirectory("/"+f_type);
                 ftpClient.changeWorkingDirectory(f_type);
@@ -199,17 +202,17 @@ public class AttachController extends BaseController {
                 ftpClient.storeFile(filename, uploadedStream);
 
                 uploadedStream.close();
-                String path = "ftp://"+ftpConfig.getIp()+"/"+ftpConfig.getUploadFolder()+"/"+filename;
-                String id=this.save(fileOldName,filename,f_type,path,"");
-                message += "{\"name\":\""+fileOldName+"\",\"id\":\""+id
-                        +"\",\"deleteUrl\":\"/attach/ftpDelete?id="+id
-                        +"\",\"deleteType\":\"get\",\"url\":\"/attach/ftpDownload?id="+id+"\"}";
+                String path = "ftp://" + ftpConfig.getIp() + "/" + ftpConfig.getUploadFolder() + "/" + filename;
+                String id = this.save(fileOldName, filename, f_type, path, "");
+                message += "{\"name\":\"" + fileOldName + "\",\"id\":\"" + id
+                        + "\",\"deleteUrl\":\"/attach/ftpDelete?id=" + id
+                        + "\",\"deleteType\":\"get\",\"url\":\"/attach/ftpDownload?id=" + id + "\"}";
             }
 
-            message+="]}";
+            message += "]}";
         } catch (IOException e) {
-            logger.error("异常",new Exception(e));
-            message= "{\"success\":false}";
+            logger.error("异常", new Exception(e));
+            message = "{\"success\":false}";
             e.printStackTrace();
             throw new RuntimeException("FTP客户端出错！", e);
         } finally {
@@ -217,7 +220,7 @@ public class AttachController extends BaseController {
             try {
                 ftpClient.disconnect();
             } catch (IOException e) {
-                logger.error("异常",new Exception(e));
+                logger.error("异常", new Exception(e));
                 e.printStackTrace();
                 throw new RuntimeException("关闭FTP连接发生异常！", e);
             }
@@ -227,14 +230,12 @@ public class AttachController extends BaseController {
     }
 
 
-
-
     @RequestMapping(value = "/ftpDownload")
     @ResponseBody
     public void ftpdownload(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String id=request.getParameter("id");
-        AttachmentDO attachment=attachmentService.get(id);
+        String id = request.getParameter("id");
+        AttachmentDO attachment = attachmentService.get(id);
 
         //设置向浏览器端传送的文件格式
         response.setContentType("bin");
@@ -288,7 +289,10 @@ public class AttachController extends BaseController {
             ftp.logout();
 
         } catch (Exception e) {
-            logger.error("异常",new Exception(e));
+            for (int i = 0; i < 3; i++) {
+                ftpdownload(request, response);
+            }
+            logger.error("异常", new Exception(e));
             //LOGGER.error("从FTP服务器下载文件失败:" + e.getMessage());
             //e.printStackTrace();
         } finally {
@@ -305,6 +309,7 @@ public class AttachController extends BaseController {
 
     /**
      * 删除ftp附件
+     *
      * @param request
      * @param response
      * @throws ServletException
@@ -312,7 +317,7 @@ public class AttachController extends BaseController {
      */
     @RequestMapping(value = "/ftpDelete")
     @ResponseBody
-    public void ftpDelete(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+    public void ftpDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         AttachmentDO attachment = attachmentService.get(id);
         int result = attachmentService.remove(id);
@@ -333,7 +338,7 @@ public class AttachController extends BaseController {
                     response.getWriter().write("{\"success\":true}");
                 }
             } catch (Exception e) {
-                logger.error("异常",new Exception(e));
+                logger.error("异常", new Exception(e));
                 e.printStackTrace();
             } finally {
                 if (ftp.isConnected()) {
@@ -350,8 +355,6 @@ public class AttachController extends BaseController {
         }
 
     }
-
-
 
 
 //

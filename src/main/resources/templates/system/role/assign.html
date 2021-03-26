@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include::header"></head>
+<body class="gray-bg">
+<input type="hidden" id="roleId" th:value="${role.roleId}">
+<input type="hidden" id="roleName" th:value="${role.roleName}">
+<div class="wrapper wrapper-content ">
+    <div class="col-sm-12">
+        <div class="ibox">
+            <div class="ibox-body">
+                <div id="exampleToolbar" role="group">
+                    <button shiro:hasPermission="sys:role:assign" type="button"
+                            class="btn btn-primary" onclick="assign()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>分配角色
+                    </button>
+                </div>
+                <table id="exampleTable" data-mobile-responsive="true">
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+    <div>
+        <script type="text/javascript">
+            var s_assign_h = 'hidden';
+        </script>
+    </div>
+    <div shiro:hasPermission="sys:role:assign">
+        <script type="text/javascript">
+            s_assign_h = '';
+        </script>
+    </div>
+
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/sys/role/assign.js">
+
+</script>
+</body>
+
+</html>

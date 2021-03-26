@@ -214,9 +214,15 @@ ORDER BY i.sort ASC LIMIT 12,12    -- 未处理
 		</where>
 	</select>
 
-	<select id="getSelectByXfjbType" resultType="com.smart119.common.domain.DictDO">
-		SELECT `id`,`name`,`value` FROM `sys_dict` where  type='XFJYXJBDM' and parent_id !='0'
+	<select id="getSelectByXfgwType" resultType="com.smart119.common.domain.DictDO">
+		SELECT `id`,`name`,`value` FROM `sys_dict` where  type='XFGWFLYDM' and parent_id !='0'
 	</select>
+
+	<select id="queryByDictType" resultType="com.smart119.common.domain.DictDO">
+		select  `id`,`name`,`value` from sys_dict  where  type = #{type} and `value` != '' and `value` is not null
+	</select>
+
+
 </mapper>
 
 
