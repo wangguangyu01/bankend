@@ -9,18 +9,14 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-							<div class="form-group">	
-								<label class="col-sm-2 control-label">坐席号码：</label>
-								<div class="col-sm-4">
-									<input id="zxhm" name="zxhm" class="form-control" type="text">
-								</div>
-
-								<label class="col-sm-2 control-label">坐席密码：</label>
-								<div class="col-sm-4">
-									<input id="zxmm" name="zxmm" class="form-control" type="text">
-								</div>
-							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">坐席类别：</label>
+								<div class="col-sm-4">
+									<select data-placeholder="坐席类别" name="type" id="type" title="坐席类别"
+											class="form-control chosen-select" tabindex="2" onchange="selectType(this)" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
 								<label class="col-sm-2 control-label">消防救援机构：</label>
 								<div class="col-sm-4">
 									<!--<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="form-control" type="text">-->
@@ -30,21 +26,32 @@
 										style="cursor: pointer;" onclick="openDept('xfjyjgTywysbm')"
 										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
 								</div>
-
-								<label class="col-sm-2 control-label">IP地址：</label>
-								<div class="col-sm-4">
-									<input id="ip" name="ip" class="form-control" type="text">
-								</div>
 							</div>
 							<div class="form-group">
-
 								<label class="col-sm-2 control-label">电话号码：</label>
 								<div class="col-sm-4">
 									<input id="dhhm" name="dhhm" class="form-control" type="text">
 								</div>
 
-
+								<label class="col-sm-2 control-label zxzs">IP地址：</label>
+								<div class="col-sm-4 zxzs">
+									<input id="ip" name="ip" class="form-control" type="text">
+								</div>
 							</div>
+
+							<div class="form-group">	
+								<label class="col-sm-2 control-label zxzs">坐席号码：</label>
+								<div class="col-sm-4 zxzs zxzs">
+									<input id="zxhm" name="zxhm" class="form-control" type="text">
+								</div>
+
+								<label class="col-sm-2 control-label zxzs">坐席密码：</label>
+								<div class="col-sm-4 zxzs">
+									<input id="zxmm" name="zxmm" class="form-control" type="text">
+								</div>
+							</div>
+
+
 							<div class="form-group">
 								<div class="col-sm-10 col-sm-offset-2">
 									<button type="submit" class="btn btn-primary">提交</button>

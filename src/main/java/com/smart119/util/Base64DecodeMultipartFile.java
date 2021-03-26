@@ -1,7 +1,7 @@
 package com.smart119.util;
 
+import java.util.Base64;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Decoder;
 
 import java.io.*;
 
@@ -79,13 +79,11 @@ public class Base64DecodeMultipartFile implements MultipartFile {
      */
     public static MultipartFile base64Convert(String base64) {
         String[] baseStrs = base64.split(",");
-        BASE64Decoder decoder = new BASE64Decoder();
-        byte[] b = new byte[0];
-        try {
-            b = decoder.decodeBuffer(baseStrs[1]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        Base64.Decoder decoder = Base64.getDecoder();
+
+        byte[] b = decoder.decode(baseStrs[1]);
+
         for (int i = 0; i < b.length; ++i) {
             if (b[i] < 0) {
                 b[i] += 256;

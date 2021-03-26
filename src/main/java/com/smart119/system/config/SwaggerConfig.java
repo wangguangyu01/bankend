@@ -1,6 +1,7 @@
 package com.smart119.system.config;
 
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,17 +17,31 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig implements WebMvcConfigurer {
+
+    /**
+     * 是否开启swagger
+     */
+    @Value("${swagger.show}")
+    private boolean swaggerShow;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
-        //registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath*:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-        registry.addResourceHandler("/swagger/**").addResourceLocations("classpath:/static/swagger/");
+
+    if (this.swaggerShow) {
+      registry
+          .addResourceHandler("doc.html")
+          .addResourceLocations("classpath:/META-INF/resources/");
+      registry
+          .addResourceHandler("/webjars/**")
+          .addResourceLocations("classpath:/META-INF/resources/webjars/");
+      registry.addResourceHandler("/swagger/**").addResourceLocations("classpath:/static/swagger/");
+        }
 
     }
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .enable(swaggerShow)
                 .apiInfo(apiInfo())
                 .select()
                 //加了ApiOperation注解的类，才生成接口文档

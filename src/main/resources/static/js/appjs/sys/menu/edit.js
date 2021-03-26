@@ -102,7 +102,7 @@ function getAppList(objId,selected){
         var list=result.data;
         if(list!= null && list!=undefined && list.length>0){
           $("#"+objId).empty();
-          $("#"+objId).append('<option value="" >--请选择--</option>');
+          $("#"+objId).append('<option value="" >--请选择应用--</option>');
           $.each(list,function(i,item){
             if(selected!=null && selected==item.value){
               $("#"+objId).append('<option id="'+item.id+'" value="'+item.id+'" selected="selected">'+item.name+'</option>');

@@ -11,7 +11,7 @@ function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/webapi/controllerPort/save",
+		url : "/iot/controllerPort/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {

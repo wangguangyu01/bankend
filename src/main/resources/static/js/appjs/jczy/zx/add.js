@@ -1,6 +1,7 @@
 $().ready(function() {
 	validateRule();
     getSelectByType("zxzt","zt",null);  //常用证件类型
+    getSelectByType("zxlb","type",null);  //常用证件类型
 });
 
 $.validator.setDefaults({
@@ -64,4 +65,13 @@ function loadDept( deptId,deptName,xfjyjgTywysbm){
     //$("#deptId").val(deptId);
     $("#"+inpId).val(xfjyjgTywysbm);
     $("#"+inpId+"Name").val(deptName);
+}
+
+function selectType(obj){
+	var select = $(obj).val();
+	if(select!=1){
+		$(".zxzs").css("display","none");
+	}else{
+        $(".zxzs").css("display","");
+	}
 }

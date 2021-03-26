@@ -4,7 +4,7 @@
 <mapper namespace="com.smart119.jczy.dao.ZxDao">
 
 	<select id="get" resultType="com.smart119.jczy.domain.ZxDO">
-		select `id`,`ZXHM`,`ZXMM`,`XFJYJG_TYWYSBM`,`IP`,`USER_ID`,`DHHM`,`ZT`,`cdate`,`status`,`cperson` from jczy_zx where id = #{value}
+		select `id`,`ZXHM`,`ZXMM`,`XFJYJG_TYWYSBM`,`IP`,`USER_ID`,`DHHM`,`ZT`,`cdate`,`status`,`cperson`,`type` from jczy_zx where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.smart119.jczy.domain.ZxDO">
@@ -19,12 +19,15 @@
 		dict.`name` as `ZT`,
 		zx.`cdate`,
 		zx.`status`,
-		zx.`cperson`
+		zx.`cperson`,
+		dict2.`name` as `type`
 		from jczy_zx zx
 		LEFT JOIN sys_dept dept
 		on dept.XFJYJG_TYWYSBM = zx.XFJYJG_TYWYSBM
 		LEFT JOIN sys_dict dict
 		on zx.ZT = dict.`value` AND dict.type='zxzt'
+		left join sys_dict dict2
+		on zx.`type`=dict2.value and dict2.type='zxlb'
         <where>  
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="zxhm != null and zxhm != ''"> and ZXHM = #{zxhm} </if>

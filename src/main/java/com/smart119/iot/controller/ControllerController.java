@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,6 +58,15 @@ public class ControllerController {
         //查询列表数据
         PageUtils page = controllerService.queryPage(params);
         return page;
+    }
+
+    @ResponseBody
+    @GetMapping("/listByXfjyjgTywysbm")
+    @RequiresPermissions("iot:controller:controller")
+    public List<ControllerDO> listByXfjyjgTywysbm(@RequestParam String xfjyjgTywysbm) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("xfjyjgTywysbm", xfjyjgTywysbm);
+        return controllerService.list(params);
     }
 
 
