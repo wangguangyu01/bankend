@@ -37,6 +37,8 @@ public class ZxDO implements Serializable {
 	private String status;
 	//创建人员
 	private String cperson;
+	//类型
+	private String type;
 
 	/**
 	 * 设置：
@@ -169,5 +171,13 @@ public class ZxDO implements Serializable {
 	 */
 	public String getCperson() {
 		return cperson;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
