@@ -136,9 +136,10 @@ public class ControllerPortController {
      */
     @ApiOperation(value = "删除中控器端口信息")
     @ApiParam(name = "id", value = "传入主键", required = true)
+    @ResponseBody
     @PostMapping("/remove")
     @RequiresPermissions("iot:controllerPort:remove")
-    public R remove(@RequestBody String id) {
+    public R remove(@RequestParam String id) {
         if (controllerPortService.remove(id) > 0) {
             return R.ok();
         }
@@ -150,9 +151,10 @@ public class ControllerPortController {
      */
     @ApiOperation(value = "批量删除中控器端口信息")
     @ApiParam(name = "ids", value = "传入主键数组", required = true)
+    @ResponseBody
     @PostMapping("/batchRemove")
     @RequiresPermissions("iot:controllerPort:batchRemove")
-    public R remove(@RequestBody String[] ids) {
+    public R remove(@RequestParam("ids[]") String[] ids) {
         controllerPortService.batchRemove(ids);
         return R.ok();
     }
