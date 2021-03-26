@@ -8,6 +8,7 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ import java.util.Map;
  * @date 2021-03-23 16:52:25
  */
 @Api(tags = "中控器端口管理")
-@RestController
+@Controller
 @RequestMapping("/iot/controllerPort")
 @Slf4j
 public class ControllerPortController {
@@ -33,8 +34,8 @@ public class ControllerPortController {
 
 	@GetMapping()
 	@RequiresPermissions("iot:controllerPort:controllerPort")
-	R ControllerPort(){
-	    return R.ok();
+	String ControllerPort(){
+	    return "iot/controllerPort/controllerPort";
 	}
 
 
@@ -49,10 +50,10 @@ public class ControllerPortController {
 	@ResponseBody
 	@PostMapping("/list")
 	@RequiresPermissions("iot:controllerPort:controllerPort")
-	public R list(@RequestBody Map<String, Object> params){
+	public PageUtils list(@RequestBody Map<String, Object> params){
 		//查询列表数据
 		PageUtils page = controllerPortService.queryPage(params);
-		return R.ok(page);
+		return page;
 	}
 
 

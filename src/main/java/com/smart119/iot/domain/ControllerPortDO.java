@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -79,5 +80,19 @@ public class ControllerPortDO implements Serializable {
      */
     @ApiModelProperty(value = "更新时间", name = "updateTime")
     private Date updateTime;
+
+    /**
+     * 消防救援机构名称
+     */
+    @ApiModelProperty(value = "消防救援机构", name = "deptName")
+    @TableField(exist = false)
+    private String deptName;
+
+    /**
+     * 控制器名称
+     */
+    @ApiModelProperty(value = "控制器名称", name = "controllerName")
+    @TableField(exist = false)
+    private String controllerName;
 
 }
