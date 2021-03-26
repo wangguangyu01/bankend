@@ -154,6 +154,19 @@ public class RoleController extends BaseController {
 		}
 	}
 
+	@Log("批量删除用户角色")
+	@RequiresPermissions("sys:role:assign")
+	@PostMapping("/batchRemoveUserRole")
+	@ResponseBody
+	R batchRemoveUserRole(String userIds,Long roleId) {
+		String[] userIdArry = StringUtils.split(userIds,",");
+		if (userService.batchRemoveUserRole(userIdArry,roleId) > 0) {
+			return R.ok();
+		} else {
+			return R.error(1, "批量删除用户角色失败");
+		}
+	}
+
 	@Log("添加用户角色页面")
 	@RequiresPermissions("sys:role:assign")
 	@GetMapping("/assign/{roleId}/addUserRoleForm")

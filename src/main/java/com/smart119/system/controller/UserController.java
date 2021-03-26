@@ -61,8 +61,11 @@ public class UserController extends BaseController {
 		System.out.println(JSON.toJSONString(getUser()));
 
 		Query query = new Query(params);
-		query.put("deptId",getUser().getDeptId());
-		List<UserDO> sysUserList = userService.list(query);
+		if(!query.containsKey("deptId")){
+			query.put("deptId",getUser().getDeptId());
+		}
+
+		List<UserDO> sysUserList = userService.list(query,getUser().getDeptId());
 		int total = userService.count(query);
 		PageUtils pageUtil = new PageUtils(sysUserList, total);
 		return pageUtil;

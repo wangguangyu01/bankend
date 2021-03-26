@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UserService {
 	UserDO get(Long id);
 
-	List<UserDO> list(Map<String, Object> map);
+	List<UserDO> list(Map<String, Object> map,Long userDeptId);
 
 	int count(Map<String, Object> map);
 
@@ -79,4 +79,12 @@ public interface UserService {
 	 * @return
 	 */
     int addUserRole(String[] userIdArry, Long roleId);
+
+	/**
+	 * 批量删除用户角色
+	 * @param userIdArry
+	 * @param roleId
+	 * @return
+	 */
+	int batchRemoveUserRole(String[] userIdArry, Long roleId);
 }
