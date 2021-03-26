@@ -1,8 +1,10 @@
 package com.smart119.iot.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.iot.domain.ControllerDO;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +16,6 @@ import java.util.Map;
  */
 public interface ControllerService {
 
-
     PageUtils queryPage(Map<String, Object> params);
 
     ControllerDO queryById(String id);
@@ -23,8 +24,9 @@ public interface ControllerService {
 
     int update(ControllerDO controllerDO);
 
-
     int remove(String id);
 
     int batchRemove(String[] ids);
+
+    List<ControllerDO> list(Map<String, Object> params);
 }

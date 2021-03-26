@@ -7,6 +7,7 @@ import com.smart119.iot.domain.ControllerDO;
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 
@@ -20,6 +21,8 @@ import java.util.Map;
 public interface ControllerDao extends BaseMapper<ControllerDO> {
 
     IPage<ControllerDO> selectPageVo(@Param("page") Page<ControllerDO> page, @Param("params") Map<String, Object> params);
+
+    List<ControllerDO> list(@Param("params") Map<String, Object> params);
 
     @Override
     ControllerDO selectById(Serializable id);

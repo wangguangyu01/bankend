@@ -1,5 +1,6 @@
 package com.smart119.iot.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart119.common.utils.PageMybatisPlusUtils;
@@ -62,6 +63,11 @@ public class ControllerServiceImpl  implements ControllerService {
 		Collections.addAll(resultList, ids);
 		int deleteBatchrow = controllerDao.deleteBatchIds(resultList);
 		return deleteBatchrow;
+	}
+
+	@Override
+	public List<ControllerDO> list(Map<String, Object> params) {
+		return controllerDao.list(params);
 	}
 	
 }
