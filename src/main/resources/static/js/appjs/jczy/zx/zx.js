@@ -66,6 +66,9 @@ function load() {
 																{
 									field : 'dhhm', 
 									title : '电话号码' 
+								},{
+									field : 'type',
+									title : '坐席类别'
 								},
 																{
 									title : '操作',

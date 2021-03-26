@@ -1,5 +1,11 @@
 $().ready(function() {
 	validateRule();
+    getSelectByType("zxlb","type",$("#typeVal").val());  //坐席类别
+	var type = $("#typeVal").val();
+	console.log(type);
+    if(type!=1){
+        $(".zxzs").css("display","none");
+    }
 });
 
 $.validator.setDefaults({
@@ -63,4 +69,13 @@ function loadDept( deptId,deptName,xfjyjgTywysbm){
     //$("#deptId").val(deptId);
     $("#"+inpId).val(xfjyjgTywysbm);
     $("#"+inpId+"Name").val(deptName);
+}
+
+function selectType(obj){
+    var select = $(obj).val();
+    if(select!=1){
+        $(".zxzs").css("display","none");
+    }else{
+        $(".zxzs").css("display","");
+    }
 }
