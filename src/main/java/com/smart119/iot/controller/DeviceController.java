@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -59,8 +60,8 @@ public class DeviceController {
 
 	@GetMapping("/add")
 	@RequiresPermissions("iot:device:add")
-	public R add(){
-		return R.ok();
+	public String add(){
+		return "iot/device/add";
 	}
 
 
@@ -79,9 +80,12 @@ public class DeviceController {
 	 */
 	@ApiOperation(value = "保存物联设备信息")
 	@ApiParam(name = "Device对象", value = "传入Device对象的json格式", required = true)
+	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("iot:device:add")
 	public R save( DeviceDO device){
+		device.setCreateTime(new Date());
+		device.setUpdateTime(new Date());
 		if(deviceService.save(device)>0){
 			return R.ok();
 		}

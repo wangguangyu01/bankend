@@ -110,13 +110,43 @@ function reLoad() {
 }
 
 function add() {
-    layer.open({
-        type: 2,
-        title: '增加',
-        maxmin: true,
-        shadeClose: false, // 点击遮罩关闭层
-        area: ['800px', '520px'],
-        content: prefix + '/add' // iframe的url
+    var deptId = $("#jstree li[aria-selected='true']").attr("id");
+    if (deptId != null && deptId != null && deptId != "") {
+        //var deptId = $("#jstree li [aria-selected='true']").attr("id");
+        judge_add(deptId);
+    } else {
+        parent.layer.alert("请选择“消防救援站”后再操作！");
+    }
+    return;
+}
+
+//判断当前选中的组织机构是否为消防救援站
+function judge_add(deptId) {
+    $.ajax({
+        type: "POST",
+        url: "/system/sysDept/isXfjyz",
+        data: {
+            deptId: deptId
+        },// 你的formid
+        async: false,
+        error: function (request) {
+            parent.layer.alert("选择的消防救援机构不是“消防救援站“");
+        },
+        success: function (data) {
+            if (data.code == "0") {
+                layer.open({
+                    type: 2,
+                    title: '增加',
+                    maxmin: true,
+                    shadeClose: false, // 点击遮罩关闭层
+                    area: ['90%', '90%'],
+                    content: prefix + '/add?deptId=' + deptId // iframe的url
+                });
+            } else {
+                parent.layer.alert("选择的消防救援机构不是“消防救援站“");
+            }
+
+        }
     });
 }
 
