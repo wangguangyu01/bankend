@@ -35,7 +35,7 @@ public class DeviceController {
 	@GetMapping()
 	@RequiresPermissions("iot:device:device")
 	String Device(){
-	    return "iot/device";
+	    return "iot/device/device";
 	}
 
 
@@ -50,10 +50,10 @@ public class DeviceController {
 	@ResponseBody
 	@PostMapping("/list")
 	@RequiresPermissions("iot:device:device")
-	public R list(@RequestBody Map<String, Object> params){
+	public PageUtils list(@RequestBody Map<String, Object> params){
 		//查询列表数据
 		PageUtils page = deviceService.queryPage(params);
-		return R.ok(page);
+		return page;
 	}
 
 

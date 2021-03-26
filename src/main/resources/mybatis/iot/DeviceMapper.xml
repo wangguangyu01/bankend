@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.smart119.webapi.dao.DeviceDao">
+<mapper namespace="com.smart119.iot.dao.DeviceDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
 	<resultMap type="com.smart119.iot.domain.DeviceDO" id="deviceMap">
@@ -14,6 +14,27 @@
 		<result property="createTime" column="create_time"/>
 		<result property="updateTime" column="update_time"/>
 	</resultMap>
+	<select id="selectPageVo" resultType="com.smart119.iot.domain.DeviceDO">
+		select
+		t.id as id,
+		t.name as name,
+		t.type as type,
+		t.status as status,
+		t.controller_port_id as controllerPortId,
+		t.xfjyjg_tywysbm as xfjyjgTywysbm,
+		t.create_time as createTime,
+		t.update_time as updateTime,
+		d.DWMC as deptName,
+		c.name as controllerName,
+		p.channel_number as channelNumber
+		from
+		iot_device t
+		left join sys_dept d on d.XFJYJG_TYWYSBM = t.xfjyjg_tywysbm
+		left join iot_controller_port p on p.id = t.controller_port_id
+		left join iot_controller c on c.id = p.controller_id
+		where 1=1
+		<if test="params.xfjyjgTywysbm != null and params.xfjyjgTywysbm != ''"> and d.xfjyjg_tywysbm = #{params.xfjyjgTywysbm}</if>
+	</select>
 
 
 </mapper>
