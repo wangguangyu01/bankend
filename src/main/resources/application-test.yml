@@ -78,3 +78,7 @@ jasypt:
     password: jasypt
 
 appId:
+
+#是否开启swagger文档
+swagger:
+  show: false
