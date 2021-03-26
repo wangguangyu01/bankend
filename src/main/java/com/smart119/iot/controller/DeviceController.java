@@ -108,9 +108,10 @@ public class DeviceController {
 	 */
 	@ApiOperation(value = "删除物联设备信息")
 	@ApiParam(name = "id", value = "传入主键", required = true)
+	@ResponseBody
 	@PostMapping( "/remove")
 	@RequiresPermissions("iot:device:remove")
-	public R remove(@RequestBody String id){
+	public R remove(@RequestParam String id){
 		if(deviceService.remove(id)>0){
 		return R.ok();
 		}
@@ -122,9 +123,10 @@ public class DeviceController {
 	 */
 	@ApiOperation(value = "批量删除物联设备信息")
 	@ApiParam(name = "ids", value = "传入主键数组", required = true)
+	@ResponseBody
 	@PostMapping( "/batchRemove")
 	@RequiresPermissions("iot:device:batchRemove")
-	public R remove(@RequestBody String[] ids){
+	public R remove(@RequestParam("ids[]") String[] ids){
 		deviceService.batchRemove(ids);
 		return R.ok();
 	}
