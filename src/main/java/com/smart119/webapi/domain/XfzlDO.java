@@ -112,11 +112,6 @@ public class XfzlDO implements Serializable {
     private List<String> sltFileIdList;
 
 
-    /**
-     * 只是用来接收前端上传的图片
-     */
-    @TableField(exist = false)
-    private MultipartFile[] files;
 
     /**
      * 附件List

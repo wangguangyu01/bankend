@@ -44,4 +44,11 @@
     </update>
 
 
+    <delete id="batchRemove">
+        delete from xfzl where XFZL_ID in
+        <foreach item="xfzlId" collection="array" open="(" separator="," close=")">
+            #{xfzlId}
+        </foreach>
+    </delete>
+
 </mapper>

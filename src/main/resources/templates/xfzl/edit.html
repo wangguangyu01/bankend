@@ -10,7 +10,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
-                    <form class="form-horizontal m-t" id="signupForm">
+                    <form class="form-horizontal m-t" name="myform" id="signupForm" enctype=“multipart/form-data”>
                         <input id="xfzlId" name="xfzlId" th:value="${xfzl.xfzlId}" type="hidden">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">案例标题：</label>
@@ -56,12 +56,12 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">缩略图：</label>
-                            <div class="col-sm-4">
-                                <input id='input-id' multiple type="file" name="files" data-show-caption="true"/>
+                            <div class="col-sm-4" style="width: 45%; margin-left: 55px">
+                                <input id='input-id-edit' multiple type="file" name="files" data-show-caption="true"/>
                             </div>
                         </div>
 						<div class="form-group">
-                            <label class="col-sm-3 control-label">状态 0 显示 1隐藏：</label>
+                            <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-8">
 								<select id="zt" name="zt" class="form-control">
 									<option value="">请选择</option>
@@ -70,6 +70,7 @@
 								</select>
                             </div>
                         </div>
+                        <img src="/attach/ftpDownload?id=176427049394472aa3edb19b046fa77c">
                         <div class="form-group">
                             <div class="col-sm-8 col-sm-offset-3">
                                 <button type="submit" class="btn btn-primary">提交</button>
@@ -82,6 +83,9 @@
     </div>
 </div>
 <div th:include="include::footer"></div>
+<script th:inline="javascript">
+    var attachmentDOList = [[${attachmentDOList}]];
+</script>
 <script src="/js/plugins/editor/dist/js/wangEditor.min.js"></script>
 <script type="text/javascript" src="/js/appjs/xfzl/edit.js">
 </script>

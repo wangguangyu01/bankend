@@ -23,4 +23,10 @@ public interface XfzlDao extends BaseMapper<XfzlDO> {
 
     int updDzUserIds(@Param("dzUserIds") String dzUserIds,@Param("xfzlId") String xfzlId);
 
+    /**
+     * 批量删除
+     * @param xfzlIds
+     * @return
+     */
+    int batchRemove(String[] xfzlIds);
 }

@@ -1,5 +1,6 @@
 $().ready(function() {
-	initFileInput("input-id",attachmentDOList);
+
+	initFileInput("input-id-edit",attachmentDOList);
 	var fzjcnr = $("#fzjcnr");
 	//文本域获取富文本编辑器内容
 	var E = window.wangEditor;
@@ -126,15 +127,9 @@ $.validator.setDefaults({
 	}
 });
 function update() {
-	$.ajax({
-		cache : true,
+	$("#signupForm").ajaxSubmit({
 		type : "POST",
 		url : "/back/xfzl/update",
-		data : $('#signupForm').serialize(),// 你的formid
-		async : false,
-		error : function(request) {
-			parent.layer.alert("Connection error");
-		},
 		success : function(data) {
 			if (data.code == 0) {
 				parent.layer.msg("操作成功");
@@ -145,9 +140,8 @@ function update() {
 			} else {
 				parent.layer.alert(data.msg)
 			}
-
 		}
-	});
+	})
 
 }
 function validateRule() {
@@ -197,7 +191,7 @@ function initFileInput(ctrlName,attachmentDOList) {
 		//maxImageHeight: 1000,//图片的最大高度
 		//maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
 		//minFileCount: 0,
-		//maxFileCount: 10, //表示允许同时上传的最大文件个数
+		maxFileCount: 1, //表示允许同时上传的最大文件个数
 		enctype: 'multipart/form-data',
 		validateInitialCount:true,
 		previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",

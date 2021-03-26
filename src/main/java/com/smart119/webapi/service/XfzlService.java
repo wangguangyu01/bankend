@@ -3,13 +3,14 @@ package com.smart119.webapi.service;
 
 import com.smart119.common.utils.PageUtils;
 import com.smart119.webapi.domain.XfzlDO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
 
 /**
  * 消防战例
- * 
+ *
  * @author liangsl
  * @email liangsl@sz000673.com
  * @date 2021-03-11 14:56:44
@@ -39,5 +40,10 @@ public interface XfzlService {
 	 * @return
 	 */
 	int update(XfzlDO xfzl, String userName);
+
+
+	int remove(String xfzlId);
+
+	int batchRemove(String[] xfzlIds);
 
 }

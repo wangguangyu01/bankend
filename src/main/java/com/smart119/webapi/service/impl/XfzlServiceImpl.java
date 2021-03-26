@@ -95,7 +95,7 @@ public class XfzlServiceImpl implements XfzlService {
 
 
     @Override
-    public int save(XfzlDO xfzl, String userName){
+    public int save( XfzlDO xfzl, String userName){
         xfzl.setXfzlId(UUIDGenerator.getUUID());
         if ("0".equals(xfzl.getZt())) {
             xfzl.setFbsj(new Date());
@@ -103,11 +103,7 @@ public class XfzlServiceImpl implements XfzlService {
         xfzl.setCdate(new Date());
         xfzl.setCperson(userName);
         int count = xfzlDao.insert(xfzl);
-        if (count > 0) {
-            if (!ObjectUtils.isEmpty(xfzl.getFiles())) {
-                attachmentService.ftpUpload(xfzl.getFiles(), xfzl.getXfzlId(),  "xfzl_slt");
-            }
-        }
+
         return count;
     }
 
@@ -123,11 +119,17 @@ public class XfzlServiceImpl implements XfzlService {
         }
         BeanUtils.copyProperties(xfzl, xfzlDO);
         int count  = xfzlDao.updateById(xfzlDO);
-        if (count > 0) {
-            if (!ObjectUtils.isEmpty(xfzl.getFiles())) {
-                attachmentService.ftpUpload(xfzl.getFiles(), xfzl.getXfzlId(),  "xfzl_slt");
-            }
-        }
         return count;
+    }
+
+
+    @Override
+    public int remove(String xfzlId){
+        return xfzlDao.deleteById(xfzlId);
+    }
+
+    @Override
+    public int batchRemove(String[] xfzlIds){
+        return xfzlDao.batchRemove(xfzlIds);
     }
 }
