@@ -16,6 +16,7 @@
         <result property="cdate" column="cdate"/>
         <result property="status" column="status"/>
         <result property="cperson" column="cperson"/>
+        <result property="orderNum" column="order_num"/>
     </resultMap>
 
     <select id="queryXflzById" resultType="com.smart119.webapi.domain.XfzlDO">
@@ -25,10 +26,14 @@
     </select>
 
     <select id="queryXflzList" resultType="com.smart119.webapi.domain.XfzlDO">
-        select t.XFZL_ID as xfzlId,t.BT as bt, t.NR as nr,t.LX as lx,t.ZT as zt,t.LLCS as llcs,t.DZCS as dzcs,t.FBSJ as fbsj, t.cdate as  cdate, u.username as cpersonUserName from xfzl t left join sys_user u on t.cperson = u.user_id where 1=1
-        <if test="params.gjc != null and params.gjc != ''">and (t.BT LIKE CONCAT ('%',#{params.gjc},'%') or t.NR LIKE CONCAT ('%',#{params.gjc},'%'))</if>
+        select t.XFZL_ID as xfzlId,t.BT as bt, t.NR as nr,t.LX as lx,t.ZT as zt,t.LLCS as llcs,t.DZCS as dzcs,t.FBSJ as
+        fbsj, t.cdate as cdate, u.username as cpersonUserName, t.order_num as orderNum from xfzl t left join sys_user u on t.cperson = u.username
+        where 1=1
+        <if test="params.gjc != null and params.gjc != ''">and (t.BT LIKE CONCAT ('%',#{params.gjc},'%') or t.NR LIKE
+            CONCAT ('%',#{params.gjc},'%'))
+        </if>
         <if test="params.lx != null and params.lx != ''">and t.LX = #{params.lx}</if>
-        order by t.LLCS+t.DZCS desc
+        order by t.order_num desc, t.LLCS+t.DZCS desc
     </select>
 
     <update id="updLlCs">

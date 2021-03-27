@@ -246,7 +246,7 @@ public class AttachController extends BaseController {
         filename = new String(filename.getBytes(), "ISO-8859-1");
         response.reset();
         //response.setContentType("application/audio/x-wav;charset=UTF-8"); //这是下载wav格式的音频用的。如果需要下载其它的文件，可以去参考一下 常见的MIME类型表
-        response.setHeader("Content-disposition", "attachment;filename=" + filename);
+        response.setHeader("Content-disposition", "attachment;filename=" + filenewname);
 
 // 创建FTPClient对象
         FTPClient ftp = new FTPClient();
