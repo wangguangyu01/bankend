@@ -184,6 +184,7 @@ public class WblxrController  extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/uploadImg")
+    @RequiresPermissions("jczy:wblxr:uploadPicture")
     public String uploadPicture(
             @RequestParam(value="file",required=false)MultipartFile file,
             HttpServletRequest request){
@@ -193,7 +194,7 @@ public class WblxrController  extends BaseController {
         String fileName=file.getOriginalFilename();//获取文件名加后缀
         if(fileName!=null&&fileName!=""){
             //String returnUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() +"/upload/excel/";//存储路径
-            String path = "C:\\Users\\Public\\Documents"; //文件存储位置
+            String path = "D:\\Users\\Public\\Documents"; //文件存储位置
             String fileF = fileName.substring(fileName.lastIndexOf("."), fileName.length());//文件后缀
             fileName=new Date().getTime()+"_"+new Random().nextInt(1000)+fileF;//新的文件名
 
@@ -202,6 +203,7 @@ public class WblxrController  extends BaseController {
             //先判断文件是否存在
             String fileAdd =datetime;
             File file1 =new File(path+"/"+fileAdd);
+
             //如果文件夹不存在则创建
             if(!file1 .exists()  && !file1 .isDirectory()){
                 file1 .mkdirs();
@@ -224,6 +226,7 @@ public class WblxrController  extends BaseController {
      */
     @ResponseBody
     @RequestMapping("/insertUserExcel")
+    @RequiresPermissions("jczy:wblxr:insertUserExcel")
     public String insertUserExcel(
             @RequestParam(value="url",required=false) String url , HttpServletRequest request){
 

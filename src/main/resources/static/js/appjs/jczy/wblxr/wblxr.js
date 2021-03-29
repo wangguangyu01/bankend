@@ -231,6 +231,8 @@ function downExcel(){
  * 点击预览，导入excel
  */
 function setImg(obj){//用于进行excel上传，返回地址
+
+
     var f=$(obj).val();
     if(f == null || f ==undefined || f == ''){
         return false;
@@ -254,21 +256,28 @@ function setImg(obj){//用于进行excel上传，返回地址
         processData: false,    //不可缺
         dataType:"json",
         success: function(suc) {
+
             if(suc.code==0){
                 $("#excelUrl").val(suc.message);//将地址存储好
                 $("#excelUrlShow").val(suc.message);//显示excel
+                $("#url").val("");
             }else{
                 alertLayel("上传失败");
                 $("#url").val("");
                 $(obj).val('');
             }
+
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             alertLayel("上传失败，请检查网络后重试");
             $("#url").val("");
             $(obj).val('');
+
         }
+
     });
+
+
 }
 
 /**
@@ -277,7 +286,7 @@ function setImg(obj){//用于进行excel上传，返回地址
 function insertExcel() {
     var url = $("#excelUrlShow").val();
     if (url == null || url == '') {
-        alertLayel("请选择Excel文件");
+        alert("请选择Excel文件");
         return false;
     }
     $.ajax({
