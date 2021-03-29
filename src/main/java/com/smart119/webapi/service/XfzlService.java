@@ -31,7 +31,7 @@ public interface XfzlService {
 	int updDzUserIds(String dzUserIds, String xfzlId);
 
 
-	int save(MultipartFile[] file, XfzlDO xfzl, String userName);
+	int save(XfzlDO xfzl, String userName);
 
 	/**
 	 * 修改消防战例
@@ -39,26 +39,11 @@ public interface XfzlService {
 	 * @param userName 用户名
 	 * @return
 	 */
-	int update(MultipartFile[] file, XfzlDO xfzl, String userName);
+	int update(XfzlDO xfzl, String userName);
 
 
 	int remove(String xfzlId);
 
 	int batchRemove(String[] xfzlIds);
 
-	/**
-	 * 修改消防战例的显示状态
-	 * @param xfzl 消防战例
-	 * @param username 修改用户名
-	 * @return
-	 */
-    int updateShowZt(XfzlDO xfzl, String username);
-
-	/**
-	 * 修改消防战例的排序
-	 * @param xfzl 消防战例
-	 * @param username
-	 * @return
-	 */
-	int updateShowOrderNum(XfzlDO xfzl, String username);
 }

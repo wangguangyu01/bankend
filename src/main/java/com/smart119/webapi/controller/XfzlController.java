@@ -38,145 +38,127 @@ import java.util.Map;
 public class XfzlController extends BaseController {
 
 
-    @Autowired
-    private XfzlService xfzlService;
-
-
-    @Resource
-    private DictService dictService;
-
-    @Resource
-    private AttachmentService attachmentService;
-
-
-    @GetMapping()
-    @RequiresPermissions("back:xfzl:xfzl")
-    String Xfzl() {
-        return "xfzl/xfzl";
-    }
-
-
-    @ResponseBody
-    @GetMapping("/list")
-    @RequiresPermissions("back:xfzl:xfzl")
-    public PageUtils list(@RequestParam Map<String, Object> params) {
-        //查询列表数据
-        PageUtils page = xfzlService.queryPage(params);
-        return page;
-    }
-
-
-    @GetMapping("/add")
-    @RequiresPermissions("back:xfzl:add")
-    String add(Model model) {
-        List dictList = dictService.queryByDictType("JQFLYDM");
-        model.addAttribute("dictList", dictList);
-        return "xfzl/add";
-    }
-
-
-    /**
-     * 保存
-     */
-    @ResponseBody
-    @PostMapping("/save")
-    @RequiresPermissions("back:xfzl:add")
-    public R save(@RequestPart(value = "file", required = false) MultipartFile[] file, XfzlDO xfzl) {
-        UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
-        if (xfzlService.save(file, xfzl, user.getUsername()) > 0) {
-            return R.ok();
-        }
-        return R.error();
-    }
-
-
-    @GetMapping("/edit/{xfzlId}")
-    @RequiresPermissions("back:xfzl:edit")
-    String edit(@PathVariable("xfzlId") String xfzlId, Model model) {
-        XfzlDO xfzl = xfzlService.queryById(xfzlId);
-        Map param = new HashMap();
-        param.put("fid", xfzlId);
-        param.put("fType", "xfzl_slt");
-        List<AttachmentDO> attachmentDOList = attachmentService.list(param);
-        List dictList = dictService.queryByDictType("JQFLYDM");
-        model.addAttribute("dictList", dictList);
-        model.addAttribute("xfzl", xfzl);
-        model.addAttribute("attachmentDOList", attachmentDOList);
-        return "xfzl/edit";
-    }
-
-
-    /**
-     * 修改
-     */
-    @ResponseBody
-    @RequestMapping("/update")
-    @RequiresPermissions("back:xfzl:edit")
-    public R update(@RequestPart(value = "file", required = false) MultipartFile[] file, XfzlDO xfzl) {
-        UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
-        int count = xfzlService.update(file, xfzl, user.getUsername());
-        if (count > 0) {
-            return R.ok();
-        }
-        return R.error();
-    }
+	@Autowired
+	private XfzlService xfzlService;
 
 
 
-    /**
-     * 修改显示状态
-     */
-    @ResponseBody
-    @RequestMapping("/updateShowZt")
-    @RequiresPermissions("back:xfzl:edit")
-    public R updateShowZt(XfzlDO xfzl) {
-        UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
-        int count = xfzlService.updateShowZt( xfzl, user.getUsername());
-        if (count >= 0) {
-            return R.ok();
-        }
-        return R.error();
-    }
+	@Resource
+	private DictService dictService;
+
+	@Resource
+	private AttachmentService attachmentService;
 
 
-    /**
-     * 修改排序
-     */
-    @ResponseBody
-    @RequestMapping("/updateShowOrderNum")
-    @RequiresPermissions("back:xfzl:edit")
-    public R updateShowOrderNum(XfzlDO xfzl) {
-        UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
-        int count = xfzlService.updateShowOrderNum( xfzl, user.getUsername());
-        if (count >= 0) {
-            return R.ok();
-        }
-        return R.error();
-    }
 
-    /**
-     * 删除
-     */
-    @PostMapping("/remove")
-    @ResponseBody
-    @RequiresPermissions("back:xfzl:remove")
-    public R remove(String xfzlId) {
-        if (xfzlService.remove(xfzlId) > 0) {
-            return R.ok();
-        }
-        return R.error();
-    }
+	@GetMapping()
+	@RequiresPermissions("back:xfzl:xfzl")
+	String Xfzl(){
+		return "xfzl/xfzl";
+	}
 
-    /**
-     * 删除
-     */
-    @PostMapping("/batchRemove")
-    @ResponseBody
-    @RequiresPermissions("back:xfzl:batchRemove")
-    public R remove(@RequestParam("ids[]") String[] xfzlIds) {
-        xfzlService.batchRemove(xfzlIds);
-        return R.ok();
-    }
+
+
+
+
+	@ResponseBody
+	@GetMapping("/list")
+	@RequiresPermissions("back:xfzl:xfzl")
+	public PageUtils list(@RequestParam Map<String, Object> params){
+		//查询列表数据
+		PageUtils page = xfzlService.queryPage(params);
+		return page;
+	}
+
+
+	@GetMapping("/add")
+	@RequiresPermissions("back:xfzl:add")
+	String add(Model model){
+		List dictList = dictService.queryByDictType("JQFLYDM");
+		model.addAttribute("dictList", dictList);
+		return "xfzl/add";
+	}
+
+
+	/**
+	 * 保存
+	 */
+	@ResponseBody
+	@PostMapping("/save")
+	@RequiresPermissions("back:xfzl:add")
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] file, XfzlDO xfzl){
+		UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
+		if(xfzlService.save(xfzl, user.getUsername())>0){
+			if(file!=null && file.length>0) {
+				attachmentService.ftpUpload(file, xfzl.getXfzlId(), "xfzl_slt");
+			}
+			return R.ok();
+		}
+		return R.error();
+	}
+
+
+
+	@GetMapping("/edit/{xfzlId}")
+	@RequiresPermissions("back:xfzl:edit")
+	String edit(@PathVariable("xfzlId") String xfzlId,Model model){
+		XfzlDO xfzl = xfzlService.queryById(xfzlId);
+		Map param = new HashMap();
+		param.put("fid",xfzlId);
+		param.put("fType","xfzl_slt");
+		List<AttachmentDO> attachmentDOList = attachmentService.list(param);
+		List dictList = dictService.queryByDictType("JQFLYDM");
+		model.addAttribute("dictList", dictList);
+		model.addAttribute("xfzl", xfzl);
+		model.addAttribute("attachmentDOList", attachmentDOList);
+		return "xfzl/edit";
+	}
+
+
+	/**
+	 * 修改
+	 */
+	@ResponseBody
+	@RequestMapping("/update")
+	@RequiresPermissions("back:xfzl:edit")
+	public R update(@RequestPart(value = "file", required = false) MultipartFile[] file, XfzlDO xfzl){
+		UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
+		 int count = xfzlService.update(xfzl, user.getUsername());
+		if (count > 0) {
+			if(file!=null && file.length>0) {
+				attachmentService.ftpUpload(file, xfzl.getXfzlId(), "xfzl_slt");
+			}
+			return R.ok();
+		}
+		return R.error();
+	}
+
+
+
+	/**
+	 * 删除
+	 */
+	@PostMapping( "/remove")
+	@ResponseBody
+	@RequiresPermissions("back:xfzl:remove")
+	public R remove( String xfzlId){
+		if(xfzlService.remove(xfzlId)>0){
+			return R.ok();
+		}
+		return R.error();
+	}
+
+	/**
+	 * 删除
+	 */
+	@PostMapping( "/batchRemove")
+	@ResponseBody
+	@RequiresPermissions("back:xfzl:batchRemove")
+	public R remove(@RequestParam("ids[]") String[] xfzlIds){
+		xfzlService.batchRemove(xfzlIds);
+		return R.ok();
+	}
+
 
 
 }

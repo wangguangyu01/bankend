@@ -1,5 +1,5 @@
 $().ready(function() {
-	appendOption('orderNum', orderNum);
+
 	initFileInput("input-id-edit",attachmentDOList);
 	var fzjcnr = $("#fzjcnr");
 	//文本域获取富文本编辑器内容
@@ -207,20 +207,4 @@ function initFileInput(ctrlName,attachmentDOList) {
 		overwriteInitial: false
 	})
 
-}
-
-
-function appendOption(selectId, value) {
-	var select = $('#' + selectId);
-	if (select != null && typeof select != 'undefined') {
-		select.empty();
-		for (var i = 0; i < 11; i++) {
-			if (value && value == i) {
-				select.append("<option value= '"+ i + "' selected>" + i + "</option>")
-			} else {
-				select.append("<option value= '"+ i + "'>" + i + "</option>")
-			}
-
-		}
-	}
 }

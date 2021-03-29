@@ -1,6 +1,5 @@
 $().ready(function () {
     initFileInput("input-id");
-    appendOption('orderNum');
     //文本域获取富文本编辑器内容
     var fzjcnr = $("#nr");
     var E = window.wangEditor;
@@ -32,7 +31,7 @@ $().ready(function () {
         'undo', // 撤销
         'redo' // 重复
     ];
-    editor.config.uploadImgMaxSize = 3 * 1024 * 1024 * 1024;
+    editor.config.uploadImgMaxSize = 3 * 1024 * 1024;
     editor.config.uploadImgAccept = ['jpg', 'jpeg', 'png', 'gif'];
     editor.config.uploadImgMaxLength = 1;
     editor.config.uploadFileName = "file";
@@ -226,17 +225,6 @@ function initFileInput(ctrlName) {
             {caption: "Lighthouse.jpg", size: 549000, width: "120px", url: "/file-upload-batch/2", key: 2},
         ],
     })
-
-}
-
-function appendOption(selectId) {
-    var select = $('#' + selectId);
-    if (select != null && typeof select != 'undefined') {
-        select.empty();
-        for (var i = 0; i < 11; i++) {
-            select.append("<option value= '"+ i +"'>" + i+ "</option>")
-        }
-    }
 
 }
 

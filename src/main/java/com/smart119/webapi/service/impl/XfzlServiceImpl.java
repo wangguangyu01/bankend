@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,8 +95,7 @@ public class XfzlServiceImpl implements XfzlService {
 
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public int save(MultipartFile[] file, XfzlDO xfzl, String userName){
+    public int save( XfzlDO xfzl, String userName){
         xfzl.setXfzlId(UUIDGenerator.getUUID());
         if ("0".equals(xfzl.getZt())) {
             xfzl.setFbsj(new Date());
@@ -105,16 +103,13 @@ public class XfzlServiceImpl implements XfzlService {
         xfzl.setCdate(new Date());
         xfzl.setCperson(userName);
         int count = xfzlDao.insert(xfzl);
-        if (count > 0) {
-            attachmentService.ftpUpload(file, xfzl.getXfzlId(), "xfzl_slt");
-        }
+
         return count;
     }
 
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public int update(MultipartFile[] file, XfzlDO xfzl, String userName) {
+    public int update(XfzlDO xfzl, String userName) {
         if (StringUtils.isBlank(xfzl.getXfzlId())) {
             return 0;
         }
@@ -122,39 +117,10 @@ public class XfzlServiceImpl implements XfzlService {
         if (ObjectUtils.isEmpty(xfzlDO)) {
             return 0;
         }
-        xfzl.setCperson(userName);
         BeanUtils.copyProperties(xfzl, xfzlDO);
         int count  = xfzlDao.updateById(xfzlDO);
-        if (count > 0) {
-            if(file!=null && file.length>0) {
-                attachmentService.ftpUpload(file, xfzl.getXfzlId(), "xfzl_slt");
-            }
-        }
         return count;
     }
-
-
-    /**
-     * 修改消防战例的显示状态
-     * @param xfzl 消防整理
-     * @param username 修改用户名
-     * @return
-     */
-    @Override
-    public int updateShowZt(XfzlDO xfzl, String username) {
-        if (StringUtils.isBlank(xfzl.getXfzlId())) {
-            return 0;
-        }
-        XfzlDO xfzlDO = xfzlDao.selectById(xfzl.getXfzlId());
-        if (ObjectUtils.isEmpty(xfzlDO)) {
-            return 0;
-        }
-        xfzlDO.setZt(xfzl.getZt());
-        xfzlDO.setFbsj(new Date());
-        return xfzlDao.updateById(xfzlDO);
-    }
-
-
 
 
     @Override
@@ -165,20 +131,5 @@ public class XfzlServiceImpl implements XfzlService {
     @Override
     public int batchRemove(String[] xfzlIds){
         return xfzlDao.batchRemove(xfzlIds);
-    }
-
-
-    @Override
-    public int updateShowOrderNum(XfzlDO xfzl, String username) {
-        if (StringUtils.isBlank(xfzl.getXfzlId())) {
-            return 0;
-        }
-        XfzlDO xfzlDO = xfzlDao.selectById(xfzl.getXfzlId());
-        if (ObjectUtils.isEmpty(xfzlDO)) {
-            return 0;
-        }
-        xfzlDO.setOrderNum(xfzl.getOrderNum());
-        xfzlDO.setFbsj(new Date());
-        return xfzlDao.updateById(xfzlDO);
     }
 }
