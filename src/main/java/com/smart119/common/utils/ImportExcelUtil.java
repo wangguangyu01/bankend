@@ -1,35 +1,21 @@
 package com.smart119.common.utils;
 
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-
-/**
- *
- * @ClassName: ImportExcelUtil
- * @Description: excel 导入数据
- * @author qinzz
- * @date 2017年1月17日
- * @time 上午10:28:48
- */
 public class ImportExcelUtil {
-    public static List<List<Object>> importExcel(File file) throws IOException{
+    public static List<List<Object>> importExcel(File file) throws IOException {
         String fileName = file.getName();
         String extension = fileName.lastIndexOf(".")==-1?"":fileName.substring(fileName.lastIndexOf(".")+1);
         if("xls".equals(extension)){
@@ -46,7 +32,7 @@ public class ImportExcelUtil {
     /**
      * 读取 office 2003 excel
      * @throws IOException
-     * @throws FileNotFoundException */
+      */
     private static List<List<Object>> read2003Excel(File file) throws IOException{
         List<List<Object>> list = new LinkedList<List<Object>>();
         HSSFWorkbook hwb = new HSSFWorkbook(new FileInputStream(file));
@@ -68,6 +54,33 @@ public class ImportExcelUtil {
                 DecimalFormat df = new DecimalFormat("0");// 格式化 number String 字符
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 格式化日期字符串
                 DecimalFormat nf = new DecimalFormat("0");// 格式化数字
+                switch (cell.getCellType()) {
+                    case XSSFCell.CELL_TYPE_STRING:
+                        //  System.out.println(i+"行"+j+" 列 is String type");
+                        value = cell.getStringCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_NUMERIC:
+                        //   System.out.println(i+"行"+j+" 列 is Number type ; DateFormt:"+cell.getCellStyle().getDataFormatString());
+                        if("@".equals(cell.getCellStyle().getDataFormatString())){
+                            value = df.format(cell.getNumericCellValue());
+                        } else if("General".equals(cell.getCellStyle().getDataFormatString())){
+                            value = nf.format(cell.getNumericCellValue());
+                        }else{
+                            value = sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue()));
+                        }
+                        break;
+                    case XSSFCell.CELL_TYPE_BOOLEAN:
+                        //   System.out.println(i+"行"+j+" 列 is Boolean type");
+                        value = cell.getBooleanCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_BLANK:
+                        //   System.out.println(i+"行"+j+" 列 is Blank type");
+                        value = "";
+                        break;
+                    default:
+                        //   System.out.println(i+"行"+j+" 列 is default type");
+                        value = cell.toString();
+                }
                 if (value == null || "".equals(value)) {
                     continue;
                 }
@@ -106,6 +119,33 @@ public class ImportExcelUtil {
                 DecimalFormat df = new DecimalFormat("0");// 格式化 number String 字符
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 格式化日期字符串
                 DecimalFormat nf = new DecimalFormat("0");// 格式化数字
+                switch (cell.getCellType()) {
+                    case XSSFCell.CELL_TYPE_STRING:
+                        //   System.out.println(i+"行"+j+" 列 is String type");
+                        value = cell.getStringCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_NUMERIC:
+                        //   System.out.println(i+"行"+j+" 列 is Number type ; DateFormt:"+cell.getCellStyle().getDataFormatString());
+                        if("@".equals(cell.getCellStyle().getDataFormatString())){
+                            value = df.format(cell.getNumericCellValue());
+                        } else if("General".equals(cell.getCellStyle().getDataFormatString())){
+                            value = nf.format(cell.getNumericCellValue());
+                        }else{
+                            value = sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue()));
+                        }
+                        break;
+                    case XSSFCell.CELL_TYPE_BOOLEAN:
+                        //   System.out.println(i+"行"+j+" 列 is Boolean type");
+                        value = cell.getBooleanCellValue();
+                        break;
+                    case XSSFCell.CELL_TYPE_BLANK:
+//		      System.out.println(i+"行"+j+" 列 is Blank type");
+                        value = "";
+                        break;
+                    default:
+                        //   System.out.println(i+"行"+j+" 列 is default type");
+                        value = cell.toString();
+                }
                 if (value == null || "".equals(value)) {
                     continue;
                 }
@@ -115,6 +155,7 @@ public class ImportExcelUtil {
         }
         return list;
     }
+
 
 
 }

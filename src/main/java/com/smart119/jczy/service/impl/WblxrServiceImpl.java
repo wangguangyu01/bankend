@@ -49,6 +49,11 @@ public class WblxrServiceImpl implements WblxrService {
 	}
 
 	@Override
+	public int getWblxr(WblxrDO wblxr){
+		return wblxrDao.getWblxr(wblxr);
+	}
+
+	@Override
 	public int remove(String wblxrId){
 		return wblxrDao.remove(wblxrId);
 	}

@@ -225,18 +225,7 @@ function Excel() {
 
 //下载excel
 function downExcel(){
-    alert(1111)
-    $.ajax({
-        type: "POST",
-        url:  prefix + "/downExcel",
-        data: "",
-        cache: false,
-        contentType: false,    //不可缺
-        processData: false,    //不可缺
-        dataType:"json",
-        success: function(suc) {
-        },
-    });
+    window.location.href = "/jczy/wblxr/downExcel";//在后台代码里
 }
 /**
  * 点击预览，导入excel
@@ -293,30 +282,18 @@ function insertExcel() {
     }
     $.ajax({
         type: "POST",
-        url: prefix + "/downExcel?url=" + url,
-        cache: false,
-        contentType: false,
-        processData: false,
-        dataType: "json",
-        success: function (obj) {
-            var total = obj.result.total;
-            var num = obj.result.num;
-            var shibai = total - num;
-            if (obj.code == 1) {
-                alertLayel("一共" + total + "条数据,成功导入" + num + "条数据,失败" + shibai + "条数据");//成功
-            } else if (obj.code == 2) {
-                alertLayel(obj.message);//失败
-            } else if (obj.code == 3) {
-                alertLayel("Excel中没有数据");//无数据
-            }
-            else if (obj.code == 0) {
-                alertLayel("系统异常,请稍候操作");
+        url: "/jczy/wblxr/insertUserExcel?url="+encodeURI(url),
+        dataType:"json",
+        success: function(obj) {
+            if (obj.code == 3) {
+                alert("Excel中没有数据");//无数据
+            }else{
+                alert("导入成功");//导入成功
+                reLoad()
             }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alertLayel("上传失败，请检查网络后重试");
-            $("#url").val("");
-            $(obj).val('');
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            reLoad()
         }
     });
 }

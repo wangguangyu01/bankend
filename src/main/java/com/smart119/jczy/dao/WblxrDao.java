@@ -33,6 +33,8 @@ public interface WblxrDao extends BaseMapper<WblxrDO> {
 
     int update(WblxrDO wblxrDO);
 
+    int getWblxr(WblxrDO wblxrDO);
+
     int remove(String String);
 
     int batchRemove(String[] Strings);
