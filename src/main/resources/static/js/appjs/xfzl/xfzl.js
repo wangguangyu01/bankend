@@ -34,7 +34,8 @@ function load() {
                         offset: params.offset,
                         // name:$('#searchName').val(),
                         // username:$('#searchName').val()
-                        gjc: $('#searchName').val()
+                        gjc: $('#searchName').val(),
+                        state: $('#searchDate').val()
                     };
                 },
                 // //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -50,20 +51,35 @@ function load() {
                     {
                         field: 'xfzlId',
                         title: '主键id',
-						visible: false
+                        visible: false
                     },
-					{
-						field : 'number',
-						title : '序号',
-						formatter: function (value, row, index) {
-							//获取每页显示的数量
-							var pageSize=$('#exampleTable').bootstrapTable('getOptions').pageSize;
-							//获取当前是第几页
-							var pageNumber=$('#exampleTable').bootstrapTable('getOptions').pageNumber;
-							//返回序号，注意index是从0开始的，所以要加上1
-							return pageSize * (pageNumber - 1) + index + 1;
-						}
-					},
+                    /* {
+                         field: 'number',
+                         title: '序号',
+                         formatter: function (value, row, index) {
+                             //获取每页显示的数量
+                             var pageSize = $('#exampleTable').bootstrapTable('getOptions').pageSize;
+                             //获取当前是第几页
+                             var pageNumber = $('#exampleTable').bootstrapTable('getOptions').pageNumber;
+                             //返回序号，注意index是从0开始的，所以要加上1
+                             return pageSize * (pageNumber - 1) + index + 1;
+                         }
+                     },*/{
+                        field: 'orderNum',
+                        title: '排序',
+                        formatter: function (value, row, index) {
+                            var html = `<select class="form-control"  onchange="changeOrderNum('${row.xfzlId}',this)">`;
+                            for (var i = 0; i < 11; i++) {
+                                if (i == row.orderNum) {
+                                    html += `<option value="`+ i + `" selected>`+ i +  `</option>`
+                                } else {
+                                    html += `<option value="`+ i + `">`+ i +  `</option>`
+                                }
+                            }
+                            html += `</select>`;
+                            return html;
+                        }
+                    },
                     {
                         field: 'bt',
                         title: '案例标题'
@@ -71,28 +87,34 @@ function load() {
                     {
                         field: 'lx',
                         title: '类型',
-						formatter : function(value, row, index) {
-							if (row.lx == '1') {
-								return "视频";
-							} else if (row.lx == '2') {
-								return "图片";
-							} else if (row.lx == '3') {
-								return "文本";
-							} else if (row.lx == '4') {
-								return "音频";
-							}
-						}
+                        formatter: function (value, row, index) {
+                            if (row.lx == '1') {
+                                return "视频";
+                            } else if (row.lx == '2') {
+                                return "图片";
+                            } else if (row.lx == '3') {
+                                return "文本";
+                            } else if (row.lx == '4') {
+                                return "音频";
+                            }
+                        }
                     },
                     {
                         field: 'zt',
                         title: '状态 ',
-						formatter : function(value, row, index) {
-							if (row.zt == '0' ) {
-								return "显示";
-							} else if (row.zt == '1') {
-								return "隐藏";
-							}
-						}
+                        formatter: function (value, row, index) {
+                            var html = ``;
+                            html += `<select class="form-control" ` + s_changeZt + ` onchange="changeZt('${row.xfzlId}',this)">`;
+                            if (value == '0') {
+                                html += `<option value='0' selected="true">显示</option>`;
+                                html += `<option value='1'>隐藏</option>`;
+                            } else {
+                                html += `<option value='0'>显示</option>`;
+                                html += `<option value='1' selected="true">隐藏</option>`;
+                            }
+                            html += `</select>`;
+                            return html;
+                        }
                     },
                     {
                         field: 'llcs',
@@ -102,6 +124,7 @@ function load() {
                         field: 'dzcs',
                         title: '点赞次数'
                     },
+
                     {
                         field: 'cpersonUserName',
                         title: '创建人'
@@ -202,7 +225,7 @@ function batchRemove() {
             data: {
                 "ids": ids
             },
-            url: prefix + '/batchRemove',
+            url: prefix + '/batchRemove?t=' + Math.random(),
             success: function (r) {
                 if (r.code == 0) {
                     layer.msg(r.msg);
@@ -214,5 +237,59 @@ function batchRemove() {
         });
     }, function () {
 
+    });
+}
+
+
+function changeZt(id, thiz) {
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: "/back/xfzl/updateShowZt?t=" + Math.random(),
+        data: {
+            "xfzlId": id,
+            "zt": thiz.value
+        },
+        async: false,
+        error: function (request) {
+            layer.alert("Connection error");
+        },
+        success: function (data) {
+            if (data.code == 0) {
+                layer.msg("操作成功");
+                reLoad();
+
+            } else {
+                layer.alert(data.msg)
+            }
+
+        }
+    });
+}
+
+
+function changeOrderNum(id, thiz) {
+    $.ajax({
+        cache: false,
+        type: "POST",
+        url: "/back/xfzl/updateShowOrderNum?t=" + Math.random(),
+        data: {
+            "xfzlId": id,
+            "orderNum": thiz.value
+        },
+        async: false,
+        error: function (request) {
+            layer.alert("Connection error");
+        },
+        success: function (data) {
+            if (data.code == 0) {
+                layer.msg("操作成功");
+                reLoad();
+
+            } else {
+                layer.alert(data.msg)
+            }
+
+        }
     });
 }
