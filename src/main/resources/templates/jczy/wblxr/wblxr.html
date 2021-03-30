@@ -26,13 +26,9 @@
 							<button shiro:hasPermission="jczy:wblxr:insertUserExcel" type="button" class="btn  btn-primary" onclick="insertExcel()">
 								<i class="fa fa-plus" aria-hidden="true"></i>导入信息
 							</button>
+							<input type="file" name="FileUpload" id="FileUpload">
 
-							<input type="file" name="logoFile"  id="logoFile"  ref = "wf" onchange="setImg(this);" class="selectedLogoImgId" > 上传excel表格前,请先下载excel模板
-							<div class="columns pull-right">
-								<input type="hidden" name="excelUrl"  id="excelUrl"/>
 
-								<input type="hidden" name="excelUrlShow" id="excelUrlShow" style="width: 315px;">
-							</div>
 
 						</div>
 						<div class="columns pull-right">
@@ -45,20 +41,6 @@
 						</div>
 
 					</div>
-					<!--<div class="fixed-table-toolbar">-->
-
-						<!--&lt;!&ndash;导入excel&ndash;&gt;-->
-						<!--<div class="columns pull-left">-->
-							<!--<br><span class="personattr" style="display: inline;">批量导入用户信息：</span>-->
-							<!--<input type="hidden" name="excelUrl"  id="excelUrl"/>-->
-							<!--<a href="javascript:void(0);" class="btn_addPic">-->
-								<!--<span id="imgTitle" style="color: red ">上传excel表格前,请先下载excel模板</span>-->
-								<!--<input type="file" name="logoFile"  id="logoFile"  ref = "wf" onchange="setImg(this);" class="selectedLogoImgId" >-->
-							<!--</a>-->
-							<!--<input type="hidden" name="excelUrlShow" id="excelUrlShow" style="width: 315px;">-->
-						<!--</div>-->
-					<!--</div>-->
-
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
 				</div>

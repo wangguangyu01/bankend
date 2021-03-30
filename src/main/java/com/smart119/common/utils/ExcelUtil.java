@@ -1,54 +1,87 @@
 package com.smart119.common.utils;
 
+import com.smart119.util.WDWUtil;
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelUtil {
 
+
+    //读取文件的方法
     /**
-     *  生成Excel表格
-     * @param sheetName sheet名称
-     * @param titleList 表头列表
-     * @param dataList 数据列表
-     * @return HSSFWorkbook对象
-     * */
-    public static HSSFWorkbook createExcel(String sheetName,
-                                           List<String> titleList, List dataList) throws IllegalAccessException {
-
-        //创建HSSFWorkbook对象
-        HSSFWorkbook wb = new HSSFWorkbook();
-        //创建sheet对象
-        HSSFSheet sheet=wb.createSheet(sheetName);
-        //在sheet里创建第一行，这里即是表头
-        HSSFRow rowTitle=sheet.createRow(0);
-
-        //写入表头的每一个列
-        for (int i = 0; i < titleList.size(); i++) {
-            //创建单元格
-            rowTitle.createCell(i).setCellValue(titleList.get(i));
-        }
-
-        //写入每一行的记录
-        for (int i = 0; i < dataList.size(); i++) {
-            //创建新的一行，递增
-            HSSFRow rowData = sheet.createRow(i+1);
-
-            //通过反射，获取POJO对象
-            Class cl = dataList.get(i).getClass();
-            //获取类的所有字段
-            Field[] fields = cl.getDeclaredFields();
-            for (int j = 0; j < fields.length; j++) {
-                //设置字段可见，否则会报错，禁止访问
-                fields[j].setAccessible(true);
-                //创建单元格
-                rowData.createCell(j).setCellValue((String) fields[j].get(dataList.get(i)));
+     * 获取解析文件行数据
+     * @param fileName : 文件地址
+     * @param isTitle  : 是否过滤第一行解析
+     * @return
+     * @throws Exception
+     */
+    public static List<Row> getExcelRead(String fileName, InputStream is, boolean isTitle) throws Exception{
+        try {
+            //判断其兼容版本 调用了判断版本的方法
+            Workbook workbook = getWorkbook(fileName, is);
+            Sheet sheet = workbook.getSheetAt(0);
+            int count = 0;
+            List<Row> list = new ArrayList<Row>();
+            for (Row row : sheet) {
+                // 跳过第一行的目录
+                if (count == 0 && isTitle) {
+                    count++;
+                    continue;
+                }
+                list.add(row);
             }
+            return list;
+        } catch (Exception e) {
+            throw e;
         }
-        return wb;
     }
 
+//判断版本的方法
+
+    public static Workbook getWorkbook(String fileName,InputStream is) throws Exception{
+        Workbook workbook = null;
+        try {
+            /** 判断文件的类型，是2003还是2007 */
+            boolean isExcel2003 = true;
+            if (WDWUtil.isExcel2007(fileName)) {
+                isExcel2003 = false;
+            }
+
+            if (isExcel2003) {
+                workbook = new HSSFWorkbook(is);
+            } else {
+                workbook = new XSSFWorkbook(is);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return workbook;
+    }
+
+    //得到celL值的方法：
+    public static String getValue(Cell cell){
+        if(cell.getCellType() == HSSFCell.CELL_TYPE_BOOLEAN){
+            return String.valueOf(cell.getBooleanCellValue());
+        }else if(cell.getCellType() == HSSFCell.CELL_TYPE_NUMERIC){
+            double value = cell.getNumericCellValue();
+            return new BigDecimal(value).toString();
+        }else if (cell.getCellType() ==HSSFCell.CELL_TYPE_STRING){
+            return String.valueOf(cell.getStringCellValue());
+        }else{
+            return String.valueOf(cell.getStringCellValue());
+        }
+    }
 }

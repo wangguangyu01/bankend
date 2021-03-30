@@ -223,86 +223,51 @@ function Excel() {
     });
 }
 
-//下载excel
-function downExcel(){
-    window.location.href = "/jczy/wblxr/downExcel";//在后台代码里
-}
-/**
- * 点击预览，导入excel
- */
-function setImg(obj){//用于进行excel上传，返回地址
-
-
-    var f=$(obj).val();
-    if(f == null || f ==undefined || f == ''){
-        return false;
-    }
-    if(!/\.(?:xls|xlsx)$/.test(f))
-    {
-        alertLayel("类型必须是excel表格(.xls|xlsx)格式");
-        $(obj).val('');
-        return false;
-    }
-    var data = new FormData();
-    $.each($(obj)[0].files,function(i,file){
-        data.append('file', file);
-    });
-    $.ajax({
-        type: "POST",
-        url:  prefix + "/uploadImg",
-        data: data,
-        cache: false,
-        contentType: false,    //不可缺
-        processData: false,    //不可缺
-        dataType:"json",
-        success: function(suc) {
-
-            if(suc.code==0){
-                $("#excelUrl").val(suc.message);//将地址存储好
-                $("#excelUrlShow").val(suc.message);//显示excel
-                $("#url").val("");
-            }else{
-                alertLayel("上传失败");
-                $("#url").val("");
-                $(obj).val('');
-            }
-
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alertLayel("上传失败，请检查网络后重试");
-            $("#url").val("");
-            $(obj).val('');
-
-        }
-
-    });
-
-
-}
 
 /**
  * 导入excel数据
  */
 function insertExcel() {
-    var url = $("#excelUrlShow").val();
-    if (url == null || url == '') {
-        alert("请选择Excel文件");
-        return false;
+    var fileObj = document.getElementById("FileUpload").files[0]; // js 获取文件对象
+
+    if (typeof (fileObj) == "undefined" || fileObj.size <= 0) {
+
+        alert("请选择文件");
+
+        return;
+
     }
+
+    var formFile = new FormData();
+
+    formFile.append("action", "UploadVMKImagePath");
+
+    formFile.append("file", fileObj); //加入文件对象
+
+
+    var data = formFile;
+
     $.ajax({
-        type: "POST",
-        url: "/jczy/wblxr/insertUserExcel?url="+encodeURI(url),
-        dataType:"json",
-        success: function(obj) {
-            if (obj.code == 3) {
-                alert("Excel中没有数据");//无数据
-            }else{
-                alert("导入成功");//导入成功
-                reLoad()
-            }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            reLoad()
+
+        url: "/jczy/wblxr/insertUserExcel",
+
+        data: data,
+
+        type: "Post",
+
+        dataType: "json",
+
+        cache: false,//上传文件无需缓存
+
+        processData: false,//用于对data参数进行序列化处理 这里必须false
+
+        contentType: false, //必须
+
+        success: function (result) {
+            console.log(result.msg);
+            alert(result.msg)
         }
-    });
+
+    })
+
 }
