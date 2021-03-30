@@ -1,6 +1,6 @@
 $().ready(function() {
 	validateRule();
-    getSelectByType("JJYYLX","type",$("#type").val());
+    getSelectByType("JJYYLX","type",$("#type_val").val());
 });
 
 $.validator.setDefaults({

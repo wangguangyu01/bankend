@@ -48,11 +48,11 @@ function load() {
 								{
 									checkbox : true
 								},
-								{
-									field : 'fzjcId', 
-									title : '主键',
-									visible: false
-								},
+								// {
+								// 	field : 'fzjcId',
+								// 	title : '主键',
+								// 	visible: true
+								// },
 								{
 								  field : 'number',
 								  title : '序号',
