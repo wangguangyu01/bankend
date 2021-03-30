@@ -139,4 +139,27 @@
 			and  status = '0'
 		</where>
 	</select>
+
+
+	<update id="updateExcel" parameterType="com.smart119.jczy.domain.WblxrDO">
+		update txl_wblxr
+		<set>
+			<if test="xm != null">`XM` = #{xm}, </if>
+			<if test="dh != null">`DH` = #{dh}, </if>
+			<if test="dz != null">`DZ` = #{dz}, </if>
+			<if test="sr != null">`SR` = #{sr}, </if>
+			<if test="yx != null">`YX` = #{yx}, </if>
+			<if test="bz != null">`BZ` = #{bz}, </if>
+			<if test="xfjyryTywysbm != null">`XFJYRY_TYWYSBM` = #{xfjyryTywysbm}, </if>
+			<if test="cdate != null">`cdate` = #{cdate}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="cperson != null">`cperson` = #{cperson}</if>
+		</set>
+
+		<where>
+			<if test="xm != null and xm != ''"> and XM = #{xm} </if>
+			<if test="dh != null and dh != ''"> and DH = #{dh} </if>
+		</where>
+
+	</update>
 </mapper>

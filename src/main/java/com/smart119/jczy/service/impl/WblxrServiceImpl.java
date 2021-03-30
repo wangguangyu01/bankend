@@ -49,6 +49,11 @@ public class WblxrServiceImpl implements WblxrService {
 	}
 
 	@Override
+	public int updateExcel(WblxrDO wblxr){
+		return wblxrDao.updateExcel(wblxr);
+	}
+
+	@Override
 	public int getWblxr(WblxrDO wblxr){
 		return wblxrDao.getWblxr(wblxr);
 	}

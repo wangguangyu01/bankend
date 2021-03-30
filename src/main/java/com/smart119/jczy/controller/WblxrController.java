@@ -222,7 +222,7 @@ public class WblxrController  extends BaseController {
                     wblxrDO.setCdate(new Date());
                     int status =  wblxrService.getWblxr(wblxrDO);
                     if(status >=1){
-                        wblxrService.update(wblxrDO);
+                        wblxrService.updateExcel(wblxrDO);
                     }else{
                         wblxrService.save(wblxrDO);
                     }

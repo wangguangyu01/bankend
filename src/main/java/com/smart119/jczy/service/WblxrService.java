@@ -27,6 +27,8 @@ public interface WblxrService {
 
 	int update(WblxrDO wblxr);
 
+	int updateExcel(WblxrDO wblxr);
+
 	int getWblxr(WblxrDO wblxr);
 
 	int remove(String wblxrId);
