@@ -155,7 +155,7 @@ public class WblxrController  extends BaseController {
     @ResponseBody
     public void xiazai(HttpServletResponse response){
         //导出文件的标题
-        String title="导入模板.xlsx";
+        String title="导入模板.xls";
         //设置表格标题行
         String[] headers = new String[] {"姓名","电话","地址", "生日","邮箱", "备注"};
         List<Object[]> dataList = new ArrayList<Object[]>();
@@ -191,22 +191,55 @@ public class WblxrController  extends BaseController {
                 InputStream is = excl.getInputStream();//转化为流的形式
                 List<Row> list = ExcelUtil.getExcelRead(fileName,is, true);
                 //首先是读取行 也就是一行一行读，然后在取到列，遍历行里面的行，根据行得到列的值
+                //初始属性
+                String xm ;
+                String dh ;
+                String dz ;
+                String sr ;
+                String yx;
+                String bz;
                 for (Row row : list) {
+                    if(null ==row.getCell(0)){
+                        xm ="";
+                    }else{
+                        Cell cell_0 = row.getCell(0);
+                        xm = ExcelUtil.getValue(cell_0);
+                    }
 
-                    Cell cell_0 = row.getCell(0);
-                    Cell cell_1 = row.getCell(1);
-                    Cell cell_2 = row.getCell(2);
-                    Cell cell_3 = row.getCell(3);
-                    Cell cell_4 = row.getCell(4);
-                    Cell cell_5 = row.getCell(5);
+                    if(null ==row.getCell(1)){
+                        dh ="";
+                    }else{
+                        Cell cell_1 = row.getCell(1);
+                        dh = ExcelUtil.getValue(cell_1);
+                    }
 
-                    //得到列的值，也就是你需要解析的字段的值
-                    String xm = ExcelUtil.getValue(cell_0);
-                    String dh = ExcelUtil.getValue(cell_1);
-                    String dz = ExcelUtil.getValue(cell_2);
-                    String sr = ExcelUtil.getValue(cell_3);
-                    String yx = ExcelUtil.getValue(cell_4);
-                    String bz = ExcelUtil.getValue(cell_5);
+                    if(null ==row.getCell(2)){
+                        dz ="";
+                    }else{
+                        Cell cell_2 = row.getCell(2);
+                        dz = ExcelUtil.getValue(cell_2);
+                    }
+
+                    if(null ==row.getCell(3)){
+                         sr ="";
+                    }else{
+                        Cell cell_3 = row.getCell(3);
+                        sr = ExcelUtil.getValue(cell_3);
+                    }
+
+                    if(null ==row.getCell(4)){
+                        yx ="";
+                    }else{
+                        Cell cell_4 = row.getCell(4);
+                        yx = ExcelUtil.getValue(cell_4);
+                    }
+
+                    if(null ==row.getCell(5)){
+                        bz ="";
+                    }else{
+                        Cell cell_5 = row.getCell(5);
+                        bz = ExcelUtil.getValue(cell_5);
+                    }
 
                     WblxrDO wblxrDO = new WblxrDO();
                     wblxrDO.setWblxrId(UUID.randomUUID().toString().replace("-", ""));
@@ -225,17 +258,8 @@ public class WblxrController  extends BaseController {
                     wblxrDO.setStatus("0");
                     wblxrDO.setCperson(getUser().getUserId().toString());
                     wblxrDO.setCdate(new Date());
-                    int status =  wblxrService.getWblxr(wblxrDO);
-                    if(status >=1){
-                        if(!xm.equals("")&&!dh.equals("")){
-                            wblxrService.updateExcel(wblxrDO);
-                        }
-                    }else{
-                        if(!xm.equals("")&&!dh.equals("")){
-                            wblxrService.save(wblxrDO);
-                        }
+                    wblxrService.save(wblxrDO);
 
-                    }
                 }
 
                 result.setMsg("导入成功！");
