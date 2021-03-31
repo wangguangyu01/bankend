@@ -84,7 +84,7 @@ public class ControllerPortController {
     }
 
 
-    @ApiOperation(value = "查询中控器端口详情")
+    @ApiOperation(value = "编辑")
     @ApiParam(name = "id", value = "主键id", required = true)
     @GetMapping("/edit/{id}")
     @RequiresPermissions("iot:controllerPort:edit")
