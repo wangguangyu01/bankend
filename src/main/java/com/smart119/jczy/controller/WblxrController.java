@@ -213,8 +213,13 @@ public class WblxrController  extends BaseController {
                     wblxrDO.setXm(xm);
                     wblxrDO.setDh(dh);
                     wblxrDO.setDz(dz);
-                    Date setupTime = HSSFDateUtil.getJavaDate(Double.valueOf(sr));
-                    wblxrDO.setSr(setupTime);
+                    if(sr.equals("")){
+                        wblxrDO.setSr(null);
+                    }else{
+                        Date setupTime = HSSFDateUtil.getJavaDate(Double.valueOf(sr));
+                        wblxrDO.setSr(setupTime);
+                    }
+
                     wblxrDO.setYx(yx);
                     wblxrDO.setBz(bz);
                     wblxrDO.setStatus("0");
@@ -222,9 +227,14 @@ public class WblxrController  extends BaseController {
                     wblxrDO.setCdate(new Date());
                     int status =  wblxrService.getWblxr(wblxrDO);
                     if(status >=1){
-                        wblxrService.updateExcel(wblxrDO);
+                        if(!xm.equals("")&&!dh.equals("")){
+                            wblxrService.updateExcel(wblxrDO);
+                        }
                     }else{
-                        wblxrService.save(wblxrDO);
+                        if(!xm.equals("")&&!dh.equals("")){
+                            wblxrService.save(wblxrDO);
+                        }
+
                     }
                 }
 

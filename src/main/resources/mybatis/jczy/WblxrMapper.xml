@@ -103,11 +103,9 @@
 
 	<select id="getWblxr" resultType="int">
 		select count(*) from txl_wblxr
-		<where>
-			<if test="xm != null and xm != ''"> and XM = #{xm} </if>
-			<if test="dh != null and dh != ''"> and DH = #{dh} </if>
-			and  status = '0'
-		</where>
+		where XM = #{xm}
+		and DH = #{dh}
+		and  status = '0'
 	</select>
 	
 	<delete id="remove">
