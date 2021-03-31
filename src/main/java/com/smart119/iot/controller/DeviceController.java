@@ -91,13 +91,14 @@ public class DeviceController {
     }
 
 
-    @ApiOperation(value = "查询物联设备详情")
+    @ApiOperation(value = "编辑物联设备详情")
     @ApiParam(name = "id", value = "主键id", required = true)
     @GetMapping("/edit/{id}")
     @RequiresPermissions("iot:device:edit")
-    public R edit(@PathVariable("id") String id, Model model) {
+    public String edit(@PathVariable("id") String id, Model model) {
         DeviceDO device = deviceService.queryById(id);
-        return R.ok(device);
+        model.addAttribute("device", device);
+        return "iot/device/edit";
     }
 
     /**

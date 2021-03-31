@@ -56,7 +56,6 @@ function changeControl(){
 		cache : true,
 		url:'/iot/controllerPort/list',
 		dataType:'json',
-		// contentType:'application/json;charset=UTF-8',
 		data:JSON.stringify(str),
 		headers:{
 			'Content-Type':'application/json'
@@ -64,8 +63,6 @@ function changeControl(){
 		async : false,
 		success:function (data){
 			console.log(data,'=====res')
-			// if (data.code == 0) {
-			// 	parent.layer.msg("操作成功");
 			var controllerPort = $('#controllerPort');
 			var options  = [];
 			options.push('<option value="">','--请选择--','</option>')
@@ -75,12 +72,6 @@ function changeControl(){
 			}
 			controllerPort.append(options.join(''))
 			parent.reLoad();
-				// var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-				// parent.layer.close(index);
-
-			// } else {
-			// 	parent.layer.alert(data.msg)
-			// }
 		}
 	})
 }
