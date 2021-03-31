@@ -54,7 +54,7 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="signupForm">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">名称：</label>
+                            <label class="col-sm-2 control-label">消防装备器材名称：</label>
                             <div class="col-sm-2">
                                 <input id="xfzbMc" name="xfzbMc" class="form-control" type="text" title="请输入名称" required>
                             </div>
@@ -78,7 +78,7 @@
                             <div class="col-sm-2">
                                 <input id="ggxh" name="ggxh" class="form-control" type="text">
                             </div>
-                            <label class="col-sm-2 control-label">参考价：</label>
+                            <label class="col-sm-2 control-label">参考价（元）：</label>
                             <div class="col-sm-2">
                                 <input id="ckjJe" name="ckjJe" class="form-control" type="text">
                             </div>
@@ -112,9 +112,15 @@
                                 <input type="text" class="laydate-icon layer-date form-control" id="zbsxRq" name="zbsxRq" placeholder="请选择装备失效日期"
                                        onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly"/>
                             </div>
-                            <label class="col-sm-2 control-label">计量度量单位：</label>
+                            <!--<label class="col-sm-2 control-label">计量度量单位：</label>-->
+                            <!--<div class="col-sm-2">-->
+                                <!--<select class="form-control" id="jldldwdm" name="jldldwdm">-->
+                                    <!--<option value="">&#45;&#45;请选择&#45;&#45;</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                            <label class="col-sm-2 control-label">消防装备状态：</label>
                             <div class="col-sm-2">
-                                <select class="form-control" id="jldldwdm" name="jldldwdm">
+                                <select class="form-control" id="xfzbztlbdm" name="xfzbztlbdm" title="请选择消防装备状态" required>
                                     <option value="">--请选择--</option>
                                 </select>
                             </div>
@@ -157,12 +163,7 @@
                             <div class="col-sm-2">
                                 <input id="tj" name="tj" class="form-control" type="number" min="0">
                             </div>
-                            <label class="col-sm-2 control-label">消防装备状态：</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="xfzbztlbdm" name="xfzbztlbdm" title="请选择消防装备状态" required>
-                                    <option value="">--请选择--</option>
-                                </select>
-                            </div>
+
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">主要成分_简要情况：</label>
@@ -183,7 +184,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">售后服务_单位名称：</label>
+                            <label class="col-sm-2 control-label">售后服务：</label>
                             <div class="col-sm-2">
                                 <input id="shfwDwmc" name="shfwDwmc" class="form-control" type="text">
                             </div>
