@@ -66,6 +66,21 @@ public class ControllerPortController {
         return page;
     }
 
+    @ApiOperation(value = "根据中控器查询中控器端口列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "controllerId", value = "中控器ID", paramType = "body")
+    })
+    @ResponseBody
+    @GetMapping("/listByControllerId")
+    @RequiresPermissions("iot:controllerPort:controllerPort")
+    public R listByControllerId(@RequestParam String controllerId) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("controllerId", controllerId);
+        //查询列表数据
+        List<ControllerPortDO> controllerPortDOS = controllerPortService.list(params);
+        return R.ok(controllerPortDOS);
+    }
+
 
     @GetMapping("/add")
     @RequiresPermissions("iot:controllerPort:add")

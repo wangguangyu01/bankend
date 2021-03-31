@@ -97,6 +97,11 @@ public class DeviceController {
     @RequiresPermissions("iot:device:edit")
     public String edit(@PathVariable("id") String id, Model model) {
         DeviceDO device = deviceService.queryById(id);
+        ControllerDO controllerDO = controllerService.queryById(device.getControllerId());
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("xfjyjgTywysbm", controllerDO.getXfjyjgTywysbm());
+        List<ControllerDO> controllerDOList = controllerService.list(params);
+        model.addAttribute("controllerDOList", controllerDOList);
         model.addAttribute("device", device);
         return "iot/device/edit";
     }

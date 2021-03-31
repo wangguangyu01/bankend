@@ -83,6 +83,13 @@ public class DeviceDO implements Serializable {
     private String deptName;
 
     /**
+     * 中控器ID
+     */
+    @ApiModelProperty(value = "中控器ID", name = "controllerId")
+    @TableField(exist = false)
+    private String controllerId;
+
+    /**
      * 中控器名称
      */
     @ApiModelProperty(value = "中控器名称", name = "controllerName")

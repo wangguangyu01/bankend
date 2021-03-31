@@ -40,7 +40,7 @@
                             <label class="col-sm-3 control-label">中控器：</label>
                             <div class="col-sm-8">
                                 <select class="form-control" id="controller" name="controller" title="控制器" onChange="changeControl()" required>
-                                    <option value="">--请选择--</option>
+<!--                                    <option value="">&#45;&#45;请选择&#45;&#45;</option>-->
                                     <option th:each="controllerDO : ${controllerDOList}" th:value="${controllerDO.id}"
                                             th:text="${controllerDO.name}"></option>
                                 </select>

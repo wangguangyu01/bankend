@@ -1,5 +1,6 @@
 $().ready(function() {
 	validateRule();
+	changeControl();
 });
 
 $.validator.setDefaults({
@@ -50,25 +51,30 @@ function validateRule() {
 
 function changeControl(){
 	var controllerId = $('#controller option:selected').val()
-	var str = {"controllerId":controllerId};
+	// var str = {"controllerId":controllerId};
 	$.ajax({
-		type:'POST',
+		type:'GET',
 		cache : true,
-		url:'/iot/controllerPort/list',
-		dataType:'json',
-		data:JSON.stringify(str),
-		headers:{
-			'Content-Type':'application/json'
+		url:'/iot/controllerPort/listByControllerId',
+		// dataType:'json',
+		// data:JSON.stringify(str),
+		data: {
+			"controllerId":controllerId
 		},
+		// headers:{
+		// 	'Content-Type':'application/json'
+		// },
 		async : false,
-		success:function (data){
-			console.log(data,'=====res')
+		success:function (res){
+			var data = res.data;
+			console.log(data);
 			var controllerPort = $('#controllerPort');
-			var options  = [];
-			options.push('<option value="">','--请选择--','</option>')
-			for(var i = 0;i < data.rows.length; i++ ){
-				console.log(data.rows[i] + "============port")
-				options.push('<option value="'+data.rows[i].id+'">',data.rows[i].channelNumber,'</option>');
+			controllerPort.find("option:selected").text("");
+			controllerPort.empty();
+			var options = [];
+			// options.push('<option value="">','--请选择--','</option>')
+			for(var i = 0;i < data.length; i++ ){
+				options.push('<option value="'+data[i].id+'">',data[i].channelNumber,'</option>');
 			}
 			controllerPort.append(options.join(''))
 			parent.reLoad();

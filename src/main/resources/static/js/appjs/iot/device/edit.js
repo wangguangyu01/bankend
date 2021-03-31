@@ -48,24 +48,27 @@ function validateRule() {
 	})
 }
 
-function changeControl(){
+function change(){
 	var controllerId = $('#controller option:selected').val()
-	var str = {"controllerId":controllerId};
+	// var str = {"controllerId":controllerId};
 	$.ajax({
-		type:'POST',
+		type:'GET',
 		cache : true,
-		url:'/iot/controllerPort/list',
-		dataType:'json',
+		url:'/iot/controllerPort/listByControllerId',
+		// dataType:'json',
 		// contentType:'application/json;charset=UTF-8',
-		data:JSON.stringify(str),
-		headers:{
-			'Content-Type':'application/json'
+		// data:JSON.stringify(str),
+		data: {
+			"controllerId":controllerId
 		},
+		// headers:{
+		// 	'Content-Type':'application/json'
+		// },
 		async : false,
 		success:function (data){
 			var controllerPort = $('#controllerPort');
+			controllerPort.
 			var options  = [];
-			options.push('<option value="">','--请选择--','</option>')
 			for(var i = 0;i < data.rows.length; i++ ){
 				console.log(data.rows[i] + "============port")
 				options.push('<option value="'+data.rows[i].id+'">',data.rows[i].channelNumber,'</option>');

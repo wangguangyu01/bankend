@@ -25,10 +25,10 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">中控器：</label>
                             <div class="col-sm-8">
-                                <select class="form-control" id="controller" name="controller" title="控制器" onChange="changeControl()" required>
-                                    <option value="">--请选择--</option>
-                                    <option th:each="controllerDO : ${controllerDOList}" th:value="${controllerDO.id}"
-                                            th:text="${controllerDO.name}"></option>
+                                <select id="controllerId" name="controllerId" class="form-control" onChange="change()" required>
+                                    <option value="">请选择</option>
+                                    <option th:each="controllerDO: ${controllerDOList}" th:value="${controllerDO.id}" th:text="${controllerDO.name}"
+                                            th:selected="${controllerDO.id == device.controllerId}"></option>
                                 </select>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
     </div>
 </div>
 <div th:include="include::footer"></div>
-<script type="text/javascript" src="/js/appjs/webapi/device/edit.js">
+<script type="text/javascript" src="/js/appjs/iot/device/edit.js">
 </script>
 </body>
 </html>
