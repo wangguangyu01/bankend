@@ -2,6 +2,7 @@ package com.smart119.iot.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -82,5 +83,12 @@ public class ControllerDO implements Serializable {
     @ApiModelProperty(value = "单位名称", name = "deptName")
     @TableField(exist = false)
     private String deptName;
+
+    /**
+     * 端口集合
+     */
+    @ApiModelProperty(value = "端口集合", name = "portList")
+    @TableField(exist = false)
+    private List<ControllerPortDO> portList;
 
 }

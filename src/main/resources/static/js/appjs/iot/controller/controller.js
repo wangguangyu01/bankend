@@ -3,10 +3,6 @@ var xfjyjgTywysbm;
 $(function () {
     getTreeData();
     load();
-    getSelectAll("XFZBLXDM","XFZBLXDM-DIV","xfzblxdm","xfzblxdm-title");
-    getSelectByType("XFCLZZGNDM","xfclzzgndm",null);
-    getSelectByType("XFCLDJDM","xfcldjdm",null);
-    getSelectAll("CLQWZTLBDM","CLQWZTLBDM-DIV","clqwztlbdm","clqwztlbdm-title");
 });
 
 function load() {

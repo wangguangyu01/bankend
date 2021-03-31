@@ -34,6 +34,11 @@ public class ControllerPortServiceImpl  implements ControllerPortService {
     }
 
 	@Override
+	public List<ControllerPortDO> list(Map<String, Object> params) {
+		return controllerPortDao.list(params);
+	}
+
+	@Override
 	public ControllerPortDO queryById(String id) {
 		return controllerPortDao.selectById(id);
 	}
