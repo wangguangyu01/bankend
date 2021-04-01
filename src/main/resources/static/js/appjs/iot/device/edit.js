@@ -1,5 +1,6 @@
 $().ready(function() {
 	validateRule();
+	changeControl();
 });
 
 $.validator.setDefaults({
@@ -48,33 +49,40 @@ function validateRule() {
 	})
 }
 
-function change(){
-	var controllerId = $('#controller option:selected').val()
-	// var str = {"controllerId":controllerId};
+function changeControl(){
+	var controllerId = $('#controller option:selected').val();
+	var controllerPortId = document.getElementById("controllerPortId").value;
+	console.log(controllerPortId);
 	$.ajax({
 		type:'GET',
 		cache : true,
 		url:'/iot/controllerPort/listByControllerId',
-		// dataType:'json',
-		// contentType:'application/json;charset=UTF-8',
-		// data:JSON.stringify(str),
 		data: {
 			"controllerId":controllerId
 		},
-		// headers:{
-		// 	'Content-Type':'application/json'
-		// },
 		async : false,
-		success:function (data){
-			var controllerPort = $('#controllerPort');
-			controllerPort.
-			var options  = [];
-			for(var i = 0;i < data.rows.length; i++ ){
-				console.log(data.rows[i] + "============port")
-				options.push('<option value="'+data.rows[i].id+'">',data.rows[i].channelNumber,'</option>');
+		success:function (res){
+			if (res.code == 0) {
+				var data = res.data;
+				var controllerPort = $('#controllerPort');
+				controllerPort.find("option:selected").text("");
+				controllerPort.empty();
+				var options = [];
+				for(var i = 0;i < data.length; i++ ){
+					console.log(controllerPortId);
+					console.log(data[i].channelNumber + ":" + (data[i].id == controllerPortId));
+					if (data[i].id == controllerPortId) {
+						options.push('<option ' + 'value="'+data[i].id + '"' + ' selected="selected"' + '>',data[i].channelNumber,'</option>');
+					}else {
+						options.push('<option ' + 'value="'+data[i].id + '"' + '>',data[i].channelNumber,'</option>');
+					}
+				}
+				controllerPort.append(options.join(''))
+				parent.reLoad();
+			}else {
+				layer.msg(res.msg);
 			}
-			controllerPort.append(options.join(''))
-			parent.reLoad();
+
 		}
 	})
 }

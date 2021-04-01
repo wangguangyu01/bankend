@@ -73,7 +73,7 @@ public class ControllerPortController {
     @ResponseBody
     @GetMapping("/listByControllerId")
     @RequiresPermissions("iot:controllerPort:controllerPort")
-    public R listByControllerId(@RequestParam String controllerId) {
+    public R listByControllerId(@RequestParam("controllerId") String controllerId) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("controllerId", controllerId);
         //查询列表数据
