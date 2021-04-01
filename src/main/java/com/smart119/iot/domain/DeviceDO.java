@@ -103,4 +103,11 @@ public class DeviceDO implements Serializable {
     @TableField(exist = false)
     private String channelNumber;
 
+    /**
+     *类型名称
+     */
+    @ApiModelProperty(value = "类型名称", name = "typeName")
+    @TableField(exist = false)
+    private String typeName;
+
 }

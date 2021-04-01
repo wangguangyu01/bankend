@@ -58,7 +58,7 @@ function load() {
                         title: '名称'
                     },
                     {
-                        field: 'type',
+                        field: 'typeName',
                         title: '类型'
                     },
                     /*{

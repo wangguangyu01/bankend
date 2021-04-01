@@ -12,7 +12,7 @@ function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/webapi/device/update",
+		url : "/iot/device/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -51,7 +51,7 @@ function validateRule() {
 
 function changeControl(){
 	var controllerId = $('#controller option:selected').val();
-	var controllerPortId = document.getElementById("controllerPortId").value;
+	var controllerPortId = document.getElementById("controllerPortIdParams").value;
 	console.log(controllerPortId);
 	$.ajax({
 		type:'GET',

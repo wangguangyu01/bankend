@@ -1,5 +1,7 @@
 package com.smart119.iot.controller;
 
+import com.smart119.common.domain.DictDO;
+import com.smart119.common.service.DictService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.R;
 import com.smart119.iot.domain.ControllerDO;
@@ -44,6 +46,8 @@ public class DeviceController {
     private ControllerService controllerService;
     @Autowired
     private ControllerPortService controllerPortService;
+    @Autowired
+    private DictService dictService;
 
 
     @GetMapping()
@@ -87,6 +91,9 @@ public class DeviceController {
         }
         model.addAttribute("controllerDOList", controllerDOList);
 
+        List<DictDO> dictDOList = dictService.listByParentType("wlsblx");
+        model.addAttribute("dictDOList", dictDOList);
+
         return "iot/device/add";
     }
 
@@ -103,6 +110,10 @@ public class DeviceController {
         List<ControllerDO> controllerDOList = controllerService.list(params);
         model.addAttribute("controllerDOList", controllerDOList);
         model.addAttribute("device", device);
+
+        List<DictDO> dictDOList = dictService.listByParentType("wlsblx");
+        model.addAttribute("dictDOList", dictDOList);
+
         return "iot/device/edit";
     }
 
@@ -128,9 +139,10 @@ public class DeviceController {
      */
     @ApiOperation(value = "修改物联设备信息")
     @ApiParam(name = "Device对象", value = "传入Device对象的json格式", required = true)
+    @ResponseBody
     @PostMapping("/update")
     @RequiresPermissions("iot:device:edit")
-    public R update(@RequestBody DeviceDO device) {
+    public R update(DeviceDO device) {
         deviceService.update(device);
         return R.ok();
     }
