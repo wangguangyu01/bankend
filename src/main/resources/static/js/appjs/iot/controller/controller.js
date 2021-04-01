@@ -66,10 +66,6 @@ function load() {
                         title: '端口'
                     },
                     {
-                        field: 'statusName',
-                        title: '状态'
-                    },
-                    {
                         field: 'deptName',
                         title: '消防救援机构'
                     },
@@ -80,6 +76,10 @@ function load() {
                     {
                         field: 'updateTime',
                         title: '更新时间'
+                    },
+                    {
+                        field: 'statusName',
+                        title: '状态'
                     },
                     {
                         title: '操作',
