@@ -117,6 +117,9 @@ public class ControllerPortController {
         List<ControllerDO> controllerDOList = controllerService.list(params);
         model.addAttribute("controllerDOList", controllerDOList);
         model.addAttribute("controllerPort", controllerPort);
+
+        List<DictDO> dictDOList = dictService.listByParentType("wlzkqdkzt");
+        model.addAttribute("dictDOList", dictDOList);
         return "iot/controllerPort/edit";
     }
 
