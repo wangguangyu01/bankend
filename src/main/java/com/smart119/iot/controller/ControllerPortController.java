@@ -1,6 +1,8 @@
 package com.smart119.iot.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.smart119.common.domain.DictDO;
+import com.smart119.common.service.DictService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.R;
 import com.smart119.iot.domain.ControllerDO;
@@ -42,6 +44,8 @@ public class ControllerPortController {
     private DeptService deptService;
     @Autowired
     private ControllerService controllerService;
+    @Autowired
+    private DictService dictService;
 
 
     @GetMapping()
@@ -95,6 +99,8 @@ public class ControllerPortController {
 //        map.put("xfjyjgTywysbm", dept.getXfjyjgTywysbm());
 //        model.addAttribute("map", map);
         model.addAttribute("controllerDOList", controllerDOList);
+        List<DictDO> dictDOList = dictService.listByParentType("wlzkqdkzt");
+        model.addAttribute("dictDOList", dictDOList);
         return "iot/controllerPort/add";
     }
 
@@ -125,7 +131,6 @@ public class ControllerPortController {
     public R save(ControllerPortDO controllerPort) {
         controllerPort.setCreateTime(new Date());
         controllerPort.setUpdateTime(new Date());
-        controllerPort.setStatus(0);
         if (controllerPortService.save(controllerPort) > 0) {
             return R.ok();
         }
