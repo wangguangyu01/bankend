@@ -26,7 +26,7 @@
                             <label class="col-sm-3 control-label">中控器：</label>
                             <div class="col-sm-8">
                                 <select id="controller" name="controller" class="form-control" onChange="changeControl()" required>
-                                    <option value="">请选择</option>
+<!--                                    <option value="">请选择</option>-->
                                     <option th:each="controllerDO: ${controllerDOList}" th:value="${controllerDO.id}" th:text="${controllerDO.name}"
                                             th:selected="${controllerDO.id == device.controllerId}"></option>
                                 </select>

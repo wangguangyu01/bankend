@@ -50,32 +50,34 @@ function validateRule() {
 }
 
 function changeControl(){
-	var controllerId = $('#controller option:selected').val()
-	$.ajax({
-		type:'GET',
-		cache : true,
-		url:'/iot/controllerPort/listByControllerId',
-		data: {
-			"controllerId":controllerId
-		},
-		async : false,
-		success:function (res){
-			if (res.code == 0){
-				var data = res.data;
-				console.log(data);
-				var controllerPort = $('#controllerPort');
-				controllerPort.find("option:selected").text("");
-				controllerPort.empty();
-				var options = [];
-				for(var i = 0;i < data.length; i++ ){
-					options.push('<option value="'+data[i].id+'">',data[i].channelNumber,'</option>');
+	var controllerId = $('#controller option:selected').val();
+	if (controllerId != "") {
+		$.ajax({
+			type:'GET',
+			cache : true,
+			url:'/iot/controllerPort/listByControllerId',
+			data: {
+				"controllerId":controllerId
+			},
+			async : false,
+			success:function (res){
+				if (res.code == 0){
+					var data = res.data;
+					console.log(data);
+					var controllerPort = $('#controllerPort');
+					controllerPort.find("option:selected").text("");
+					controllerPort.empty();
+					var options = [];
+					for(var i = 0;i < data.length; i++ ){
+						options.push('<option value="'+data[i].id+'">',data[i].channelNumber,'</option>');
+					}
+					controllerPort.append(options.join(''))
+					parent.reLoad();
+				}else {
+					layer.msg(res.msg);
 				}
-				controllerPort.append(options.join(''))
-				parent.reLoad();
-			}else {
-				layer.msg(res.msg);
-			}
 
-		}
-	})
+			}
+		})
+	}
 }
