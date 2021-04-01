@@ -91,4 +91,11 @@ public class ControllerDO implements Serializable {
     @TableField(exist = false)
     private List<ControllerPortDO> portList;
 
+    /**
+     * 状态名称
+     */
+    @ApiModelProperty(value = "状态名称", name = "statusName")
+    @TableField(exist = false)
+    private String statusName;
+
 }

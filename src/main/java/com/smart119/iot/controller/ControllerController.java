@@ -1,6 +1,7 @@
 package com.smart119.iot.controller;
 
 import com.smart119.common.domain.DictDO;
+import com.smart119.common.service.DictService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.R;
 import com.smart119.iot.domain.ControllerDO;
@@ -37,7 +38,8 @@ public class ControllerController {
     private ControllerService controllerService;
     @Autowired
     private DeptService deptService;
-
+    @Autowired
+    private DictService dictService;
 
     @GetMapping()
     @RequiresPermissions("iot:controller:controller")
@@ -79,6 +81,9 @@ public class ControllerController {
         map.put("xfjyjgTywysbm", name.getXfjyjgTywysbm());
         map.put("deptId", deptId);
         model.addAttribute("map", map);
+
+        List<DictDO> dictDOList = dictService.listByParentType("wlzkqwlzt");
+        model.addAttribute("dictDOList", dictDOList);
         return "iot/controller/add";
     }
 
@@ -90,6 +95,9 @@ public class ControllerController {
     public String edit(@PathVariable("id") String id, Model model) {
         ControllerDO controller = controllerService.queryById(id);
         model.addAttribute("controller", controller);
+
+        List<DictDO> dictDOList = dictService.listByParentType("wlzkqwlzt");
+        model.addAttribute("dictDOList", dictDOList);
         return "iot/controller/edit";
     }
 

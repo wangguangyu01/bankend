@@ -24,10 +24,12 @@
 			t.xfjyjg_tywysbm as xfjyjgTywysbm,
 			t.create_time as createTime,
 			t.update_time as updateTime,
-			d.DWMC as deptName
+			d.DWMC as deptName,
+			dict.name as statusName
 		from
 			iot_controller t
 			left join sys_dept d on d.XFJYJG_TYWYSBM = t.xfjyjg_tywysbm
+			left join sys_dict dict on dict.type = "wlzkqwlzt" and dict.value = t.status
 		where 1=1
 		<if test="params.xfjyjgTywysbm != null and params.xfjyjgTywysbm != ''"> and t.xfjyjg_tywysbm = #{params.xfjyjgTywysbm}</if>
 	</select>

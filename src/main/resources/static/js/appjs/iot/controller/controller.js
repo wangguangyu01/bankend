@@ -66,7 +66,7 @@ function load() {
                         title: '端口'
                     },
                     {
-                        field: 'status',
+                        field: 'statusName',
                         title: '状态'
                     },
                     {
