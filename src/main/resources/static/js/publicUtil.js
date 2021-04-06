@@ -36,8 +36,8 @@ function getSelectByType(type,objId,selected){
         },
         success : function(list) {
             if(list!=null && list!=undefined && list.length>0){
-               // $("#"+objId).empty();
-               // $("#"+objId).append('<option value="" >--请选择--</option>');
+                $("#"+objId).empty();
+                $("#"+objId).append('<option value="" >--请选择--</option>');
                 $.each(list,function(i,item){
                     if(selected!=null && selected==item.value){
                         $("#"+objId).append('<option id="'+item.id+'" value="'+item.value+'" selected="selected">'+item.name+'</option>');
