@@ -48,11 +48,11 @@ function load() {
 								{
 									checkbox : true
 								},
-								// {
-								// 	field : 'fzjcId',
-								// 	title : '主键',
-								// 	visible: true
-								// },
+								 {
+								 	field : 'fzjcId',
+								 	title : '主键',
+									visible: false
+								 },
 								{
 								  field : 'number',
 								  title : '序号',
@@ -66,8 +66,8 @@ function load() {
 								  }
 								},
 								{
-									field : 'bt', 
-									title : '标题' 
+									field : 'bt',
+									title : '标题'
 								},
 								{
 									field : 'fzjclxdmName',
@@ -78,17 +78,17 @@ function load() {
 								// 	title : '辅助决策内容'
 								// },
 								{
-									field : 'cdate', 
+									field : 'cdate',
 									title : '创建时间',
 									visible: false
 								},
 								{
-									field : 'cperson', 
+									field : 'cperson',
 									title : '创建人',
 									visible: false
 								},
 								{
-									field : 'status', 
+									field : 'status',
 									title : '状态',
 									visible: false,
 									formatter : function(value, row, index) {
