@@ -257,15 +257,15 @@
             <if test="zjzxfglrXm != null">`ZJZXFGLR_XM` = #{zjzxfglrXm},</if>
             <if test="zjzxfglrGmsfhm != null">`ZJZXFGLR_GMSFHM` = #{zjzxfglrGmsfhm},</if>
             <if test="zjzxfglrLxdh != null">`ZJZXFGLR_LXDH` = #{zjzxfglrLxdh},</if>
-            <if test="bz != null">`BZ` = #{bz}</if>
-            <if test="xfkzsjyqk != null">`XFKZS_JYQK` = #{xfkzsjyqk}</if>
-            <if test="wxhxpmc != null">`WXHXP_MC` = #{wxhxpmc}</if>
-            <if test="wxhxpwxhxpflydm != null">`WXHXP_WXHXPFLYDM` = #{wxhxpwxhxpflydm}</if>
-            <if test="wxhxphxpztlbdm != null">`WXHXP_HXPZTLBDM` = #{wxhxphxpztlbdm}</if>
-            <if test="wxhxphxpwxxlbdm != null">`WXHXP_HXPWXXLBDM` = #{wxhxphxpwxxlbdm}</if>
-            <if test="wxhxpsl != null">`WXHXP_SL` = #{wxhxpsl}</if>
-            <if test="wxhxpjyqk != null">`WXHXP_JYQK` = #{wxhxpjyqk}</if>
-            <if test="wxhxpdzmc != null">`WXHXP_DZMC` = #{wxhxpdzmc}</if>
+            <if test="bz != null">`BZ` = #{bz},</if>
+            <if test="xfkzsjyqk != null">`XFKZS_JYQK` = #{xfkzsjyqk},</if>
+            <if test="wxhxpmc != null">`WXHXP_MC` = #{wxhxpmc},</if>
+            <if test="wxhxpwxhxpflydm != null">`WXHXP_WXHXPFLYDM` = #{wxhxpwxhxpflydm},</if>
+            <if test="wxhxphxpztlbdm != null">`WXHXP_HXPZTLBDM` = #{wxhxphxpztlbdm},</if>
+            <if test="wxhxphxpwxxlbdm != null">`WXHXP_HXPWXXLBDM` = #{wxhxphxpwxxlbdm},</if>
+            <if test="wxhxpsl != null">`WXHXP_SL` = #{wxhxpsl},</if>
+            <if test="wxhxpjyqk != null">`WXHXP_JYQK` = #{wxhxpjyqk},</if>
+            <if test="wxhxpdzmc != null">`WXHXP_DZMC` = #{wxhxpdzmc},</if>
         </set>
         where ZDDW_TYWYSBM = #{zddwTywysbm}
     </update>
