@@ -256,7 +256,7 @@ public class SysLogAspect implements Ordered {
      * @return
      */
     private TAuditLogConfigEntity getAuditLogConfig(String url) {
-        TAuditLogConfigEntity auditLogConfigEntity = auditLogConfigService.getOne(new QueryWrapper<TAuditLogConfigEntity>().eq("url", url));
+        TAuditLogConfigEntity auditLogConfigEntity = auditLogConfigService.getOne(new QueryWrapper<TAuditLogConfigEntity>().eq("url", url).eq("sys_name", "smart119_bms_backend"));
         return auditLogConfigEntity;
     }
 
