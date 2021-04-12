@@ -226,7 +226,7 @@ public class TAuditLogServiceImpl extends ServiceImpl<TAuditLogDao, TAuditLogEnt
         if (!path.exists()) {
             //path.createNewFile();
             path.mkdir();
-            System.out.println("log folder created");
+            log.error("log folder created");
         }
         FileWriter fw = null;
         BufferedWriter bw = null;

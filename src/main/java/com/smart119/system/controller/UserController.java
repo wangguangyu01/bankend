@@ -1,12 +1,14 @@
 package com.smart119.system.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.smart119.common.annotation.Log;
 import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.Tree;
 import com.smart119.common.service.DictService;
-import com.smart119.common.utils.*;
+import com.smart119.common.utils.MD5Utils;
+import com.smart119.common.utils.PageUtils;
+import com.smart119.common.utils.Query;
+import com.smart119.common.utils.R;
 import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.DeptDO;
@@ -16,8 +18,6 @@ import com.smart119.system.service.DeptService;
 import com.smart119.system.service.RoleService;
 import com.smart119.system.service.UserService;
 import com.smart119.system.vo.UserVO;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +25,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +58,6 @@ public class UserController extends BaseController {
 	@ResponseBody
 	PageUtils list(@RequestParam Map<String, Object> params) {
 		// 查询列表数据
-
-		System.out.println(JSON.toJSONString(getUser()));
 
 		Query query = new Query(params);
 		if(!query.containsKey("deptId")){
