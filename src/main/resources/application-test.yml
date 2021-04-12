@@ -82,3 +82,7 @@ appId:
 #是否开启swagger文档
 swagger:
   show: false
+
+log:
+  path: ../logs/
+  level: info
