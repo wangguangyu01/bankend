@@ -14,6 +14,7 @@ import io.swagger.annotations.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -32,7 +33,7 @@ import java.util.UUID;
  */
 @Api(value = "警情类型统计接口", description = "警情类型统计接口API")
 @Controller
-
+@Validated
 @RequestMapping("/webapi/webjbxx")
 public class WebJbxxController {
     @Autowired

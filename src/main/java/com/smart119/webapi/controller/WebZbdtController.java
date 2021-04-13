@@ -7,6 +7,7 @@ import io.swagger.annotations.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 @Api(value = "值班动态基本信息", description = "值班动态基本信息API")
 @Controller
-
+@Validated
 @RequestMapping("/webapi/webzbdt")
 public class WebZbdtController {
     @Autowired

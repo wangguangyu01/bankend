@@ -107,7 +107,7 @@ public class ZddwDO implements Serializable {
 	//危险化学品危险性
 	private String wxhxphxpwxxlbdm;
 	//数量
-	private String wxhxpsl;
+	private Integer wxhxpsl;
 	//简要情况
 	private String wxhxpjyqk;
 	//地址名称
@@ -145,11 +145,11 @@ public class ZddwDO implements Serializable {
 		this.wxhxphxpwxxlbdm = wxhxphxpwxxlbdm;
 	}
 
-	public String getWxhxpsl() {
+	public Integer getWxhxpsl() {
 		return wxhxpsl;
 	}
 
-	public void setWxhxpsl(String wxhxpsl) {
+	public void setWxhxpsl(Integer wxhxpsl) {
 		this.wxhxpsl = wxhxpsl;
 	}
 

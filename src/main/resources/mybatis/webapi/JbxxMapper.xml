@@ -4,7 +4,7 @@
 <mapper namespace="com.smart119.webapi.dao.JbxxDao">
 
     <select id="get" resultType="com.smart119.webapi.domain.JbxxDO">
-		select `JQ_TYWYSBM`,`BJ_TYWYSBM`,`MC`,`DDMC`,`JQFLYDM`,`JQDJDM`,`JQZT_LBDM`,`JQZT_RQSJ`,`JQDX_TYWYSBM`,`JQDX_MC`,`JQDX_JYQK`,`JQ_JYQK`,`JQBSLBDM`,`LC`,`DQJD`,`DQWD`,`BJRXM`,`BJDH`,`BJFSLBDM`,`BJSJ`,`LASJ`,`JASJ`,`JSMLSJ`,`CDSJ`,`DCSJ`,`ZDZKSJ`,`CSSJ`,`HSKZSJ`,`JBPMSJ`,`TSSJ`,`GDSJ`,`ZTFHSJ`,`XFJYJG_TYWYSBM`,`XZQHDM`,`JZJGLXDM`,`YWQKDM`,`ZHCSDM`,`RSWDM`,`BKRS`,`RYSW`,`cperson`,`cdate`,`status` from jqxx_jbxx where JQ_TYWYSBM = #{value}
+		select `JQ_TYWYSBM`,`BJ_TYWYSBM`,`MC`,`DDMC`,`JQFLYDM`,`JQDJDM`,`JQZT_LBDM`,`JQZT_RQSJ`,`JQDX_TYWYSBM`,`JQDX_MC`,`JQDX_JYQK`,`JQ_JYQK`,`JQBSLBDM`,`LC`,`DQJD`,`DQWD`,`BJRXM`,`BJDH`,`BJFSLBDM`,`BJSJ`,`LASJ`,`JASJ`,`JSMLSJ`,`CDSJ`,`DCSJ`,`ZDZKSJ`,`CSSJ`,`HSKZSJ`,`JBPMSJ`,`TSSJ`,`GDSJ`,`ZTFHSJ`,`XFJYJG_TYWYSBM`,`XZQHDM`,`JZJGLXDM`,`YWQKDM`,`ZHCSDM`,`RSWDM`,`BKRS`,`RYSW`,`cperson`,`cdate`,`status`, `BZ` from jqxx_jbxx where JQ_TYWYSBM = #{value}
 	</select>
 
     <select id="list" resultType="com.smart119.webapi.domain.JbxxDO">
@@ -60,7 +60,8 @@
         i.`RYSW`,
         i.`cperson`,
         i.`cdate`,
-        i.`status`
+        i.`status`,
+        i.`BZ`
         FROM
         jqxx_jbxx i
         LEFT JOIN sys_dict dj ON dj.`value` = i.JQDJDM
@@ -186,7 +187,8 @@
         i.`RYSW`,
         i.`cperson`,
         i.`cdate`,
-        i.`status`
+        i.`status`,
+        i.`BZ`
         FROM
         jqxx_jbxx i
         LEFT JOIN sys_dict dj ON dj.`value` = i.JQDJDM
@@ -305,7 +307,8 @@
         i.`RYSW`,
         i.`cperson`,
         i.`cdate`,
-        i.`status`
+        i.`status`,
+        i.`BZ`
         from jqxx_jbxx i
         LEFT JOIN sys_dict dj ON dj.`value` = i.JQDJDM
         AND dj.type = 'JQDJDM' -- 警情等级
@@ -481,7 +484,8 @@
 			`RYSW`,
 			`cperson`,
 			`cdate`,
-			`status`
+			`status`,
+			 `BZ`
 		)
 		values
 		(
@@ -527,7 +531,8 @@
 			#{rysw},
 			#{cperson},
 			#{cdate},
-			#{status}
+			#{status},
+			#{bz}
 		)
 	</insert>
 
@@ -577,6 +582,7 @@
             <if test="cdate != null">`cdate` = #{cdate},</if>
             <if test="status != null">`status` = #{status},</if>
             <if test="parentNodeId != null">`parentNodeId` = #{parentNodeId}</if>
+            <if test="bz != null">`BZ` = #{bz}</if>
         </set>
         where JQ_TYWYSBM = #{jqTywysbm}
     </update>

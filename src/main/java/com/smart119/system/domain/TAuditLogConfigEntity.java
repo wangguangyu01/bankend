@@ -28,6 +28,8 @@ public class TAuditLogConfigEntity implements Serializable {
 	 * url
 	 */
 	private String url;
+
+	private String sysName;
 	/**
 	 * 额外的描述
 	 */

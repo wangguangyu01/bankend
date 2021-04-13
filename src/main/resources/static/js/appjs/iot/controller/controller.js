@@ -3,10 +3,6 @@ var xfjyjgTywysbm;
 $(function () {
     getTreeData();
     load();
-    getSelectAll("XFZBLXDM","XFZBLXDM-DIV","xfzblxdm","xfzblxdm-title");
-    getSelectByType("XFCLZZGNDM","xfclzzgndm",null);
-    getSelectByType("XFCLDJDM","xfcldjdm",null);
-    getSelectAll("CLQWZTLBDM","CLQWZTLBDM-DIV","clqwztlbdm","clqwztlbdm-title");
 });
 
 function load() {
@@ -70,10 +66,6 @@ function load() {
                         title: '端口'
                     },
                     {
-                        field: 'status',
-                        title: '状态'
-                    },
-                    {
                         field: 'deptName',
                         title: '消防救援机构'
                     },
@@ -84,6 +76,10 @@ function load() {
                     {
                         field: 'updateTime',
                         title: '更新时间'
+                    },
+                    {
+                        field: 'statusName',
+                        title: '状态'
                     },
                     {
                         title: '操作',

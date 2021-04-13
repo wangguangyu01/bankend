@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @Date: 2021-02-02 20:42
  */
 @RestController
+@Validated
 @Api(value = "消防救援人员API", description = "消防救援人员API")
 public class XfjyryApiController {
     @Autowired

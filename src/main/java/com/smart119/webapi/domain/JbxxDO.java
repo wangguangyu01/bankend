@@ -1,6 +1,7 @@
 package com.smart119.webapi.domain;
 
 import com.smart119.jczy.domain.ZddwDO;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -137,6 +138,14 @@ public class JbxxDO implements Serializable {
 
     //重点单位对象
 	private ZddwDO zddwDO;
+
+
+
+
+	/**
+	 *  备注 受理工单动输入
+	 */
+	private String bz;
 
 	public ZddwDO getZddwDO() {
 		return zddwDO;
@@ -764,5 +773,14 @@ public class JbxxDO implements Serializable {
 
 	public void setDtsxzDOList(List<DtsxzDO> dtsxzDOList) {
 		this.dtsxzDOList = dtsxzDOList;
+	}
+
+
+	public String getBz() {
+		return bz;
+	}
+
+	public void setBz(String bz) {
+		this.bz = bz;
 	}
 }

@@ -1,5 +1,6 @@
 $().ready(function() {
 	validateRule();
+	changeControl();
 });
 
 $.validator.setDefaults({
@@ -11,7 +12,7 @@ function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/webapi/device/update",
+		url : "/iot/device/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		error : function(request) {
@@ -44,6 +45,44 @@ function validateRule() {
 			name : {
 				required : icon + "请输入名字"
 			}
+		}
+	})
+}
+
+function changeControl(){
+	var controllerId = $('#controller option:selected').val();
+	var controllerPortId = document.getElementById("controllerPortIdParams").value;
+	console.log(controllerPortId);
+	$.ajax({
+		type:'GET',
+		cache : true,
+		url:'/iot/controllerPort/listByControllerId',
+		data: {
+			"controllerId":controllerId
+		},
+		async : false,
+		success:function (res){
+			if (res.code == 0) {
+				var data = res.data;
+				var controllerPort = $('#controllerPort');
+				controllerPort.find("option:selected").text("");
+				controllerPort.empty();
+				var options = [];
+				for(var i = 0;i < data.length; i++ ){
+					console.log(controllerPortId);
+					console.log(data[i].channelNumber + ":" + (data[i].id == controllerPortId));
+					if (data[i].id == controllerPortId) {
+						options.push('<option ' + 'value="'+data[i].id + '"' + ' selected="selected"' + '>',data[i].channelNumber,'</option>');
+					}else {
+						options.push('<option ' + 'value="'+data[i].id + '"' + '>',data[i].channelNumber,'</option>');
+					}
+				}
+				controllerPort.append(options.join(''))
+				parent.reLoad();
+			}else {
+				layer.msg(res.msg);
+			}
+
 		}
 	})
 }

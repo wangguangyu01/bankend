@@ -71,3 +71,7 @@ ftp:
   user: smart119
   password: abc123
   uploadFolder: dataImport
+
+log:
+  path: ../logs/
+  level: info

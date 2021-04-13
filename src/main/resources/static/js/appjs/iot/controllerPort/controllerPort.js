@@ -78,16 +78,16 @@ function load() {
                         title: '复位时间'
                     },
                     {
-                        field: 'status',
-                        title: '状态'
-                    },
-                    {
                         field: 'createTime',
                         title: '创建时间'
                     },
                     {
                         field: 'updateTime',
                         title: '更新时间'
+                    },
+                    {
+                        field: 'statusName',
+                        title: '状态'
                     },
                     {
                         title: '操作',

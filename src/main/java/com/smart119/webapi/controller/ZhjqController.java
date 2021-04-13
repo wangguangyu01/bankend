@@ -1,5 +1,6 @@
 package com.smart119.webapi.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.Update;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
@@ -10,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -23,6 +25,7 @@ import java.util.Map;
  */
 @Api(value = "综合警情接口", description = "综合警情接口API")
 @Controller
+@Validated
 @RequestMapping("/webapi/zhjq")
 public class ZhjqController {
     @Autowired
@@ -66,7 +69,7 @@ public class ZhjqController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("webapi:zhjq:add")
-    public R save(ZhjqDO zhjq) {
+    public R save(@Validated(Update.class) ZhjqDO zhjq) {
         if (zhjqService.save(zhjq) > 0) {
             return R.ok();
         }
@@ -79,7 +82,7 @@ public class ZhjqController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("webapi:zhjq:edit")
-    public R update(ZhjqDO zhjq) {
+    public R update(@Validated(Update.class) ZhjqDO zhjq) {
         zhjqService.update(zhjq);
         return R.ok();
     }

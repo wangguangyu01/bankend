@@ -27,13 +27,35 @@
 		t.create_time as createTime,
 		t.update_time as updateTime,
 		d.DWMC as deptName,
+		c.`name` as controllerName,
+		dict.name as statusName
+		from
+		iot_controller_port t
+		left join iot_controller c on c.id = t.controller_id
+		left join sys_dept d on d.XFJYJG_TYWYSBM = c.xfjyjg_tywysbm
+		left join sys_dict dict on dict.type = "wlzkqdkzt" and dict.value = t.status
+		where 1=1
+		<if test="params.xfjyjgTywysbm != null and params.xfjyjgTywysbm != ''"> and d.xfjyjg_tywysbm = #{params.xfjyjgTywysbm}</if>
+	</select>
+	<select id="list" resultType="com.smart119.iot.domain.ControllerPortDO">
+		select
+		t.id as id,
+		t.channel_number as channelNumber,
+		t.address as address,
+		t.port_address as portAddress,
+		t.status as status,
+		t.controller_id as controllerId,
+		t.restoration_time as restorationTime,
+		t.create_time as createTime,
+		t.update_time as updateTime,
+		d.DWMC as deptName,
 		c.`name` as controllerName
 		from
 		iot_controller_port t
 		left join iot_controller c on c.id = t.controller_id
 		left join sys_dept d on d.XFJYJG_TYWYSBM = c.xfjyjg_tywysbm
 		where 1=1
-		<if test="params.xfjyjgTywysbm != null and params.xfjyjgTywysbm != ''"> and t.xfjyjg_tywysbm = #{params.xfjyjgTywysbm}</if>
+		<if test="params.controllerId != null and params.controllerId != ''"> and t.controller_id = #{params.controllerId}</if>
 	</select>
 
 

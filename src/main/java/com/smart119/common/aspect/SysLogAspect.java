@@ -132,7 +132,7 @@ public class SysLogAspect implements Ordered {
         if (auditLogConfigEntity != null && auditLogConfigEntity.getIsOpen().toString().equals("1")) {
             UserDO userDO = ShiroUtils.getUser();
             if (userDO == null) {
-                    System.out.println("Token无效或特殊地址不记录日志");
+                    log.error("Token无效或特殊地址不记录日志");
                     return;
                 }
             String userName = "";
@@ -256,7 +256,7 @@ public class SysLogAspect implements Ordered {
      * @return
      */
     private TAuditLogConfigEntity getAuditLogConfig(String url) {
-        TAuditLogConfigEntity auditLogConfigEntity = auditLogConfigService.getOne(new QueryWrapper<TAuditLogConfigEntity>().eq("url", url));
+        TAuditLogConfigEntity auditLogConfigEntity = auditLogConfigService.getOne(new QueryWrapper<TAuditLogConfigEntity>().eq("url", url).eq("sys_name", "smart119_bms_backend"));
         return auditLogConfigEntity;
     }
 

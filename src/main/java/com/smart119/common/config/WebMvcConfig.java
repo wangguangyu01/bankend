@@ -1,5 +1,6 @@
 package com.smart119.common.config;
 
+import com.smart119.system.filter.LogbackFilter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
@@ -24,5 +25,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/swagger-ui/")
                 .setViewName("forward:/swagger-ui/index.html");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LogbackFilter()).addPathPatterns("/**");
     }
 }

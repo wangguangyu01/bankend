@@ -9,7 +9,6 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
-						<input id="mhjyzjTywysbm" name="mhjyzjTywysbm" th:value="${mhjyzj.mhjyzjTywysbm}"  type="hidden">
 							<div class="form-group">
 								<label class="col-sm-2 control-label">姓名：</label>
 								<div class="col-sm-4">
@@ -18,6 +17,10 @@
 								<label class="col-sm-2 control-label">公民身份号码：</label>
 								<div class="col-sm-4">
 									<input id="gmsfhm" name="gmsfhm" class="form-control" type="text" th:value="${mhjyzj.gmsfhm}" >
+								</div>
+								<label class="col-sm-2 control-label">专家唯一标识：</label>
+								<div class="col-sm-4">
+									<input id="mhjyzjTywysbm" name="mhjyzjTywysbm" class="form-control" type="text" th:value="${mhjyzj.mhjyzjTywysbm}" >
 								</div>
 							</div>
 							<div class="form-group">
@@ -143,10 +146,12 @@
 								<label class="col-sm-2 control-label">是否队伍内部专家：</label>
 								<div class="col-sm-4">
 									<input id="sfdwnbzjPdbzVal" class="form-control" type="hidden" th:value="${mhjyzj.sfdwnbzjPdbz}">
-									<select data-placeholder="是否队伍内部专家" name="sfdwnbzjPdbz" title="是否队伍内部专家" id="sfdwnbzjPdbz"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--选择类别--</option>
-									</select>
+									<!--<select data-placeholder="是否队伍内部专家" name="sfdwnbzjPdbz" title="是否队伍内部专家" id="sfdwnbzjPdbz"-->
+											<!--class="form-control chosen-select" tabindex="2" required>-->
+										<!--<option value="">&#45;&#45;选择类别&#45;&#45;</option>-->
+									<!--</select>-->
+									<input type="radio" name="sfdwnbzjPdbz"   value="是">是</input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" name="sfdwnbzjPdbz"   value="否">否</input>
 								</div>
 							</div>
 							<div class="form-group">
@@ -199,5 +204,15 @@
 	<script th:inline="javascript">
         var attachmentDOList = [[${attachmentDOList}]];
 	</script>
+	<script th:inline="javascript">
+        var sfdwnbzjPdbz=document.getElementById("sfdwnbzjPdbzVal").value;
+
+        $("input[name='sfdwnbzjPdbz'][value='"+sfdwnbzjPdbz+"'").attr("checked",true);
+
+
+	</script>
+
+
+
 </body>
 </html>

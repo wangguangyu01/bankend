@@ -4,7 +4,7 @@ var exportList;
 $(function () {
     getTreeData();
     load();
-    getSelectByXfjbType("XFJYXJBDM", "xfjyxjbdm", null);
+
 });
 
 function load() {
@@ -31,7 +31,7 @@ function load() {
                         offset: params.offset,
                         xm: $('#searchName').val(),
                         sjszjg: $('#sjszjg').val(),
-                        xfjyxjbdm:$('#xfjyxjbdm').val()
+                        xfjyxjbdmmc:$('#xfjyxjbdmmc').val()
                     };
                 },
 

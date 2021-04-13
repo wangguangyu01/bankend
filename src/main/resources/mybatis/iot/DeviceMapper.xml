@@ -26,14 +26,39 @@
 		t.update_time as updateTime,
 		d.DWMC as deptName,
 		c.name as controllerName,
-		p.channel_number as channelNumber
+		p.channel_number as channelNumber,
+		dict.name as typeName
 		from
 		iot_device t
 		left join sys_dept d on d.XFJYJG_TYWYSBM = t.xfjyjg_tywysbm
 		left join iot_controller_port p on p.id = t.controller_port_id
 		left join iot_controller c on c.id = p.controller_id
+		left join sys_dict dict on dict.type = "wlsblx" and dict.value = t.type
 		where 1=1
 		<if test="params.xfjyjgTywysbm != null and params.xfjyjgTywysbm != ''"> and d.xfjyjg_tywysbm = #{params.xfjyjgTywysbm}</if>
+	</select>
+	<select id="selectById" resultType="com.smart119.iot.domain.DeviceDO">
+		select
+		t.id as id,
+		t.name as name,
+		t.type as type,
+		t.status as status,
+		t.controller_port_id as controllerPortId,
+		t.xfjyjg_tywysbm as xfjyjgTywysbm,
+		t.create_time as createTime,
+		t.update_time as updateTime,
+		d.DWMC as deptName,
+		c.id as controllerId,
+		c.name as controllerName,
+		p.channel_number as channelNumber,
+		dict.name as typeName
+		from
+		iot_device t
+		left join sys_dept d on d.XFJYJG_TYWYSBM = t.xfjyjg_tywysbm
+		left join iot_controller_port p on p.id = t.controller_port_id
+		left join iot_controller c on c.id = p.controller_id
+		left join sys_dict dict on dict.type = "wlsblx" and dict.value = t.type
+		where t.id = #{id}
 	</select>
 
 

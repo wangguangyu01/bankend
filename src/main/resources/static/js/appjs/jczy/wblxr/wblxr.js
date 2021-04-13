@@ -188,6 +188,10 @@ function batchRemove() {
 
     });
 }
+//下载excel
+function downExcel(){
+    window.location.href = "/jczy/wblxr/downExcel";//在后台代码里
+}
 
 function Excel() {
 
@@ -271,3 +275,5 @@ function insertExcel() {
     })
 
 }
+
+

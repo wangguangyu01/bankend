@@ -93,6 +93,7 @@
             <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
             <if test="sjszjg != null and sjszjg != ''">and d.DWMC like '%${sjszjg}%'</if>
             <if test="xfjyxjbdm != null and xfjyxjbdm != ''">and dict2.value  = #{xfjyxjbdm}</if>
+            <if test="xfjyxjbdmmc != null and xfjyxjbdmmc != ''">and dict2.name like '%${xfjyxjbdmmc}%'</if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -353,6 +354,7 @@
             <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
             <if test="sjszjg != null and sjszjg != ''">and d.DWMC like '%${sjszjg}%'</if>
             <if test="xfjyxjbdm != null and xfjyxjbdm != ''">and dict2.value  = #{xfjyxjbdm} </if>
+            <if test="xfjyxjbdmmc != null and xfjyxjbdmmc != ''">and dict2.name like '%${xfjyxjbdmmc}%'</if>
         </where>
 
     </select>

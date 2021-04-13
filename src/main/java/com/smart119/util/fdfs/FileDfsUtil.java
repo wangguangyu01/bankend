@@ -1,8 +1,8 @@
 package com.smart119.util.fdfs;
 
-import org.apache.commons.net.util.Base64;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.springframework.mock.web.MockMultipartFile;
+import org.apache.commons.net.util.Base64;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+@Slf4j
 public class FileDfsUtil {
     public static final String uploadFile(MultipartFile file){
       // MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "image/png", IOUtils.toByteArray(inputStream));
@@ -36,7 +36,7 @@ public class FileDfsUtil {
             //基于工具类进行文件上传,并接受返回参数  String[]
             String[] uploadResult = FastDfsClient.upload(fastDfsFile);
             for (int i = 0; i < uploadResult.length; i++) {
-                System.out.println(uploadResult[i]);
+               log.info(uploadResult[i]);
             }
             //封装返回结果
             return "/"+uploadResult[0]+"/"+uploadResult[1];

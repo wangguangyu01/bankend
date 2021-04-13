@@ -63,6 +63,10 @@ function load() {
 									title : '权限标识'
 								},
 								{
+									field : 'sysName',
+									title : '所属系统'
+								},
+								{
 									field : 'isReplace',
 									title : '是否输出替换',
                                     align : 'center',
