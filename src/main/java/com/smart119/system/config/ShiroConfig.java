@@ -35,14 +35,14 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig {
-    @Value("${spring.redis.host}")
-    private String host;
-    @Value("${spring.redis.password}")
-    private String password;
-    @Value("${spring.redis.port}")
-    private int port;
-    @Value("${spring.redis.timeout}")
-    private int timeout;
+//    @Value("${spring.redis.host}")
+//    private String host;
+//    @Value("${spring.redis.password}")
+//    private String password;
+//    @Value("${spring.redis.port}")
+//    private int port;
+//    @Value("${spring.redis.timeout}")
+//    private int timeout;
 
     @Value("${spring.cache.type}")
     private String cacheType ;
@@ -162,11 +162,11 @@ public class ShiroConfig {
     @Bean
     public RedisManager redisManager() {
         RedisManager redisManager = new RedisManager();
-        redisManager.setHost(host);
-        redisManager.setPort(port);
-        redisManager.setExpire(1800);// 配置缓c存过期时间
+        //redisManager.setHost(host);
+        //redisManager.setPort(port);
+        //redisManager.setExpire(1800);// 配置缓c存过期时间
         //redisManager.setTimeout(1800);
-        redisManager.setPassword(password);
+        //redisManager.setPassword(password);
         return redisManager;
     }
 

@@ -3,6 +3,7 @@ package com.smart119.common.controller;
 import com.smart119.common.config.FtpConfig;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.*;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping(value = "/attach")
+@Slf4j
 public class AttachController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(AttachController.class);
 
@@ -156,23 +158,26 @@ public class AttachController extends BaseController {
      */
     @RequestMapping(value = "/ftpUpload")
     @ResponseBody
-    public void ftpUpload(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public void ftpUpload(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
         FTPClient ftpClient = new FTPClient();
         FileInputStream fis = null;
         String message = "{\"files\":[";
         String filename = "";
         String fileOldName = "";
         String f_type = "";
+
         try {
             ftpClient.connect(ftpConfig.getIp());
             ftpClient.login(ftpConfig.getUser(), ftpConfig.getPassword());
 
             StandardMultipartHttpServletRequest req = (StandardMultipartHttpServletRequest) request;
-            Iterator<String> iterator = req.getFileNames();
+
             f_type = req.getParameter("f_type");
             List<MultipartFile> list = req.getMultiFileMap().get("file");
+
             for (int i = 0; i < list.size(); i++) {
+
                 MultipartFile file = list.get(i);
                 String fileNames = file.getOriginalFilename();
                 int split = fileNames.lastIndexOf(".");
@@ -185,25 +190,27 @@ public class AttachController extends BaseController {
                 //发送到远程服务器上
                 InputStream uploadedStream = file.getInputStream();
 
-//                ftpClient.changeWorkingDirectory("/"+f_type);
                 ftpClient.changeWorkingDirectory(f_type);
                 ftpClient.setBufferSize(1024);
                 ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
                 ftpClient.setControlEncoding("GBK");
 
-                FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
-                conf.setServerLanguageCode("zh");
+//                FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+//                conf.setServerLanguageCode("zh");
 
                 //File srcFile = new File("C:\\new.gif");
                 //fis = new FileInputStream(srcFile);
                 //设置上传目录
                 //设置文件类型（二进制）
-                ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
                 ftpClient.storeFile(filename, uploadedStream);
-
                 uploadedStream.close();
-                String path = "ftp://" + ftpConfig.getIp() + "/" + ftpConfig.getUploadFolder() + "/" + filename;
+
+                //String path = "ftp://" + ftpConfig.getIp() + "/" + ftpConfig.getUploadFolder() + "/" + filename;
+
+                String path= ftpConfig.getUploadFolder() + "/" + filename;
+
                 String id = this.save(fileOldName, filename, f_type, path, "");
+
                 message += "{\"name\":\"" + fileOldName + "\",\"id\":\"" + id
                         + "\",\"deleteUrl\":\"/attach/ftpDelete?id=" + id
                         + "\",\"deleteType\":\"get\",\"url\":\"/attach/ftpDownload?id=" + id + "\"}";
@@ -258,7 +265,7 @@ public class AttachController extends BaseController {
             ftp.login(ftpConfig.getUser(), ftpConfig.getPassword());
             ftp.setControlEncoding("GBK");    // 设置字符编码
 
-            FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+            FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_NT);
             conf.setServerLanguageCode("zh");
 
 
@@ -292,7 +299,7 @@ public class AttachController extends BaseController {
             for (int i = 0; i < 3; i++) {
                 ftpdownload(request, response);
             }
-            logger.error("异常", new Exception(e));
+            logger.error("异常", e);
             //LOGGER.error("从FTP服务器下载文件失败:" + e.getMessage());
             //e.printStackTrace();
         } finally {
@@ -300,7 +307,7 @@ public class AttachController extends BaseController {
                 try {
                     ftp.disconnect();
                 } catch (IOException ioe) {
-                    //LOGGER.info(ioe.getMessage());
+                    logger.error("异常", ioe);
                 }
             }
         }
@@ -318,6 +325,7 @@ public class AttachController extends BaseController {
     @RequestMapping(value = "/ftpDelete")
     @ResponseBody
     public void ftpDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String id = request.getParameter("id");
         AttachmentDO attachment = attachmentService.get(id);
         int result = attachmentService.remove(id);
@@ -335,17 +343,16 @@ public class AttachController extends BaseController {
 
                 if (r) {
                     ftp.logout();
-                    response.getWriter().write("{\"success\":true}");
                 }
+                response.getWriter().write("{\"success\":true}");
             } catch (Exception e) {
-                logger.error("异常", new Exception(e));
-                e.printStackTrace();
+                logger.error("删除文件异常", e);
             } finally {
                 if (ftp.isConnected()) {
                     try {
                         ftp.disconnect();
                     } catch (IOException ioe) {
-                        //LOGGER.info(ioe.getMessage());
+                        log.error("调用方法异常", ioe);
                     }
                 }
             }

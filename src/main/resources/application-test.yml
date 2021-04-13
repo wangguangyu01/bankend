@@ -43,7 +43,7 @@ spring:
     port: 6379
     password:
     # 连接超时时间（毫秒）
-    timeout: 10000
+    timeout: 10000ms
     jedis:
       pool:
         # 连接池中的最大空闲连接

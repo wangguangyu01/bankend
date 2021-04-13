@@ -5,53 +5,97 @@ package com.smart119.common.redis.shiro;
  * @version V1.0
  */
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisSentinelPool;
 
 /**
  *
  */
+@Data
 public class RedisManager {
 
-    @Value("${spring.redis.host}")
+    /**
+     * 主节点
+     */
+    @Value("${spring.redis.sentinel.master:#{null}}")
+    private String master;
+
+
+    @Value("${spring.redis.host:#{null}}")
     private String host;
 
-    @Value("${spring.redis.port}")
+    @Value("${spring.redis.port:6379}")
     private int port = 6379;
 
-    // 0 - never expire
+    @Value("${security.shiro.globalSessionTimeout:1800}")
     private int expire = 0;
 
-    //timeout for jedis try to connect to redis server, not expire time! In milliseconds
-    @Value("${spring.redis.timeout}")
-    private int timeout = 0;
+    @Value("${spring.redis.timeout:2000ms}")
+    private String timeoutMs;
 
-    @Value("${spring.redis.password}")
-    private String password = "";
+    @Value("${spring.redis.password:#{null}}")
+    private String password;
 
-    private static JedisPool jedisPool = null;
+    @Value("${spring.redis.sentinel.password:#{null}}")
+    private String sentinelPassword;
+    /**
+     * 节点
+     */
+    @Value("${spring.redis.sentinel.nodes:#{null}}")
+    private String nodes;
 
-    public RedisManager() {
+    private static JedisPool jedisPool;
 
-    }
+    private static JedisSentinelPool sentinelPool;
+    /**
+     * 是否是哨兵模式
+     */
+    private static boolean sentinel = false;
 
     /**
      * 初始化方法
      */
     public void init() {
-        if (jedisPool == null) {
-            if (password != null && !"".equals(password)) {
-                jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout, password);
-            } else if (timeout != 0) {
-                jedisPool = new JedisPool(new JedisPoolConfig(), host, port, timeout);
-            } else {
-                jedisPool = new JedisPool(new JedisPoolConfig(), host, port);
-            }
 
+        int timeout = Integer.valueOf(timeoutMs.replace("ms", ""));
+
+        if (StringUtils.isNotBlank(master)) {
+            //哨兵模式
+            Set<String> hostSet = new HashSet<>();
+            List<String> strings = Arrays.asList(nodes.split(","));
+            hostSet.addAll(strings);
+            GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+
+            if (StringUtils.isNotBlank(sentinelPassword)) {
+                sentinelPool = new JedisSentinelPool(master, hostSet, config, timeout,
+                    sentinelPassword);
+            } else {
+                sentinelPool = new JedisSentinelPool(master, hostSet, config, timeout);
+            }
+            sentinel = true;
+        } else {
+            //单点模式
+            if (Objects.isNull(jedisPool)) {
+
+                JedisPoolConfig config = new JedisPoolConfig();
+                if (StringUtils.isNotBlank(password)) {
+                    jedisPool = new JedisPool(config, host, port, timeout, password);
+                } else {
+                    jedisPool = new JedisPool(config, host, port, timeout);
+                }
+            }
         }
     }
 
@@ -63,7 +107,7 @@ public class RedisManager {
      */
     public byte[] get(byte[] key) {
         byte[] value = null;
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = this.getResource();
         try {
             value = jedis.get(key);
         } finally {
@@ -82,7 +126,7 @@ public class RedisManager {
      * @return
      */
     public byte[] set(byte[] key, byte[] value) {
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = this.getResource();
         try {
             jedis.set(key, value);
             if (this.expire != 0) {
@@ -105,7 +149,7 @@ public class RedisManager {
      * @return
      */
     public byte[] set(byte[] key, byte[] value, int expire) {
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = this.getResource();
         try {
             jedis.set(key, value);
             if (expire != 0) {
@@ -125,7 +169,7 @@ public class RedisManager {
      * @param key
      */
     public void del(byte[] key) {
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = this.getResource();
         try {
             jedis.del(key);
         } finally {
@@ -139,7 +183,7 @@ public class RedisManager {
      * flush
      */
     public void flushDB() {
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = this.getResource();
         try {
             jedis.flushDB();
         } finally {
@@ -154,7 +198,7 @@ public class RedisManager {
      */
     public Long dbSize() {
         Long dbSize = 0L;
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = this.getResource();
         try {
             dbSize = jedis.dbSize();
         } finally {
@@ -173,7 +217,7 @@ public class RedisManager {
      */
     public Set<byte[]> keys(String pattern) {
         Set<byte[]> keys = null;
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = this.getResource();
         try {
             keys = jedis.keys(pattern.getBytes());
         } finally {
@@ -184,45 +228,18 @@ public class RedisManager {
         return keys;
     }
 
-    public String getHost() {
-        return host;
+    /**
+     * 获取Jedis对象
+     * @return
+     */
+    public Jedis getResource() {
+
+        Jedis result;
+        if (sentinel) {
+            result = sentinelPool.getResource();
+        } else {
+            result = jedisPool.getResource();
+        }
+        return result;
     }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public int getExpire() {
-        return expire;
-    }
-
-    public void setExpire(int expire) {
-        this.expire = expire;
-    }
-
-    public int getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(int timeout) {
-        this.timeout = timeout;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
 }

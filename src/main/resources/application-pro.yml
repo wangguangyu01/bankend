@@ -1,20 +1,21 @@
-bootdo:
-  uploadPath: /var/uploaded_files/
-  username: root
-  password: abc#123
+smart119:
+  uploadPath: c:/var/uploaded_files/
+  username: admin
+  password: 111111
   baiduMapApiKey: vU6GCDwes9ROs5r84QCBvCQEMRcCNOgn
   gaodeMapApiKey: 6abf4a07a2d27ca236c01b4be5341be9
 logging:
   level:
-    root: error
-    com.bootdo: info
+    root: info
+    com.bootdo: debug
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.40.1.42:3306/smart119?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.16.200.12:3306/smart119?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: abc@123
+    #password: ENC(q3rJHyQxFAfpLHxLp89cAw==)
     initialSize: 1
     minIdle: 3
     maxActive: 20
@@ -38,26 +39,26 @@ spring:
     # 合并多个DruidDataSource的监控数据
     #useGlobalDataSourceStat: true
   redis:
-      host: 10.40.1.43
-      port: 6379
-      password:
-      # 连接超时时间（毫秒）
-      timeout: 10000
-      jedis:
-        pool:
-          # 连接池中的最大空闲连接
-          max-idle: 8
-          # 连接池中的最小空闲连接
-          min-idle: 10
-          # 连接池最大连接数（使用负值表示没有限制）
-          max-active: 100
-          # 连接池最大阻塞等待时间（使用负值表示没有限制）
-          max-wait: -1
+    #host: 10.40.1.222
+    #port: 6379
+    #password:
+    # 连接超时时间（毫秒）
+    sentinel:
+      master: master
+      nodes: 172.16.200.16:16379,172.16.200.17:16379,172.16.200.18:16379
+      password: abc@#123
+    timeout: 6000ms
+    jedis:
+      pool:
+        max-active: 100
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 0
   rabbitmq:
-    host: 10.40.1.44
-    mq.port: 5672
-    mq.username: smart119
-    mq.password: smart119
+    #host: 10.40.1.222
+    #port: 5672
+    username: nationaleconomy
+    password: abc@#123
     publisher-returns: true
     listener:
       simple:
@@ -66,12 +67,24 @@ spring:
         max-concurrency: 1
         retry:
           enabled: true
+    addresses: 172.16.200.21:5672,172.16.200.22:5672,172.16.200.23:5672
 ftp:
-  ip: 10.40.1.44
-  user: smart119
-  password: abc123
+  ip: 172.16.200.56
+  user: nationaleconomy
+  password: abc@#123321
   uploadFolder: dataImport
 
-log:
-  path: ../logs/
-  level: info
+jasypt:
+  encryptor:
+    password: jasypt
+
+appId:
+
+#是否开启swagger文档
+swagger:
+  show: false
+
+#Shiro相关配置
+security:
+  shiro:
+    globalSessionTimeout: 28800  # 登录过期时长8小时

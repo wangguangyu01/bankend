@@ -4,6 +4,7 @@ import com.smart119.common.config.FtpConfig;
 import com.smart119.common.dao.AttachmentDao;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
@@ -20,6 +21,7 @@ import java.util.*;
 
 
 @Service
+@Slf4j
 public class AttachmentServiceImpl implements AttachmentService {
 	@Autowired
 	private AttachmentDao attachmentDao;
@@ -64,11 +66,13 @@ public class AttachmentServiceImpl implements AttachmentService {
 
 	@Override
 	public List<String> ftpUpload(MultipartFile[] files,String fid,String f_type){
+
 		FTPClient ftpClient = new FTPClient();
 		FileInputStream fis = null;
 		String filename="";
 		String fileOldName="";
 		List<String> returnPath=new ArrayList<>();
+
 		try {
 			ftpClient.connect(ftpConfig.getIp());
 			ftpClient.login(ftpConfig.getUser(), ftpConfig.getPassword());
@@ -78,17 +82,19 @@ public class AttachmentServiceImpl implements AttachmentService {
 			ftpClient.setBufferSize(1024);
 			ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
-			FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
-			conf.setServerLanguageCode("zh");
-			ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
+//			FTPClientConfig conf = new FTPClientConfig(FTPClientConfig.SYST_UNIX);
+//			conf.setServerLanguageCode("zh");
+			//ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 			//ftpClient.changeWorkingDirectory("pub");
+
 			if(ftpClient.listFiles(f_type).length==0){
 				ftpClient.makeDirectory(f_type);
 			}
 			ftpClient.changeWorkingDirectory(f_type);
 
-
+      //上传文件
 			for (int i = 0; i < files.length; i++) {
+
 				MultipartFile file = files[i];
 				String fileNames = file.getOriginalFilename();
 				int split = fileNames.lastIndexOf(".");
@@ -102,9 +108,11 @@ public class AttachmentServiceImpl implements AttachmentService {
 				InputStream uploadedStream =file.getInputStream();
 
 				//ftpClient.storeFile(filename, uploadedStream);
+				ftpClient.enterLocalPassiveMode();
 				ftpClient.storeFile(new String(filename.getBytes("UTF-8"),"iso-8859-1"), uploadedStream);
 				uploadedStream.close();
-				String path = "ftp://"+ftpConfig.getIp()+"/"+f_type+"/"+filename;
+				//String path = "ftp://"+ftpConfig.getIp()+"/"+f_type+"/"+filename;
+        String path=f_type+"/"+filename;
 
 				AttachmentDO attachment=new AttachmentDO();
 				String id= UUID.randomUUID().toString().trim().replaceAll("-", "");
@@ -121,14 +129,16 @@ public class AttachmentServiceImpl implements AttachmentService {
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("保存文件异常",e);
 			throw new RuntimeException("FTP客户端出错！", e);
 		} finally {
 			IOUtils.closeQuietly(fis);
 			try {
-				ftpClient.disconnect();
+        if (ftpClient.isConnected()) {
+          ftpClient.disconnect();
+				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.error("关闭FTP连接发生异常",e);
 				throw new RuntimeException("关闭FTP连接发生异常！", e);
 			}
 		}
