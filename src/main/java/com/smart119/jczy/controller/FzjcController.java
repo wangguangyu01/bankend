@@ -14,6 +14,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,12 +34,12 @@ import javax.annotation.Resource;
 
 /**
  * 辅助决策
- * 
+ *
  * @author wangguangyu
  * @email wangguangyu@sz000673.com
  * @date 2021-02-02 10:22:35
  */
- 
+
 @Controller
 @RequestMapping("/jczy/fzjc")
 public class FzjcController {
@@ -68,7 +70,7 @@ public class FzjcController {
 
 
 
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:fzjc:add")
 	String add(Model model){
@@ -86,14 +88,17 @@ public class FzjcController {
 		model.addAttribute("fzjc", fzjc);
 	    return "jczy/fzjc/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:fzjc:add")
-	public R save( FzjcDO fzjc){
+	public R save(@Validated FzjcDO fzjc, BindingResult bindingResult){
+		if (bindingResult.hasErrors()) {
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
 		fzjc.setCperson(user.getUsername());
 		fzjc.setCdate(new Date());
@@ -101,8 +106,9 @@ public class FzjcController {
 		fzjc.setFzjcId(UUIDGenerator.getUUID());
 		if(fzjcService.save(fzjc)){
 			return R.ok();
+		} else {
+			return R.error();
 		}
-		return R.error();
 	}
 	/**
 	 * 修改
@@ -118,7 +124,7 @@ public class FzjcController {
 		fzjcService.updateById(fzjc);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -131,7 +137,7 @@ public class FzjcController {
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -142,5 +148,5 @@ public class FzjcController {
 		fzjcService.batchRemove(fzjcIds);
 		return R.ok();
 	}
-	
+
 }
