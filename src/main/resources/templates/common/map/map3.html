@@ -268,7 +268,7 @@
             var _this = this;
             this.createMap(function () {
                 if(points && points!=""){
-                    var point = points.split(":");
+                    var point = points.split(";");
                     var arr = [];
                     for(var i in point){
                         console.log(parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0]))
