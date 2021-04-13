@@ -1,5 +1,6 @@
 package com.smart119.jczy.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.Update;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
@@ -14,6 +15,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +35,7 @@ import java.util.*;
  */
 
 @Controller
+@Validated
 @RequestMapping("/jczy/wblxr")
 public class WblxrController  extends BaseController {
     @Autowired
@@ -84,7 +87,7 @@ public class WblxrController  extends BaseController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("jczy:wblxr:add")
-    public String save(@RequestParam(value = "file", required = false) MultipartFile[] files, WblxrDO wblxr){
+    public String save(@RequestParam(value = "file", required = false) MultipartFile[] files, @Validated(Update.class) WblxrDO wblxr){
         String id = UUID.randomUUID().toString().replace("-", "");
         wblxr.setWblxrId(id);
         wblxr.setCdate(new Date());
@@ -104,7 +107,7 @@ public class WblxrController  extends BaseController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("jczy:wblxr:edit")
-    public R update(@RequestPart(value = "file", required = false) MultipartFile[] files,WblxrDO wblxr){
+    public R update(@RequestPart(value = "file", required = false) MultipartFile[] files,@Validated(Update.class) WblxrDO wblxr){
         if(files!=null && files.length>0) {
             attachmentService.ftpUpload(files, wblxr.getWblxrId(), "wblxr");
         }
@@ -183,7 +186,7 @@ public class WblxrController  extends BaseController {
     @RequestMapping("/insertUserExcel")
     @RequiresPermissions("jczy:wblxr:insertUserExcel")
     public Result insertUserExcel(@RequestParam("file") MultipartFile excl, HttpServletRequest request){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
         Result result = new Result();
         if(!excl.isEmpty()){//说明文件不为空
             try {
