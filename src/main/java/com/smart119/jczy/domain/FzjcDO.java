@@ -4,7 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,7 +16,7 @@ import java.util.Date;
 
 /**
  * 辅助决策
- * 
+ *
  * @author wangguangyu
  * @email wangguangyu@sz000673.com
  * @date 2021-02-02 10:22:35
@@ -20,15 +24,19 @@ import java.util.Date;
 @TableName("jczy_fzjc")
 public class FzjcDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//主键 uuid
 	@TableId(type = IdType.INPUT)
 	private String fzjcId;
 	//标题
+	@NotBlank(message = "标题不能为空")
+	@Length(min = 2, max = 200, message = "标题长度在1到100字符")
 	private String bt;
 	//辅助决策类型代码 （sys_dict表 type为FZJCLXDM的value值）
+	@NotBlank(message = "辅助决策类型代码不能为空")
 	private String fzjclxdm;
 	//辅助决策内容（页面用富文本编辑器编辑）
+	@NotBlank(message = "辅助决策内容不能为空")
 	private String fzjcnr;
 	//创建时间
 	private Date cdate;
