@@ -57,19 +57,27 @@ function validateRule() {
 	$("#signupForm").validate({
 		rules : {
 			zzdymc : {
-				required : true
+				required : true,
+                maxlength:50
 			},
 			zzdylxdm:{
 				required : true
-			}
+			},
+            zzrw:{
+                required : true,
+                maxlength:300
+            }
 		},
 		messages : {
 			zzdymc : {
-				required : icon + "请输入作战单元名称"
+				required : "请输入作战单元名称"
 			},
 			zzdylxdm : {
-				required : icon + "请输入作战单元类型"
-			}
+				required : "请选择作战单元类型"
+			},
+            zzrw : {
+                required : "请输入作战任务"
+            }
 		}
 	})
 }

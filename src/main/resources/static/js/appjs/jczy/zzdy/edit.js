@@ -50,18 +50,32 @@ function update() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    $("#signupForm").validate({
+        rules : {
+            zzdymc : {
+                required : true,
+                maxlength:50
+            },
+            zzdylxdm:{
+                required : true
+            },
+            zzrw:{
+                required : true,
+                maxlength:300
+            }
+        },
+        messages : {
+            zzdymc : {
+                required : "请输入作战单元名称"
+            },
+            zzdylxdm : {
+                required : "请选择作战单元类型"
+            },
+            zzrw : {
+                required : "请输入作战任务"
+            }
+        }
+    })
 }
 function add() {
 	var zzjg=$('#xfjyjgTywysbm').val();
