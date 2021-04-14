@@ -104,7 +104,8 @@ function getAppList(objId,selected){
           $("#"+objId).empty();
           $("#"+objId).append('<option value="" >--请选择应用--</option>');
           $.each(list,function(i,item){
-            if(selected!=null && selected==item.value){
+          	console.log( item);
+            if(selected!=null && selected==item.id){
               $("#"+objId).append('<option id="'+item.id+'" value="'+item.id+'" selected="selected">'+item.name+'</option>');
             }else{
               $("#"+objId).append('<option id="'+item.id+'" value="'+item.id+'">'+item.name+'</option>');
