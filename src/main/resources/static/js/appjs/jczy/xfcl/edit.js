@@ -83,16 +83,73 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
         ignore: "",//开启对hidden元素的验证
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
+        rules : {
+            clmc : {
+                required : true,
+                maxlength : 50
+            },
+            jdchphm : {
+                required : true,
+                maxlength : 15
+            },
+            clsbdh : {
+                required : true,
+                maxlength : 25
+            },
+            dwsb : {
+                required : true,
+                maxlength : 100
+            },
+            dwsbSimkkh : {
+                required : true,
+                maxlength : 29
+            },
+            sccjDwmc : {
+                required : true,
+                maxlength : 100
+            },
+            shfwDwmc : {
+                required : true,
+                maxlength : 100
+            },
+            bz : {
+                required : true,
+                maxlength : 300
+            },
+            clxnzbJyqk : {
+                required : true,
+                maxlength : 300
+            }
+        },
+        messages : {
+            clmc : {
+                required : "请输入车辆名称"
+            },
+            jdchphm : {
+                required : "请输入机动车号牌号码"
+            },
+            clsbdh : {
+                required : "请输入车辆识别代号"
+            },
+            dwsb : {
+                required : "请输入定位设备"
+            },
+            dwsbSimkkh : {
+                required : "请输入定位设备SIM卡卡号"
+            },
+            sccjDwmc : {
+                required : "请输入生产厂家"
+            },
+            shfwDwmc : {
+                required : "请输入售后服务_单位名称"
+            },
+            bz : {
+                required : "请输入备注"
+            },
+            clxnzbJyqk : {
+                required : "请输入车辆性能指标_简要情况"
+            }
+        }
 	})
 }
 

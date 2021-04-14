@@ -32,14 +32,80 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
-			}
+            mc : {
+                required : true,
+                maxlength:50
+            },
+            dzmc : {
+                required : true,
+                maxlength:100
+            },
+            ssldMc : {
+                required : true,
+                maxlength:100
+            },
+            wbdwDwmc : {
+                required : true,
+                maxlength:100
+            },
+            lxrXm : {
+                required : true,
+                maxlength:50
+            },
+            lxrLxdh : {
+                required : true,
+                digits:true,
+                maxlength:18
+            },
+            qsxsJyqk : {
+                required : true,
+                maxlength:300
+            },
+            tcwzDdmc : {
+                required : true,
+                maxlength:100
+            },
+            gsDwmc : {
+                required : true,
+                maxlength:100
+            },
+            glDwmc : {
+                required : true,
+                maxlength:100
+            }
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
+            mc : {
+                required :  "请输入消防水池名称"
+            },
+            dzmc : {
+                required :  "请输入消防水池地址"
+            },
+            ssldMc : {
+                required :  "请输入所属路段名称"
+            },
+            wbdwDwmc : {
+                required :  "请输入维保单位名称"
+            },
+            lxrXm : {
+                required :  "请输入联系人"
+            },
+            lxrLxdh : {
+                required :  "请输入联系电话",
+                digits : "请输入数字格式"
+            },
+            qsxsJyqk : {
+                required :  "请输入取水形式_简要情况"
+            },
+            tcwzDdmc : {
+                required :  "请输入停车位置地点名称"
+            },
+            gsDwmc : {
+                required :  "请输入供水单位名称"
+            },
+            glDwmc : {
+                required :  "请输入管理单位名称"
+            }
 		}
 	})
 }

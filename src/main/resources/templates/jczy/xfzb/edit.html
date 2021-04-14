@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">消防装备器材名称：</label>
                             <div class="col-sm-2">
-                                <input id="xfzbMc" name="xfzbMc" class="form-control" type="text" th:value="${xfzb.xfzbMc}" title="请输入名称" required>
+                                <input id="xfzbMc" name="xfzbMc" class="form-control" type="text" th:value="${xfzb.xfzbMc}">
                             </div>
                             <label class="col-sm-2 control-label">消防装备器材分类：</label>
                             <div class="col-sm-2">
@@ -90,7 +90,7 @@
                             </div>
                             <label class="col-sm-2 control-label">参考价（元）：</label>
                             <div class="col-sm-2">
-                                <input id="ckjJe" name="ckjJe" class="form-control" type="text" th:value="${xfzb.ckjJe}">
+                                <input id="ckjJe" name="ckjJe" class="form-control" type="number" min="0" th:value="${xfzb.ckjJe}">
                             </div>
                             <label class="col-sm-2 control-label">品牌名称：</label>
                             <div class="col-sm-2">
