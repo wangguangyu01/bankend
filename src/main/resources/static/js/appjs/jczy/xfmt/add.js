@@ -63,10 +63,10 @@ function validateRule() {
         },
         messages : {
             mc : {
-                required :  "请输入消防水池名称"
+                required :  "请输入消防码头名称"
             },
             dzmc : {
-                required :  "请输入消防水池地址"
+                required :  "请输入消防码头地址"
             },
             szsyMc : {
                 required :  "请输入所在水源名称"

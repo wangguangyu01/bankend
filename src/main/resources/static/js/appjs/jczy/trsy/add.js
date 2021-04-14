@@ -32,18 +32,47 @@ function save() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
-		}
-	})
+    $("#signupForm").validate({
+        rules : {
+            mc : {
+                required : true,
+                maxlength:50
+            },
+            dzmc : {
+                required : true,
+                maxlength:100
+            },
+            szqkJyqk : {
+                required : true,
+                maxlength:300
+            },
+            sjbhJyqk : {
+                required : true,
+                maxlength:300
+            },
+            ksqkdJyqk : {
+                required : true,
+                maxlength:300
+            }
+        },
+        messages : {
+            mc : {
+                required :  "请输入天然水源名称"
+            },
+            dzmc : {
+                required :  "请输入天然水源地址"
+            },
+            szqkJyqk : {
+                required :  "请输入水质情况简要情况"
+            },
+            sjbhJyqk : {
+                required :  "请输入四季变化简要情况"
+            },
+            ksqkdJyqk : {
+                required :  "请输入枯水期跨度简要情况"
+            }
+        }
+    })
 }
 
 var openMap = function(){
