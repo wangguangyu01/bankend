@@ -152,6 +152,7 @@ function save() {
 			}
 		},
 		error : function(request) {
+
 			parent.layer.alert("Connection error");
 		},
 		success : function(data) {
