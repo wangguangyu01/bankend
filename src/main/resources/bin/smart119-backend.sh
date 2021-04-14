@@ -89,7 +89,7 @@ stop(){
 }
 
 status(){
-	ps -ef | grep `cat $pid_file`
+	ps -ef | grep `cat $pid_file` | grep -v grep
 	RETVAL=$?
     if [ $RETVAL -eq "0" ]
     then
