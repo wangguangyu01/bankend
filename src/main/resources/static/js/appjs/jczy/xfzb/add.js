@@ -3,6 +3,7 @@ $().ready(function() {
     getSelectAll("XFZBLXDM","XFZBLXDM-DIV","xfzblxdm","xfzblxdm-title");
     getSelectByType("JLDLDWDM","jldldwdm",null);
     getSelectByType("XFZBZTLBDM","xfzbztlbdm",null);
+    getSelectAll("JLDLDWDM","JLDLDWDM-DIV","jldldwdm","jldldwdm-title");
     initFileInput("input-id");
 });
 $("body").delegate("label.error", "click", function(){

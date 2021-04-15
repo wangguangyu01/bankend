@@ -46,9 +46,9 @@
         FROM
             jczy_xfzb t
             LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
-            left join sys_dict d on t.JLDLDWDM=d.`value` and d.description='计量度量单位代码'
-            left join sys_dict d1 on t.XFZBZTLBDM=d1.`value` and d1.description='消防装备状态类别代码'
-            left join sys_dict d2 on t.XFZBLXDM=d2.`value` and d2.description='消防装备器材分类与代码'
+            left join sys_dict d on t.JLDLDWDM=d.`value` and d.type='JLDLDWDM' and d.`value` !=''
+            left join sys_dict d1 on t.XFZBZTLBDM=d1.`value` and d1.type='XFZBZTLBDM' and d1.`value` !=''
+            left join sys_dict d2 on t.XFZBLXDM=d2.`value` and d2.type='XFZBLXDM' and d2.`value` !=''
             where t.XFZB_TYWYSBM = #{value}
 	</select>
 
@@ -95,9 +95,9 @@
         FROM
         jczy_xfzb t
         LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
-        left join sys_dict d on t.JLDLDWDM=d.`value` and d.description='计量度量单位代码'
-        left join sys_dict d1 on t.XFZBZTLBDM=d1.`value` and d1.description='消防装备状态类别代码'
-        left join sys_dict d2 on t.XFZBLXDM=d2.`value` and d2.description='消防装备器材分类与代码'
+        left join sys_dict d on t.JLDLDWDM=d.`value` and d.type='JLDLDWDM' and d.`value` !=''
+        left join sys_dict d1 on t.XFZBZTLBDM=d1.`value` and d1.type='XFZBZTLBDM' and d1.`value` !=''
+        left join sys_dict d2 on t.XFZBLXDM=d2.`value` and d2.type='XFZBLXDM' and d2.`value` !=''
         where t.status=0
             <if test="xfzbTywysbm != null and xfzbTywysbm != ''">and t.XFZB_TYWYSBM = #{xfzbTywysbm}</if>
             <if test="xfzbMc != null and xfzbMc != ''">and t.XFZB_MC like '%${xfzbMc}%'</if>
