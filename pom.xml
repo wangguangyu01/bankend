@@ -403,6 +403,12 @@
                         <exclude>public/</exclude>
                         <exclude>static/</exclude>
                         <exclude>templates/</exclude>
+                        <exclude>bin/</exclude>
+                        <exclude>config/</exclude>
+                        <exclude>*.yml</exclude>
+                        <exclude>*.xml</exclude>
+                        <exclude>*.properties</exclude>
+                        <exclude>*.json</exclude>
                     </excludes>
                     <archive>
                         <manifest>

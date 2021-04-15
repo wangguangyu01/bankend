@@ -39,18 +39,84 @@ function update() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    $("#signupForm").validate({
+        rules : {
+            mc : {
+                required : true,
+                maxlength:50
+            },
+            dzmc : {
+                required : true,
+                maxlength:100
+            },
+            dllkldJyqk : {
+                required : true,
+                maxlength:300
+            },
+            ssgwMc : {
+                required : true,
+                maxlength:100
+            },
+            qsxsJyqk : {
+                required : true,
+                maxlength:300
+            },
+            gsDwmc : {
+                required : true,
+                maxlength:100
+            },
+            glDwmc : {
+                required : true,
+                maxlength:100
+            },
+            wbDwmc : {
+                required : true,
+                maxlength:100
+            },
+            lxrXm : {
+                required : true,
+                maxlength:50
+            },
+            lxrLxdh : {
+                required : true,
+                digits:true,
+                maxlength:18
+            }
+        },
+        messages : {
+            mc : {
+                required :  "请输入消火栓名称"
+            },
+            dzmc : {
+                required :  "请输入消火栓地址"
+            },
+            dllkldJyqk : {
+                required :  "请输入道路路口路段_简要情况"
+            },
+            ssgwMc : {
+                required :  "请输入所属管网名称"
+            },
+            qsxsJyqk : {
+                required :  "请输入取水形式_简要情况"
+            },
+            gsDwmc : {
+                required :  "请输入供水单位名称"
+            },
+            glDwmc : {
+                required :  "请输入管理单位名称"
+            },
+            wbDwmc : {
+                required :  "请输入维保单位名称"
+            },
+            lxrXm : {
+                required :  "请输入联系人"
+            },
+            lxrLxdh : {
+                required :  "请输入联系电话",
+                digits : "请输入数字格式"
+            }
+        }
+    })
 }
 var openDept = function(){
     layer.open({
