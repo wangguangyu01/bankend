@@ -131,6 +131,25 @@ function update() {
 		url : "/jczy/fzjc/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
+		beforeSend: function() {
+			var fzjcnrHtml = $("#fzjcnr").val();
+			console.log( "vewvew---》"+fzjcnrHtml);
+			if (fzjcnrHtml !== '') {
+				fzjcnrHtml = fzjcnrHtml.replace(/&nbsp;/ig,'');
+			}
+			if (fzjcnrHtml.trim() === '') {
+				$('#editorEdit').append('<label id="fzjcnr-error" class="error" for="fzjcnr" style="display: inline-block;>'
+					+ '<i class="fa fa-times-circle"></i>决策内容不能为空</label>');
+				$('#fzjcnr').attr("class", "form-control error");
+				$('#fzjcnr').attr("aria-invalid", "true");
+				return false;
+			} else {
+				$('#fzjcnr').attr("class", "form-control valid");
+				$('#fzjcnr').attr("aria-invalid", "false");
+				$('#editorEdit').append('<label id="fzjcnr-error" class="error" for="fzjcnr" style="display: none;>'
+					+ '<i class="fa fa-times-circle"></i></label>');
+			}
+		},
 		error : function(request) {
 			parent.layer.alert("Connection error");
 		},
@@ -153,13 +172,21 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
+			bt : {
+				required : true,
+				rangelength: [1, 100]
+			},
+			fzjclxdm : {
 				required : true
 			}
 		},
 		messages : {
-			name : {
-				required : icon + "请输入名字"
+			bt : {
+				required : icon + "请输入标题",
+				rangelength: icon + "标题的长度是1到100字符"
+			},
+			fzjclxdm : {
+				required : icon + "决策类型必选"
 			}
 		}
 	})

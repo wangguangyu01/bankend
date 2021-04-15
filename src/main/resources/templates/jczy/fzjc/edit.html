@@ -37,6 +37,7 @@
                         </div>-->
 						<div class="form-group">
 							<label class="col-sm-3 control-label">辅助决策内容：</label>
+                            <input type="hidden" name="fzjcnrHidden" id="fzjcnrHidden"/>
                             <div class="addToolbarDiv form-group" style="width: 455px; margin-left: 15px">
                                 <div class="col-sm-8">
                                     <textarea id="fzjcnr" style="display: none"  class="form-control" name="fzjcnr" required><p th:utext="${fzjc.fzjcnr}"></p></textarea>
@@ -44,6 +45,7 @@
                                 <div id="editorEdit" class="textContainer">
                                     <p th:utext="${fzjc.fzjcnr}"></p>
                                 </div>
+
                             </div>
 						</div>
 
