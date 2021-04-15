@@ -291,7 +291,7 @@
 								</div>
 								<label class="col-sm-2 control-label">移动_联系电话：</label>
 								<div class="col-sm-4">
-									<input id="ydLxdh" name="ydLxdh" class="form-control" type="text" required  oninput = "value=value.replace(/[^\d]/g,'')">
+									<input id="ydLxdh" name="ydLxdh" class="form-control" type="text" required  oninput = "value=value.replace(/[^\d]/g,'')" pattern="(\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$">
 								</div>
 
 							</div>
