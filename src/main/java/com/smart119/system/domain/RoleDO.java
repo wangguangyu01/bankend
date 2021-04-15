@@ -1,13 +1,19 @@
 package com.smart119.system.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import java.sql.Timestamp;
 import java.util.List;
 
 public class RoleDO {
 	
 	private Long roleId;
+
+	@Length(min= 2, max=100, message = "角色名超出范围限制{min}-{max}")
 	private String roleName;
 	private String roleSign;
+
+	@Length(min= 2, max=100, message = "备注超出范围限制{min}-{max}")
 	private String remark;
 	private Long userIdCreate;
 	private Timestamp gmtCreate;
