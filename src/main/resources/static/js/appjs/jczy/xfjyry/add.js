@@ -84,6 +84,14 @@ function validateRule() {
             },
             isCreateUser : {
                 required : true
+            },
+            txdz : {
+                required : false,
+                maxlength:100
+            },
+            bz : {
+                required : false,
+                maxlength:500
             }
 		},
 		messages : {
@@ -178,3 +186,18 @@ $.fn.serializeObject = function () {
 
     return o;
 };
+
+function checkPhone(str) {
+    if (str.length > 20) {
+        return false;
+    }
+    var patternStr = "(0123456789-)";
+    var strlength = str.length;
+    for (var i = 0; i < strlength; i++) {
+        var tempchar = str.substring(i, i + 1);
+        if (patternStr.indexOf(tempchar) < 0) {
+            return false;
+        }
+    }
+    return true;
+}

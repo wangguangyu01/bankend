@@ -104,6 +104,14 @@ function validateRule() {
             },
             isCreateUser : {
                 required : true
+            },
+            txdz : {
+                required : false,
+                maxlength:100
+            },
+            bz : {
+                required : false,
+                maxlength:500
             }
 		},
 		messages : {
