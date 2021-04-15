@@ -7,11 +7,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 手机号码验证
+ * 电话号码验证类 - 手机号、座机号
  */
 public class PhoneValidatotClass implements ConstraintValidator<PhoneValidator, String> {
 
-    private static final Pattern PHONE_PATTERN = Pattern.compile("^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$");
+    /**
+     * 固定电话 正则
+     */
+    private static final Pattern PHONE_PATTERN = Pattern.compile("[0-9-()（）]{7,18}");
+
+    /**
+     * 移动电话 正则
+     */
+    private static final Pattern MOBILE_PHONE_PATTERN = Pattern.compile("^((13[0-9])|(15[^4])|(18[0,2,3,5-9])|(17[0-8])|(147))\\d{8}$");
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
@@ -19,7 +27,15 @@ public class PhoneValidatotClass implements ConstraintValidator<PhoneValidator, 
             return false;
         }
         Matcher m = PHONE_PATTERN.matcher(value);
+
+        if(m.matches()){
+            return m.matches();
+        }
+
+
+        m = MOBILE_PHONE_PATTERN.matcher(value);
         return m.matches();
+
     }
 
     public static void main(String[] args) {

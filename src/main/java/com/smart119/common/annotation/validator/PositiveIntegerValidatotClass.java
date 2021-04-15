@@ -8,24 +8,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 手机号码验证
+ * 正整数效验
  */
-public class EmailValidatotClass implements ConstraintValidator<EmailValidator, String> {
+public class PositiveIntegerValidatotClass implements ConstraintValidator<PositiveIntegerValidator, String> {
 
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}");
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("[1-9]\\d*");
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
         if(StringUtils.isBlank(value)){
             return false;
         }
-        Matcher m = EMAIL_PATTERN.matcher(value);
+        Matcher m = NUMBER_PATTERN.matcher(value);
         return m.matches();
     }
 
     public static void main(String[] args) {
-        String email = "45@qc.co";
-        System.out.println(EMAIL_PATTERN.matcher(email).matches());
+        String email = "2548";
+        System.out.println(NUMBER_PATTERN.matcher(email).matches());
     }
 
 }
