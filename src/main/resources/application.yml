@@ -9,9 +9,9 @@ server:
 #  basic:
 #    enabled: false
 spring:
-  #thymeleaf:
+  thymeleaf:
     #mode: LEGACYHTML5
-    #cache: false
+    cache: false
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss

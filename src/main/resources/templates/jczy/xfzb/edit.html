@@ -60,7 +60,6 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="signupForm">
                         <input id="xfzbTywysbm" name="xfzbTywysbm" th:value="${xfzb.xfzbTywysbm}" type="hidden">
-                        <input id="jldldwdmVal" th:value="${xfzb.jldldwdm}" type="hidden">
                         <input id="xfzbztlbdmVal" th:value="${xfzb.xfzbztlbdm}" type="hidden">
                         <input id="attachmentDOList" th:value="${attachmentDOList}" type="hidden">
                         <div class="form-group">
@@ -112,6 +111,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">计量度量单位：</label>
+                            <div class="col-sm-2">
+                                <div class="JLDLDWDM-DIV dropdown">
+                                    <a role="button" data-toggle="dropdown" class="btn btn-white"  style="width: 100%;text-align: left;"><span id="jldldwdm-title" th:text="${xfzb.jldldw}==null?'--请选择--':${xfzb.jldldw}">--请选择--</span> <span class="caret pull-right" style="position: relative;top: 10px;"></span></a>
+                                </div>
+                                <input type="text" name="jldldwdm" id="jldldwdm" th:value="${xfzb.jldldwdm}" class="validate_hidden"/>
+                            </div>
                             <label class="col-sm-2 control-label">装备入库日期：</label>
                             <div class="col-sm-2">
                                 <input type="text" class="laydate-icon layer-date form-control" id="zbrkRq" name="zbrkRq" placeholder="请选择装备入库日期"
@@ -121,18 +127,6 @@
                             <div class="col-sm-2">
                                 <input type="text" class="laydate-icon layer-date form-control" id="zbsxRq" name="zbsxRq" placeholder="请选择装备失效日期"
                                        onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfzb.zbsxRq}==null?null:${#dates.format(xfzb.zbsxRq,'yyyy-MM-dd')}"/>
-                            </div>
-                            <!--<label class="col-sm-2 control-label">计量度量单位：</label>-->
-                            <!--<div class="col-sm-2">-->
-                                <!--<select class="form-control" id="jldldwdm" name="jldldwdm">-->
-                                    <!--<option value="">&#45;&#45;请选择&#45;&#45;</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                            <label class="col-sm-2 control-label">消防装备状态：</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="xfzbztlbdm" name="xfzbztlbdm" title="请选择消防装备状态" required>
-                                    <option value="">--请选择--</option>
-                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -173,7 +167,12 @@
                             <div class="col-sm-2">
                                 <input id="tj" name="tj" class="form-control" type="number" th:value="${xfzb.tj}" min="0">
                             </div>
-
+                            <label class="col-sm-2 control-label">消防装备状态：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="xfzbztlbdm" name="xfzbztlbdm" title="请选择消防装备状态" required>
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">主要成分_简要情况：</label>

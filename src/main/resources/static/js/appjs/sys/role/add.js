@@ -77,12 +77,26 @@ function validateRule() {
 	$("#signupForm").validate({
 		rules : {
 			roleName : {
-				required : true
+				required : true,
+				minlength : 2,
+				maxlength : 100
+			},
+			remark : {
+				required : true,
+				minlength : 2,
+				maxlength : 100
 			}
 		},
 		messages : {
 			roleName : {
-				required : icon + "请输入角色名"
+				required : icon + "请输入角色名",
+				minlength : icon + "角色名必须2个字符以上",
+				maxlength : icon + "角色名必须100个字符以内"
+			},
+			remark : {
+				required : icon + "请输入备注",
+				minlength : icon + "备注必须2个字符以上",
+				maxlength : icon + "备注必须100个字符以内"
 			}
 		}
 	});

@@ -30,7 +30,7 @@ public class FzjcDO implements Serializable {
 	private String fzjcId;
 	//标题
 	@NotBlank(message = "标题不能为空")
-	@Length(min = 2, max = 200, message = "标题长度在1到100字符")
+	@Length(min = 1, max = 100, message = "标题长度在1到100字符")
 	private String bt;
 	//辅助决策类型代码 （sys_dict表 type为FZJCLXDM的value值）
 	@NotBlank(message = "辅助决策类型代码不能为空")

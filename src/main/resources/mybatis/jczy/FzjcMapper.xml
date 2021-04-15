@@ -72,35 +72,35 @@
     <sql id="queryParam">
         <if test="params != null">
             <if test="params.bt != null and params.bt !=''">
-                and BT = #{params.bt}
+                and fzjc.BT = #{params.bt}
             </if>
         </if>
     </sql>
 
     <select id="selectPageVo" resultType="com.smart119.jczy.domain.FzjcDO">
-        select FZJC_ID as fzjcId, bt as bt, fzjclxdm as fzjclxdm, fzjcnr as fzjcnr, cdate as cdate, cperson as cperson, status as status, d.name as fzjclxdmName from jczy_fzjc fzjc, sys_dict d
-        where fzjc.FZJCLXDM = d.value and d.value != '' and d.value is not null and d.type = 'FZJCLXDM' <include refid="queryParam"/>
+        select fzjc.FZJC_ID as fzjcId, fzjc.bt as bt, fzjc.fzjclxdm as fzjclxdm, fzjc.fzjcnr as fzjcnr, fzjc.cdate as cdate, fzjc.cperson as cperson, fzjc.status as status, d.name as fzjclxdmName from jczy_fzjc fzjc, sys_dict d
+        where fzjc.FZJCLXDM = d.value and d.value != '' and d.value is not null and d.type = 'FZJCLXDM' <include refid="queryParam"/> order by fzjc.cdate desc
     </select>
 
     <insert id="save" parameterType="com.smart119.jczy.domain.FzjcDO">
 		insert into jczy_fzjc
 		(
-			`FZJC_ID`, 
-			`BT`, 
-			`FZJCLXDM`, 
-			`FZJCNR`, 
-			`cdate`, 
-			`cperson`, 
+			`FZJC_ID`,
+			`BT`,
+			`FZJCLXDM`,
+			`FZJCNR`,
+			`cdate`,
+			`cperson`,
 			`status`
 		)
 		values
 		(
-			#{fzjcId}, 
-			#{bt}, 
-			#{fzjclxdm}, 
-			#{fzjcnr}, 
-			#{cdate}, 
-			#{cperson}, 
+			#{fzjcId},
+			#{bt},
+			#{fzjclxdm},
+			#{fzjcnr},
+			#{cdate},
+			#{cperson},
 			#{status}
 		)
 	</insert>

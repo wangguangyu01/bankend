@@ -2,6 +2,11 @@
 $().ready(function() {
 	validateRule();
 	// $("#signupForm").validate();
+
+	$.validator.addMethod("isEmail", function(value, element) {
+		var score = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
+		return this.optional(element) || (score.test(value));
+	}, "邮箱格式错误");
 });
 
 $.validator.setDefaults({
@@ -64,7 +69,9 @@ function validateRule() {
 	$("#signupForm").validate({
 		rules : {
 			name : {
-				required : true
+				required : true,
+				minlength : 2,
+				maxlength : 50
 			},
 			username : {
 				required : true,
@@ -81,7 +88,7 @@ function validateRule() {
 			},
 			email : {
 				required : true,
-				email : true
+				isEmail : true
 			},
 			topic : {
 				required : "#newsletter:checked",
@@ -92,7 +99,10 @@ function validateRule() {
 		messages : {
 
 			name : {
-				required : icon + "请输入姓名"
+				required : icon + "请输入姓名",
+				minlength : icon + "姓名必须两个字符以上",
+				maxlength : icon + "姓名必须50个字符以内"
+
 			},
 			username : {
 				required : icon + "请输入您的用户名",
@@ -107,7 +117,10 @@ function validateRule() {
 				minlength : icon + "密码必须6个字符以上",
 				equalTo : icon + "两次输入的密码不一致"
 			},
-			email : icon + "请输入您的E-mail",
+			email : {
+				required : icon + "请输入您的E-mail",
+				isEmail : icon + "请输入正确的E-mail地址",
+			}
 		}
 	})
 }

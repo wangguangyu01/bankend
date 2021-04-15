@@ -1,6 +1,7 @@
 $().ready(function() {
 	//文本域获取富文本编辑器内容
 	var fzjcnr = $("#fzjcnr");
+	var fzjcnrHidden = $('#fzjcnrHidden');
 	var E = window.wangEditor;
 	var editor = new E('#editor');
 	// 自定义菜单配置
@@ -47,6 +48,7 @@ $().ready(function() {
 	editor.config.uploadVideoName = "file";
 	editor.config.onchange = function (newHtml) {
 		fzjcnr.val(newHtml);
+		fzjcnrHidden.val(editor.txt.text());
 
 	};
 	editor.config.uploadImgHooks = {
@@ -115,11 +117,14 @@ $().ready(function() {
 			console.log('customInsert', result);
 
 			// insertVideoFn 可把视频插入到编辑器，传入视频 src ，执行函数即可
-			insertVideoFn(result.fileName)
+			var url = result.fileName.replace("##serverAddr##",'');
+			insertVideoFn(url)
 		}
 	};
 	editor.create();
 	fzjcnr.val(editor.txt.html());// 初始化 textarea 的值
+	fzjcnrHidden.val(editor.txt.text());
+	console.log(editor.txt.text());
 	validateRule();
 });
 
@@ -138,13 +143,40 @@ function save() {
 		beforeSend: function() {
 			var fzjcnrHtml = $("#fzjcnr").val();
 			console.log( "vewvew---》"+fzjcnrHtml);
-			if (fzjcnrHtml === '') {
+			var fzjcnrHiddenText = $('#fzjcnrHidden').val();
+
+
+			if (fzjcnrHiddenText.trim() === '' && fzjcnrHtml.indexOf("src") === -1) {
+
 				$('#editor').append('<label id="fzjcnr-error" class="error" for="fzjcnr" style="display: inline-block;>'
 					+ '<i class="fa fa-times-circle"></i>决策内容不能为空</label>');
 				$('#fzjcnr').attr("class", "form-control error");
 				$('#fzjcnr').attr("aria-invalid", "true");
 				return false;
 			} else {
+				if (fzjcnrHtml.indexOf("video") !== -1 || fzjcnrHtml.indexOf("img") !== -1) {
+					$("div[contenteditable=true] video").each(function() {
+						var src=$(this).attr("src");
+						if (src === null || src ===  '') {
+							$('#editor').append('<label id="fzjcnr-error" class="error" for="fzjcnr" style="display: inline-block;>'
+								+ '<i class="fa fa-times-circle"></i>决策内容有错误出现空视频</label>');
+							$('#fzjcnr').attr("class", "form-control error");
+							$('#fzjcnr').attr("aria-invalid", "true");
+							return false;
+						}
+					});
+
+					$("div[contenteditable=true] img").each(function() {
+						var src=$(this).attr("src");
+						if (src === null || src ===  '') {
+							$('#editor').append('<label id="fzjcnr-error" class="error" for="fzjcnr" style="display: inline-block;>'
+								+ '<i class="fa fa-times-circle"></i>决策内容有错误出现空图片</label>');
+							$('#fzjcnr').attr("class", "form-control error");
+							$('#fzjcnr').attr("aria-invalid", "true");
+							return false;
+						}
+					});
+				}
 				$('#fzjcnr').attr("class", "form-control valid");
 				$('#fzjcnr').attr("aria-invalid", "false");
 				$('#editor').append('<label id="fzjcnr-error" class="error" for="fzjcnr" style="display: none;>'
@@ -175,36 +207,20 @@ function validateRule() {
 	$("#signupForm").validate({
 		rules : {
 			bt : {
-				required : true
+				required : true,
+				rangelength: [1, 100]
 			},
 			fzjclxdm : {
-				required : true
-			},
-			cdate: {
-				required : true
-			},
-			cperson: {
-				required : true
-			},
-			status: {
 				required : true
 			}
 		},
 		messages : {
 			bt : {
-				required : icon + "请输入标题"
+				required : icon + "请输入标题",
+				rangelength: icon + "标题的长度是1到100字符"
 			},
 			fzjclxdm : {
 				required : icon + "决策类型必选"
-			},
-			cdate : {
-				required : icon + "选择时间"
-			},
-			cperson : {
-				required : icon + "填写创建人名"
-			},
-			status: {
-				required : icon + "选择是否删除"
 			}
 		}
 	})

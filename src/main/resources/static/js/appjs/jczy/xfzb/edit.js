@@ -1,7 +1,7 @@
 $().ready(function() {
 	validateRule();
     getSelectAll("XFZBLXDM","XFZBLXDM-DIV","xfzblxdm","xfzblxdm-title");
-    //getSelectByType("JLDLDWDM","jldldwdm",$("#jldldwdmVal").val());
+    getSelectAll("JLDLDWDM","JLDLDWDM-DIV","jldldwdm","jldldwdm-title");
     getSelectByType("XFZBZTLBDM","xfzbztlbdm",$("#xfzbztlbdmVal").val());
     initFileInput("input-id");
 });

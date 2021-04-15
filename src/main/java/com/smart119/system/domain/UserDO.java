@@ -1,8 +1,12 @@
 package com.smart119.system.domain;
 
+import com.smart119.common.annotation.validator.EmailValidator;
 import com.smart119.jczy.domain.XfjyryDO;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +18,7 @@ public class UserDO implements Serializable {
     // 用户名
     private String username;
     // 用户真实姓名
+    @Length(min= 2, max=50, message = "姓名超出范围限制{min}-{max}")
     private String name;
     // 密码
     private String password;
@@ -23,7 +28,10 @@ public class UserDO implements Serializable {
     // 部门
     private Long deptId;
     private String deptName;
+
     // 邮箱
+    @NotBlank(message = "邮箱不能为空")
+    @EmailValidator
     private String email;
     // 手机号
     private String mobile;

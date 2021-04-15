@@ -13,6 +13,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -95,7 +96,7 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("system:sysDept:add")
-	public R save(DeptDO sysDept) {
+	public R save(@Validated DeptDO sysDept) {
 		//创建新数据的时候加上默认参数 创建时间、创建人、状态
 		sysDept.setCdate(new Date());
 		sysDept.setCperson(getUser().getUserId().toString());
@@ -118,7 +119,7 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("system:sysDept:edit")
-	public R update(DeptDO sysDept) {
+	public R update(@Validated DeptDO sysDept) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}

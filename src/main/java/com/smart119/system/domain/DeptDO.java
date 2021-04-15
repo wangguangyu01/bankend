@@ -1,9 +1,12 @@
 package com.smart119.system.domain;
 
+import com.smart119.common.annotation.validator.PhoneValidator;
 import com.smart119.common.domain.Distance;
 import com.smart119.common.domain.Duration;
 import com.smart119.jczy.domain.XfclDO;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Digits;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -33,12 +36,17 @@ public class DeptDO implements Serializable {
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
 	//单位名称
+	@Length(min= 2, max=100, message = "单位名称超出范围限制{min}-{max}")
 	private String dwmc;
 	//单位简称
+	@Length(min= 2, max=100, message = "单位简称超出范围限制{min}-{max}")
 	private String dwjc;
 	//联系人姓名
+	@Length(min= 2, max=50, message = "联系人姓名超出范围限制{min}-{max}")
 	private String lxrXm;
 	//联系电话
+	@PhoneValidator(message = "联系电话格式错误")
+	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String lxdh;
 	//通讯地址
 	private String txdz;
