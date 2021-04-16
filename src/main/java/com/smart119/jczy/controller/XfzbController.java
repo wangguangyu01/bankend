@@ -13,6 +13,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.XfzbDO;
@@ -106,7 +107,7 @@ public class XfzbController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfzb:add")
-	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files,XfzbDO xfzb){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files,@Validated XfzbDO xfzb){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfzb.setXfzbTywysbm(id);
 		xfzb.setCdate(new Date());
@@ -143,7 +144,7 @@ public class XfzbController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfzb:edit")
-	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,XfzbDO xfzb){
+	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,@Validated XfzbDO xfzb){
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, xfzb.getXfzbTywysbm(), "xfzb");
 		}
