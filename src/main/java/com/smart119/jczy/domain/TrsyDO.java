@@ -1,5 +1,8 @@
 package com.smart119.jczy.domain;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,12 +21,16 @@ public class TrsyDO implements Serializable {
 	//天然水源_通用唯一识别码
 	private String trsyTywysbm;
 	//名称
+	@NotBlank(message = "天然水源名称不能为空")
+	@Length(min= 1, max=100, message = "天然水源名称超出范围限制{min}-{max}")
 	private String mc;
 	//高度
 	private Double gd;
 	//水源类型代码
 	private String sylxdm;
 	//地址名称
+	@NotBlank(message = "天然水源地址不能为空")
+	@Length(min= 1, max=100, message = "天然水源地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//容积
 	private Double rj;
@@ -34,14 +41,20 @@ public class TrsyDO implements Serializable {
 	//地球纬度
 	private Double dqwd;
 	//水质情况_简要情况
+	@NotBlank(message = "水质情况简要情况不能为空")
+	@Length(min= 1, max=300, message = "水质情况简要情况超出范围限制{min}-{max}")
 	private String szqkJyqk;
 	//四季变化_简要情况
+	@NotBlank(message = "四季变化简要情况不能为空")
+	@Length(min= 1, max=300, message = "四季变化简要情况超出范围限制{min}-{max}")
 	private String sjbhJyqk;
 	//水源可用状态类别代码
 	private String sykyztlbdm;
 	//有无枯水期_判断标识
 	private Integer ywksqPdbz;
 	//枯水期跨度_简要情况
+	@NotBlank(message = "枯水期跨度简要情况不能为空")
+	@Length(min= 1, max=300, message = "枯水期跨度简要情况超出范围限制{min}-{max}")
 	private String ksqkdJyqk;
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
