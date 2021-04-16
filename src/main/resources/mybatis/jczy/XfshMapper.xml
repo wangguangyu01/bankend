@@ -324,19 +324,13 @@
 		d5.`name` area,
 		d6.`name` city,
 		d7.`name` province,
-        ROUND(
-        6378.138 * 2 * ASIN(
-        SQRT(
-        POW( SIN( ( t.DQWD * PI( ) / 180- #{wd} * PI( ) / 180 ) / 2 ), 2 ) + COS( t.DQJD * PI( ) / 180 ) * COS( #{jd} * PI( ) / 180 ) * POW( SIN( ( t.DQJD * PI( ) / 180- #{jd} * PI( ) / 180 ) / 2 ), 2 )
-        )
-        ) * 1000
-        ) AS distance
+        calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
 		FROM
 		jczy_xfsh t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
 		left join sys_dict d on t.SYKYZTLBDM=d.`value` and d.description='水源可用状态类别代码'
 		left join sys_dict d1 on t.XFJSGWXSLXDM=d1.`value` and d1.description='消防给水管网形式类型代码'
-		LEFT JOIN sys_dict d5 ON t.XZQHDM = d5.`value`
+        LEFT JOIN sys_dict d5 ON t.XZQHDM = d5.`value` and d5.type='XZQHDM' and d5.`value`!=''
 		LEFT JOIN sys_dict d6 ON d6.id = d5.parent_id
 		LEFT JOIN sys_dict d7 ON d7.id = d6.parent_id
 		where t.status =0

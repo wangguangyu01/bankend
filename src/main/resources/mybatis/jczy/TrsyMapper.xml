@@ -165,13 +165,7 @@
     <select id="getTrsyByRange" resultType="com.smart119.jczy.domain.TrsyDO">
 		select t.`TRSY_TYWYSBM`,t.`MC`,t.`GD`,t.`SYLXDM`,t.`DZMC`,t.`RJ`,t.`MJ`,t.`DQJD`,t.`DQWD`,t.`SZQK_JYQK`,t.`SJBH_JYQK`,t.`SYKYZTLBDM`,t.`YWKSQ_PDBZ`,t.`KSQKD_JYQK`,
 		t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG,
-		ROUND(
-		6378.138 * 2 * ASIN(
-		SQRT(
-		POW( SIN( ( t.DQWD * PI( ) / 180- #{wd} * PI( ) / 180 ) / 2 ), 2 ) + COS( t.DQJD * PI( ) / 180 ) * COS( #{jd} * PI( ) / 180 ) * POW( SIN( ( t.DQJD * PI( ) / 180- #{jd} * PI( ) / 180 ) / 2 ), 2 )
-		)
-		) * 1000
-		) AS distance
+        calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
 		from jczy_trsy t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
 		HAVING distance <![CDATA[ <= ]]> #{distance}
