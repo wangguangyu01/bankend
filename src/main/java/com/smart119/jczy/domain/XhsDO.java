@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+import com.smart119.common.annotation.validator.PhoneValidator;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,8 +22,12 @@ public class XhsDO implements Serializable {
 	//消火栓_通用唯一识别码
 	private String xhsTywysbm;
 	//名称
+	@NotBlank(message = "消火栓名称不能为空")
+	@Length(min= 1, max=100, message = "消火栓名称超出范围限制{min}-{max}")
 	private String mc;
 	//地址名称
+	@NotBlank(message = "地址不能为空")
+	@Length(min= 1, max=100, message = "地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//消火栓类别代码
 	private String xhslbdm;
@@ -30,6 +38,8 @@ public class XhsDO implements Serializable {
 	//地球纬度
 	private Double dqwd;
 	//道路路口路段_简要情况
+	@NotBlank(message = "道路路口路段_简要情况不能为空")
+	@Length(min= 1, max=300, message = "道路路口路段_简要情况超出范围限制{min}-{max}")
 	private String dllkldJyqk;
 	//消火栓放置形式类别代码
 	private String xhsfzxslbdm;
@@ -38,6 +48,8 @@ public class XhsDO implements Serializable {
 	//取水形式_简要情况
 	private String qsxsJyqk;
 	//所属管网_名称
+	@NotBlank(message = "所属管网_名称不能为空")
+	@Length(min= 1, max=100, message = "所属管网_名称超出范围限制{min}-{max}")
 	private String ssgwMc;
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
@@ -48,14 +60,24 @@ public class XhsDO implements Serializable {
 	//流量
 	private Double ll;
 	//供水_单位名称
+	@NotBlank(message = "供水_单位名称不能为空")
+	@Length(min= 1, max=100, message = "供水_单位名称超出范围限制{min}-{max}")
 	private String gsDwmc;
 	//管理_单位名称
+	@NotBlank(message = "管理_单位名称不能为空")
+	@Length(min= 1, max=100, message = "管理_单位名称超出范围限制{min}-{max}")
 	private String glDwmc;
 	//维保_单位名称
+	@NotBlank(message = "维保_单位名称不能为空")
+	@Length(min= 1, max=100, message = "维保_单位名称超出范围限制{min}-{max}")
 	private String wbDwmc;
 	//联系人
+	@NotBlank(message = "联系人不能为空")
+	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
 	private String lxrXm;
 	//联系电话
+	@PhoneValidator(message = "联系电话格式错误")
+	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String lxrLxdh;
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
