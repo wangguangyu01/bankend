@@ -1,5 +1,7 @@
 package com.smart119.xwzx.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,6 +20,7 @@ public class XwZxDO implements Serializable {
 	//XW_ZX_ID
 	private String xwZxId;
 	//资讯标题
+	@Length(min= 2, max=100, message = "资讯标题超出范围限制{min}-{max}")
 	private String bt;
 	//咨询内容
 	private String zxNr;
