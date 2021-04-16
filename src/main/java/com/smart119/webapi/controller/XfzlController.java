@@ -11,11 +11,14 @@ import com.smart119.system.domain.UserDO;
 import com.smart119.webapi.domain.XfzlDO;
 import com.smart119.webapi.service.XfzlService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,7 +84,11 @@ public class XfzlController extends BaseController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("back:xfzl:add")
-    public R save(@RequestPart(value = "file", required = false) MultipartFile[] file, XfzlDO xfzl) {
+    public R save(@RequestPart(value = "file", required = false) MultipartFile[] file, @Validated XfzlDO xfzl,
+                  BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return R.error(bindingResult.getFieldError().getDefaultMessage());
+        }
         UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
         if (xfzlService.save(file, xfzl, user.getUsername()) > 0) {
             return R.ok();
@@ -112,7 +119,12 @@ public class XfzlController extends BaseController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("back:xfzl:edit")
-    public R update(@RequestPart(value = "file", required = false) MultipartFile[] file, XfzlDO xfzl) {
+    public R update(@RequestPart(value = "file", required = false) MultipartFile[] file,
+                    @Validated XfzlDO xfzl,
+                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return R.error(bindingResult.getFieldError().getDefaultMessage());
+        }
         UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
         int count = xfzlService.update(file, xfzl, user.getUsername());
         if (count > 0) {
@@ -130,6 +142,9 @@ public class XfzlController extends BaseController {
     @RequestMapping("/updateShowZt")
     @RequiresPermissions("back:xfzl:edit")
     public R updateShowZt(XfzlDO xfzl) {
+        if (StringUtils.isBlank(xfzl.getXfzlId())) {
+            return R.error("缺少消防战例唯一标识码");
+        }
         UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
         int count = xfzlService.updateShowZt( xfzl, user.getUsername());
         if (count >= 0) {
@@ -146,6 +161,9 @@ public class XfzlController extends BaseController {
     @RequestMapping("/updateShowOrderNum")
     @RequiresPermissions("back:xfzl:edit")
     public R updateShowOrderNum(XfzlDO xfzl) {
+        if (StringUtils.isBlank(xfzl.getXfzlId())) {
+            return R.error("缺少消防战例唯一标识码");
+        }
         UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
         int count = xfzlService.updateShowOrderNum( xfzl, user.getUsername());
         if (count >= 0) {
