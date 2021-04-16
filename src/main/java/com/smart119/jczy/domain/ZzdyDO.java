@@ -1,6 +1,9 @@
 package com.smart119.jczy.domain;
 
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -19,12 +22,16 @@ public class ZzdyDO implements Serializable {
 	//
 	private String zzdyTywybs;
 	//作战单元名称
+	@NotBlank(message = "作战单元名称不能为空")
+	@Length(min= 1, max=15, message = "作战单元名称超出范围限制{min}-{max}")
 	private String zzdymc;
 	//作战单元类型代码
 	private String zzdylxdm;
 	//编组数量
 	private Integer bzsl;
 	//作战任务
+	@NotBlank(message = "作战任务不能为空")
+	@Length(min= 1, max=300, message = "作战任务超出范围限制{min}-{max}")
 	private String zzrw;
 	//创建时间
 	private Date cdate;

@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.TrsyDO;
@@ -103,7 +104,7 @@ public class TrsyController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:trsy:add")
-	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles, TrsyDO trsy){
+	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated TrsyDO trsy){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		trsy.setTrsyTywysbm(id);
 		if(sjFiles!=null && sjFiles.length>0) {
@@ -123,7 +124,7 @@ public class TrsyController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:trsy:edit")
-	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles, TrsyDO trsy){
+	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated TrsyDO trsy){
 		if(sjFiles!=null && sjFiles.length>0) {
 			attachmentService.ftpUpload(sjFiles, trsy.getTrsyTywysbm(), "trsysjt");
 		}

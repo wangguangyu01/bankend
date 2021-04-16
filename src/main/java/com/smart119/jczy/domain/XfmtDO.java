@@ -1,5 +1,8 @@
 package com.smart119.jczy.domain;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,8 +21,12 @@ public class XfmtDO implements Serializable {
 	//取水码头_通用唯一识别码
 	private String qsmtTywysbm;
 	//名称
+	@NotBlank(message = "消防码头名称不能为空")
+	@Length(min= 1, max=100, message = "消防码头名称超出范围限制{min}-{max}")
 	private String mc;
 	//地址名称
+	@NotBlank(message = "消防码头地址不能为空")
+	@Length(min= 1, max=100, message = "消防码头地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//地球经度
 	private Double dqjd;
@@ -28,20 +35,30 @@ public class XfmtDO implements Serializable {
 	//水源可用状态类别代码
 	private String sykyztlbdm;
 	//所在水源_名称
+	@NotBlank(message = "所在水源名称不能为空")
+	@Length(min= 1, max=100, message = "所在水源名称超出范围限制{min}-{max}")
 	private String szsyMc;
 	//所属路段_名称
+	@NotBlank(message = "所属路段名称不能为空")
+	@Length(min= 1, max=100, message = "所属路段名称超出范围限制{min}-{max}")
 	private String ssldMc;
 	//取水形式_简要情况
+	@NotBlank(message = "取水形式简要情况不能为空")
+	@Length(min= 1, max=300, message = "取水形式简要情况超出范围限制{min}-{max}")
 	private String qsxsJyqk;
 	//取水_高度
 	private Double qsGd;
 	//水源标高差_高度
 	private Double sybgcGd;
 	//停车位置_地点名称
+	@NotBlank(message = "停车位置地点名称不能为空")
+	@Length(min= 1, max=100, message = "停车位置地点名称超出范围限制{min}-{max}")
 	private String tcwzDdmc;
 	//停车_数量
 	private Double tcSl;
 	//管理_单位名称
+	@NotBlank(message = "管理单位名称不能为空")
+	@Length(min= 1, max=100, message = "管理单位名称超出范围限制{min}-{max}")
 	private String glDwmc;
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;

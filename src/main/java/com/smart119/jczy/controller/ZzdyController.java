@@ -18,6 +18,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,7 +114,7 @@ public class ZzdyController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("webapi:zzdy:add")
-	public R save( ZzdyDO zzdy){
+	public R save(@Validated ZzdyDO zzdy){
 		try {
 			if(zzdyService.save(zzdy)>0){
 				return R.ok();
@@ -129,7 +130,7 @@ public class ZzdyController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("webapi:zzdy:edit")
-	public R update( ZzdyDO zzdy){
+	public R update(@Validated ZzdyDO zzdy){
 		//删除绑定车辆
 		zzdyXfclService.removeZzdy(zzdy.getZzdyTywybs());
 		String [] xfccl=zzdy.getXfclTywysbm().split(",");

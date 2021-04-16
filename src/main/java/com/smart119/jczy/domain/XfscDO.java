@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+import com.smart119.common.annotation.validator.PhoneValidator;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,18 +22,28 @@ public class XfscDO implements Serializable {
 	//消防水池_通用唯一识别码
 	private String xfscTywysbm;
 	//名称
+	@NotBlank(message = "消防水池名称不能为空")
+	@Length(min= 1, max=100, message = "消防水池名称超出范围限制{min}-{max}")
 	private String mc;
 	//地址名称
+	@NotBlank(message = "消防水池地址不能为空")
+	@Length(min= 1, max=100, message = "消防水池地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//容积（立方米）
 	private Double rj;
 	//储水量_容积（立方米）
 	private Double cslRj;
 	//维保单位_单位名称
+	@NotBlank(message = "维保单位单位名称不能为空")
+	@Length(min= 1, max=100, message = "维保单位单位名称超出范围限制{min}-{max}")
 	private String wbdwDwmc;
 	//联系人
+	@NotBlank(message = "联系人不能为空")
+	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
 	private String lxrXm;
 	//联系电话
+	@PhoneValidator(message = "联系电话格式错误")
+	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String lxrLxdh;
 	//地球经度
 	private Double dqjd;
@@ -38,14 +52,20 @@ public class XfscDO implements Serializable {
 	//水源可用状态类别代码
 	private String sykyztlbdm;
 	//所属路段_名称
+	@NotBlank(message = "所属路段名称不能为空")
+	@Length(min= 1, max=100, message = "所属路段名称超出范围限制{min}-{max}")
 	private String ssldMc;
 	//取水形式_简要情况
+	@NotBlank(message = "取水形式_简要情况不能为空")
+	@Length(min= 1, max=300, message = "取水形式_简要情况超出范围限制{min}-{max}")
 	private String qsxsJyqk;
 	//取水_高度（米）
 	private Double qsGd;
 	//水源标高差_高度（米）
 	private Double sybgcGd;
 	//停车位置_地点名称
+	@NotBlank(message = "停车位置地点名称不能为空")
+	@Length(min= 1, max=100, message = "停车位置地点名称超出范围限制{min}-{max}")
 	private String tcwzDdmc;
 	//停车_数量
 	private Integer tcSl;
@@ -54,8 +74,12 @@ public class XfscDO implements Serializable {
 	//流量
 	private Integer ll;
 	//供水_单位名称
+	@NotBlank(message = "供水单位名称不能为空")
+	@Length(min= 1, max=100, message = "供水单位名称超出范围限制{min}-{max}")
 	private String gsDwmc;
 	//管理_单位名称
+	@NotBlank(message = "管理单位名称不能为空")
+	@Length(min= 1, max=100, message = "管理单位名称超出范围限制{min}-{max}")
 	private String glDwmc;
 	//创建时间
 	private Date cdate;

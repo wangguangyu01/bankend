@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+import com.smart119.common.annotation.validator.PhoneValidator;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,8 +22,12 @@ public class XfshDO implements Serializable {
 	//消防水鹤_通用唯一识别码
 	private String xfshTywysbm;
 	//消防水鹤名称
+	@NotBlank(message = "消防水鹤名称不能为空")
+	@Length(min= 1, max=100, message = "消防水鹤名称超出范围限制{min}-{max}")
 	private String mc;
 	//地址
+	@NotBlank(message = "地址不能为空")
+	@Length(min= 1, max=100, message = "地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//高度
 	private Double gd;
@@ -30,8 +38,12 @@ public class XfshDO implements Serializable {
 	//水源可用状态类别代码
 	private String sykyztlbdm;
 	//所属路段_名称
+	@NotBlank(message = "所属路段名称不能为空")
+	@Length(min= 1, max=100, message = "所属路段名称超出范围限制{min}-{max}")
 	private String ssldMc;
 	//所属管网_名称
+	@NotBlank(message = "所属管网名称不能为空")
+	@Length(min= 1, max=100, message = "所属管网名称超出范围限制{min}-{max}")
 	private String ssgwMc;
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
@@ -48,14 +60,24 @@ public class XfshDO implements Serializable {
 	//加水车道数_数量
 	private Double jscdsSl;
 	//供水_单位名称
+	@NotBlank(message = "供水单位名称不能为空")
+	@Length(min= 1, max=100, message = "供水单位名称超出范围限制{min}-{max}")
 	private String gsDwmc;
 	//管理_单位名称
+	@NotBlank(message = "管理单位名称不能为空")
+	@Length(min= 1, max=100, message = "管理单位名称超出范围限制{min}-{max}")
 	private String glDwmc;
 	//维保_单位名称
+	@NotBlank(message = "维保单位名称不能为空")
+	@Length(min= 1, max=100, message = "维保单位名称超出范围限制{min}-{max}")
 	private String wbDwmc;
 	//联系人
+	@NotBlank(message = "联系人不能为空")
+	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
 	private String lxrXm;
 	//联系电话
+	@PhoneValidator(message = "联系电话格式错误")
+	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String lxrLxdh;
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;

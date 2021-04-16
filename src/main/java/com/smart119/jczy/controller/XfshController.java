@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.XfshDO;
@@ -105,7 +106,7 @@ public class XfshController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfsh:add")
-	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles, XfshDO xfsh){
+	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XfshDO xfsh){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfsh.setXfshTywysbm(id);
 		xfsh.setCdate(new Date());
@@ -128,7 +129,7 @@ public class XfshController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfsh:edit")
-	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles, XfshDO xfsh){
+	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XfshDO xfsh){
 		if(sjFiles!=null && sjFiles.length>0) {
 			attachmentService.ftpUpload(sjFiles, xfsh.getXfshTywysbm(), "xfshsjt");
 		}
