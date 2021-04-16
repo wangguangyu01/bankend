@@ -1,17 +1,20 @@
 package com.smart119.iot.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
 
 
 /**
@@ -39,12 +42,17 @@ public class ControllerDO implements Serializable {
      * IP
      */
     @ApiModelProperty(value = "IP", name = "ip")
+    //校验IP
+    @Pattern(regexp = "((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)", message = "请输入合法的IP")
     private String ip;
 
     /**
      * 端口
      */
     @ApiModelProperty(value = "端口", name = "port")
+    //校验端口字段：不为空、数字、小于9999999999
+    @NotNull
+    @Digits(integer = 10, fraction = 0, message = "端口内容非法")
     private Integer port;
 
     /**

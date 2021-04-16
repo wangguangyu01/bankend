@@ -38,12 +38,38 @@ function validateRule() {
 	$("#signupForm").validate({
 		rules : {
 			name : {
+				required : true,
+				maxlength : 100
+			},
+			type : {
+				required : true,
+				range : [0,2]
+			},
+			deptName : {
+				required : true,
+			},
+			controller : {
+				required : true
+			},
+			controllerPort : {
 				required : true
 			}
 		},
 		messages : {
 			name : {
-				required : icon + "请输入姓名"
+				required : icon + "请输入名称"
+			},
+			name : {
+				required : icon + "请选择类型"
+			},
+			name : {
+				required : icon + "请选择消防救援机构"
+			},
+			name : {
+				required : icon + "请选择中控器"
+			},
+			name : {
+				required : icon + "请选择中控器端口"
 			}
 		}
 	})

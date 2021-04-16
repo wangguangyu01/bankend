@@ -14,6 +14,8 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -109,7 +111,10 @@ public class ControllerController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("iot:controller:add")
-    public R save(ControllerDO controller) {
+    public R save(@Validated ControllerDO controller, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return R.error(bindingResult.getFieldError().getDefaultMessage());
+        }
         controller.setCreateTime(new Date());
         controller.setUpdateTime(new Date());
         if (controllerService.save(controller) > 0) {

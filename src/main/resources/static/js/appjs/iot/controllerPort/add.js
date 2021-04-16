@@ -36,13 +36,49 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
+			channelNumber : {
+				required : true,
+				maxlength : 100
+			},
+			address : {
+				required : true,
+				maxlength : 100
+			},
+			portAddress : {
+				required : true,
+				maxlength : 100
+			},
+			controllerId : {
+				required : true,
+				maxlength : 32
+			},
+			restorationTime : {
+				required : true,
+				range : [1,99999999999999999999]
+			},
+			status : {
+				required : true,
+				range : [0,2]
 			}
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
+			channelNumber : {
+				required : icon + "请输入通道号"
+			},
+			address : {
+				required : icon + "请输入寄存器地址"
+			},
+			portAddress : {
+				required : icon + "请输入端口地址"
+			},
+			controllerId : {
+				required : icon + "请选择中控器"
+			},
+			restorationTime : {
+				required : icon + "请输入复位时间"
+			},
+			status : {
+				required : icon + "请选择状态"
 			}
 		}
 	})
