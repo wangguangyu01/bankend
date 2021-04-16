@@ -124,7 +124,7 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>DEBUG</level>
         </filter>
-        <file>${logPath}/bms_backend-debug.log</file>
+        <file>${logPath}/smart119_backend-debug.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>
                 ${logPath}/smart119_backend-debug.%d{yyyy-MM-dd}.log
