@@ -147,19 +147,21 @@ function update() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
+    $("#signupForm").validate({
         ignore: "",//开启对hidden元素的验证
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+        rules : {
+            zxNr : {
+                required : true,
+                zxNrCheckVideo : true,
+                zxNrCheckImg : true
+            }
+        },
+        messages : {
+            zxNr : {
+                required : "请输入资讯内容"
+            }
+        }
+    })
 }
 
 function initFileInput(ctrlName,attachmentDOList) {
@@ -209,3 +211,29 @@ function initFileInput(ctrlName,attachmentDOList) {
     })
 
 }
+
+jQuery.validator.addMethod("zxNrCheckVideo", function(value, element) {
+    var flag=0;
+    if (value.indexOf("video") !== -1) {
+        $("div[contenteditable=true] video").each(function() {
+            var src=$(this).attr("src");
+            if (src == null || src ==  '') {
+                flag++
+            }
+        });
+    }
+    return this.optional(element) || flag==0;
+}, "资讯内容有错误出现空视频");
+
+jQuery.validator.addMethod("zxNrCheckImg", function(value, element) {
+    var flag=0;
+    if (value.indexOf("img") !== -1) {
+        $("div[contenteditable=true] img").each(function() {
+            var src=$(this).attr("src");
+            if (src == null || src ==  '') {
+                flag++
+            }
+        });
+    }
+    return this.optional(element) || flag==0;
+}, "资讯内容有错误出现空图片");

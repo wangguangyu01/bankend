@@ -47,7 +47,6 @@ $().ready(function() {
     editor.config.uploadVideoName = "file";
     editor.config.onchange = function (newHtml) {
         zxNr.val(newHtml);
-
     };
     editor.config.uploadImgHooks = {
         // 上传图片之前
@@ -150,14 +149,16 @@ function validateRule() {
 	$("#signupForm").validate({
         ignore: "",//开启对hidden元素的验证
 		rules : {
-			name : {
-				required : true
-			}
+            zxNr : {
+                required : true,
+                zxNrCheckVideo : true,
+                zxNrCheckImg : true
+            }
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
+            zxNr : {
+                required : "请输入资讯内容"
+            }
 		}
 	})
 }
@@ -200,3 +201,29 @@ function initFileInput(ctrlName) {
     })
 
 }
+
+jQuery.validator.addMethod("zxNrCheckVideo", function(value, element) {
+    var flag=0;
+    if (value.indexOf("video") !== -1) {
+        $("div[contenteditable=true] video").each(function() {
+            var src=$(this).attr("src");
+            if (src == null || src ==  '') {
+                flag++
+            }
+        });
+    }
+    return this.optional(element) || flag==0;
+}, "资讯内容有错误出现空视频");
+
+jQuery.validator.addMethod("zxNrCheckImg", function(value, element) {
+    var flag=0;
+    if (value.indexOf("img") !== -1) {
+        $("div[contenteditable=true] img").each(function() {
+            var src=$(this).attr("src");
+            if (src == null || src ==  '') {
+               flag++
+            }
+        });
+    }
+    return this.optional(element) || flag==0;
+}, "资讯内容有错误出现空图片");
