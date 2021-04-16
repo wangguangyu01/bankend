@@ -157,12 +157,26 @@ function validateRule() {
     $("#signupForm").validate({
         rules: {
             bt: {
+                required: true,
+                rangelength: [1, 100]
+            },
+            lx: {
+                required: true
+            },
+            jqflydm: {
                 required: true
             }
         },
         messages: {
             bt: {
-                required: icon + "请输入标题"
+                required: icon + "请输入标题",
+                rangelength: icon + "标题的长度是1到100字符"
+            },
+            lx: {
+                required: icon + "类型必选"
+            },
+            jqflydm: {
+                required: icon + "警情分类必选"
             }
         }
     })

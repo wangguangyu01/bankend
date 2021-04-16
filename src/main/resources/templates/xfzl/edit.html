@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">警情分类与代码：</label>
                             <div class="col-sm-8">
-								<select id="fzjclxdm" name="fzjclxdm" class="form-control">
+								<select id="jqflydm" name="jqflydm" class="form-control">
 									<option value="">请选择</option>
 									<option th:each="dict: ${dictList}" th:value="${dict.value}" th:text="${dict.name}"
 											th:selected="${dict.value == xfzl.jqflydm}"></option>
@@ -74,9 +74,8 @@
                             <label class="col-sm-3 control-label">状态：</label>
                             <div class="col-sm-8">
 								<select id="zt" name="zt" class="form-control" >
-									<option value="">请选择</option>
 									<option value="0" th:selected="${xfzl.zt == '0' || xfzl.zt == 0}">显示</option>
-									<option value="1" th:selected="${xfzl.zt == '1' || xfzl.zt == 1}">隐藏</option>
+									<option value="1" th:selected="${xfzl.zt == '' || xfzl.zt == null  || xfzl.zt == '1' || xfzl.zt == 1}">隐藏</option>
 								</select>
                             </div>
                         </div>

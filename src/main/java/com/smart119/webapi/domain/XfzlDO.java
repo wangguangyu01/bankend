@@ -9,8 +9,11 @@ import com.smart119.common.domain.AttachmentDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -38,16 +41,20 @@ public class XfzlDO implements Serializable {
     /**
      * 案例标题
      */
+    @NotBlank(message = "标题不能为空")
+    @Length(min = 1, max = 100, message = "标题的字符最长是1到100字符")
     private String bt;
 
     /**
      * 类型 1视频 2图片 3文本 4音频
      */
+    @NotBlank(message = "战例类型不能为空")
     private String lx;
 
     /**
      * 警情分类与代码
      */
+    @NotBlank(message = "警情分类代码不能为空")
     private String jqflydm;
 
 
