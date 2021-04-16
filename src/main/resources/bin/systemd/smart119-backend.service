@@ -5,7 +5,7 @@ After=network.target
 [Service]
 LimitNOFILE=100000
 Type=forking
-ExecStart=/usr/bin/sh -c "/opt/smart119/smart119_backend/bin/smart119-backend.sh start"
+ExecStart=/usr/bin/sh -c "/opt/smart119_backend/bin/smart119-backend.sh start"
 
 [Install]
 WantedBy=multi-user.target
