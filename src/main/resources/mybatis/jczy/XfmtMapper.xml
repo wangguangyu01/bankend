@@ -167,13 +167,7 @@
     <select id="getXfmtByRange" resultType="com.smart119.jczy.domain.XfmtDO">
 		select t.`QSMT_TYWYSBM`,t.`MC`,t.`DZMC`,t.`DQJD`,t.`DQWD`,t.`SYKYZTLBDM`,t.`SZSY_MC`,t.`SSLD_MC`,t.`QSXS_JYQK`,t.`QS_GD`,t.`SYBGC_GD`,t.`TCWZ_DDMC`,t.`TC_SL`,t.`GL_DWMC`,
 		t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG,
-		ROUND(
-		6378.138 * 2 * ASIN(
-		SQRT(
-		POW( SIN( ( t.DQWD * PI( ) / 180- #{wd} * PI( ) / 180 ) / 2 ), 2 ) + COS( t.DQJD * PI( ) / 180 ) * COS( #{jd} * PI( ) / 180 ) * POW( SIN( ( t.DQJD * PI( ) / 180- #{jd} * PI( ) / 180 ) / 2 ), 2 )
-		)
-		) * 1000
-		) AS distance
+        calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
 		from jczy_xfmt t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
 		HAVING distance <![CDATA[ <= ]]> #{distance}
