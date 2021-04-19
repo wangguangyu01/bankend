@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.LqbzdwDO;
@@ -100,7 +101,7 @@ public class LqbzdwController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:lqbzdw:add")
-	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files, LqbzdwDO lqbzdw){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files,@Validated LqbzdwDO lqbzdw){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		lqbzdw.setLqbzdwTywysbm(id);
 		lqbzdw.setCdate(new Date());
@@ -120,7 +121,7 @@ public class LqbzdwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:lqbzdw:edit")
-	public R update(@RequestPart(value = "file", required = false) MultipartFile[] files, LqbzdwDO lqbzdw){
+	public R update(@RequestPart(value = "file", required = false) MultipartFile[] files,@Validated LqbzdwDO lqbzdw){
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, lqbzdw.getLqbzdwTywysbm(), "lqbzdw");
 		}
