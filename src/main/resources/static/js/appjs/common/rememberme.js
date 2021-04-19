@@ -20,6 +20,32 @@ var remembermeOptions  = {
         localStorage.setItem("remembermeDataList",JSON.stringify(this.remembermeList))
         this.options.checkCallBack(this.remembermeList);
     },
+    onCheckAll:function (rows) {
+        var remembermeKey = this.options.remembermeKey;
+        for(var i in rows){
+            var dataIndex = this.remembermeList.findIndex(item=>{
+                return item[remembermeKey] == rows[i][remembermeKey]
+            })
+            if(dataIndex == -1){
+                this.remembermeList.push(rows[i]);
+            }
+        }
+        localStorage.setItem("remembermeDataList",JSON.stringify(this.remembermeList))
+        this.options.checkCallBack(this.remembermeList);
+    },
+    onUncheckAll:function (rows) {
+        var remembermeKey = this.options.remembermeKey;
+        for(var i in rows){
+            var dataIndex = this.remembermeList.findIndex(item=>{
+                return item[remembermeKey] == rows[i][remembermeKey]
+            })
+            if(dataIndex != -1){
+                this.remembermeList.splice(dataIndex,1);
+            }
+        }
+        localStorage.setItem("remembermeDataList",JSON.stringify(this.remembermeList))
+        this.options.checkCallBack(this.remembermeList);
+    },
     onUncheck:function(row){
         var remembermeKey = this.options.remembermeKey;
         var dataIndex = this.remembermeList.findIndex(item=>{
