@@ -67,12 +67,12 @@ function update() {
         type : "POST",
         url : "/jczy/xfcl/update",
         success : function(data) {
-            if (data.code != "") {
+            if (data.code == 0) {
                 parent.layer.msg("操作成功");
                 parent.reLoad();
                 var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                 parent.layer.close(index);
-                saveCllxSX(data);
+                saveCllxSX(data.data.xfclTywysbm);
             } else {
                 parent.layer.alert(data.msg)
             }
