@@ -2,8 +2,10 @@ package com.smart119.jczy.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -30,16 +32,25 @@ public class XfclDO implements Serializable {
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
 	//机动车号牌号码
+	@NotBlank(message = "机动车号牌号码不能为空")
+	@Length(min= 1, max=15, message = "机动车号牌号码超出范围限制{min}-{max}")
 	private String jdchphm;
 	//车辆识别代号
+	@NotBlank(message = "车辆识别代号不能为空")
+	@Length(min= 1, max=25, message = "车辆识别代号超出范围限制{min}-{max}")
 	private String clsbdh;
 	//SIM卡卡号
+	@NotBlank(message = "SIM卡卡号不能为空")
+	@Length(min= 1, max=29, message = "SIM卡卡号超出范围限制{min}-{max}")
 	private String dwsbSimkkh;
 	//规格型号
+	@Length(max=100, message = "规格型号超出范围限制{max}")
 	private String ggxh;
 	//参考价_金额
 	private Double ckjJe;
 	//生产厂家_单位名称
+	@NotBlank(message = "生产厂家不能为空")
+	@Length(min= 1, max=100, message = "生产厂家超出范围限制{min}-{max}")
 	private String sccjDwmc;
 	//机动车车身颜色类别代码
 	private String jdccsyslbdm;
@@ -48,8 +59,11 @@ public class XfclDO implements Serializable {
 	//是否第一出动车辆_判断标识 0是 1否
 	private String sfdycdclTywysbm;
 	//备注
+	@NotBlank(message = "备注不能为空")
+	@Length(min= 1, max=300, message = "备注超出范围限制{min}-{max}")
 	private String bz;
 	//机动车发动机（电动机）号
+	@Length(min= 1, max=25, message = "机动车发动机（电动机）号超出范围限制{min}-{max}")
 	private String jdcfdjddjh;
 	//装载水_容积 吨
 	private Double zzsRj;
@@ -78,6 +92,8 @@ public class XfclDO implements Serializable {
 	//负责人联系电话
 	private String fzrLxdh;
 	//车辆性能指标_简要情况
+	@NotBlank(message = "车辆性能指标_简要情况不能为空")
+	@Length(min= 1, max=300, message = "车辆性能指标_简要情况超出范围限制{min}-{max}")
 	private String clxnzbJyqk;
 	//创建时间
 	private Date cdate;
@@ -104,6 +120,8 @@ public class XfclDO implements Serializable {
 	private int dpFlag;
 
 	//车辆名称
+	@NotBlank(message = "车辆名称不能为空")
+	@Length(min= 1, max=100, message = "车辆名称超出范围限制{min}-{max}")
 	private String clmc;
 	//长度
 	private Double cd;
@@ -122,8 +140,12 @@ public class XfclDO implements Serializable {
 	//负责人通用唯一识别码(消防救援人员通用唯一识别码)
 	private String fzrTywysbm;
 	//售后服务_单位名称
+	@NotBlank(message = "售后服务_单位名称不能为空")
+	@Length(min= 1, max=100, message = "售后服务_单位名称超出范围限制{min}-{max}")
 	private String shfwDwmc;
 	//定位设备
+	@NotBlank(message = "定位设备不能为空")
+	@Length(min= 1, max=100, message = "定位设备超出范围限制{min}-{max}")
 	private String dwsb;
 
 

@@ -15,6 +15,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -121,7 +122,7 @@ public class XfclController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfcl:add")
-	public String save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfclDO xfcl){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfclDO xfcl){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfcl.setXfclTywysbm(id);
 		xfcl.setCdate(new Date());
@@ -131,9 +132,9 @@ public class XfclController extends BaseController{
 			attachmentService.ftpUpload(files, id, "xfcl");
 		}
 		if(xfclService.save(xfcl)>0){
-			return id;
+			return R.ok(xfcl);
 		}
-		return "";
+		return R.error();
 	}
 	/**
 	 * 修改
@@ -141,13 +142,13 @@ public class XfclController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfcl:edit")
-	public String update( @RequestPart(value = "file", required = false) MultipartFile[] files,XfclDO xfcl){
+	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,@Validated XfclDO xfcl){
 
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, xfcl.getXfclTywysbm(), "xfcl");
 		}
 		xfclService.update(xfcl);
-		return xfcl.getXfclTywysbm();
+		return R.ok(xfcl);
 	}
 
 	/**
