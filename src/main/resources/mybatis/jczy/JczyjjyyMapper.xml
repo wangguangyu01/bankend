@@ -11,7 +11,7 @@
 		SELECT j.id,j.`name`,d.name type,j.remarks,j.cperson,j.cdate,j.`status` from jjyy j LEFT JOIN sys_dict d ON d.`value` = j.type
 		<where>
 		  		  <if test="id != null and id != ''"> and j.id = #{id} </if>
-		  		  <if test="name != null and name != ''"> and j.name = #{name} </if>
+		  		  <if test="name != null and name != ''"> and j.name like '%${name}%'  </if>
 		  		  <if test="type != null and type != ''"> and j.type = #{type} </if>
 		  		  <if test="remarks != null and remarks != ''"> and j.remarks = #{remarks} </if>
 		  		  <if test="cdate != null and cdate != ''"> and j.cdate = #{cdate} </if>
@@ -36,7 +36,7 @@
 		SELECT count(*) from jjyy j LEFT JOIN sys_dict d ON d.`value` = j.type
 		 <where>  
 		  		  <if test="id != null and id != ''"> and j.id = #{id} </if>
-		  		  <if test="name != null and name != ''"> and j.name = #{name} </if>
+		  		  <if test="name != null and name != ''"> and j.name like '%${name}%'  </if>
 		  		  <if test="type != null and type != ''"> and j.type = #{type} </if>
 		  		  <if test="remarks != null and remarks != ''"> and j.remarks = #{remarks} </if>
 		  		  <if test="cdate != null and cdate != ''"> and j.cdate = #{cdate} </if>
