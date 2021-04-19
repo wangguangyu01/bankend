@@ -32,14 +32,38 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
-			}
+            dwmc : {
+				required : true,
+                maxlength : 50
+			},
+            dzmc : {
+                required : true,
+                maxlength : 100
+            },
+            lxrXm : {
+                required : true,
+                maxlength:50
+            },
+            lxrLxdh : {
+                required : true,
+                digits:true,
+                maxlength:18
+            }
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
+            dwmc : {
+				required :  "请输入单位名称"
+			},
+            dzmc : {
+                required :  "请输入单位地址"
+            },
+            lxrXm : {
+                required :  "请输入联系人"
+            },
+            lxrLxdh : {
+                required :  "请输入联系电话",
+                digits : "请输入数字格式"
+            }
 		}
 	})
 }

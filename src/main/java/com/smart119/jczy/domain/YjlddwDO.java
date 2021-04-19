@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+import com.smart119.common.annotation.validator.PhoneValidator;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,8 +22,12 @@ public class YjlddwDO implements Serializable {
 	//应急联动单位_通用唯一识别码
 	private String yjlddwTywysbm;
 	//单位名称
+	@NotBlank(message = "单位名称不能为空")
+	@Length(min= 1, max=100, message = "单位名称超出范围限制{min}-{max}")
 	private String dwmc;
 	//单位地址
+	@NotBlank(message = "单位地址不能为空")
+	@Length(min= 1, max=100, message = "单位地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//应急联动单位类别代码
 	private String yjlddwlbdm;
@@ -30,8 +38,12 @@ public class YjlddwDO implements Serializable {
 	//单位_简要情况
 	private String dwJyqk;
 	//联系人
+	@NotBlank(message = "联系人不能为空")
+	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
 	private String lxrXm;
 	//联系电话
+	@PhoneValidator(message = "联系电话格式错误")
+	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String lxrLxdh;
 	//地球经度
 	private Double dqjd;
