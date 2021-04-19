@@ -117,6 +117,24 @@ public class RedisManager {
         }
         return value;
     }
+    /**
+     * get value from redis
+     *
+     * @param key
+     * @return
+     */
+    public String get(String key) {
+        String value = null;
+        Jedis jedis = this.getResource();
+        try {
+            value = jedis.get(key);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return value;
+    }
 
     /**
      * set
@@ -162,6 +180,28 @@ public class RedisManager {
         }
         return value;
     }
+    /**
+     * set
+     *
+     * @param key
+     * @param value
+     * @param expire
+     * @return
+     */
+    public String set(String key, String value, int expire) {
+        Jedis jedis = this.getResource();
+        try {
+            jedis.set(key, value);
+            if (expire != 0) {
+                jedis.expire(key, expire);
+            }
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return key;
+    }
 
     /**
      * del
@@ -169,6 +209,22 @@ public class RedisManager {
      * @param key
      */
     public void del(byte[] key) {
+        Jedis jedis = this.getResource();
+        try {
+            jedis.del(key);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     * del
+     *
+     * @param key
+     */
+    public void del(String key) {
         Jedis jedis = this.getResource();
         try {
             jedis.del(key);
@@ -241,5 +297,49 @@ public class RedisManager {
             result = jedisPool.getResource();
         }
         return result;
+    }
+    /**
+     * 判断key是否存在
+     * @param key
+     * @return
+     */
+    public boolean exist(String key) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.exists(key);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
+    /**
+     * 设置值并设置过期时间
+     */
+    public String setex(String key, int seconds, String value) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.setex(key, seconds, value);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     * 给key数自动+1
+     * @param key
+     * @return
+     */
+    public Long incr(String key) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.incr(key);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
     }
 }
