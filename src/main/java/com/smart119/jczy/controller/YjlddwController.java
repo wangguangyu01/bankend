@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.YjlddwDO;
@@ -100,7 +101,7 @@ public class YjlddwController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:yjlddw:add")
-	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files, YjlddwDO yjlddw){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files,@Validated YjlddwDO yjlddw){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		yjlddw.setYjlddwTywysbm(id);
 		yjlddw.setCdate(new Date());
@@ -120,7 +121,7 @@ public class YjlddwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:yjlddw:edit")
-	public R update(@RequestPart(value = "file", required = false) MultipartFile[] files, YjlddwDO yjlddw){
+	public R update(@RequestPart(value = "file", required = false) MultipartFile[] files,@Validated YjlddwDO yjlddw){
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, yjlddw.getYjlddwTywysbm(), "yjlddw");
 		}
