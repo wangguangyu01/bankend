@@ -80,7 +80,7 @@
         select count(*) from jczy_zddw
         <where>
             <if test="zddwTywysbm != null and zddwTywysbm != ''">and ZDDW_TYWYSBM = #{zddwTywysbm}</if>
-            <if test="dwmc != null and dwmc != ''">and DWMC = #{dwmc}</if>
+            <if test="dwmc != null and dwmc != ''">and DWMC like '%${dwmc}%'</if>
             <if test="dwpyjc != null and dwpyjc != ''">and DWPYJC = #{dwpyjc}</if>
             <if test="jjsyzlxdm != null and jjsyzlxdm != ''">and JJSYZLXDM = #{jjsyzlxdm}</if>
             <if test="clRq != null and clRq != ''">and CL_RQ = #{clRq}</if>

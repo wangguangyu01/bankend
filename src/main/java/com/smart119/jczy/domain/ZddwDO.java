@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,8 +22,12 @@ public class ZddwDO implements Serializable {
 	//重点单位_通用唯一识别码
 	private String zddwTywysbm;
 	//单位名称
+	@NotBlank(message = "重点单位名称不能为空")
+	@Length(min= 1, max=100, message = "重点单位名称超出范围限制{min}-{max}")
 	private String dwmc;
 	//单位拼音简称
+	@NotBlank(message = "单位拼音简称不能为空")
+	@Length(min= 1, max=100, message = "单位拼音简称超出范围限制{min}-{max}")
 	private String dwpyjc;
 	//经济所有制类型代码
 	private String jjsyzlxdm;
@@ -30,6 +38,8 @@ public class ZddwDO implements Serializable {
 	//单位自然性质代码
 	private String dwzrxzdm;
 	//单位地址
+	@NotBlank(message = "单位地址不能为空")
+	@Length(min= 1, max=100, message = "单位地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//联系电话
 	private String lxdh;

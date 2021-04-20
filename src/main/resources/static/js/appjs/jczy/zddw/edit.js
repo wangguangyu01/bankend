@@ -43,18 +43,33 @@ function update() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    $("#signupForm").validate({
+        rules : {
+            dwmc : {
+                required : true,
+                maxlength:100
+            },
+            dwpyjc : {
+                required : true,
+                maxlength:100
+            },
+            dzmc : {
+                required : true,
+                maxlength:100
+            }
+        },
+        messages : {
+            dwmc : {
+                required :  "请输入重点单位名称"
+            },
+            dwpyjc : {
+                required :  "请输入单位拼音简称"
+            },
+            dzmc : {
+                required :  "请输入单位地址"
+            }
+        }
+    })
 }
 
 

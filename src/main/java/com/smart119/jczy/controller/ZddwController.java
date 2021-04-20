@@ -14,6 +14,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -122,7 +123,7 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:zddw:add")
-	public R save( ZddwDO zddw){
+	public R save(@Validated ZddwDO zddw){
 		if(zddwService.save(zddw)>0){
 			return R.ok();
 		}
@@ -134,7 +135,7 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zddw:edit")
-	public R update( ZddwDO zddw){
+	public R update(@Validated ZddwDO zddw){
 		zddwService.update(zddw);
 		return R.ok();
 	}
