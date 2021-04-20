@@ -43,7 +43,7 @@ function validateRule() {
             },
             remarks : {
                 required : true,
-                maxlength : 2000
+                maxlength : 300
             },
 		},
 		messages : {

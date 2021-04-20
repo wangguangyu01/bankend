@@ -28,7 +28,7 @@ public class JjyyDO implements Serializable {
 	private String type;
 	//备注
 	@NotBlank(message = "备注")
-	@Length(min= 1, max=2000, message = "备注超出范围限制{min}-{max}")
+	@Length(min= 1, max=300, message = "备注超出范围限制{min}-{max}")
 	private String remarks;
 	//创建时间
 	private Date cdate;
