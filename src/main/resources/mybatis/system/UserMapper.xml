@@ -60,6 +60,11 @@
             <if test="name != null and name != ''">and name = #{name}</if>
             <if test="password != null and password != ''">and password = #{password}</if>
             <if test="deptId != null and deptId != ''">and dept_id = #{deptId}</if>
+            <if test="deptList != null and deptList.size() > 0">and dept_id in
+                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.deptId}
+                </foreach>
+            </if>
             <if test="email != null and email != ''">and email = #{email}</if>
             <if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
             <if test="status != null and status != ''">and status = #{status}</if>

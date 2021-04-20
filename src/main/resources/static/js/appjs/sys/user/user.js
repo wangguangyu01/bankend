@@ -97,7 +97,12 @@ function load(deptId) {
 			});
 }
 function reLoad() {
-	$('#exampleTable').bootstrapTable('refresh');
+    var opt = {
+        query : {
+            deptId : $("#deptId").val(),
+        }
+    };
+    $('#exampleTable').bootstrapTable('refresh',opt);
 }
 function add() {
 	// iframe层
@@ -215,6 +220,7 @@ $('#jstree').on("changed.jstree", function(e, data) {
 				deptId : data.selected[0],
 			}
 		}
+		$("#deptId").val(data.selected[0]);
 		$('#exampleTable').bootstrapTable('refresh',opt);
 	}
 
