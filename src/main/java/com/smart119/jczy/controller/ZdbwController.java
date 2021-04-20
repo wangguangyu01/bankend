@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.ZdbwDO;
@@ -92,7 +93,7 @@ public class ZdbwController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:zdbw:add")
-	public R save(@RequestParam("tzFile") MultipartFile[] tzFiles, ZdbwDO zdbw){
+	public R save(@RequestParam("tzFile") MultipartFile[] tzFiles,@Validated ZdbwDO zdbw){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		zdbw.setZdbwTywysbm(id);
 		if(tzFiles!=null && tzFiles.length>0) {
@@ -109,7 +110,7 @@ public class ZdbwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zdbw:edit")
-	public R update(@RequestPart(value = "tzFile", required = false) MultipartFile[] tzFiles , ZdbwDO zdbw){
+	public R update(@RequestPart(value = "tzFile", required = false) MultipartFile[] tzFiles ,@Validated ZdbwDO zdbw){
 		if(tzFiles!=null && tzFiles.length>0) {
 			attachmentService.ftpUpload(tzFiles, zdbw.getZdbwTywysbm(), "zdbwtz");
 		}

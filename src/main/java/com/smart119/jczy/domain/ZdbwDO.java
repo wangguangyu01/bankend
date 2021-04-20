@@ -1,5 +1,8 @@
 package com.smart119.jczy.domain;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -22,8 +25,12 @@ public class ZdbwDO implements Serializable {
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
 	//名称
+	@NotBlank(message = "重点部位名称不能为空")
+	@Length(min= 1, max=100, message = "重点部位名称超出范围限制{min}-{max}")
 	private String mc;
 	//地点名称
+	@NotBlank(message = "地点名称不能为空")
+	@Length(min= 1, max=100, message = "地点名称超出范围限制{min}-{max}")
 	private String ddmc;
 	//楼层
 	private Integer bwszLc;

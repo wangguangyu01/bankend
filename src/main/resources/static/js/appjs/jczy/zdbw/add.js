@@ -32,14 +32,29 @@ function save() {
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
+        ignore: "",//开启对hidden元素的验证
 		rules : {
-			name : {
+            mc : {
+                required : true,
+                maxlength:100
+            },
+            ddmc : {
+                required : true,
+                maxlength:100
+            },
+            dddwTywysbm : {
 				required : true
 			}
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
+            mc : {
+                required : "请输入重点部位名称"
+            },
+            ddmc : {
+                required : "请输入地点名称"
+            },
+            dddwTywysbm : {
+				required : "请选择重点单位"
 			}
 		}
 	})
