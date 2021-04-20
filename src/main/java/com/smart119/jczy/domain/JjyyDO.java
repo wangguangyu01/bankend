@@ -1,5 +1,8 @@
 package com.smart119.jczy.domain;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,11 +21,14 @@ public class JjyyDO implements Serializable {
 	//警情用语_通用唯一识别码
 	private String id;
 	//警情用语名称
-
+	@NotBlank(message = "警情用语名称")
+	@Length(min= 1, max=200, message = "警情用语名称超出范围限制{min}-{max}")
 	private String name;
 	//警情用语类型
 	private String type;
 	//备注
+	@NotBlank(message = "备注")
+	@Length(min= 1, max=2000, message = "备注超出范围限制{min}-{max}")
 	private String remarks;
 	//创建时间
 	private Date cdate;
