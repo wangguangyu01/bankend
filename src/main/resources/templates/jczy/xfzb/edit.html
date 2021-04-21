@@ -121,12 +121,12 @@
                             <label class="col-sm-2 control-label">装备入库日期：</label>
                             <div class="col-sm-2">
                                 <input type="text" class="laydate-icon layer-date form-control" id="zbrkRq" name="zbrkRq" placeholder="请选择装备入库日期"
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfzb.zbrkRq}==null?null:${#dates.format(xfzb.zbrkRq,'yyyy-MM-dd')}"/>
+                                       onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfzb.zbrkRq}==null?null:${#dates.format(xfzb.zbrkRq,'yyyy-MM-dd')}"/>
                             </div>
                             <label class="col-sm-2 control-label">装备失效日期：</label>
                             <div class="col-sm-2">
                                 <input type="text" class="laydate-icon layer-date form-control" id="zbsxRq" name="zbsxRq" placeholder="请选择装备失效日期"
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfzb.zbsxRq}==null?null:${#dates.format(xfzb.zbsxRq,'yyyy-MM-dd')}"/>
+                                       onclick="laydate({istime: false, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfzb.zbsxRq}==null?null:${#dates.format(xfzb.zbsxRq,'yyyy-MM-dd')}"/>
                             </div>
                         </div>
                         <div class="form-group">
