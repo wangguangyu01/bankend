@@ -6,6 +6,7 @@ import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.DictDO;
 import com.smart119.common.domain.FileDO;
 import com.smart119.common.domain.Tree;
+import com.smart119.common.enums.ResponseStatusEnum;
 import com.smart119.common.exception.BDException;
 import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.service.DictService;
@@ -114,7 +115,7 @@ public class LoginController extends BaseController {
         String lockKey = "user:lock:" + username;
         String errorCountKey = "user:login:error:" + username;
         if (redisManager.exist(lockKey)) {
-            throw new BDException("登录尝试次数过多，用户已被限制登录，请稍后尝试");
+            throw new BDException("登录尝试次数过多，用户已被限制登录，请稍后尝试", ResponseStatusEnum.RESCODE_10003.getCode());
         }
         password = MD5Utils.encrypt(username, password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
@@ -142,7 +143,7 @@ public class LoginController extends BaseController {
         } catch (AuthenticationException e) {
             //判断是否超过登录次数了，如果超过登录次数，则锁定该用户
             checkLoginError(username);
-            return R.error("用户或密码错误");
+            return R.error(ResponseStatusEnum.RESCODE_10003.getCode(),"用户或密码错误");
         }
     }
 
