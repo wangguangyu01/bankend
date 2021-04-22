@@ -113,13 +113,13 @@ public class BrqyController extends BaseController {
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:brqy:edit")
 	public R update( BrqyDO brqy){
-		String baiduJW = Exchange(brqy.getCoordinatesBaidu());
-		JSONObject baiduServer = baiduMapService.baiduZbToGaodeZb(baiduJW.replaceAll(";","|"));
-		String coordinatesGaode = "";
-		if(baiduServer!=null && "1".equals(baiduServer.get("status"))){
-			coordinatesGaode = Exchange(baiduServer.get("locations").toString());
-		}
-		brqy.setCoordinatesGaode(coordinatesGaode);
+//		String baiduJW = Exchange(brqy.getCoordinatesBaidu());
+//		JSONObject baiduServer = baiduMapService.baiduZbToGaodeZb(baiduJW.replaceAll(";","|"));
+//		String coordinatesGaode = "";
+//		if(baiduServer!=null && "1".equals(baiduServer.get("status"))){
+//			coordinatesGaode = Exchange(baiduServer.get("locations").toString());
+//		}
+//		brqy.setCoordinatesGaode(coordinatesGaode);
 		brqyService.update(brqy);
 		return R.ok();
 	}
