@@ -104,6 +104,7 @@ public class XfzlServiceImpl implements XfzlService {
         }
         xfzl.setCdate(new Date());
         xfzl.setCperson(userName);
+        xfzl.setStatus("0");
         int count = xfzlDao.insert(xfzl);
         if (count > 0) {
             if (!ObjectUtils.isEmpty(file)) {
