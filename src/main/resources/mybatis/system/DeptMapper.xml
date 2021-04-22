@@ -156,7 +156,7 @@
 		delete from sys_dept where dept_id in
 		<foreach item="deptId" collection="array" open="(" separator=","
 			close=")">
-			#{XFJYJG_TYWYSBM}
+			#{deptId}
 		</foreach>
 	</delete>
 

@@ -44,11 +44,9 @@ function load() {
                 // sortOrder.
                 // 返回false将会终止请求
                 columns: [
-                    // {
-                    //     field : 'id',
-                    //     title : '警情用语_通用唯一识别码',
-                    //     visible: true
-                    // },
+                    {
+                        checkbox : true
+                    },
                     {
                         field : 'number',
                         title : '序号',

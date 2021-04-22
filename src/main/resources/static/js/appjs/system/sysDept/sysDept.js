@@ -5,7 +5,6 @@ $(function() {
 });
 
 function load() {
-	console.log($('#searchName').val());
 	$('#exampleTable')
 		.bootstrapTreeTable(
 			{
@@ -18,7 +17,7 @@ function load() {
 					dwmc : $('#searchName').val()
 
                 }, // 请求数据的ajax的data属性
-				expandColumn : '0', // 在哪一列上面显示展开按钮
+				expandColumn : '1', // 在哪一列上面显示展开按钮
 				striped : true, // 是否各行渐变色
 				bordered : true, // 是否显示边框
 				expandAll : true, // 是否全部展开
@@ -33,6 +32,11 @@ function load() {
 					// 	width : '50px',
 					// 	checkbox : true
 					// },
+                    {
+						//必须叫selectItem 源码内要求
+                        field: 'selectItem',
+                        checkbox : true,
+                    },
 					{
 						field : 'dwmc',
 						title : '单位名称',
@@ -135,7 +139,7 @@ function removeone(id) {
 function resetPwd(id) {
 }
 function batchRemove() {
-	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+	var rows = $('#exampleTable').bootstrapTreeTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
 	if (rows.length == 0) {
 		layer.msg("请选择要删除的数据");
 		return;
@@ -147,7 +151,7 @@ function batchRemove() {
 		var ids = new Array();
 		// 遍历所有选择的行数据，取每条数据对应的ID
 		$.each(rows, function(i, row) {
-			ids[i] = row['deptId'];
+			ids[i] = row['id'];
 		});
 		$.ajax({
 			type : 'POST',

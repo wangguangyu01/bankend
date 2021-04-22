@@ -40,6 +40,9 @@ function load() {
                 // 返回false将会终止请求
                 columns: [
                     {
+                        checkbox : true
+                    },
+                    {
                         field: 'xh',
                         title: '序号',
                         formatter: function (value, row, index) {

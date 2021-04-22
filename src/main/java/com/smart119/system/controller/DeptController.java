@@ -4,7 +4,6 @@ import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.Tree;
 import com.smart119.common.service.DictService;
-import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
@@ -17,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * 部门管理
@@ -139,17 +137,21 @@ public class DeptController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
+        DeptDO deptDO = sysDeptService.get(Long.parseLong(deptId));
+		if(deptDO == null){
+            return R.error(1, "机构不存在");
+        }
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("xfjyjgTywysbm", deptId);
+		map.put("xfjyjgTywysbm", deptDO.getXfjyjgTywysbm());
 		if(sysDeptService.count(map)>0) {
-			return R.error(1, "包含下级部门,不允许修改");
+			return R.error(1, "包含下级部门,不允许删除");
 		}
-		if(sysDeptService.checkDeptHasUser(deptId)) {
+		if(sysDeptService.checkDeptHasUser(deptDO.getXfjyjgTywysbm())) {
 			if (sysDeptService.remove(deptId) > 0) {
 				return R.ok();
 			}
 		}else {
-			return R.error(1, "部门包含用户,不允许修改");
+			return R.error(1, "部门包含用户,不允许删除");
 		}
 		return R.error();
 	}
@@ -164,6 +166,18 @@ public class DeptController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
+		Map<String, Object> map = new HashMap<>(1);
+		for (Long deptId : deptIds) {
+            DeptDO deptDO = sysDeptService.get(deptId);
+			map.put("xfjyjgTywysbm", deptDO.getXfjyjgTywysbm());
+			if(sysDeptService.count(map) > 0) {
+				return R.error(1, deptDO.getDwmc() + "包含下级部门,不允许删除");
+			}
+			if(!sysDeptService.checkDeptHasUser(deptDO.getXfjyjgTywysbm())) {
+				return R.error(1, deptDO.getDwmc() + "包含用户,不允许删除");
+			}
+		}
+
 		sysDeptService.batchRemove(deptIds);
 		return R.ok();
 	}
