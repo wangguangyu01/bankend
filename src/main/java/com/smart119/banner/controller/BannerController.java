@@ -11,6 +11,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import com.smart119.banner.domain.BannerDO;
@@ -92,7 +93,7 @@ public class BannerController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("banner:banner:add")
-	public R save(@RequestPart(value = "file", required = false) MultipartFile[] file, BannerDO banner){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] file,@Validated BannerDO banner){
 		String id = UUID.randomUUID().toString().replace("-", "");
 		banner.setScBannerId(id);
 		Date date = new Date();
@@ -114,7 +115,7 @@ public class BannerController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("banner:banner:edit")
-	public R update(@RequestPart(value = "file", required = false) MultipartFile[] file, BannerDO banner){
+	public R update(@RequestPart(value = "file", required = false) MultipartFile[] file,@Validated BannerDO banner){
 		if(file!=null && file.length>0) {
 			attachmentService.ftpUpload(file, banner.getScBannerId(), "banner");
 		}

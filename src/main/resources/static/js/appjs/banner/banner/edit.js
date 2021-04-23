@@ -27,18 +27,19 @@ function update() {
 }
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    $("#signupForm").validate({
+        rules : {
+            bt : {
+                required : true,
+                maxlength: 100
+            }
+        },
+        messages : {
+            bt : {
+                required : "请输入标题"
+            }
+        }
+    })
 }
 
 function initFileInput(ctrlName,attachmentDOList) {

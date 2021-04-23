@@ -7,6 +7,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,7 +74,7 @@ public class BannerLxController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 //	@RequiresPermissions("banner:bannerLx:add")
-	public R save( BannerLxDO bannerLx){
+	public R save(@Validated BannerLxDO bannerLx){
 		Map map = new HashMap();
 		map.put("flmc",bannerLx.getFlmc());
 		map.put("status","0");

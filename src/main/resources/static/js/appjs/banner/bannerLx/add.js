@@ -36,13 +36,14 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
+            flmc : {
+				required : true,
+                maxlength: 100
 			}
 		},
 		messages : {
-			name : {
-				required : icon + "请输入姓名"
+            flmc : {
+				required : "请输入分类名称"
 			}
 		}
 	})

@@ -1,7 +1,9 @@
 package com.smart119.banner.domain;
 
 import com.smart119.common.domain.AttachmentDO;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,8 @@ public class BannerDO implements Serializable {
 	//id
 	private String scBannerId;
 	//标题
+	@NotBlank(message = "标题不能为空")
+	@Length(min= 1, max=100, message = "标题超出范围限制{min}-{max}")
 	private String bt;
 	//banner类型id
 	private String bannerLxId;

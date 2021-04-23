@@ -1,5 +1,8 @@
 package com.smart119.banner.domain;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,6 +21,8 @@ public class BannerLxDO implements Serializable {
 	//banner_lx_id
 	private String bannerLxId;
 	//分类名称
+	@NotBlank(message = "分类名称不能为空")
+	@Length(min= 1, max=100, message = "分类名称超出范围限制{min}-{max}")
 	private String flmc;
 	//创建时间
 	private Date cdate;
