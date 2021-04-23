@@ -75,18 +75,42 @@ function update() {
 
 function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			}
-		}
-	})
+    $("#signupForm").validate({
+        rules : {
+            xm : {
+                required : true,
+                maxlength:50
+            },
+            txdz : {
+                required : true,
+                maxlength:100
+            },
+            yddh : {
+                required : true,
+                digits:true,
+                maxlength:18
+            },
+            dwmc : {
+                required : true,
+                maxlength:100
+            }
+        },
+        messages : {
+            xm : {
+                required : "请输入姓名"
+            },
+            txdz : {
+                required : "请输入通信地址"
+            },
+            yddh : {
+                required :  "请输入联系电话",
+                digits : "请输入数字格式"
+            },
+            dwmc : {
+                required : "请输入单位名称"
+            }
+        }
+    })
 }
 
 function initFileInput(ctrlName) {

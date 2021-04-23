@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+import com.smart119.common.annotation.validator.PhoneValidator;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -20,6 +24,8 @@ public class MhjyzjDO implements Serializable {
 	//公民身份号码
 	private String gmsfhm;
 	//姓名
+	@NotBlank(message = "姓名不能为空")
+	@Length(min= 1, max=50, message = "姓名超出范围限制{min}-{max}")
 	private String xm;
 	//性别代码
 	private String xbdm;
@@ -34,16 +40,22 @@ public class MhjyzjDO implements Serializable {
 	//居住_地址名称
 	private String jzhDzmc;
 	//通信地址
+	@NotBlank(message = "通信地址不能为空")
+	@Length(min= 1, max=100, message = "通信地址超出范围限制{min}-{max}")
 	private String txdz;
 	//邮政编码
 	private String yzbm;
 	//联系电话
+	@PhoneValidator(message = "联系电话格式错误")
+	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String yddh;
 	//家庭_联系电话
 	private String jtLxdh;
 	//办公_联系电话
 	private String bgLxdh;
 	//单位名称
+	@NotBlank(message = "单位名称不能为空")
+	@Length(min= 1, max=100, message = "单位名称超出范围限制{min}-{max}")
 	private String dwmc;
 	//备注
 	private String bz;
