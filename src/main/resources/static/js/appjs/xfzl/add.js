@@ -134,6 +134,16 @@ $.validator.setDefaults({
 });
 
 function save() {
+    var nr = $("#nr").val();
+    var file = $("#input-id").val();
+    if(nr == "" || nr == null || nr == undefined){
+        parent.layer.alert("请输入案例内容");
+        return;
+    }
+    if(file == "" || file == null || file == undefined){
+        parent.layer.alert("请选择需要上传的图片");
+        return;
+    }
     $("#signupForm").ajaxSubmit({
         type: "POST",
         url: "/back/xfzl/save",
@@ -229,6 +239,7 @@ function initFileInput(ctrlName) {
         validateInitialCount: true,
         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
         msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        dropZoneTitle:"拖拽文件到这里 &hellip;<br>支持多文件同时上传<br>建议图片宽高比例为4:3",
         layoutTemplates: {
             //actionDelete:'', //去除上传预览的缩略图中的删除图标
             //actionUpload:'',//去除上传预览缩略图中的上传图片；

@@ -127,6 +127,11 @@ $.validator.setDefaults({
 	}
 });
 function update() {
+    var nr = $("#fzjcnr").val();
+    if(nr == "" || nr == null || nr == undefined){
+        parent.layer.alert("请输入案例内容");
+        return;
+    }
 	$("#signupForm").ajaxSubmit({
 		type : "POST",
 		url : "/back/xfzl/update",

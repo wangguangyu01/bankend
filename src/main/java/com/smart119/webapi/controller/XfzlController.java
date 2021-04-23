@@ -3,6 +3,7 @@ package com.smart119.webapi.controller;
 
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.enums.ResponseStatusEnum;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.PageUtils;
@@ -17,13 +18,12 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +38,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/back/xfzl")
 @Slf4j
+@Validated
 public class XfzlController extends BaseController {
 
 
@@ -84,11 +85,7 @@ public class XfzlController extends BaseController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("back:xfzl:add")
-    public R save(@RequestPart(value = "file", required = false) MultipartFile[] file, @Validated XfzlDO xfzl,
-                  BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return R.error(bindingResult.getFieldError().getDefaultMessage());
-        }
+    public R save(@RequestPart(value = "file", required = false) @NotNull(message = "请选择需要上传的图片") MultipartFile[] file, @Validated XfzlDO xfzl) {
         UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
         if (xfzlService.save(file, xfzl, user.getUsername()) > 0) {
             return R.ok();
@@ -120,10 +117,16 @@ public class XfzlController extends BaseController {
     @RequestMapping("/update")
     @RequiresPermissions("back:xfzl:edit")
     public R update(@RequestPart(value = "file", required = false) MultipartFile[] file,
-                    @Validated XfzlDO xfzl,
-                    BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return R.error(bindingResult.getFieldError().getDefaultMessage());
+                    @Validated XfzlDO xfzl) {
+        if(StringUtils.isNotEmpty(xfzl.getXfzlId()) && (file == null || file.length == 0)){
+            Map param = new HashMap();
+            param.put("fid", xfzl.getXfzlId());
+            param.put("fType", "xfzl_slt");
+            List<AttachmentDO> attachmentDOList = attachmentService.list(param);
+            //是否已移除原有图片
+            if(attachmentDOList.isEmpty()){
+                return R.error(ResponseStatusEnum.RESCODE_10004.getCode(),"请选择需要上传的图片");
+            }
         }
         UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
         int count = xfzlService.update(file, xfzl, user.getUsername());
