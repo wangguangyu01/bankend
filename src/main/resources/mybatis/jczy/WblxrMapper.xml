@@ -4,11 +4,11 @@
 <mapper namespace="com.smart119.jczy.dao.WblxrDao">
 
 	<select id="get" resultType="com.smart119.jczy.domain.WblxrDO">
-		select `WBLXR_ID`,`XM`,`DH`,`DZ`,`SR`,`YX`,`BZ`,`XFJYRY_TYWYSBM`,`cdate`,`status`,`cperson` from txl_wblxr where WBLXR_ID = #{value}
+		select `WBLXR_ID`,`XM`,`DH`,`DZ`,STR_TO_DATE(`SR`,'%Y-%m-%d') as SR,`YX`,`BZ`,`XFJYRY_TYWYSBM`,`cdate`,`status`,`cperson` from txl_wblxr where WBLXR_ID = #{value}
 	</select>
 
 	<select id="list" resultType="com.smart119.jczy.domain.WblxrDO">
-		select `WBLXR_ID`,`XM`,`DH`,`DZ`,`SR`,`YX`,`BZ`,`XFJYRY_TYWYSBM`,`cdate`,`status`,`cperson` from txl_wblxr
+		select `WBLXR_ID`,`XM`,`DH`,`DZ`,STR_TO_DATE(`SR`,'%Y-%m-%d') as SR,`YX`,`BZ`,`XFJYRY_TYWYSBM`,`cdate`,`status`,`cperson` from txl_wblxr
         <where>  
 		  		  <if test="wblxrId != null and wblxrId != ''"> and WBLXR_ID = #{wblxrId} </if>
 		  		  <if test="xm != null and xm != ''"> and XM like '%${xm}%' </if>

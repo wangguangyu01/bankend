@@ -31,14 +31,26 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			name : {
-				required : true
-			}
+            xm : {
+				required : true,
+                maxlength:20
+			},
+            dh : {
+                required : true,
+                maxlength : 20
+            },
+            bz : {
+                required : false,
+                maxlength : 300
+            }
 		},
 		messages : {
-			name : {
+            xm : {
 				required : icon + "请输入姓名"
-			}
+			},
+            dh : {
+                required : "请输入电话"
+            }
 		}
 	})
 }

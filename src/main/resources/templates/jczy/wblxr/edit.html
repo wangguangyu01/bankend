@@ -13,13 +13,13 @@
 							<div class="form-group">	
 								<label class="col-sm-3 control-label">姓名：</label>
 								<div class="col-sm-8">
-									<input id="xm" name="xm" th:value="${wblxr.xm}" class="form-control" type="text">
+									<input id="xm" name="xm" th:value="${wblxr.xm}" class="form-control" type="text" required>
 								</div>
 							</div>
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">电话：</label>
 								<div class="col-sm-8">
-									<input id="dh" name="dh" th:value="${wblxr.dh}" class="form-control" type="text">
+									<input id="dh" name="dh" th:value="${wblxr.dh}" class="form-control" type="text" required>
 								</div>
 							</div>
 														<div class="form-group">	
@@ -28,11 +28,18 @@
 									<input id="dz" name="dz" th:value="${wblxr.dz}" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
+														<!--<div class="form-group">	-->
+								<!--<label class="col-sm-3 control-label">生日：</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input id="sr" name="sr" th:value="${wblxr.sr}" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
+							<div class="form-group">
 								<label class="col-sm-3 control-label">生日：</label>
-								<div class="col-sm-8">
-									<input id="sr" name="sr" th:value="${wblxr.sr}" class="form-control" type="text">
-								</div>
+							<div class="col-sm-8">
+								<input type="text" class="laydate-icon layer-date form-control" id="sr" name="sr"  placeholder="请选择出生日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${wblxr.sr}==null?null:${#dates.format(wblxr.sr,'yyyy-MM-dd')}"/>
+							</div>
 							</div>
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">邮箱：</label>
@@ -43,9 +50,10 @@
 														<div class="form-group">	
 								<label class="col-sm-3 control-label">备注：</label>
 								<div class="col-sm-8">
-									<input id="bz" name="bz" th:value="${wblxr.bz}" class="form-control" type="text">
+									<textarea id="bz" name="bz" th:text="${wblxr.bz}" class="form-control" type="text"></textarea>
 								</div>
 							</div>
+
 
 							<div class="form-group">
 								<label class="col-sm-3 control-label">照片：</label>
@@ -54,12 +62,12 @@
 								</div>
 							</div>
 
-														<div class="form-group">	
-								<label class="col-sm-3 control-label">消防救援人员_通用唯一识别码：</label>
-								<div class="col-sm-8">
-									<input id="xfjyryTywysbm" name="xfjyryTywysbm" th:value="${wblxr.xfjyryTywysbm}" class="form-control" type="text">
-								</div>
-							</div>
+														<!--<div class="form-group">	-->
+								<!--<label class="col-sm-3 control-label">消防救援人员_通用唯一识别码：</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input id="xfjyryTywysbm" name="xfjyryTywysbm" th:value="${wblxr.xfjyryTywysbm}" class="form-control" type="text">-->
+								<!--</div>-->
+							<!--</div>-->
 
 																					<div class="form-group">
 								<div class="col-sm-8 col-sm-offset-3">
