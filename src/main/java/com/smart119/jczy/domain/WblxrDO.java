@@ -8,6 +8,9 @@ import io.swagger.annotations.ApiModelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * 外部联系人
@@ -32,12 +35,16 @@ public class WblxrDO implements Serializable {
     /**
      * 姓名
      */
+    @NotBlank(message = "姓名")
+    @Length(min= 1, max=20, message = "姓名超出范围限制{min}-{max}")
     @ApiModelProperty(value = "姓名", name = "xm")
     private String xm;
 
     /**
      * 电话
      */
+    @NotBlank(message = "电话")
+    @Length(min= 1, max=20, message = "电话超出范围限制{min}-{max}")
     @ApiModelProperty(value = "电话", name = "dh")
     private String dh;
 
@@ -56,12 +63,15 @@ public class WblxrDO implements Serializable {
     /**
      * 邮箱
      */
+
     @ApiModelProperty(value = "邮箱", name = "yx")
     private String yx;
 
     /**
      * 备注
      */
+    @NotBlank(message = "备注")
+    @Length(min= 1, max=300, message = "备注超出范围限制{min}-{max}")
     @ApiModelProperty(value = "备注", name = "bz")
     private String bz;
 
