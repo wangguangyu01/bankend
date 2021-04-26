@@ -1,12 +1,13 @@
 package com.smart119.jczy.domain;
 
+import com.smart119.common.domain.AttachmentDO;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
-
+import java.util.List;
 
 
 /**
@@ -122,6 +123,17 @@ public class ZddwDO implements Serializable {
 	private String wxhxpjyqk;
 	//地址名称
 	private String wxhxpdzmc;
+
+
+	private List<AttachmentDO> attachmentDOList;
+
+	public List<AttachmentDO> getAttachmentDOList() {
+		return attachmentDOList;
+	}
+
+	public void setAttachmentDOList(List<AttachmentDO> attachmentDOList) {
+		this.attachmentDOList = attachmentDOList;
+	}
 
 	public String getXfkzsjyqk() {
 		return xfkzsjyqk;

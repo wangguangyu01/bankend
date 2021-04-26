@@ -116,6 +116,7 @@ function saveMarker(lng,lat){
 function getXzqhdm(obj,objId){
 	var id = $(obj).find("option:selected").attr("id");
 	getSelectById(id,objId);
+	getSelectById(id,objId);
 }
 
 function initFileInput(ctrlName,attachmentDOList) {

@@ -1,10 +1,10 @@
 package com.smart119.jczy.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.DictService;
 import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.system.domain.DeptDO;
@@ -15,18 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.smart119.jczy.domain.ZddwDO;
 import com.smart119.jczy.service.ZddwService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 
@@ -49,6 +45,9 @@ public class ZddwController extends BaseController{
 
 	@Autowired
 	private DeptService deptService;
+
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	@GetMapping()
 	@RequiresPermissions("jczy:zddw:zddw")
@@ -114,6 +113,12 @@ public class ZddwController extends BaseController{
 		String province = dictService.findParentValue(city);
 		model.addAttribute("province", province);
 		model.addAttribute("city", city);
+		//回显附件
+		Map m = new HashMap();
+		m.put("fid",zddwTywysbm);
+		m.put("fType","zddwtp");
+		List<AttachmentDO> zddwtpList = attachmentService.list(m);
+		model.addAttribute("zddwtpList", zddwtpList);
 	    return "jczy/zddw/edit";
 	}
 	
@@ -123,7 +128,13 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:zddw:add")
-	public R save(@Validated ZddwDO zddw){
+	public R save(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile, @Validated ZddwDO zddw){
+		String id = UUID.randomUUID().toString().replace("-", "");
+		zddw.setZddwTywysbm(id);
+		//重点单位增加图片
+		if(zddwFile!=null && zddwFile.length>0) {
+			attachmentService.ftpUpload(zddwFile, id, "zddwtp");
+		}
 		if(zddwService.save(zddw)>0){
 			return R.ok();
 		}
@@ -135,7 +146,10 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zddw:edit")
-	public R update(@Validated ZddwDO zddw){
+	public R update(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile,@Validated ZddwDO zddw){
+		if(zddwFile!=null && zddwFile.length>0) {
+			attachmentService.ftpUpload(zddwFile, zddw.getZddwTywysbm(), "zddwtp");
+		}
 		zddwService.update(zddw);
 		return R.ok();
 	}

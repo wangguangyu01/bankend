@@ -35,7 +35,6 @@ public class ZddwServiceImpl implements ZddwService {
 	
 	@Override
 	public int save(ZddwDO zddw){
-		zddw.setZddwTywysbm(UUID.randomUUID().toString().replace("-", ""));
 		return zddwDao.save(zddw);
 	}
 	
