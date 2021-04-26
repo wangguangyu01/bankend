@@ -215,6 +215,7 @@ function initFileInput(ctrlName,attachmentDOList) {
 		validateInitialCount:true,
 		previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
 		msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        dropZoneTitle:"拖拽文件到这里 &hellip;<br>支持多文件同时上传<br>建议图片宽高比例为4:3",
 		layoutTemplates :{
 			//actionDelete:'', //去除上传预览的缩略图中的删除图标
 			//actionUpload:'',//去除上传预览缩略图中的上传图片；
