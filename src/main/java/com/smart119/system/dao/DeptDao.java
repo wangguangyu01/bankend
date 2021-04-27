@@ -1,5 +1,6 @@
 package com.smart119.system.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.smart119.system.domain.DeptDO;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import org.apache.ibatis.annotations.Param;
  * @date 2017-10-03 15:35:39
  */
 
-public interface DeptDao {
+public interface DeptDao extends BaseMapper<DeptDO> {
 
 	DeptDO get(long deptId);
 
@@ -27,9 +28,7 @@ public interface DeptDao {
 
 	int save(DeptDO dept);
 
-	int update(DeptDO dept);
-
-	int remove(String xfjyjgTywysbm);
+	int updatexml(DeptDO dept);
 
 	int batchRemove(Long[] deptIds);
 

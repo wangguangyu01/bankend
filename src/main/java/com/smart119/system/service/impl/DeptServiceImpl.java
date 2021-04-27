@@ -1,7 +1,17 @@
 package com.smart119.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.smart119.common.domain.Tree;
+import com.smart119.common.enums.ResponseStatusEnum;
+import com.smart119.common.utils.BuildTree;
+import com.smart119.common.utils.R;
+import com.smart119.system.dao.DeptDao;
+import com.smart119.system.domain.DeptDO;
+import com.smart119.system.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,15 +19,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.smart119.common.domain.Tree;
-import com.smart119.common.utils.BuildTree;
-import com.smart119.system.dao.DeptDao;
-import com.smart119.system.domain.DeptDO;
-import com.smart119.system.service.DeptService;
-
 
 @Service
-public class DeptServiceImpl implements DeptService {
+public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements DeptService {
     @Autowired
     private DeptDao sysDeptMapper;
 
@@ -42,6 +46,39 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public R move(Long deptId, Integer type){
+        DeptDO deptDO = get(deptId);
+        if(deptDO == null){
+            return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "机构不存在");
+        }
+        QueryWrapper<DeptDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("order_num, dept_id")
+                .eq("parent_id", deptDO.getParentId())
+                .last("limit 1");
+        if(type.intValue() == 0){
+            //上移
+            queryWrapper.lt("order_num", deptDO.getOrderNum())
+                    .orderByDesc("order_num");
+        }else{
+            //下移
+            queryWrapper.gt("order_num", deptDO.getOrderNum())
+                    .orderByAsc("order_num");
+        }
+        DeptDO tempDeptDO = getOne(queryWrapper);
+        if(tempDeptDO == null){
+            return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "机构位置处于边缘，不可移动");
+        }
+        lambdaUpdate().set(DeptDO::getOrderNum, tempDeptDO.getOrderNum())
+                .eq(DeptDO::getDeptId, deptDO.getDeptId())
+                .update();
+        lambdaUpdate().set(DeptDO::getOrderNum, deptDO.getOrderNum())
+                .eq(DeptDO::getDeptId, tempDeptDO.getDeptId())
+                .update();
+        return R.ok();
+    }
+
+    @Override
     public List<DeptDO> list(Map<String, Object> map) {
         return sysDeptMapper.list(map);
     }
@@ -52,18 +89,13 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public int save(DeptDO sysDept) {
+    public int savexml(DeptDO sysDept) {
         return sysDeptMapper.save(sysDept);
     }
 
     @Override
     public int update(DeptDO sysDept) {
-        return sysDeptMapper.update(sysDept);
-    }
-
-    @Override
-    public int remove(String xfjyjgTywysbm) {
-        return sysDeptMapper.remove(xfjyjgTywysbm);
+        return sysDeptMapper.updatexml(sysDept);
     }
 
     @Override
@@ -138,7 +170,7 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public List<Long> listChildrenIds(Long parentId) {
-        List<DeptDO> deptDOS = list(null);
+        List<DeptDO> deptDOS = list();
         return treeMenuList(deptDOS, parentId);
     }
 
@@ -169,7 +201,7 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public List<DeptDO> listChildren(Long id) {
-        List<DeptDO> deptDOS = list(null);
+        List<DeptDO> deptDOS = list();
         List<DeptDO> resultList = new ArrayList<>();
         if(id!=null){
             DeptDO filterDept = deptDOS.stream().filter(o->o.getDeptId().equals(id)).collect(Collectors.toList()).get(0);

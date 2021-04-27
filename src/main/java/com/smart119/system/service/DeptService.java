@@ -1,6 +1,8 @@
 package com.smart119.system.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.smart119.common.domain.Tree;
+import com.smart119.common.utils.R;
 import com.smart119.system.domain.DeptDO;
 
 import java.util.List;
@@ -13,7 +15,7 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-09-27 14:28:36
  */
-public interface DeptService {
+public interface DeptService extends IService<DeptDO> {
 
 	/**
 	 * 用部门id查询部门实体对象
@@ -43,7 +45,7 @@ public interface DeptService {
 	 * @param sysDept 部门对象
 	 * @return
 	 */
-	int save(DeptDO sysDept);
+	int savexml(DeptDO sysDept);
 
 
 	/**
@@ -52,14 +54,6 @@ public interface DeptService {
 	 * @return
 	 */
 	int update(DeptDO sysDept);
-
-
-	/**
-	 * 删除部门方法
-	 * @param xfjyjgTywysbm 救援机构唯一标识代码
-	 * @return
-	 */
-	int remove(String xfjyjgTywysbm);
 
 
 	/**
@@ -113,4 +107,6 @@ public interface DeptService {
 	List<DeptDO> getXfjyjgZdAndDd();
 
 	Map<String,Object> findJyjgxzdmById(String deptId);
+
+	R move(Long deptId, Integer type);
 }

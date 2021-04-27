@@ -43,7 +43,7 @@
 				order by ${sort} ${order}
 			</when>
 			<otherwise>
-				order by dept_id desc
+				order by parent_id,order_num
 			</otherwise>
 		</choose>
 	</select>
@@ -93,11 +93,11 @@
 		`cperson`,
 		`status`
 		)
-		values
-		(
+		select
 		#{parentId},
 		#{name},
-		#{orderNum},
+		/*主要是为初始化它*/
+		max(order_num) + 1,
 		#{delFlag},
 		#{xfjyjgTywysbm},
 		#{dwmc},
@@ -118,10 +118,10 @@
 		#{cdate},
 		#{cperson},
 		#{status}
-		)
+		from sys_dept where parent_id = #{parentId}
 	</insert>
 
-	<update id="update" parameterType="com.smart119.system.domain.DeptDO">
+	<update id="updatexml" parameterType="com.smart119.system.domain.DeptDO">
 		update sys_dept
 		<set>
 			<if test="parentId != null">`parent_id` = #{parentId}, </if>
@@ -147,10 +147,6 @@
 		</set>
 		where XFJYJG_TYWYSBM = #{xfjyjgTywysbm}
 	</update>
-
-	<delete id="remove">
-		delete from sys_dept where XFJYJG_TYWYSBM = #{value}
-	</delete>
 
 	<delete id="batchRemove">
 		delete from sys_dept where dept_id in

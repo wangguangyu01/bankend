@@ -81,12 +81,15 @@ function load() {
 								+ item.deptId
 								+ '\')"><i class="fa fa-plus"></i></a> ';
 							var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="removeone(\''
-								+ item.xfjyjgTywysbm
-								+ '\')"><i class="fa fa-remove"></i></a> ';
-							var f = '<a class="btn btn-success btn-sm＂ href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
 								+ item.deptId
-								+ '\')"><i class="fa fa-key"></i></a> ';
-							return e + a + d;
+								+ '\')"><i class="fa fa-remove"></i></a> ';
+							var f = '<a class="btn btn-info btn-sm' + s_move_h + '" href="#" title="上移"  mce_href="#" onclick="move('
+								+ item.deptId
+								+ ',0)"><i class="fa fa-arrow-up"></i></a> ';
+                            var h = '<a class="btn btn-info btn-sm' + s_move_h + '" href="#" title="下移"  mce_href="#" onclick="move('
+                                + item.deptId
+                                + ',1)"><i class="fa fa-arrow-down"></i></a> ';
+							return e + a + d + f + h;
 						}
 					} ]
 			});
@@ -171,3 +174,22 @@ function batchRemove() {
 	}, function() {});
 }
 
+function move(id, type) {
+
+    layer.confirm('确定要'+ (type == 0 ? '上移': '下移')+ '选中的记录？', {
+        btn : [ '确定', '取消' ]
+    }, function() {
+        $.ajax({
+            url : prefix + "/move/" + id + "/" + type,
+            type : "get",
+            success : function(r) {
+                if (r.code == 0) {
+                    layer.msg(r.msg);
+                    reLoad();
+                } else {
+                    layer.msg(r.msg);
+                }
+            }
+        });
+    })
+}

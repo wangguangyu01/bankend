@@ -3,6 +3,7 @@ package com.smart119.system.controller;
 import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.Tree;
+import com.smart119.common.enums.ResponseStatusEnum;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.R;
 import com.smart119.system.domain.DeptDO;
@@ -105,7 +106,7 @@ public class DeptController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (sysDeptService.save(sysDept) > 0) {
+		if (sysDeptService.savexml(sysDept) > 0) {
 			return R.ok();
 		}
 		return R.error();
@@ -133,11 +134,11 @@ public class DeptController extends BaseController {
 	@PostMapping("/remove")
 	@ResponseBody
 	@RequiresPermissions("system:sysDept:remove")
-	public R remove(String deptId) {
+	public R remove(Long deptId) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-        DeptDO deptDO = sysDeptService.get(Long.parseLong(deptId));
+        DeptDO deptDO = sysDeptService.getById(deptId);
 		if(deptDO == null){
             return R.error(1, "机构不存在");
         }
@@ -147,7 +148,7 @@ public class DeptController extends BaseController {
 			return R.error(1, "包含下级部门,不允许删除");
 		}
 		if(sysDeptService.checkDeptHasUser(deptDO.getXfjyjgTywysbm())) {
-			if (sysDeptService.remove(deptId) > 0) {
+			if (sysDeptService.removeById(deptId)) {
 				return R.ok();
 			}
 		}else {
@@ -211,5 +212,22 @@ public class DeptController extends BaseController {
 		}
 		return R.error();
 	}
+	/**
+	 * @Author sdw
+	 * @Description  移动排序
+	 * @Date 2021/4/26
+	 * @Param [deptId, type 0：上移，1:下移]
+	 * @return com.smart119.common.utils.R
+	**/
+	@GetMapping("/move/{deptId}/{type}")
+	@RequiresPermissions("system:sysDept:move")
+    @ResponseBody
+	public R move(@PathVariable("deptId") Long deptId, @PathVariable("type") Integer type) {
+		if(type == 0 || 1 == type){
+            return sysDeptService.move(deptId, type).setOnlyExtraNote(deptId);
+        }else{
+            return R.error(ResponseStatusEnum.RESCODE_10004);
+        }
 
+	}
 }

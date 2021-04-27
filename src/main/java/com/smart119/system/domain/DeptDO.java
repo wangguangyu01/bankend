@@ -1,12 +1,14 @@
 package com.smart119.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart119.common.annotation.validator.PhoneValidator;
 import com.smart119.common.domain.Distance;
 import com.smart119.common.domain.Duration;
 import com.smart119.jczy.domain.XfclDO;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Digits;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,10 +22,12 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2017-09-27 14:28:36
  */
+@TableName("sys_dept")
 public class DeptDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	//
+	@TableId
 	private Long deptId;
 	//上级部门XFJYJG_TYWYSBM，一级部门为null
 	private Long parentId;
@@ -78,16 +82,20 @@ public class DeptDO implements Serializable {
 	private String cperson;
 
 	//对战车辆
+	@TableField(exist = false)
 	private List<XfclDO> xfclDOList;
 	//距离
+	@TableField(exist = false)
 	private Distance distance;
 	//耗时
+	@TableField(exist = false)
 	private Duration duration;
 
 //	//消防救援机构_通用唯一识别码_全部
 //	private String xfjyjgTywysbmAll;
 
 	//作战单元
+	@TableField(exist = false)
 	List<Map<String, Object>> zzdyList;
 
 
