@@ -97,7 +97,7 @@
 		#{parentId},
 		#{name},
 		/*主要是为初始化它*/
-		max(order_num) + 1,
+		order_num + 1,
 		#{delFlag},
 		#{xfjyjgTywysbm},
 		#{dwmc},
@@ -118,7 +118,7 @@
 		#{cdate},
 		#{cperson},
 		#{status}
-		from sys_dept where parent_id = #{parentId}
+		from sys_dept where parent_id = #{parentId} ORDER BY order_num desc limit 1
 	</insert>
 
 	<update id="updatexml" parameterType="com.smart119.system.domain.DeptDO">
