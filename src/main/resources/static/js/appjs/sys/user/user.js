@@ -1,11 +1,10 @@
 var prefix = "/sys/user"
 $(function() {
-	var deptId = '';
 	getTreeData();
-	load(deptId);
+	load();
 });
 
-function load(deptId) {
+function load() {
 	$('#exampleTable')
 		.bootstrapTable(
 			{
@@ -36,7 +35,7 @@ function load(deptId) {
 						limit : params.limit,
 						offset : params.offset,
 						name : $('#searchName').val(),
-						deptId : deptId
+						deptId : $("#deptId").val()
 					};
 				},
 				// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -97,12 +96,7 @@ function load(deptId) {
 			});
 }
 function reLoad() {
-    var opt = {
-        query : {
-            deptId : $("#deptId").val(),
-        }
-    };
-    $('#exampleTable').bootstrapTable('refresh',opt);
+    $('#exampleTable').bootstrapTable('refresh');
 }
 function add() {
 	// iframe层
@@ -207,21 +201,9 @@ function loadTree(tree) {
 	$('#jstree').jstree().open_all();
 }
 $('#jstree').on("changed.jstree", function(e, data) {
-	if (data.selected == -1) {
-		var opt = {
-			query : {
-				deptId : '',
-			}
-		}
-		$('#exampleTable').bootstrapTable('refresh', opt);
-	} else {
-		var opt = {
-			query : {
-				deptId : data.selected[0],
-			}
-		}
+	if (data.selected != -1) {
 		$("#deptId").val(data.selected[0]);
-		$('#exampleTable').bootstrapTable('refresh',opt);
 	}
+    $('#exampleTable').bootstrapTable('refresh');
 
 });
