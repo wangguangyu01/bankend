@@ -84,7 +84,7 @@
           用于配置不符合过滤条件的操作
             <onMismatch>DENY</onMismatch>-->
         </filter>
-        <file>${logPath}/bms_backend-warn.log</file>
+        <file>${logPath}/smart119_backend-warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志输出位置 可相对、和绝对路径 -->
             <fileNamePattern>

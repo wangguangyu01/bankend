@@ -88,3 +88,7 @@ swagger:
 security:
   shiro:
     globalSessionTimeout: 28800  # 登录过期时长8小时
+
+log:
+  path: ../logs/
+  level: info
