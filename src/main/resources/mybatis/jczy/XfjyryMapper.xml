@@ -54,7 +54,7 @@
         left join sys_dict dict2 on dict2.value=t.XFJYXJBDM and dict2.type='XFJYXJBDM' and dict2.value!=''
         <where>
             <if test="xfjyryTywysbm != null and xfjyryTywysbm != ''">and t.XFJYRY_TYWYSBM = #{xfjyryTywysbm}</if>
-            <if test="xm != null and xm != ''">and t.XM like '%${xm}%'</if>
+            <if test="xm != null and xm != ''">and t.XM like CONCAT ('%',#{xm},'%')</if>
             <if test="cyzjlxdm != null and cyzjlxdm != ''">and t.CYZJLXDM = #{cyzjlxdm}</if>
             <if test="zjhm != null and zjhm != ''">and t.ZJHM = #{zjhm}</if>
             <if test="xbdm != null and xbdm != ''">and t.XBDM = #{xbdm}</if>
@@ -112,7 +112,7 @@
         select count(*) from jczy_xfjyry
         <where>
             <if test="xfjyryTywysbm != null and xfjyryTywysbm != ''">and XFJYRY_TYWYSBM = #{xfjyryTywysbm}</if>
-            <if test="xm != null and xm != ''">and XM = #{xm}</if>
+            <if test="xm != null and xm != ''">and XM like CONCAT ('%',#{xm},'%')</if>
             <if test="cyzjlxdm != null and cyzjlxdm != ''">and CYZJLXDM = #{cyzjlxdm}</if>
             <if test="zjhm != null and zjhm != ''">and ZJHM = #{zjhm}</if>
             <if test="xbdm != null and xbdm != ''">and XBDM = #{xbdm}</if>
