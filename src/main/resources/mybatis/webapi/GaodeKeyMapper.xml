@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.webapi.dao.GaodeKeyDao">
+
+    <select id="get" resultType="com.smart119.webapi.domain.GaodeKeyDO">
+		select `id`,`key`,`type`,`status` from gaode_key where id = #{value}
+	</select>
+
+    <select id="list" resultType="com.smart119.webapi.domain.GaodeKeyDO">
+        select `id`,`key`,`type`,`status` from gaode_key
+        <where>
+            <if test="id != null and id != ''"> and id = #{id} </if>
+            <if test="key != null and key != ''"> and key = #{key} </if>
+            <if test="type != null and type != ''"> and type = #{type} </if>
+            <if test="status != null and status != ''"> and status = #{status} </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from gaode_key
+        <where>
+            <if test="id != null and id != ''"> and id = #{id} </if>
+            <if test="key != null and key != ''"> and key = #{key} </if>
+            <if test="type != null and type != ''"> and type = #{type} </if>
+            <if test="status != null and status != ''"> and status = #{status} </if>
+        </where>
+    </select>
+
+
+    <select id="queryListUseable" resultType="java.lang.String">
+        select `id`,`key`,`type`,`status` from gaode_key
+        <where>
+           <if test="gaodeKeyParm != null">
+               <if test="gaodeKeyParm.id != null and gaodeKeyParm.id != ''"> and id = #{gaodeKeyParm.id} </if>
+               <if test="gaodeKeyParm.key != null and gaodeKeyParm.key != ''"> and key = #{gaodeKeyParm.key} </if>
+               <if test="gaodeKeyParm.type != null and gaodeKeyParm.type != ''"> and type = #{gaodeKeyParm.type} </if>
+               <if test="gaodeKeyParm.status != null and gaodeKeyParm.status != ''"> and status = #{gaodeKeyParm.status} </if>
+           </if>
+        </where>
+    </select>
+
+
+    <select id="selectPageVo" resultType="com.smart119.webapi.domain.GaodeKeyDO">
+        select `id`,`key`,`type`,`status` from gaode_key
+        <where>
+            <if test="map != null">
+                <if test="map.id != null and map.id != ''"> and `id` = #{map.id} </if>
+                <if test="map.key != null and map.key != ''"> and `key` like  CONCAT ('%',#{map.key},'%')</if>
+                <if test="map.type != null and map.type != ''"> and `type` = #{map.type} </if>
+                <if test="map.status != null and map.status != ''"> and `status` = #{map.status} </if>
+            </if>
+        </where>
+        order by `id` desc
+    </select>
+
+    <insert id="save" parameterType="com.smart119.webapi.domain.GaodeKeyDO" useGeneratedKeys="true" keyProperty="id">
+		insert into gaode_key
+		(
+			`key`,
+			`type`,
+			`status`
+		)
+		values
+		(
+			#{key},
+			#{type},
+			#{status}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.smart119.webapi.domain.GaodeKeyDO">
+        update gaode_key
+        <set>
+            <if test="key != null">`key` = #{key}, </if>
+            <if test="type != null">`type` = #{type}, </if>
+            <if test="status != null">`status` = #{status}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="remove">
+		delete from gaode_key where id = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from gaode_key where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

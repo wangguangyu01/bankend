@@ -7,6 +7,7 @@ import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -168,9 +169,9 @@ public class DictController extends BaseController {
 
 	@ResponseBody
 	@GetMapping("/getListByParentId")
-	public List<DictDO> getListByParentId(@RequestParam("id") Long id) {
-
-		List<DictDO> dictList = dictService.listByParentId(id);
+	public List<DictDO> getListByParentId(@RequestParam(value="id", required = false) String id) {
+		Long idLong = NumberUtils.toLong(id, -1);
+		List<DictDO> dictList = dictService.listByParentId(idLong);
 		return dictList;
 	}
 

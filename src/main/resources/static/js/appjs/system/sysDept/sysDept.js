@@ -2,6 +2,7 @@
 var prefix = "/system/sysDept"
 $(function() {
 	load();
+
 });
 
 function load() {

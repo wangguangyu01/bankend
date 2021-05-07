@@ -268,7 +268,7 @@ public class RedisManager {
     /**
      * keys
      *
-     * @param regex
+     * @param pattern
      * @return
      */
     public Set<byte[]> keys(String pattern) {
@@ -342,4 +342,119 @@ public class RedisManager {
             }
         }
     }
+
+
+
+    /**
+     * 向redis的set集合添加元素
+     * @param key
+     *  @param value
+     * @return
+     */
+    public boolean setAddElement(String key, String value) {
+        Jedis jedis = this.getResource();
+        try {
+            long scardNew  = jedis.sadd(key, value);
+            if (scardNew > 0 ) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 向redis的set集合添加元素
+     * @param key
+     * @param valueList
+     * @return
+     */
+    public boolean setAddElement(String key, List<String> valueList) {
+        Jedis jedis = this.getResource();
+        try {
+            int count = 0;
+            for (String value: valueList) {
+                jedis.sadd(key, value);
+                count ++;
+            }
+            if (count == valueList.size() ) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return false;
+    }
+
+
+
+    /**
+     * 向redis的set集合移除元素
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean setRemoveElement(String key, String value) {
+        Jedis jedis = this.getResource();
+        try {
+            long scardNew = 0;
+            if (!jedis.exists(key)) {
+                return true;
+            } else {
+                long scard = jedis.scard(key);
+                if (scard > 0) {
+                    scardNew = jedis.srem(key, value);
+                    if (scard > scardNew) {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 根据key键获取所有的set集合中的元素
+     * @param key
+     * @return
+     */
+    public Set<String> getSetAllElement(String key) {
+        Jedis jedis = this.getResource();
+        Set<String> set = new HashSet<>();
+        try {
+            long scardNew = 0;
+            if (!jedis.exists(key)) {
+                return  set;
+            } else {
+                set = jedis.smembers(key);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return set;
+    }
+
 }
