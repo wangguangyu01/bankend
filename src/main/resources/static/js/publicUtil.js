@@ -7,10 +7,9 @@ function getSelectById(dictId,objId,selected){
             'id' : dictId
         },
         success : function(list) {
-
+            $("#"+objId).empty();
+            $("#"+objId).append('<option value="" >--请选择--</option>');
             if(list!=null && list!=undefined && list.length>0){
-                $("#"+objId).empty();
-                $("#"+objId).append('<option value="" >--请选择--</option>');
                 $.each(list,function(i,item){
                     if(selected!=null && selected==item.value){
                         $("#"+objId).append('<option id="'+item.id+'" value="'+item.value+'" selected="selected">'+item.name+'</option>');
@@ -20,7 +19,6 @@ function getSelectById(dictId,objId,selected){
 
                 });
             }
-
         }
     });
 }
@@ -35,9 +33,9 @@ function getSelectByType(type,objId,selected){
             'type' : type
         },
         success : function(list) {
+            $("#"+objId).empty();
+            $("#"+objId).append('<option value="" >--请选择--</option>');
             if(list!=null && list!=undefined && list.length>0){
-                $("#"+objId).empty();
-                $("#"+objId).append('<option value="" >--请选择--</option>');
                 $.each(list,function(i,item){
                     if(selected!=null && selected==item.value){
                         $("#"+objId).append('<option id="'+item.id+'" value="'+item.value+'" selected="selected">'+item.name+'</option>');
@@ -59,9 +57,10 @@ function getSelectByValue(value,objId,selected){
             'value' : value
         },
         success : function(list) {
+            $("#"+objId).empty();
+            $("#"+objId).append('<option value="" >--请选择--</option>');
             if(list!=null && list!=undefined && list.length>0){
-                $("#"+objId).empty();
-                $("#"+objId).append('<option value="" >--请选择--</option>');
+
                 $.each(list,function(i,item){
                     if(selected!=null && selected==item.value){
                         $("#"+objId).append('<option id="'+item.id+'" value="'+item.value+'" selected="selected">'+item.name+'</option>');

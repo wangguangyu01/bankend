@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.smart119</groupId>
-    <artifactId>smart119_backend</artifactId>
+    <artifactId>smart119_backend1</artifactId>
     <version>2.0.0</version>
     <packaging>jar</packaging>
 
-    <name>smart119_backend</name>
-    <description>smart119_backend</description>
+    <name>smart119_backend1</name>
+    <description>smart119_backend1</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -17,7 +17,7 @@
         <version>2.4.2</version>
         <relativePath/>
     </parent>
-    
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
