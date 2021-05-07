@@ -35,18 +35,18 @@
         <if test="params.lx != null and params.lx != ''">and t.LX = #{params.lx}</if>
         <if test="params.state == '1' or params.state == 1">
             <!--查询近一天的-->
-            and DATEDIFF(t.FBSJ, NOW())>=-1
+            and DATE_SUB(CURDATE(), INTERVAL 1 DAY) &lt;= t.FBSJ
         </if>
         <if test="params.state == '2' or params.state == 2 ">
             <!--查询近三天的-->
-            and DATEDIFF(t.FBSJ, NOW())>=-3
+            and DATE_SUB(CURDATE(), INTERVAL 3 DAY) &lt;= t.FBSJ
         </if>
         <if test="params.state == '3' or params.state == 3  ">
             <!--查询近一周的-->
-            and DATEDIFF(t.FBSJ, NOW())>=-7
+            and DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= t.FBSJ
         </if>
         <if test="params.state == '4' or params.state == 4  ">
-            AND DATE_FORMAT(t.FBSJ, '%Y%m' ) = DATE_FORMAT( CURDATE() , '%Y%m' )
+            AND DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= t.FBSJ
         </if>
         order by t.order_num desc, t.LLCS+t.DZCS desc
     </select>
