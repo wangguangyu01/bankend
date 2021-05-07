@@ -198,3 +198,9 @@ function initFileInput(ctrlName) {
     })
 
 }
+
+function getXzqhdm(obj,objId){
+    var id = $(obj).find("option:selected").attr("id");
+    console.log(id);
+    getSelectById(id,objId);
+}
