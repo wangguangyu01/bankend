@@ -7,6 +7,8 @@ import com.smart119.common.annotation.validator.PhoneValidator;
 import com.smart119.common.domain.Distance;
 import com.smart119.common.domain.Duration;
 import com.smart119.jczy.domain.XfclDO;
+import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -17,12 +19,14 @@ import java.util.Map;
 
 /**
  * 部门管理
- * 
+ *
  * @author chglee
  * @email 1992lcg@163.com
  * @date 2017-09-27 14:28:36
  */
 @TableName("sys_dept")
+@Data
+@ToString
 public class DeptDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 

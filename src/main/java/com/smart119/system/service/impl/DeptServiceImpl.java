@@ -90,7 +90,13 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
 
     @Override
     public int savexml(DeptDO sysDept) {
-        return sysDeptMapper.save(sysDept);
+        int count = 0;
+        try {
+            count = sysDeptMapper.save(sysDept);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 
     @Override
