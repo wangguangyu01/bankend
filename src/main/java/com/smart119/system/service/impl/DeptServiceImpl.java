@@ -207,7 +207,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
 
     @Override
     public List<DeptDO> listChildren(Long id) {
-        List<DeptDO> deptDOS = list();
+        List<DeptDO> deptDOS = sysDeptMapper.list(new HashMap<String, Object>(16));
         List<DeptDO> resultList = new ArrayList<>();
         if(id!=null){
             DeptDO filterDept = deptDOS.stream().filter(o->o.getDeptId().equals(id)).collect(Collectors.toList()).get(0);
