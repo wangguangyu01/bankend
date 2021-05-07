@@ -18,8 +18,13 @@ $().ready(function() {
     getSelectAll("XFJYXJBDM","XFJYXJBDM-DIV","xfjyxjbdm","xfjyxjbdm-title");  //消防救援衔级别
 
     getSelectByType("XZQHDM","province",$("#provinceVal").val());  //区划代码（省）级联
-    getSelectByValue($("#provinceVal").val(),"city",$("#cityVal").val());  //区划代码（市）级联
-    getSelectByValue($("#cityVal").val(),"jgdm",$("#jgdmVal").val());  //区划代码（区/县）级联
+    if($("#cityVal").val()!=null && $("#cityVal").val()!=""){
+        getSelectByValue($("#provinceVal").val(),"city",$("#cityVal").val());  //区划代码（市）级联
+    }
+    if($("#jgdmVal").val()!=null && $("#jgdmVal").val()!=""){
+        getSelectByValue($("#cityVal").val(),"jgdm",$("#jgdmVal").val());  //区划代码（区/县）级联
+    }
+
 
     getSelectByType("rygwlb_jh","rylbJh",$("#rylbJh_val").val());  //人员岗位简类
 
