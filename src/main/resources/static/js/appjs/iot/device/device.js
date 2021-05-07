@@ -34,8 +34,8 @@ function load() {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
                         offset: params.offset,
-                        xfjyjgTywysbm: xfjyjgTywysbm
-                        // name:$('#searchName').val(),
+                        xfjyjgTywysbm: xfjyjgTywysbm,
+                        name:$('#searchName').val()
                         // username:$('#searchName').val()
                     };
                 },

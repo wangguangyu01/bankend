@@ -20,7 +20,7 @@ import java.util.*;
 
 /**
  * 部门管理
- * 
+ *
  * @author chglee
  * @email 1992lcg@163.com
  * @date 2017-09-27 14:40:36
@@ -96,6 +96,7 @@ public class DeptController extends BaseController {
 	@PostMapping("/save")
 	@RequiresPermissions("system:sysDept:add")
 	public R save(@Validated DeptDO sysDept) {
+
 		//创建新数据的时候加上默认参数 创建时间、创建人、状态
 		sysDept.setCdate(new Date());
 		sysDept.setCperson(getUser().getUserId().toString());
@@ -106,9 +107,14 @@ public class DeptController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		if (sysDeptService.savexml(sysDept) > 0) {
-			return R.ok();
+		try {
+			if (sysDeptService.savexml(sysDept) > 0) {
+				return R.ok();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
 		return R.error();
 	}
 

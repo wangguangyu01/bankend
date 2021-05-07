@@ -31,7 +31,12 @@
 			left join sys_dept d on d.XFJYJG_TYWYSBM = t.xfjyjg_tywysbm
 			left join sys_dict dict on dict.type = "wlzkqwlzt" and dict.value = t.status
 		where 1=1
-		<if test="params.xfjyjgTywysbm != null and params.xfjyjgTywysbm != ''"> and t.xfjyjg_tywysbm = #{params.xfjyjgTywysbm}</if>
+		<if test="params.name != null and params.name != ''"> and t.name like CONCAT('%',#{params.name},'%') </if>
+		<if test="params.deptList != null and params.deptList.size() > 0"> and t.xfjyjg_tywysbm in
+			<foreach collection="params.deptList" item="item" index="index" separator="," open="(" close=")">
+				#{item.xfjyjgTywysbm}
+			</foreach>
+		</if>
 	</select>
 
 	<select id="list" resultType="com.smart119.iot.domain.ControllerDO">

@@ -19,10 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 中控器端口
@@ -65,6 +62,14 @@ public class ControllerPortController {
     @PostMapping("/list")
     @RequiresPermissions("iot:controllerPort:controllerPort")
     public PageUtils list(@RequestBody Map<String, Object> params) {
+        List<DeptDO> deptList = new ArrayList<>();
+        if (null != params.get("xfjyjgTywysbm") && !String.valueOf(params.get("xfjyjgTywysbm")).equals("")){
+            DeptDO dept = deptService.getDeptId(String.valueOf(params.get("xfjyjgTywysbm")));
+            if (null != dept){
+                deptList = deptService.listChildren(dept.getDeptId());
+            }
+        }
+        params.put("deptList", deptList);
         //查询列表数据
         PageUtils page = controllerPortService.queryPage(params);
         return page;
