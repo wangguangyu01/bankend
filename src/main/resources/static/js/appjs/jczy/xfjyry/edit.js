@@ -46,20 +46,22 @@ $().ready(function() {
 
     $("input[name='isCreateUser']").click(function(){
         if("1" == $('input:radio[name="isCreateUser"]:checked').val()){
+            $('#accountDiv').show();
             $('#roleDiv').show();
-            $('#ydLxdh').rules('add',{
+            $('#username').rules('add',{
                 remote:{
                     url : "/sys/user/exit", // 后台处理程序
                     type : "post", // 数据发送方式
                     dataType : "json", // 接受数据格式
                     data : { // 要传递的数据
                         username : function() {
-                            return $("#ydLxdh").val();
+                            return $("#username").val();
                         }
                     }
                 }
             });
         }else{
+            $('#accountDiv').hide();
             $('#roleDiv').hide();
             $('#ydLxdh').rules('remove','remote');
         }
@@ -124,6 +126,10 @@ function validateRule() {
             },
             isCreateUser : {
                 required : icon + "请选择是否创建用户"
+            },
+            username:{
+                required: icon + "请输入登录名",
+                remote:"登录名已存在"
             }
 		}
 	})

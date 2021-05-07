@@ -115,6 +115,10 @@ public class XfjyryDO implements Serializable {
 	private String xfjyxjb;
 	//人员岗位类别-简化  1.指挥员| 2.驾驶员 |3.战斗员
 	private String rylbJh;
+	//登录名
+	private String username;
+	//登录密码
+	private String password;
 
 	/**
 	 * 是否创建用户 0-否  1-是 (辅助字段，数据表无该字段)
@@ -585,5 +589,21 @@ public class XfjyryDO implements Serializable {
 
 	public void setIsCreateUser(String isCreateUser) {
 		this.isCreateUser = isCreateUser;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

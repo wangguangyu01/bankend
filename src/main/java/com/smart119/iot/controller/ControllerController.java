@@ -18,10 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 中控器
@@ -59,6 +56,14 @@ public class ControllerController {
     @PostMapping("/list")
     @RequiresPermissions("iot:controller:controller")
     public PageUtils list(@RequestBody Map<String, Object> params) {
+        List<DeptDO> deptList = new ArrayList<>();
+        if (null != params.get("xfjyjgTywysbm") && !String.valueOf(params.get("xfjyjgTywysbm")).equals("")){
+            DeptDO dept = deptService.getDeptId(String.valueOf(params.get("xfjyjgTywysbm")));
+            if (null != dept){
+                deptList = deptService.listChildren(dept.getDeptId());
+            }
+        }
+        params.put("deptList", deptList);
         //查询列表数据
         PageUtils page = controllerService.queryPage(params);
         return page;

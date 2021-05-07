@@ -19,10 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 物联设备
@@ -67,6 +64,14 @@ public class DeviceController {
     @PostMapping("/list")
     @RequiresPermissions("iot:device:device")
     public PageUtils list(@RequestBody Map<String, Object> params) {
+        List<DeptDO> deptList = new ArrayList<>();
+        if (null != params.get("xfjyjgTywysbm") && !String.valueOf(params.get("xfjyjgTywysbm")).equals("")){
+            DeptDO dept = deptService.getDeptId(String.valueOf(params.get("xfjyjgTywysbm")));
+            if (null != dept){
+                deptList = deptService.listChildren(dept.getDeptId());
+            }
+        }
+        params.put("deptList", deptList);
         //查询列表数据
         PageUtils page = deviceService.queryPage(params);
         return page;
