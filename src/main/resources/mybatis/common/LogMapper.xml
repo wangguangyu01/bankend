@@ -9,11 +9,11 @@
 
 	<select id="list" resultType="com.smart119.common.domain.LogDO">
 		select `id`,`user_id`,`username`,`operation`,`time`,`method`,`params`,`ip`,`gmt_create` from sys_log
-        <where>  
+        <where>
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
-		  		  <if test="username != null and username != ''"> and username = #{username} </if>
-		  		  <if test="operation != null and operation != ''"> and operation = #{operation} </if>
+		  		  <if test="username != null and username != ''"> and username like CONCAT ('%',#{username},'%') </if>
+		  		  <if test="operation != null and operation != ''"> and operation like CONCAT ('%', #{operation} ,'%')</if>
 		  		  <if test="time != null and time != ''"> and time = #{time} </if>
 		  		  <if test="method != null and method != ''"> and method = #{method} </if>
 		  		  <if test="params != null and params != ''"> and params = #{params} </if>
@@ -32,14 +32,14 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
  	<select id="count" resultType="int">
 		select count(*) from sys_log
-		 <where>  
+		 <where>
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="userId != null and userId != ''"> and user_id = #{userId} </if>
-		  		  <if test="username != null and username != ''"> and username = #{username} </if>
-		  		  <if test="operation != null and operation != ''"> and operation = #{operation} </if>
+		  		  <if test="username != null and username != ''"> and username like CONCAT ('%', #{username},'%') </if>
+		  		  <if test="operation != null and operation != ''"> and operation like CONCAT ('%', #{operation} ,'%') </if>
 		  		  <if test="time != null and time != ''"> and time = #{time} </if>
 		  		  <if test="method != null and method != ''"> and method = #{method} </if>
 		  		  <if test="params != null and params != ''"> and params = #{params} </if>
@@ -47,34 +47,34 @@
 		  		  <if test="gmtCreate != null and gmtCreate != ''"> and gmt_create = #{gmtCreate} </if>
 		  		</where>
 	</select>
-	 
+
 	<insert id="save" parameterType="com.smart119.common.domain.LogDO" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_log
 		(
-			`user_id`, 
-			`username`, 
-			`operation`, 
-			`time`, 
-			`method`, 
-			`params`, 
-			`ip`, 
+			`user_id`,
+			`username`,
+			`operation`,
+			`time`,
+			`method`,
+			`params`,
+			`ip`,
 			`gmt_create`
 		)
 		values
 		(
-			#{userId}, 
-			#{username}, 
-			#{operation}, 
-			#{time}, 
-			#{method}, 
-			#{params}, 
-			#{ip}, 
+			#{userId},
+			#{username},
+			#{operation},
+			#{time},
+			#{method},
+			#{params},
+			#{ip},
 			#{gmtCreate}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.smart119.common.domain.LogDO">
-		update sys_log 
+		update sys_log
 		<set>
 			<if test="userId != null">`user_id` = #{userId}, </if>
 			<if test="username != null">`username` = #{username}, </if>
@@ -87,13 +87,13 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="remove">
 		delete from sys_log where id = #{value}
 	</delete>
-	
+
 	<delete id="batchRemove">
-		delete from sys_log where id in 
+		delete from sys_log where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
