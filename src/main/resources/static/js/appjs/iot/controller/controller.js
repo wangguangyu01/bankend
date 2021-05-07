@@ -35,7 +35,7 @@ function load() {
                         limit: params.limit,
                         offset: params.offset,
                         xfjyjgTywysbm: xfjyjgTywysbm,
-                        controllerName:$('#controllerName').val()
+                        name:$('#searchName').val()
                         // name:$('#searchName').val(),
                         // username:$('#searchName').val()
                     };
