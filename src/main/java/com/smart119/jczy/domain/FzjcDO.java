@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.smart119.common.annotation.Excel;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,28 +24,57 @@ import java.util.Date;
 public class FzjcDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//主键 uuid
+	/**
+	 * 主键 uuid
+	 */
 	@TableId(type = IdType.INPUT)
 	private String fzjcId;
-	//标题
+
+	/**
+	 * 标题
+	 */
 	@NotBlank(message = "标题不能为空")
 	@Length(min = 1, max = 100, message = "标题长度在1到100字符")
+	@Excel(name = "标题", sort = 1)
 	private String bt;
-	//辅助决策类型代码 （sys_dict表 type为FZJCLXDM的value值）
+
+	/**
+	 * 辅助决策类型代码 （sys_dict表 type为FZJCLXDM的value值）
+	 */
 	@NotBlank(message = "辅助决策类型代码不能为空")
 	private String fzjclxdm;
-	//辅助决策内容（页面用富文本编辑器编辑）
+
+	/**
+	 * 辅助决策内容（页面用富文本编辑器编辑）
+	 */
 	@NotBlank(message = "辅助决策内容不能为空")
+	@Excel(name = "辅助决策内容", sort = 3)
 	private String fzjcnr;
-	//创建时间
+
+	/**
+	 * 创建时间
+	 */
+	@Excel(name = "辅助决策创建时间", sort = 4)
 	private Date cdate;
-	//创建人
+
+	/**
+	 * 创建人
+	 */
 	private String cperson;
-	//状态0 在用 1删除
+
+	/**
+	 * 状态0 在用 1删除
+	 */
 	private Integer status;
 
+	/**
+	 * 辅助决策类型
+	 */
 	private String fzjclx;
 
+	/**
+	 * 辅助决策类型名称
+	 */
 	@TableField(exist = false)
 	private String fzjclxdmName;
 
@@ -145,6 +173,7 @@ public class FzjcDO implements Serializable {
 		this.fzjclx = fzjclx;
 	}
 
+	@Excel(name = "辅助决策类型", sort = 2)
 	public String getFzjclxdmName() {
 		return fzjclxdmName;
 	}

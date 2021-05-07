@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 /**
- * 
- * 
+ *
+ *
  * @title: QuartzManager.java
  * @description: 计划任务管理
  *
@@ -32,11 +32,11 @@ public class QuartzManager {
 
 	/**
 	 * 添加任务
-	 * 
+	 *
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
-	
+
 	public void addJob(ScheduleJob job) {
 		try {
 			// 创建jobDetail实例，绑定Job实现类
@@ -104,7 +104,7 @@ public class QuartzManager {
 
 	/**
 	 * 获取所有计划中的任务列表
-	 * 
+	 *
 	 * @return
 	 * @throws SchedulerException
 	 */
@@ -134,7 +134,7 @@ public class QuartzManager {
 
 	/**
 	 * 所有正在运行的job
-	 * 
+	 *
 	 * @return
 	 * @throws SchedulerException
 	 */
@@ -163,7 +163,7 @@ public class QuartzManager {
 
 	/**
 	 * 暂停一个job
-	 * 
+	 *
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
@@ -174,7 +174,7 @@ public class QuartzManager {
 
 	/**
 	 * 恢复一个job
-	 * 
+	 *
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
@@ -185,7 +185,7 @@ public class QuartzManager {
 
 	/**
 	 * 删除一个job
-	 * 
+	 *
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
@@ -197,7 +197,7 @@ public class QuartzManager {
 
 	/**
 	 * 立即执行job
-	 * 
+	 *
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */
@@ -208,7 +208,7 @@ public class QuartzManager {
 
 	/**
 	 * 更新job时间表达式
-	 * 
+	 *
 	 * @param scheduleJob
 	 * @throws SchedulerException
 	 */

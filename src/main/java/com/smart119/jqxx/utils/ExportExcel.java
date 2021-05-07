@@ -2,6 +2,8 @@ package com.smart119.jqxx.utils;
 
 
 import com.google.common.collect.Lists;
+import com.smart119.common.annotation.Excel;
+import com.smart119.jczy.domain.FzjcDO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -11,16 +13,17 @@ import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * Excel导出工具类
@@ -56,6 +59,23 @@ public class ExportExcel {
 
 
 
+
+    /**
+     * 需要导出的属性
+     */
+    private List<String> exportFields;
+
+
+    public List<String> getExportFields() {
+        return exportFields;
+    }
+
+    public void setExportFields(List<String> exportFields) {
+        this.exportFields = exportFields;
+    }
+
+
+
     /**
      * 构造函数
      * @param title 表格标题，传“空值”，表示无标题
@@ -73,6 +93,22 @@ public class ExportExcel {
     public ExportExcel(String title, List<String> headerList) {
         initialize(title, headerList);
     }
+
+
+    /**
+     * 构造函数
+     * 获取导出数据，get方法和属性的同时使用excel注释的话，读取属性
+     * @param clazz 导出的对象
+     */
+    public ExportExcel(String title, Class<?> clazz) {
+        Map map = getExcel(clazz);
+        initialize(title, (List<String>)map.get("headTitle"));
+        this.exportFields = (List<String>)map.get("exportField");
+    }
+
+
+
+
 
     /**
      * 初始化函数
@@ -392,5 +428,91 @@ public class ExportExcel {
 //		log.debug("Export success.");
 //
 //	}
+
+
+    /**
+     * 根据类型获取导出的报表头以及要导出的字段
+     * @param clazz
+     * @return
+     */
+    public static Map getExcel(Class<?> clazz) {
+        Method[] methods = clazz.getDeclaredMethods();
+        TreeMap<Excel, Object> treeMap = new TreeMap<Excel, Object>(new Comparator<Excel>() {
+            @Override
+            public int compare(Excel o1, Excel o2) {
+                return o1.sort() - o2.sort();
+            }
+        });
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(Excel.class)) {
+                Excel methodAnnotation = method.getAnnotation(Excel.class);
+                if (StringUtils.startsWith(method.getName(), "get")) {
+                    treeMap.put(methodAnnotation, method.getName());
+                }
+            }
+        }
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            if (field.isAnnotationPresent(Excel.class)) {
+                Excel fieldAnnotation = field.getAnnotation(Excel.class);
+                if (!ObjectUtils.isEmpty(fieldAnnotation)) {
+                    treeMap.put(fieldAnnotation, field.getName());
+                }
+            }
+        }
+        List<String> headerList = new ArrayList<>();
+        List<Object> dataList = new ArrayList<>();
+        Map<String, Object> map = new HashMap<>();
+        if (!ObjectUtils.isEmpty(treeMap)) {
+            Set<Excel> excels = treeMap.keySet();
+            Iterator<Excel> excelIterator = excels.iterator();
+            while (excelIterator.hasNext()) {
+                Excel excel = excelIterator.next();
+                headerList.add(excel.name());
+                dataList.add(treeMap.get(excel));
+
+            }
+            map.put("headTitle", headerList);
+            map.put("exportField", dataList);
+        }
+        return map;
+    }
+
+
+    /**
+     * 获取导出数据，get方法和属性的同时使用excel注释的话，读取属性
+     * @param object
+     * @return
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
+    public List<Object> getExportData(Object object) throws InvocationTargetException, IllegalAccessException {
+        List<String> fields = this.exportFields;
+        Class clazz = object.getClass();
+        Method[] methods = clazz.getMethods();
+        Field[] fieldArr = clazz.getDeclaredFields();
+        List<Object> listData = new ArrayList<>();
+        for (String exportField: fields) {
+            if (StringUtils.startsWith(exportField, "get")) {
+                for (Method method : methods) {
+                    if (exportField.equals(method.getName())) {
+                        Object invoke = method.invoke(object);
+                        listData.add(invoke);
+                    }
+                }
+            } else {
+                for (Field field:  fieldArr) {
+                    field.setAccessible(true);
+                    if (StringUtils.equals(exportField, field.getName())) {
+                        listData.add(field.get(object));
+                    }
+                }
+            }
+        }
+
+        return listData;
+    }
+
+
 
 }
