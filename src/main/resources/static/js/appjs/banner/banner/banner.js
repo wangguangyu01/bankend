@@ -52,7 +52,7 @@ function load() {
                         title: '排序',
                         formatter: function (value, row, index) {
                             var html = ``;
-                            html += `<select class="form-control" onchange="changePx('${row.scBannerId}',this)">`;
+                            html += `<select class="form-control" onchange="changePx('${row.bt}', '${row.scBannerId}',this)">`;
 
                             for(var i=1;i<11;i++){
                                 if(i==value){
@@ -95,7 +95,7 @@ function load() {
                         title: '状态',
                         formatter: function (value, row, index) {
                             var html = ``;
-                            html += `<select class="form-control" onchange="changeZt('${row.scBannerId}',this)">`;
+                            html += `<select class="form-control" onchange="changeZt('${row.bt}','${row.scBannerId}',this)">`;
                             if(value=='0'){
                                 html += `<option value='0' selected="true">显示</option>`
                                 html += `<option value='1'>隐藏</option>`
@@ -218,7 +218,7 @@ function batchRemove() {
     });
 }
 
-function changePx(id,thiz) {
+function changePx(bt,id,thiz) {
     $.ajax({
         cache : true,
         type : "POST",
@@ -226,6 +226,7 @@ function changePx(id,thiz) {
         data : {
             "scBannerId":id,
             "px":thiz.value,
+            "bt": bt
         },
         async : false,
         error : function(request) {
@@ -245,7 +246,7 @@ function changePx(id,thiz) {
 
 }
 
-function changeZt(id,thiz) {
+function changeZt(bt,id,thiz) {
     $.ajax({
         cache : true,
         type : "POST",
@@ -253,6 +254,7 @@ function changeZt(id,thiz) {
         data : {
             "scBannerId":id,
             "zt":thiz.value,
+            "bt":bt
         },
         async : false,
         error : function(request) {
