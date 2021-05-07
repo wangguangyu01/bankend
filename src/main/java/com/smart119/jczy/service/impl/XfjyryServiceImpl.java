@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -153,16 +154,20 @@ public class XfjyryServiceImpl implements XfjyryService {
 	@Override
 	@Transactional
 	public int batchRemove(String[] xfjyryTywysbms){
-		//根据xfjyryTywysbms查找userId的集合
+		// 根据xfjyryTywysbms查找userId的集合
 		List<String> userIdList = xfjyryDao.findUserIdByXfjyryTywysbms(xfjyryTywysbms);
 		Long [] userIdArry = new Long[userIdList.size()];
 		for(int i = 0; i < userIdList.size(); i++){
 			userIdArry[i] = Long.parseLong(userIdList.get(i));
 		}
-		//批量删除用户权限
-		userRoleDao.batchRemoveByUserId(userIdArry);
-		//批量删除用户
-		userDao.batchRemove(userIdArry);
+		if (!ObjectUtils.isEmpty(userIdArry)) {
+			// 批量删除用户权限
+			userRoleDao.batchRemoveByUserId(userIdArry);
+		}
+		if (!ObjectUtils.isEmpty(userIdArry)) {
+			//批量删除用户
+			userDao.batchRemove(userIdArry);
+		}
 		//批量删除消防救援人员
 		return xfjyryDao.batchRemove(xfjyryTywysbms);
 	}
