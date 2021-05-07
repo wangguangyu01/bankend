@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,6 +131,8 @@ public class UserController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
+		user.setGmtCreate(new Date());
+		user.setGmtModified(new Date());
 		if (userService.save(user) > 0) {
 			return R.ok();
 		}
@@ -144,6 +147,7 @@ public class UserController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
+		user.setGmtModified(new Date());
 		if (userService.update(user) > 0) {
 			return R.ok();
 		}
@@ -159,6 +163,7 @@ public class UserController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
+		user.setGmtModified(new Date());
 		if (userService.updatePersonal(user) > 0) {
 			return R.ok();
 		}
@@ -221,6 +226,7 @@ public class UserController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		try{
+			userVO.getUserDO().setGmtModified(new Date());
 			userService.resetPwd(userVO,getUser());
 			return R.ok();
 		}catch (Exception e){
@@ -239,6 +245,7 @@ public class UserController extends BaseController {
 			if(userDO1.getPassword().equals(MD5Utils.encrypt(userDO1.getUsername(),userDO.getPassword()))){
 				String password = MD5Utils.encrypt(userDO1.getUsername(), userDO.getNewpassword());
 				userDO1.setPassword(password);
+				userDO1.setGmtModified(new Date());
 				userService.update(userDO1);
 				return R.ok(userDO1);
 			}else{
@@ -259,6 +266,7 @@ public class UserController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		try{
+			userVO.getUserDO().setGmtModified(new Date());
 			userService.adminResetPwd(userVO);
 			return R.ok();
 		}catch (Exception e){
@@ -312,6 +320,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	R updatePeronalApp(@RequestBody UserDO user) {
 		if (userService.updatePersonal(user) > 0) {
+			user.setGmtModified(new Date());
 			xfjyryService.update(user.getXfjyryDO());
 			return R.ok();
 		}
