@@ -257,7 +257,7 @@
 									<input type="hidden" name="xfgwflydm" id="xfgwflydm" value="" th:value="${xfjyry.xfgwflydm}" />
 									<div class="XFGWFLYDM-DIV dropdown">
 										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xfgwflydm-title" th:text="${xfgwflydm_name}">选择分类</span>
+											<span id="xfgwflydm-title" th:text="${xfgwflydm_name}==null?'选择分类':${xfgwflydm_name}">选择分类</span>
 											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
 										</a>
 									</div>
@@ -353,21 +353,24 @@
 								<label class="col-sm-2 control-label">专业技术职务类别：</label>
 								<div class="col-sm-4">
 									<!--<input id="zyjszwlbdm" name="zyjszwlbdm" class="form-control" type="text">-->
-									<input type="hidden" name="zyjszwlbdm" id="zyjszwlbdm" value="" th:value="${xfjyry.zyjszwlbdm}" />
+									<input type="hidden" name="zyjszwlbdm" id="zyjszwlbdm" value="" th:value="${xfjyry.zyjszwlbdm}"/>
 									<div class="ZYJSZWLBDM-DIV dropdown">
 										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="zyjszwlbdm-title" th:text="${zyjszwlbdm_name}">选择分类</span>
+											<span id="zyjszwlbdm-title" th:text="${zyjszwlbdm_name}==null?'选择分类':${zyjszwlbdm_name}">选择分类</span>
 											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
 										</a>
 									</div>
 								</div>
+
+
+							</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">照片：</label>
 									<div class="col-sm-10">
 										<input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
 									</div>
 								</div>
-							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">备注：</label>
 								<div class="col-sm-10">
