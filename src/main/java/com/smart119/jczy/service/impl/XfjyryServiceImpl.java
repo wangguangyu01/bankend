@@ -90,9 +90,9 @@ public class XfjyryServiceImpl implements XfjyryService {
 		//判断是否需要修改用户名
 		if(StringUtils.isNotBlank(xfjyry.getUserid())){
 			UserDO user = userDao.get(Long.parseLong(xfjyry.getUserid()));
-			if(!StringUtils.equals(user.getUsername(),xfjyry.getYdLxdh())){
+			if(!StringUtils.equals(user.getUsername(),xfjyry.getUsername())){
 				//验证是否重复
-				String username = xfjyry.getYdLxdh();
+				String username = xfjyry.getUsername();
 				Map<String, Object> params = new HashMap<>();
 				params.put("username",username);
 				boolean isHave = userService.exit(params);
@@ -109,7 +109,7 @@ public class XfjyryServiceImpl implements XfjyryService {
 
 	private int saveUser(XfjyryDO xfjyry){
 		//验证用户名是否重复
-		String username = xfjyry.getYdLxdh();
+		String username = xfjyry.getUsername();
 		Map<String, Object> params = new HashMap<>();
 		params.put("username",username);
 		boolean isHave = userService.exit(params);
@@ -121,7 +121,7 @@ public class XfjyryServiceImpl implements XfjyryService {
 		UserDO userDO = new UserDO();
 		userDO.setUsername(username);    //用户名
 		userDO.setName(xfjyry.getXm());        //姓名
-		userDO.setPassword(MD5Utils.encrypt(xfjyry.getYdLxdh(),xfjyry.getYdLxdh())); //密码
+		userDO.setPassword(MD5Utils.encrypt(username,xfjyry.getPassword())); //密码
 		userDO.setStatus(1);                                   //状态
 		userDO.setXfjyjgTywysbm(xfjyry.getSjszjgTywysbm());  //实际救援机构唯一识别码
 		userDO.setEmail(xfjyry.getHlwDzxx());                //互联网
