@@ -59,35 +59,35 @@
         LEFT JOIN jczy_zzdy_xfcl zzdycl ON zzdy.ZZDY_TYWYBS = zzdycl.ZZDY_TYWYBS
         LEFT JOIN jczy_xfcl cl ON zzdycl.XFCL_TYWYSBM = cl.XFCL_TYWYSBM
         LEFT JOIN sys_dict d ON cl.XFZBLXDM=d.`value` AND d.type='XFZBLXDM'
-        LEFT JOIN sys_dept dept ON dept.XFJYJGTYWYSBM = cl.XFJYJGTYWYSBM
+        LEFT JOIN sys_dept dept ON dept.XFJYJG_TYWYSBM = cl.XFJYJG_TYWYSBM
         WHERE  b.BCBD_ID = #{bcbdId}
 	</select>
 
     <select id="getZZDY" resultType="java.util.HashMap">
-        SELECT t.ZZDY_TYWYBS AS id ,t.ZZDYLXDM AS VALUE ,CONCAT(t.ZZDYMC,'-',dept.DWMC)AS NAME
-        FROM  jczy_zzdy  t
-        LEFT JOIN sys_dept dept
-        ON t.XFJYJGTYWYSBM = dept.XFJYJGTYWYSBM
+       select t.ZZDY_TYWYBS as `id`, t.ZZDYLXDM as `value`, CONCAT(t.ZZDYMC,'-',dept.DWMC) AS `name`
+         from jczy_zzdy t  LEFT JOIN sys_dept dept
+        ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
     </select>
+
 
 
     <insert id="save" parameterType="com.smart119.jczy.domain.BcbdDO">
 		insert into jczy_bcbd
 		(
-			`BCBD_ID`, 
-			`BCBD_MC`, 
-			`BCBDLXDM`, 
-			`cdate`, 
+			`BCBD_ID`,
+			`BCBD_MC`,
+			`BCBDLXDM`,
+			`cdate`,
 			`cpserson`,
 			`BCBD_MS`,
 			`status`,
-			`XFJYJGTYWYSBM`
+			`XFJYJG_TYWYSBM`
 		)
 		values
 		(
-			#{bcbdId}, 
-			#{bcbdMc}, 
-			#{bcbdlxdm}, 
+			#{bcbdId},
+			#{bcbdMc},
+			#{bcbdlxdm},
 			now(),
 			#{cpserson},
 			#{bcbdms},
@@ -105,7 +105,7 @@
             <if test="cpserson != null">`cpserson` = #{cpserson},</if>
             <if test="bcbdms != null">`BCBD_MS` = #{bcbdms},</if>
             <if test="status != null">`status` = #{status}</if>
-            <if test="xfjyjgtywysbm != null">`XFJYJGTYWYSBM` = #{xfjyjgtywysbm}</if>
+            <if test="xfjyjgtywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgtywysbm}</if>
         </set>
         where BCBD_ID = #{bcbdId}
     </update>
