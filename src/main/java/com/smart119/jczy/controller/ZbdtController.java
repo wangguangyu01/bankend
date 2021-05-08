@@ -31,7 +31,7 @@ import com.smart119.common.utils.R;
 
 /**
  * 值班动态基本信息
- * 
+ *
  * @author zhangxj
  * @email thrz@sz000673.com
  * @date 2021-01-18 16:02:23
@@ -46,7 +46,7 @@ public class ZbdtController extends BaseController{
 	private DictService dictService;
 	@Autowired
 	private DeptService deptService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:zbdt:zbdt")
 	String Zbdt(){
@@ -101,7 +101,7 @@ public class ZbdtController extends BaseController{
 		PageUtils pageUtils = new PageUtils(zbdtList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:zbdt:add")
 	String add(){
@@ -138,7 +138,7 @@ public class ZbdtController extends BaseController{
 		return R.ok(map);
 	}
 
-	
+
 	/**
 	 * 保存
 	 */
@@ -226,7 +226,7 @@ public class ZbdtController extends BaseController{
 			@ApiImplicitParam(name = "zbrzJyqk", value = "值班日志_简要情况", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
 	})
 	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= DeptDO.class)})
-	public R update(@RequestBody Map<String, Object> params){
+	public R update(@RequestParam Map<String, Object> params){
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String zhbTywysbm = params.get("zhbTywysbm").toString();
@@ -271,7 +271,7 @@ public class ZbdtController extends BaseController{
 		zbdtService.update(zbdt);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -299,7 +299,7 @@ public class ZbdtController extends BaseController{
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -310,5 +310,5 @@ public class ZbdtController extends BaseController{
 		zbdtService.batchRemove(zhbTywysbms);
 		return R.ok();
 	}
-	
+
 }
