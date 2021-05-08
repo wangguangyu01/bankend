@@ -5,10 +5,7 @@ import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.Tree;
 import com.smart119.common.service.DictService;
-import com.smart119.common.utils.MD5Utils;
-import com.smart119.common.utils.PageUtils;
-import com.smart119.common.utils.Query;
-import com.smart119.common.utils.R;
+import com.smart119.common.utils.*;
 import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.DeptDO;
@@ -20,6 +17,7 @@ import com.smart119.system.service.UserService;
 import com.smart119.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -49,6 +47,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private XfjyryService xfjyryService;
+
+	@Value("${rsa-private}")
+	private String privateKeyCode;
 
 	@RequiresPermissions("sys:user:user")
 	@GetMapping("")
@@ -266,7 +267,10 @@ public class UserController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		try{
+
 			userVO.getUserDO().setGmtModified(new Date());
+			String password = RSAUtils.decryptDataOnJava(userVO.getPwdNew(), privateKeyCode);
+			userVO.setPwdNew(password);
 			userService.adminResetPwd(userVO);
 			return R.ok();
 		}catch (Exception e){

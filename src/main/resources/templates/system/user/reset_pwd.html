@@ -2,7 +2,8 @@
 <html>
 
 <meta charset="utf-8">
-<head th:include="include :: header"></head>
+<head th:include="include :: header">
+</head>
 
 <body class="gray-bg">
 	<div class="wrapper wrapper-content animated fadeInRight">
@@ -44,8 +45,7 @@
 	<!-- jQuery Validation plugin javascript-->
 	<script src="/js/plugins/validate/jquery.validate.min.js"></script>
 	<script src="/js/plugins/validate/messages_zh.min.js"></script>
-
-
+	<script type="text/javascript" src="/js/jsencrypt.min.js"></script>
 	<!-- script src="/js/demo/form-validate-demo.js"></script> -->
 
 
@@ -59,7 +59,20 @@
 				update();
 			}
 		});
+
+		function encodeByRSA(str, publicKey) {
+			let RSA = new JSEncrypt();
+			RSA.setPublicKey(publicKey);
+			return RSA.encrypt(str + '');
+		}
+
 		function update() {
+			var PUBLIC_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCML/fQ5+xveKtmNrFxm88CmbELuZ00lSJqHz46qf07BEvsr8d9pIiiPfBUFTYoVj03IwAeRlTcar1uYTv/UV1st2CBJuMY3r0hnNX+BxLBRavkoM1aMK8g1oWoZvaMlFw8JY1VGZPpDO8kiCENJ7OorkaJ1HTZd60XPdFrtchGVwIDAQAB'
+			if ($("#password").val() === null || $("#password").val() ==='') {
+				parent.layer.msg("密码不能为空");
+			}
+			var password = $("#password").val();
+			$("#password").val(encodeByRSA(password, PUBLIC_KEY));
 			$.ajax({
 				cache : true,
 				type : "POST",
