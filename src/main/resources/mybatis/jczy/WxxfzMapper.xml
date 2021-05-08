@@ -30,7 +30,7 @@
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by WXXFZ_TYWYSBM desc
+                order by cdate desc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">

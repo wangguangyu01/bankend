@@ -68,7 +68,7 @@
                 order by ${sort} ${order}
             </when>
             <otherwise>
-                order by t.ZDDW_TYWYSBM desc
+                order by t.CL_RQ desc
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">

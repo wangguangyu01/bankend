@@ -63,7 +63,7 @@
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by jczy_zzdy.ZZDY_TYWYBS desc
+                order by jczy_zzdy.cdate desc
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">

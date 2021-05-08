@@ -46,7 +46,7 @@
                 order by ${sort} ${order}
             </when>
             <otherwise>
-                order by QSMT_TYWYSBM desc
+                order by QY_RQ desc
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">

@@ -68,3 +68,11 @@ function saveMarker(lng,lat){
     $("#dqjd").val(lng);
     $("#dqwd").val(lat);
 }
+
+function getXzqhdm(obj,objId){
+    var id = $(obj).find("option:selected").attr("id");
+    console.log(id);
+    $("#xzqhdm").empty();
+    $("#xzqhdm").append('<option value="" >--请选择--</option>');
+    getSelectById(id,objId);
+}

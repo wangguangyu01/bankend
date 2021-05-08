@@ -52,6 +52,8 @@ function validateRule() {
 function getXzqhdm(obj,objId){
     var id = $(obj).find("option:selected").attr("id");
     console.log(id);
+    $("#xzqhdm").empty();
+    $("#xzqhdm").append('<option value="" >--请选择--</option>');
     getSelectById(id,objId);
 }
 
