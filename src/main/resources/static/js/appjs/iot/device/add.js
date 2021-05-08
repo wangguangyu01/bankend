@@ -43,7 +43,7 @@ function validateRule() {
 			},
 			type : {
 				required : true,
-				range : [0,2]
+				range : [1,3]
 			},
 			deptName : {
 				required : true,
