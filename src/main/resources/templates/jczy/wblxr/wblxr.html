@@ -16,17 +16,33 @@
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
 							</button>
+							<button class="btn btn-danger"  type="button" data-toggle="modal" data-target="#myModal">
+								导入与模板
+							</button>
+							<!-- 模态框（Modal） -->
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button shiro:hasPermission="jczy:wblxr:downExcel" type="button" class="btn  btn-primary" onclick="downExcel()">
+												<i class="fa fa-plus" aria-hidden="true"></i>下载Excel模板
+											</button>
+											<input type="file" name="FileUpload" id="FileUpload">
+										</div>
+										<div class="modal-footer">
+											<button shiro:hasPermission="jczy:wblxr:insertUserExcel" type="button" class="btn  btn-primary" onclick="insertExcel()">
+												<i class="fa fa-plus" aria-hidden="true"></i>导入
+											</button>
+											<button type="button" class="btn btn-default"
+													data-dismiss="modal">关闭
+											</button>
+										</div>
+									</div><!-- /.modal-content -->
+								</div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
 							<button shiro:hasPermission="jczy:wblxr:wblxrExcel" type="button" class="btn  btn-primary" onclick="Excel()">
 								<i class="fa fa-plus" aria-hidden="true"></i>导出
 							</button>
-							<button shiro:hasPermission="jczy:wblxr:downExcel" type="button" class="btn  btn-primary" onclick="downExcel()">
-								<i class="fa fa-plus" aria-hidden="true"></i>下载Excel模板
-							</button>
-
-							<button shiro:hasPermission="jczy:wblxr:insertUserExcel" type="button" class="btn  btn-primary" onclick="insertExcel()">
-								<i class="fa fa-plus" aria-hidden="true"></i>导入信息
-							</button>
-							<input type="file" name="FileUpload" id="FileUpload">
 
 
 
