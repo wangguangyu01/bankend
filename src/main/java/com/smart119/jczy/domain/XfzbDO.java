@@ -14,14 +14,15 @@ import java.util.Date;
 /**
  * 消防装备器材基本信息
 
- * 
+ *
  * @author liangsl
  * @email 1992lcg@163.com
  * @date 2021-01-18 15:16:57
  */
+@Data
 public class XfzbDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//消防装备_通用唯一识别码
 	private String xfzbTywysbm;
 	//名称
@@ -124,6 +125,8 @@ public class XfzbDO implements Serializable {
 	private String xfzbztlb;
 
 	private String xfzblx;
+
+	private String ckjJeStr;
 
 	public String getZbxnzbJyqk() {
 		return zbxnzbJyqk;

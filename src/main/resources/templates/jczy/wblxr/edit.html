@@ -10,19 +10,19 @@
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
 						<input id="wblxrId" name="wblxrId" th:value="${wblxr.wblxrId}"  type="hidden">
-							<div class="form-group">	
+							<div class="form-group">
 								<label class="col-sm-3 control-label">姓名：</label>
 								<div class="col-sm-8">
 									<input id="xm" name="xm" th:value="${wblxr.xm}" class="form-control" type="text" required>
 								</div>
 							</div>
-														<div class="form-group">	
+														<div class="form-group">
 								<label class="col-sm-3 control-label">电话：</label>
 								<div class="col-sm-8">
 									<input id="dh" name="dh" th:value="${wblxr.dh}" class="form-control" type="text" required>
 								</div>
 							</div>
-														<div class="form-group">	
+														<div class="form-group">
 								<label class="col-sm-3 control-label">地址：</label>
 								<div class="col-sm-8">
 									<input id="dz" name="dz" th:value="${wblxr.dz}" class="form-control" type="text">
@@ -38,16 +38,16 @@
 								<label class="col-sm-3 control-label">生日：</label>
 							<div class="col-sm-8">
 								<input type="text" class="laydate-icon layer-date form-control" id="sr" name="sr"  placeholder="请选择出生日期"
-									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${wblxr.sr}==null?null:${#dates.format(wblxr.sr,'yyyy-MM-dd')}"/>
+									   onclick="laydate({format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${wblxr.sr}==null?null:${#dates.format(wblxr.sr,'yyyy-MM-dd')}"/>
 							</div>
 							</div>
-														<div class="form-group">	
+														<div class="form-group">
 								<label class="col-sm-3 control-label">邮箱：</label>
 								<div class="col-sm-8">
 									<input id="yx" name="yx" th:value="${wblxr.yx}" class="form-control" type="text">
 								</div>
 							</div>
-														<div class="form-group">	
+														<div class="form-group">
 								<label class="col-sm-3 control-label">备注：</label>
 								<div class="col-sm-8">
 									<textarea id="bz" name="bz" th:text="${wblxr.bz}" class="form-control" type="text"></textarea>

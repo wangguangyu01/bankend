@@ -3,6 +3,7 @@ package com.smart119.jczy.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -58,6 +59,7 @@ public class WblxrDO implements Serializable {
      * 生日
      */
     @ApiModelProperty(value = "生日", name = "sr")
+    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date sr;
 
     /**

@@ -74,6 +74,7 @@ function load() {
                     {
                         field: 'sr',
                         title: '生日'
+
                     },
                     {
                         field: 'yx',
