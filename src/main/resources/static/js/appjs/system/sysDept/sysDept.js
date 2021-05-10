@@ -84,10 +84,10 @@ function load() {
 							var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="removeone(\''
 								+ item.deptId
 								+ '\')"><i class="fa fa-remove"></i></a> ';
-							var f = '<a class="btn btn-info btn-sm' + s_move_h + '" href="#" title="上移"  mce_href="#" onclick="move('
+							var f = '<a class="btn btn-info btn-sm ' + s_move_h + '" href="#" title="上移"  mce_href="#" onclick="move('
 								+ item.deptId
 								+ ',0)"><i class="fa fa-arrow-up"></i></a> ';
-                            var h = '<a class="btn btn-info btn-sm' + s_move_h + '" href="#" title="下移"  mce_href="#" onclick="move('
+                            var h = '<a class="btn btn-info btn-sm ' + s_move_h + '" href="#" title="下移"  mce_href="#" onclick="move('
                                 + item.deptId
                                 + ',1)"><i class="fa fa-arrow-down"></i></a> ';
 							return e + a + d + f + h;
