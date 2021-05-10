@@ -109,4 +109,5 @@ public interface DeptService extends IService<DeptDO> {
 	Map<String,Object> findJyjgxzdmById(String deptId);
 
 	R move(Long deptId, Integer type);
+	void dgDeptList(List<DeptDO> deptList, long id,List<DeptDO> resultList);
 }

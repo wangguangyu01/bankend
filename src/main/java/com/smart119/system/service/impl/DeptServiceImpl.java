@@ -227,8 +227,8 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
         return sysDeptMapper.getDeptByRange(jd,wd,distance);
     }
 
-
-    private void dgDeptList(List<DeptDO> deptList, long id,List<DeptDO> resultList) {
+    @Override
+    public void dgDeptList(List<DeptDO> deptList, long id,List<DeptDO> resultList) {
         List<DeptDO> filterDeptList = deptList.stream().filter(o->o.getParentId().equals(id)).collect(Collectors.toList());
         for(DeptDO deptDO:filterDeptList){
             resultList.add(deptDO);
