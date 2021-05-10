@@ -102,13 +102,18 @@
 <script src="/js/plugins/layer/layer.min.js"></script>
 <script src="/js/vue.min.js"></script>
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=19c164c322b2e90bb896f8bfb07f4d1c&plugin=AMap.Autocomplete,AMap.PlaceSearch"></script>
-<script src="https://webapi.amap.com/maps?v=1.4.15&key=19c164c322b2e90bb896f8bfb07f4d1c&plugin=AMap.MouseTool&plugin=AMap.PolyEditor"></script>
-<script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=19c164c322b2e90bb896f8bfb07f4d1c&plugin=AMap.MouseTool&plugin=AMap.PolyEditor&plugin=AMap.DistrictSearch"></script>
 
 <script th:inline="javascript">
     var points = [[${points}]];
     var deptList = [[${deptList}]];
     var polyEditor;
+    // 颜色辅助方法
+    var getColorByAdcode = function () {
+        var gb = Math.random() * 155 + 50;
+        return 'rgb(' + gb + ',' + gb + ',188)';
+    };
+    var lyDistrict = ['沂水县','蒙阴县','平邑县','郯城县','兰山区','莒南县','沂南县','罗庄区','兰陵县','费县','河东区','临沭县'];
     var editflag =false //编辑状态
     var app = new Vue({
         el: '#app',
@@ -134,6 +139,35 @@
                     zoom:12,//级别
                     center: center,//中心点坐标
                 });
+                var opts = {
+                    subdistrict: 1, //获取边界不需要返回下级行政区
+                    extensions: "all", //返回行政区边界坐标组等具体信息
+                    level: "district" //查询行政级别为 市
+                };
+                var district = new AMap.DistrictSearch(opts);
+                for (property of lyDistrict) {
+                    district.search(property, function(status, result) {
+                        var polygons = [];
+                        var bounds = result.districtList[0].boundaries;
+                        if (bounds) {
+                            for (var i = 0, l = bounds.length; i < l; i++) {
+                                //生成行政区划polygon
+                                var polygon = new AMap.Polygon({
+                                    strokeWeight: 1,
+                                    path: bounds[i],
+                                    fillOpacity: 0.2,
+                                    // fillColor: "#80d8ff",
+                                    fillColor: getColorByAdcode(),
+                                    strokeColor: 'black',
+                                    strokeStyle: "dashed",
+                                    strokeWeight: 2
+                                });
+                                polygons.push(polygon);
+                            }
+                        }
+                        _this.map.add(polygons);
+                    });
+                }
                 var mouseTool = new AMap.MouseTool(_this.map);
                 //监听draw事件可获取画好的覆盖物
                 var overlays = [];
@@ -250,6 +284,7 @@
                     overlays = [];
                 }
                 callback();
+
             },
             createMarker:function () {
                 if(editflag){

@@ -50,7 +50,7 @@ function load() {
 					},
 					{
 						field : 'userId', // 列字段名
-						title : '序号' // 列标题
+						title : '用户ID' // 列标题
 					},
 					{
 						field : 'name',
