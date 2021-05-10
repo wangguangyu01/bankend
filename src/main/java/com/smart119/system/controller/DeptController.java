@@ -52,10 +52,13 @@ public class DeptController extends BaseController {
 		List<DeptDO> sysDeptList = sysDeptService.list(new HashMap<>(0));
 		List<DeptDO> resultList = new ArrayList<>();
 		if(!sysDeptList.isEmpty()){
-			DeptDO filterDept = sysDeptList.stream().filter(o->o.getDeptId().equals(getUser().getDeptId())).findFirst().get();
-			//前端树状表格必须要有一个根节点
-			filterDept.setParentId(0L);
-			resultList.add(filterDept);
+			Optional<DeptDO> filterDept = sysDeptList.stream().filter(o->o.getDeptId().equals(getUser().getDeptId())).findFirst();
+			if(filterDept.isPresent()){
+				DeptDO deptDO = filterDept.get();
+				//前端树状表格必须要有一个根节点
+				deptDO.setParentId(0L);
+				resultList.add(deptDO);
+			}
 			sysDeptService.dgDeptList(sysDeptList, getUser().getDeptId(), resultList);
 			if(!ObjectUtils.isEmpty(params.get("dwmc"))){
 				resultList = resultList.stream().filter(o->o.getDwmc().contains(params.get("dwmc").toString())).collect(Collectors.toList());

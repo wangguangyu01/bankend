@@ -93,11 +93,11 @@
 		`cperson`,
 		`status`
 		)
-		<if test="parentId != 0">
-			select
+		values
+		(
 			#{parentId},
 			#{name},
-			`order_num` + 1,
+			#{orderNum},
 			#{delFlag},
 			#{xfjyjgTywysbm},
 			#{dwmc},
@@ -118,35 +118,7 @@
 			#{cdate},
 			#{cperson},
 			#{status}
-			from sys_dept where dept_id = #{parentId} ORDER BY order_num desc limit 1
-		</if>
-		<if test="parentId == 0">
-			select
-			#{parentId},
-			#{name},
-			`order_num` + 1,
-			#{delFlag},
-			#{xfjyjgTywysbm},
-			#{dwmc},
-			#{dwjc},
-			#{lxrXm},
-			#{lxdh},
-			#{txdz},
-			#{yzbm},
-			#{dzxx},
-			#{zhzJyqk},
-			#{dqjd},
-			#{dqwd},
-			#{xzqhdm},
-			#{czhm},
-			#{xfjyjgxzdm},
-			#{bz},
-			#{zbfw},
-			#{cdate},
-			#{cperson},
-			#{status}
-			from sys_dept where parent_id = #{parentId} ORDER BY order_num desc limit 1
-		</if>
+			)
 	</insert>
 
 	<update id="updatexml" parameterType="com.smart119.system.domain.DeptDO">

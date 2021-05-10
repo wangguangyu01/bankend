@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.smart119.common.domain.Tree;
 import com.smart119.common.enums.ResponseStatusEnum;
+import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.utils.BuildTree;
 import com.smart119.common.utils.R;
 import com.smart119.system.dao.DeptDao;
@@ -13,10 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.PostConstruct;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -24,6 +23,11 @@ import java.util.stream.Collectors;
 public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements DeptService {
     @Autowired
     private DeptDao sysDeptMapper;
+    @Autowired
+    private RedisManager redisManager;
+    @Autowired
+    private final static String ORDER_NUM_KEY = "dept_max_order_num";
+
 
     @Override
     public DeptDO get(Long deptId) {
@@ -87,11 +91,32 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
     public int count(Map<String, Object> map) {
         return sysDeptMapper.count(map);
     }
-
+    /**
+     * @Author sdw
+     * @Description 取出数据库中最大序号 存入redis
+     * @Date 2021/5/10
+     * @Param []
+     * @return void
+    **/
+    @PostConstruct
+    private void init(){
+        DeptDO deptDO = lambdaQuery()
+                .orderByDesc(DeptDO::getOrderNum)
+                .last("limit 1")
+                .one();
+        Integer orderNum;
+        if(deptDO != null){
+            orderNum = deptDO.getOrderNum();
+        }else{
+            orderNum = 0;
+        }
+        redisManager.set(ORDER_NUM_KEY, orderNum.toString(),0);
+    }
     @Override
     public int savexml(DeptDO sysDept) {
         int count = 0;
         try {
+            sysDept.setOrderNum(redisManager.incr(ORDER_NUM_KEY).intValue());
             count = sysDeptMapper.save(sysDept);
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,8 +235,10 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
         List<DeptDO> deptDOS = sysDeptMapper.list(new HashMap<String, Object>(16));
         List<DeptDO> resultList = new ArrayList<>();
         if(id!=null){
-            DeptDO filterDept = deptDOS.stream().filter(o->o.getDeptId().equals(id)).collect(Collectors.toList()).get(0);
-            resultList.add(filterDept);
+            Optional<DeptDO> filterDept = deptDOS.stream().filter(o->o.getDeptId().equals(id)).findFirst();
+            if(filterDept.isPresent()){
+                resultList.add(filterDept.get());
+            }
             dgDeptList(deptDOS, id,resultList);
         }
         return resultList;
