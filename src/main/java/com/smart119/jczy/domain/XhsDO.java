@@ -1,7 +1,9 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.smart119.common.annotation.validator.PhoneValidator;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -11,14 +13,14 @@ import java.util.Date;
 
 /**
  * 消火栓基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-19 14:57:59
  */
 public class XhsDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//消火栓_通用唯一识别码
 	private String xhsTywysbm;
 	//名称
@@ -54,10 +56,13 @@ public class XhsDO implements Serializable {
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
 	//管网直径_宽度
+	@Range(min= 0, max=99999999, message = "管网直径_宽度超出范围限制{min}-{max}")
 	private Double gwzjKd;
 	//管网_压力
+	@Range(min= 0, max=99999999, message = "管网_压力超出范围限制{min}-{max}")
 	private Double gwYl;
 	//流量
+	@Range(min= 0, max=99999999, message = "流量超出范围限制{min}-{max}")
 	private Double ll;
 	//供水_单位名称
 	@NotBlank(message = "供水_单位名称不能为空")

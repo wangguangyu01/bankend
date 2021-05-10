@@ -3,10 +3,12 @@ package com.smart119.jczy.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -38,7 +40,9 @@ public class XfzbDO implements Serializable {
 	@Length(min= 1, max=100, message = "规格型号超出范围限制{min}-{max}")
 	private String ggxh;
 	//参考价_金额
-	private Double ckjJe;
+	@DecimalMin(value = "0", message = "参考价金额最小是0")
+	@DecimalMax(value = "999999999999999.99", message = "参考价金额不能超过是999999999999999.99")
+	private BigDecimal ckjJe;
 	//品牌_名称
 	@NotBlank(message = "品牌名称不能为空")
 	@Length(min= 1, max=100, message = "品牌名称超出范围限制{min}-{max}")
@@ -68,8 +72,12 @@ public class XfzbDO implements Serializable {
 	//是否消耗型装备_判断标识 0是 1否
 	private String sfxhxzbPdbz;
 	//重量
+	@DecimalMin(value = "0", message = "重量最小是0")
+	@DecimalMax(value = "9999999999.99", message = "重量最大是9999999999.99")
 	private Double zl;
 	//体积
+	@DecimalMin(value = "0", message = "体积最小是0")
+	@DecimalMax(value = "9999999999.99", message = "体积最大是9999999999.99")
 	private Double tj;
 	//主要成分_简要情况
 	@NotBlank(message = "主要成分_简要情况不能为空")
@@ -94,16 +102,22 @@ public class XfzbDO implements Serializable {
 	//是否用于训练_判断标识 0是 1 否
 	private String sfyyxlPdbz;
 	//装备_数量
+	@Range(min = 0, max = 999999999L, message = "装备_数量0-999999999")
 	private Integer zbSl;
 	//库存_数量
+	@Range(min = 0, max = 999999999L, message = "库存_数量0-999999999")
 	private Integer kcSl;
 	//领用_数量
+	@Range(min = 0, max = 999999999L, message = "领用_数量0-999999999")
 	private Integer lySl;
 	//装载_数量
+	@Range(min = 0, max = 999999999L, message = "装载_数量0-999999999")
 	private Integer zzSl;
 	//维修_数量
+	@Range(min = 0, max = 999999999L, message = "维修_数量0-999999999")
 	private Integer wxSl;
 	//在途_数量
+	@Range(min = 0, max = 999999999L, message = "在途_数量0-999999999")
 	private Integer ztSl;
 	//装备性能简要情况
 	@NotBlank(message = "装备性能简要情况不能为空")
@@ -207,13 +221,13 @@ public class XfzbDO implements Serializable {
 	/**
 	 * 设置：参考价_金额
 	 */
-	public void setCkjJe(Double ckjJe) {
+	public void setCkjJe(BigDecimal ckjJe) {
 		this.ckjJe = ckjJe;
 	}
 	/**
 	 * 获取：参考价_金额
 	 */
-	public Double getCkjJe() {
+	public BigDecimal getCkjJe() {
 		return ckjJe;
 	}
 	/**

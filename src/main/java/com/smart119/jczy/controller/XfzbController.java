@@ -1,18 +1,22 @@
 package com.smart119.jczy.controller;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import com.alibaba.fastjson.JSON;
+import com.smart119.common.annotation.validator.BindingResultError;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.jczy.domain.XfclDO;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +26,9 @@ import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
+import javax.validation.executable.ValidateOnExecution;
 
 /**
  * 消防装备器材基本信息
@@ -144,7 +151,16 @@ public class XfzbController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfzb:edit")
-	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,@Validated XfzbDO xfzb){
+	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,
+					 @Validated XfzbDO xfzb,
+					 BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(xfzb.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, xfzb.getXfzbTywysbm(), "xfzb");
 		}

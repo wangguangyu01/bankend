@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,14 +25,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 消火栓基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-19 14:57:59
  */
- 
+
 @Controller
 @RequestMapping("/jczy/xhs")
+@Validated
 public class XhsController extends BaseController{
 	@Autowired
 	private XhsService xhsService;
@@ -44,13 +46,13 @@ public class XhsController extends BaseController{
 
 	@Autowired
 	private DeptService deptService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:xhs:xhs")
 	String Xhs(){
 	    return "jczy/xhs/xhs";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:xhs:xhs")
@@ -69,7 +71,7 @@ public class XhsController extends BaseController{
 		PageUtils pageUtils = new PageUtils(xhsList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:xhs:add")
 	String add(){
@@ -100,14 +102,21 @@ public class XhsController extends BaseController{
 
 	    return "jczy/xhs/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xhs:add")
-	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XhsDO xhs){
+	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles,
+				  @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,
+				  @Validated XhsDO xhs,
+				  BindingResult bindingResult){
+
+		if (bindingResult.hasErrors()) {
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xhs.setXhsTywysbm(id);
 		xhs.setCdate(new Date());
@@ -130,7 +139,13 @@ public class XhsController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xhs:edit")
-	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XhsDO xhs){
+	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles,
+					@RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,
+					@Validated XhsDO xhs,
+					BindingResult bindingResult){
+		if (bindingResult.hasErrors()) {
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		if(sjFiles!=null && sjFiles.length>0) {
 			attachmentService.ftpUpload(sjFiles, xhs.getXhsTywysbm(), "xhssjt");
 		}
@@ -140,7 +155,7 @@ public class XhsController extends BaseController{
 		xhsService.update(xhs);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -153,7 +168,7 @@ public class XhsController extends BaseController{
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -164,5 +179,5 @@ public class XhsController extends BaseController{
 		xhsService.batchRemove(xhsTywysbms);
 		return R.ok();
 	}
-	
+
 }
