@@ -122,7 +122,7 @@ public class ExportExcelSeedBack {
                             try {
                                 length = currentCell.getStringCellValue().getBytes().length;
                             } catch (Exception e) {
-                                e.printStackTrace();
+                               // e.printStackTrace();
                             }
                             if (columnWidth < length) {
                                 columnWidth = length;
