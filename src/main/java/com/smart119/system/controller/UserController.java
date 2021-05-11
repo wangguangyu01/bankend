@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,7 +64,7 @@ public class UserController extends BaseController {
 		// 查询列表数据
 
 		Query query = new Query(params);
-		if(!query.containsKey("deptId")){
+		if(ObjectUtils.isEmpty(query.get("deptId"))){
 			query.put("deptId",getUser().getDeptId());
 		}
 

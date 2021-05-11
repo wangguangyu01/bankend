@@ -13,10 +13,12 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 部门管理
@@ -46,9 +48,23 @@ public class DeptController extends BaseController {
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")
-	public List<DeptDO> list( @RequestParam Map<String, Object> params) {
-		List<DeptDO> sysDeptList = sysDeptService.list(params);
-		return sysDeptList;
+	public List<DeptDO> list(@RequestParam Map<String, Object> params) {
+		List<DeptDO> sysDeptList = sysDeptService.list(new HashMap<>(0));
+		List<DeptDO> resultList = new ArrayList<>();
+		if(!sysDeptList.isEmpty()){
+			Optional<DeptDO> filterDept = sysDeptList.stream().filter(o->o.getDeptId().equals(getUser().getDeptId())).findFirst();
+			if(filterDept.isPresent()){
+				DeptDO deptDO = filterDept.get();
+				//前端树状表格必须要有一个根节点
+				deptDO.setParentId(0L);
+				resultList.add(deptDO);
+			}
+			sysDeptService.dgDeptList(sysDeptList, getUser().getDeptId(), resultList);
+			if(!ObjectUtils.isEmpty(params.get("dwmc"))){
+				resultList = resultList.stream().filter(o->o.getDwmc().contains(params.get("dwmc").toString())).collect(Collectors.toList());
+			}
+		}
+		return resultList;
 	}
 
 	@GetMapping("/add/{pId}")
