@@ -84,7 +84,8 @@
 			`ZT`, 
 			`cdate`, 
 			`status`, 
-			`cperson`
+			`cperson`,
+			type
 		)
 		values
 		(
@@ -98,7 +99,8 @@
 			#{zt}, 
 			#{cdate}, 
 			#{status}, 
-			#{cperson}
+			#{cperson},
+			#{type}
 		)
 	</insert>
 	 
@@ -115,6 +117,7 @@
 			<if test="cdate != null">`cdate` = #{cdate}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="cperson != null">`cperson` = #{cperson}</if>
+			<if test="type != null">`type` = #{type}</if>
 		</set>
 		where id = #{id}
 	</update>
