@@ -3,6 +3,8 @@ package com.smart119.jczy.domain;
 import com.smart119.common.annotation.validator.PhoneValidator;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +32,8 @@ public class XfshDO implements Serializable {
 	@Length(min= 1, max=100, message = "地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//高度
+	@DecimalMin(value = "0", message = "高度最小是0")
+	@DecimalMax(value = "999999.99", message = "高度最大是999999.99")
 	private Double gd;
 	//地球经度
 	private Double dqjd;
@@ -48,16 +52,28 @@ public class XfshDO implements Serializable {
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
 	//管网直径_宽度
+	@DecimalMin(value = "0", message = "体积最小是0")
+	@DecimalMax(value = "999999.99", message = "体积最大是999999.99")
 	private Double gwzjKd;
 	//管网_压力
+	@DecimalMin(value = "0", message = "管网压力最小是0")
+	@DecimalMax(value = "999999.99", message = "管网压力最大是999999.99")
 	private Double gwYl;
 	//流量
+	@DecimalMin(value = "0", message = "流量最小是0")
+	@DecimalMax(value = "999999.99", message = "流量最大是999999.99")
 	private Double ll;
 	//进水管直径_宽度
+	@DecimalMin(value = "0", message = "进水管直径宽度最小是0")
+	@DecimalMax(value = "999999.99", message = "进水管直径宽度最大是999999.99")
 	private Double jsgzjKd;
 	//出水管直径_宽度
+	@DecimalMin(value = "0", message = "出水管直径宽度最小是0")
+	@DecimalMax(value = "999999.99", message = "出水管直径宽度最大是999999.99")
 	private Double csgzjKd;
 	//加水车道数_数量
+	@DecimalMin(value = "0", message = "加水车道数数量最小是0")
+	@DecimalMax(value = "999999.99", message = "加水车道数数量最大是999999.99")
 	private Double jscdsSl;
 	//供水_单位名称
 	@NotBlank(message = "供水单位名称不能为空")
