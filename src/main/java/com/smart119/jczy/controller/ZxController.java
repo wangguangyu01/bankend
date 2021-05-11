@@ -1,30 +1,26 @@
 package com.smart119.jczy.controller;
 
+import com.smart119.common.controller.BaseController;
+import com.smart119.common.enums.ResponseStatusEnum;
+import com.smart119.common.utils.PageUtils;
+import com.smart119.common.utils.Query;
+import com.smart119.common.utils.R;
+import com.smart119.common.utils.StringUtils;
+import com.smart119.jczy.domain.ZxDO;
+import com.smart119.jczy.service.ZxService;
+import com.smart119.system.service.DeptService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import com.smart119.common.controller.BaseController;
-import com.smart119.system.domain.UserDO;
-import com.smart119.system.service.DeptService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.smart119.jczy.domain.ZxDO;
-import com.smart119.jczy.service.ZxService;
-import com.smart119.common.utils.PageUtils;
-import com.smart119.common.utils.Query;
-import com.smart119.common.utils.R;
+import java.util.regex.Pattern;
 
 /**
  * 坐席
@@ -82,7 +78,19 @@ public class ZxController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:zx:add")
-	public R save( ZxDO zx){
+	public R save(@Validated ZxDO zx){
+		if("1".equals(zx.getType())){
+			String pattern = "^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$";
+			if(!Pattern.compile(pattern).matcher(zx.getIp()).matches()){
+				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "ip地址有误");
+			}
+			if(StringUtils.isBlank(zx.getZxhm())){
+				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "坐席号码不可为空");
+			}
+			if(StringUtils.isBlank(zx.getZxmm())){
+				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "坐席密码不可为空");
+			}
+		}
 		String id = UUID.randomUUID().toString().replace("-", "");
 		zx.setId(id);
 		zx.setCdate(new Date());
@@ -99,7 +107,19 @@ public class ZxController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zx:edit")
-	public R update( ZxDO zx){
+	public R update(@Validated ZxDO zx){
+		if("1".equals(zx.getType())){
+			String pattern = "^((25[0-5]|2[0-4]\\d|[01]?\\d\\d?)\\.){3}(25[0-5]|2[0-4]\\d|[01]?\\d\\d?)$";
+			if(!Pattern.compile(pattern).matcher(zx.getIp()).matches()){
+				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "ip地址有误");
+			}
+			if(StringUtils.isBlank(zx.getZxhm())){
+				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "坐席号码不可为空");
+			}
+			if(StringUtils.isBlank(zx.getZxmm())){
+				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "坐席密码不可为空");
+			}
+		}
 		zxService.update(zx);
 		return R.ok();
 	}

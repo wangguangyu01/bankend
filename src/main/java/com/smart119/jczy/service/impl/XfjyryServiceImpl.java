@@ -10,7 +10,6 @@ import com.smart119.system.dao.UserRoleDao;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.service.UserService;
-import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,7 +88,7 @@ public class XfjyryServiceImpl implements XfjyryService {
 		}
 
 		//判断是否需要修改用户名
-		if(StringUtils.isNotBlank(xfjyry.getUserid())){
+		if(StringUtils.isNotBlank(xfjyry.getUserid()) && StringUtils.isNotBlank(xfjyry.getUsername())){
 			UserDO user = userDao.get(Long.parseLong(xfjyry.getUserid()));
 			if(!StringUtils.equals(user.getUsername(),xfjyry.getUsername())){
 				//验证是否重复

@@ -191,19 +191,19 @@
                     console.log(overlays)
                     polyEditor = new AMap.PolyEditor(_this.map, overlays[0])
                     polyEditor.on('addnode', function(event) {
-                        log.info('触发事件：addnode')
+                        console.log('触发事件：addnode')
                     })
 
                     polyEditor.on('adjust', function(event) {
-                        log.info('触发事件：adjust')
+                        console.log('触发事件：adjust')
                     })
 
                     polyEditor.on('removenode', function(event) {
-                        log.info('触发事件：removenode')
+                        console.log('触发事件：removenode')
                     })
 
                     polyEditor.on('end', function(event) {
-                        log.info('触发事件： end')
+                        console.log('触发事件： end')
                         _this.points = [];
                         console.log(event.target.getPath())
                        var arr = event.target.getPath()
@@ -323,19 +323,18 @@
 
                     polyEditor = new AMap.PolyEditor(_this.map, polygon)
                     polyEditor.on('addnode', function(event) {
-                        log.info('触发事件：addnode')
+                        console.log('触发事件：addnode')
                     })
 
                     polyEditor.on('adjust', function(event) {
-                        log.info('触发事件：adjust')
+                        console.log('触发事件：adjust')
                     })
 
                     polyEditor.on('removenode', function(event) {
-                        log.info('触发事件：removenode')
+                        console.log('触发事件：removenode')
                     })
 
                     polyEditor.on('end', function(event) {
-                        log.info('触发事件： end')
                         _this.points = [];
                         console.log(event.target.getPath())
                         var arr = event.target.getPath()

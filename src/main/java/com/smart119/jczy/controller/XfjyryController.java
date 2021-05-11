@@ -1,12 +1,14 @@
 package com.smart119.jczy.controller;
 
-import java.util.*;
-
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.enums.ResponseStatusEnum;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.MD5Utils;
+import com.smart119.common.utils.PageUtils;
+import com.smart119.common.utils.Query;
+import com.smart119.common.utils.R;
 import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.DeptDO;
@@ -18,14 +20,12 @@ import com.smart119.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import com.smart119.common.utils.PageUtils;
-import com.smart119.common.utils.Query;
-import com.smart119.common.utils.R;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.*;
 
 /**
  * 消防救援人员
@@ -213,7 +213,7 @@ public class XfjyryController extends BaseController {
         if (xfjyryService.save(xfjyry) > 0) {
             return R.ok();
         }
-        return R.error();
+        return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "用户名已存在");
     }
 
     /**
@@ -230,7 +230,7 @@ public class XfjyryController extends BaseController {
         if (xfjyryService.save(xfjyry) > 0) {
             return R.ok();
         }
-        return R.error();
+        return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "用户名已存在");
     }
 
     /**
@@ -239,12 +239,14 @@ public class XfjyryController extends BaseController {
     @ResponseBody
     @RequestMapping("/update")
     @RequiresPermissions("jczy:xfjyry:edit")
-    public String update(@RequestPart(value = "file", required = false) MultipartFile[] files, XfjyryDO xfjyry) {
+    public R update(@RequestPart(value = "file", required = false) MultipartFile[] files, XfjyryDO xfjyry) {
         if(files!=null && files.length>0) {
             attachmentService.ftpUpload(files, xfjyry.getXfjyryTywysbm(), "xfjyry");
         }
-        xfjyryService.update(xfjyry);
-        return xfjyry.getXfjyryTywysbm();
+        if (xfjyryService.update(xfjyry) > 0) {
+            return R.ok();
+        }
+        return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "用户名已存在");
     }
 
     /**
@@ -253,7 +255,7 @@ public class XfjyryController extends BaseController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("jczy:xfjyry:add")
-    public String save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfjyryDO xfjyry){
+    public R save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfjyryDO xfjyry){
         String id = UUID.randomUUID().toString().replace("-", "");
         xfjyry.setXfjyryTywysbm(id);
         xfjyry.setCdate(new Date());
@@ -263,9 +265,9 @@ public class XfjyryController extends BaseController {
             attachmentService.ftpUpload(files, id, "xfjyry");
         }
         if (xfjyryService.save(xfjyry) > 0) {
-            return id;
+            return R.ok();
         }
-        return "";
+        return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "用户名已存在");
     }
     /**
      * 修改
