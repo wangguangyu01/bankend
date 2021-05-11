@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+                        <input id="zbzwId" name="zbzwId" th:value="${zbzw.zbzwId}" type="hidden">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">职务名称：</label>
+                            <div class="col-sm-8">
+                                <input id="zwmc" name="zwmc" th:value="${zbzw.zwmc}" class="form-control" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">职务描述：</label>
+                            <div class="col-sm-8">
+                                <textarea id="zwms" name="zwms" th:text="${zbzw.zwms}" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">排序号：</label>
+                            <div class="col-sm-8">
+                                <input id="pxh" name="pxh" th:value="${zbzw.pxh}" class="form-control" type="number">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                                <button type="submit" class="btn btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include::footer"></div>
+<script type="text/javascript" src="/js/appjs/zb/zbzw/edit.js">
+</script>
+</body>
+</html>

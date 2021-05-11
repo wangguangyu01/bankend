@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.zb.dao.ZbzwDao">
+
+    <select id="get" resultType="com.smart119.zb.domain.ZbzwDO">
+		select `ZBZW_ID`,`ZWMC`,`ZWMS`,`ZWLX`,`pxh`,`cdate`,`status`,`cperson` from jczy_zbzw where ZBZW_ID = #{value}
+	</select>
+
+    <select id="list" resultType="com.smart119.zb.domain.ZbzwDO">
+        select `ZBZW_ID`,`ZWMC`,`ZWMS`,`ZWLX`,`pxh`,`cdate`,`status`,`cperson` from jczy_zbzw
+        <where>
+            <if test="zbzwId != null and zbzwId != ''">and ZBZW_ID = #{zbzwId}</if>
+            <if test="zwmc != null and zwmc != ''">and ZWMC like '%${zwmc}%'</if>
+            <if test="zwms != null and zwms != ''">and ZWMS = #{zwms}</if>
+            <if test="zwlx != null and zwlx != ''">and ZWLX = #{zwlx}</if>
+            <if test="pxh != null and pxh != ''">and pxh = #{pxh}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+            <otherwise>
+                order by pxh asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        select count(*) from jczy_zbzw
+        <where>
+            <if test="zbzwId != null and zbzwId != ''">and ZBZW_ID = #{zbzwId}</if>
+            <if test="zwmc != null and zwmc != ''">and ZWMC like '%${zwmc}%'</if>
+            <if test="zwms != null and zwms != ''">and ZWMS = #{zwms}</if>
+            <if test="zwlx != null and zwlx != ''">and ZWLX = #{zwlx}</if>
+            <if test="pxh != null and pxh != ''">and pxh = #{pxh}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.smart119.zb.domain.ZbzwDO">
+		insert into jczy_zbzw
+		(
+			`ZBZW_ID`, 
+			`ZWMC`, 
+			`ZWMS`, 
+			`ZWLX`, 
+			`pxh`, 
+			`cdate`, 
+			`status`, 
+			`cperson`
+		)
+		values
+		(
+			#{zbzwId}, 
+			#{zwmc}, 
+			#{zwms}, 
+			#{zwlx}, 
+			#{pxh}, 
+			#{cdate}, 
+			#{status}, 
+			#{cperson}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.smart119.zb.domain.ZbzwDO">
+        update jczy_zbzw
+        <set>
+            <if test="zwmc != null">`ZWMC` = #{zwmc},</if>
+            <if test="zwms != null">`ZWMS` = #{zwms},</if>
+            <if test="zwlx != null">`ZWLX` = #{zwlx},</if>
+            <if test="pxh != null">`pxh` = #{pxh},</if>
+            <if test="cdate != null">`cdate` = #{cdate},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="cperson != null">`cperson` = #{cperson}</if>
+        </set>
+        where ZBZW_ID = #{zbzwId}
+    </update>
+
+    <delete id="remove">
+		delete from jczy_zbzw where ZBZW_ID = #{value}
+	</delete>
+
+    <delete id="batchRemove">
+        delete from jczy_zbzw where ZBZW_ID in
+        <foreach item="zbzwId" collection="array" open="(" separator="," close=")">
+            #{zbzwId}
+        </foreach>
+    </delete>
+
+</mapper>

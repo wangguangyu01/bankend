@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<style>
+    .tagClass{
+        width: 100%;
+        min-height: 30px;
+        line-height:25px;
+        cursor: pointer;
+    }
+    .tagClass .tagClose{
+        border-radius: 50%;
+        padding:1px 3px;
+        position: relative;
+        left: 4px;
+    }
+    .tagClass .tagClose:hover{
+        background: #074f61;
+
+    }
+    #exampleTable td.active{
+        background: #d4e9fb;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="ibox ibox-body">
+                <div class="ibox-title">
+                    <h5>选择部门</h5>
+                </div>
+                <div class="ibox-content" style="min-height: 732px;">
+                    <div id="jstree"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="ibox">
+                <div class="ibox-content" style="min-height: 780px;">
+                    <div class="fixed-table-toolbar clearfix">
+                        <div class="pull-left  col-md-3">
+                            <button type="button" class="btn  btn-success"
+                                    onclick="zwadd()">
+                                <i class="fa fa-shield" aria-hidden="true"></i>值班职务
+                            </button>
+                            <button type="button" class="btn  btn-primary"
+                                    onclick="Excel()">
+                                <i class="fa fa-plus" aria-hidden="true"></i>导出
+                            </button>
+                        </div>
+
+                        <div class="pull-right">
+                            <button class="btn btn-success" onclick="reLoad()">查询</button>
+                        </div>
+                        <div class="pull-right col-md-3">
+                            <input type="text" class="laydate-icon layer-date form-control" id="endDate" name="endDate"  placeholder="请选择结束日期"
+                                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${endDate}==null?null:${#dates.format(endDate,'yyyy-MM-dd')}"/>
+                        </div>
+                        <div class="pull-right" style="line-height: 34px;">——</div>
+                        <div class="pull-right col-md-3">
+                            <input type="text" class="laydate-icon layer-date form-control" id="startDate" name="startDate"  placeholder="请选择开始日期"
+                                   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${startDate}==null?null:${#dates.format(startDate,'yyyy-MM-dd')}"/>
+                        </div>
+                    </div>
+                    <table id="exampleTable" data-mobile-responsive="true">
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="ibox">
+                <div class="ibox-content" style="min-height: 780px;">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input id="xm" type="text" class="form-control"
+                                       placeholder="按姓名查询">
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success" onclick="userReLoad()">查询</button>
+                            </div>
+                        </div>
+                    <table id="userTable" data-mobile-responsive="true">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+<div>
+    <script type="text/javascript">
+        var s_edit_h = 'hidden';
+        var s_remove_h = 'hidden';
+        var s_resetPwd_h = 'hidden';
+    </script>
+</div>
+<div shiro:hasPermission="zb:zb:edit">
+    <script type="text/javascript">
+        s_edit_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="zb:zb:remove">
+    <script type="text/javascript">
+        var s_remove_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="zb:zb:resetPwd">
+    <script type="text/javascript">
+        var s_resetPwd_h = '';
+    </script>
+</div>
+</div>
+<div th:include="include :: footer"></div>
+<script th:inline="javascript">
+    var userDeptId = [[${userDeptId}]];
+</script>
+<script type="text/javascript" src="/js/appjs/zb/zb/zb.js"></script>
+</body>
+</html>
