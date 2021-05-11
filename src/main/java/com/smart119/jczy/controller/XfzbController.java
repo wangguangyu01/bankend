@@ -113,7 +113,16 @@ public class XfzbController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfzb:add")
-	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files,@Validated XfzbDO xfzb){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files,
+				  @Validated XfzbDO xfzb,
+				  BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(xfzb.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfzb.setXfzbTywysbm(id);
 		xfzb.setCdate(new Date());
