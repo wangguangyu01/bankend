@@ -5,11 +5,10 @@ import com.smart119.common.annotation.Excel;
 import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.service.DictService;
-import com.smart119.common.utils.DateUtils;
-import com.smart119.common.utils.FileUtil;
-import com.smart119.common.utils.PageUtils;
+import com.smart119.common.utils.*;
 import com.smart119.jczy.dao.FzjcDao;
 import com.smart119.jczy.domain.FzjcDO;
+import com.smart119.jczy.domain.XfzbDO;
 import com.smart119.jczy.service.FzjcService;
 import com.smart119.jqxx.utils.ExportExcel;
 import com.smart119.webapi.dao.XfzlDao;
@@ -21,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mock.web.MockMultipartFile;
@@ -30,6 +30,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.awt.*;
 import java.io.*;
 import java.lang.annotation.Annotation;
@@ -74,6 +76,9 @@ class Smart119ApplicationTest {
 
     @Resource
     private RedisManager redisManager;
+
+
+
 
     @BeforeEach
     public void beforeInitRedis() {
@@ -208,7 +213,29 @@ class Smart119ApplicationTest {
            String key = it.next();
            System.out.println(key);
        }
+    }
 
+    @Test
+    public  void testAAA() throws NoSuchFieldException {
+        XfzbDO xfzbDO = new XfzbDO();
+        Field fieldObj = xfzbDO.getClass().getDeclaredField("zbSl");
+        String classTypeName = fieldObj.getType().getSimpleName();
+        System.out.println(fieldObj.getType().getSimpleName());
+        if (StringUtils.equalsIgnoreCase(classTypeName, "Integer")) {
+            Min min = fieldObj.getAnnotation(Min.class);
+            Max max = fieldObj.getAnnotation(Max.class);
+            System.out.println("数值范围是" + min.value() +" ————" + max.value());
+
+        }
+    }
+
+
+    @Test
+    public void  testpassword() {
+        String password ="Bd1Zl/AFS/cB6vL0CTe33OvjbEuX9rssxWSKIAKQikdGCJo98gSucPrGAFT6Lf1M4OUxMcevf+XPHhUDWcQTviJMS1PG5Zyaxf26TIX5LoQj25ZyBg4uhsKFP/olYVZ5GVjgnkAbqi1+8pJ7dJl06C5LoWzM6uw2bBoQHtAwE/w=";
+        String password111 = RSAUtils.decryptDataOnJava(password, "MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBAIwv99Dn7G94q2Y2sXGbzwKZsQu5nTSVImofPjqp/TsES+yvx32kiKI98FQVNihWPTcjAB5GVNxqvW5hO/9RXWy3YIEm4xjevSGc1f4HEsFFq+SgzVowryDWhahm9oyUXDwljVUZk+kM7ySIIQ0ns6iuRonUdNl3rRc90Wu1yEZXAgMBAAECgYA7drFgnK/uzLmvfq2f6h5SFQ1DUvV683OInj4QNkDjAryN5jXxdpQ6dZl2oRS64XHP7HnFXcHrSR+XLYl8kG/W5qMRuHpOk2Mgds++xtDKvTD2NS/6Mr2S0uXlEqtK8p0G2jQBXKryJiHIroyKiIz4e9tKqOwExFZiDydwAM8F+QJBANcXCaeHMHrTklzb4s3Ve+YdzBdarAlkRXbjhXFgRcx6TqX+zTR9SUrphHaI6PhLvy7nTlCWz2+IChJvTqcpx5sCQQCm2dd1hgnNn/HJUUqZOnUHoXCxZQ6CbSoRrD+OovqraJ0ezKrwIIjav6hC+txWA7MoM7ciX/+7oEXfkgtygi31AkEAkJz1qcR0LPDZBEP2vsudTP+Vu9IDvyDCr4eTrcG7zBojjOm+0F64C3zrycKNWHudJAzyk66B84v0saZSrIOjpwJBAJlXpdv9xy6yq50w19WBUyMjLRXr4Wze9QXu/y6Q/L3h1F0FDqjHzd70u6hrM2rd1Z7CALJX9gkzIGR7rYecuq0CQQDI2dr2rlKpf8ASaCbIRpfjMv1F3HfPLtufTQpsSWj8cGeQ+04LQTkCj6S7Mk0WYI8f8Z0+ietHqRM1+WHHiY2x");
+        String password22 = MD5Utils.encrypt("admin", password111);
+        System.out.println(password22.equals("27bd386e70f280e24c2f4f2a549b82cf"));
     }
 
 }
