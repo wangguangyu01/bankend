@@ -2,7 +2,10 @@ package com.smart119.jczy.domain;
 
 import com.smart119.common.annotation.validator.PhoneValidator;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -30,8 +33,12 @@ public class XfscDO implements Serializable {
 	@Length(min= 1, max=100, message = "消防水池地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//容积（立方米）
+	@DecimalMin(value = "0", message = "容积最小是0")
+	@DecimalMax(value = "999999.99", message = "容积最大是999999.99")
 	private Double rj;
 	//储水量_容积（立方米）
+	@DecimalMin(value = "0", message = "储水量容积最小是0")
+	@DecimalMax(value = "999999.99", message = "储水量容积最大是999999.99")
 	private Double cslRj;
 	//维保单位_单位名称
 	@NotBlank(message = "维保单位单位名称不能为空")
@@ -60,18 +67,24 @@ public class XfscDO implements Serializable {
 	@Length(min= 1, max=300, message = "取水形式_简要情况超出范围限制{min}-{max}")
 	private String qsxsJyqk;
 	//取水_高度（米）
+	@DecimalMin(value = "0", message = "取水高度最小是0")
+	@DecimalMax(value = "999999.99", message = "取水高度最大是999999.99")
 	private Double qsGd;
 	//水源标高差_高度（米）
+	@DecimalMin(value = "0", message = "水源标高差高度最小是0")
+	@DecimalMax(value = "999999.99", message = "水源标高差高度最大是999999.99")
 	private Double sybgcGd;
 	//停车位置_地点名称
 	@NotBlank(message = "停车位置地点名称不能为空")
 	@Length(min= 1, max=100, message = "停车位置地点名称超出范围限制{min}-{max}")
 	private String tcwzDdmc;
 	//停车_数量
+	@Range(min = 0, max = 999999999L, message = "停车数量超出范围限制0-999999999")
 	private Integer tcSl;
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
 	//流量
+	@Range(min = 0, max = 999999999L, message = "流量超出范围限制0-999999999")
 	private Integer ll;
 	//供水_单位名称
 	@NotBlank(message = "供水单位名称不能为空")

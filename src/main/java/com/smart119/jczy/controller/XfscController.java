@@ -3,16 +3,19 @@ package com.smart119.jczy.controller;
 import java.util.*;
 
 import com.alibaba.fastjson.JSON;
+import com.smart119.common.annotation.validator.BindingResultError;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.DictService;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,7 +96,14 @@ public class XfscController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfsc:add")
-	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XfscDO xfsc){
+	public R save(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XfscDO xfsc, BindingResult bindingResult) throws Exception{
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(xfsc.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfsc.setXfscTywysbm(id);
 		xfsc.setCdate(new Date());
@@ -116,7 +126,15 @@ public class XfscController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfsc:edit")
-	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XfscDO xfsc){
+	public R update(@RequestPart(value = "sjFile", required = false) MultipartFile[] sjFiles, @RequestPart(value = "fwFile", required = false) MultipartFile[] fwFiles,@Validated XfscDO xfsc,BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(xfsc.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
+
 		if(sjFiles!=null && sjFiles.length>0) {
 			attachmentService.ftpUpload(sjFiles, xfsc.getXfscTywysbm(), "xfscsjt");
 		}
