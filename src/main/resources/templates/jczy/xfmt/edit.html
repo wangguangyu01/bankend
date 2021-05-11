@@ -63,11 +63,11 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">取水高度（米）：</label>
 								<div class="col-sm-4">
-									<input id="qsGd" name="qsGd" class="form-control" type="text" th:value="${xfmt.qsGd}">
+									<input id="qsGd" name="qsGd" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfmt.qsGd, 0, 2)}" min="0">
 								</div>
 								<label class="col-sm-2 control-label">水源标高差高度（米）：</label>
 								<div class="col-sm-4">
-									<input id="sybgcGd" name="sybgcGd" class="form-control" type="text" th:value="${xfmt.sybgcGd}">
+									<input id="sybgcGd" name="sybgcGd" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfmt.sybgcGd, 0, 2)}" min="0">
 								</div>
 							</div>
 							<div class="form-group">
@@ -77,7 +77,7 @@
 								</div>
 								<label class="col-sm-2 control-label">停车数量：</label>
 								<div class="col-sm-4">
-									<input id="tcSl" name="tcSl" class="form-control" type="text" th:value="${xfmt.tcSl}">
+									<input id="tcSl" name="tcSl" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfmt.tcSl, 0, 0)}" min="0">
 								</div>
 							</div>
 							<div class="form-group">

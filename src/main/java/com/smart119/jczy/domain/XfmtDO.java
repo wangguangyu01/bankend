@@ -2,6 +2,8 @@ package com.smart119.jczy.domain;
 
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -47,14 +49,20 @@ public class XfmtDO implements Serializable {
 	@Length(min= 1, max=300, message = "取水形式简要情况超出范围限制{min}-{max}")
 	private String qsxsJyqk;
 	//取水_高度
+	@DecimalMin(value = "0", message = "取水高度最小是0")
+	@DecimalMax(value = "999999.99", message = "取水高度最大是999999.99")
 	private Double qsGd;
 	//水源标高差_高度
+	@DecimalMin(value = "0", message = "水源标高差高度最小是0")
+	@DecimalMax(value = "999999.99", message = "水源标高差高度最大是999999.99")
 	private Double sybgcGd;
 	//停车位置_地点名称
 	@NotBlank(message = "停车位置地点名称不能为空")
 	@Length(min= 1, max=100, message = "停车位置地点名称超出范围限制{min}-{max}")
 	private String tcwzDdmc;
 	//停车_数量
+	@DecimalMin(value = "0", message = "停车数量最小是0")
+	@DecimalMax(value = "999999", message = "停车数量最大是999999")
 	private Double tcSl;
 	//管理_单位名称
 	@NotBlank(message = "管理单位名称不能为空")
