@@ -5,6 +5,8 @@ import com.smart119.common.annotation.validator.PhoneValidator;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -56,13 +58,16 @@ public class XhsDO implements Serializable {
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
 	//管网直径_宽度
-	@Range(min= 0, max=99999999, message = "管网直径_宽度超出范围限制{min}-{max}")
+	@DecimalMin(value = "0", message = "管网直径宽度最小是0")
+	@DecimalMax(value = "999999.99", message = "管网直径宽度最大是999999.99")
 	private Double gwzjKd;
 	//管网_压力
-	@Range(min= 0, max=99999999, message = "管网_压力超出范围限制{min}-{max}")
+	@DecimalMin(value = "0", message = "管网_压力最小是0")
+	@DecimalMax(value = "999999.99", message = "管网_压力最大是999999.99")
 	private Double gwYl;
 	//流量
-	@Range(min= 0, max=99999999, message = "流量超出范围限制{min}-{max}")
+	@DecimalMin(value = "0", message = "流量最小是0")
+	@DecimalMax(value = "999999.99", message = "流量最大是999999.99")
 	private Double ll;
 	//供水_单位名称
 	@NotBlank(message = "供水_单位名称不能为空")
