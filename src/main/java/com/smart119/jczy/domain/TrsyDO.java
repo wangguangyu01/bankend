@@ -2,6 +2,8 @@ package com.smart119.jczy.domain;
 
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,6 +27,8 @@ public class TrsyDO implements Serializable {
 	@Length(min= 1, max=100, message = "天然水源名称超出范围限制{min}-{max}")
 	private String mc;
 	//高度
+	@DecimalMin(value = "0", message = "高度最小是0")
+	@DecimalMax(value = "999999.99", message = "高度最大是999999.99")
 	private Double gd;
 	//水源类型代码
 	private String sylxdm;
@@ -33,8 +37,12 @@ public class TrsyDO implements Serializable {
 	@Length(min= 1, max=100, message = "天然水源地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//容积
+	@DecimalMin(value = "0", message = "容积最小是0")
+	@DecimalMax(value = "999999.99", message = "容积最大是999999.99")
 	private Double rj;
 	//面积
+	@DecimalMin(value = "0", message = "面积最小是0")
+	@DecimalMax(value = "999999.99", message = "面积最大是999999.99")
 	private Double mj;
 	//地球经度
 	private Double dqjd;

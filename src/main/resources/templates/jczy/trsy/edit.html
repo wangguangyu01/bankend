@@ -28,7 +28,7 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">高度（米）：</label>
 								<div class="col-sm-4">
-									<input id="gd" name="gd" class="form-control" type="text" th:value="${trsy.gd}" min="0">
+									<input id="gd" name="gd" class="form-control" type="text" th:value="${#numbers.formatDecimal(trsy.gd, 0, 2)}" min="0">
 								</div>
 								<label class="col-sm-2 control-label">水源类型：</label>
 								<div class="col-sm-4">
@@ -41,11 +41,11 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">容积（吨）：</label>
 								<div class="col-sm-4">
-									<input id="rj" name="rj" class="form-control" type="text" th:value="${trsy.rj}" min="0">
+									<input id="rj" name="rj" class="form-control" type="text" th:value="${#numbers.formatDecimal(trsy.rj, 0, 2)}" min="0">
 								</div>
 								<label class="col-sm-2 control-label">面积（平方米）：</label>
 								<div class="col-sm-4">
-									<input id="mj" name="mj" class="form-control" type="text" th:value="${trsy.mj}" min="0">
+									<input id="mj" name="mj" class="form-control" type="text" th:value="${#numbers.formatDecimal(trsy.mj, 0, 2)}" min="0">
 								</div>
 							</div>
 							<div class="form-group">
@@ -80,9 +80,14 @@
 										<option value="">--请选择水源可用状态--</option>
 									</select>
 								</div>
-								<label class="col-sm-2 control-label">有无枯水期判断标识：</label>
+								<label class="col-sm-2 control-label">有无枯水期：</label>
 								<div class="col-sm-4">
-									<input id="ywksqPdbz" name="ywksqPdbz" class="form-control" type="text" th:value="${trsy.ywksqPdbz}">
+									<label class="radio-inline">
+										<input type="radio" name="ywksqPdbz" value="0" th:checked="${trsy.ywksqPdbz==0}"/> 有
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="ywksqPdbz" value="1" th:checked="${trsy.ywksqPdbz==1}"/> 无
+									</label>
 								</div>
 							</div>
 							<div class="form-group">
