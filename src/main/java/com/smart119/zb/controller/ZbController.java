@@ -1,12 +1,10 @@
 package com.smart119.zb.controller;
 
 import java.io.OutputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.alibaba.fastjson.JSON;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.utils.ExportExcelSeedBack;
 import com.smart119.system.domain.DeptDO;
@@ -20,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +25,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.smart119.zb.domain.ZbDO;
 import com.smart119.zb.service.ZbService;
 import com.smart119.common.utils.PageUtils;
-import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 
 import javax.servlet.http.HttpServletResponse;
@@ -67,14 +63,10 @@ public class ZbController extends BaseController {
     @RequiresPermissions("zb:zb:zb")
     public PageUtils list(@RequestParam Map<String, Object> params) throws Exception{
         //查询列表数据
-        //Query query = new Query(params);
-       // List<ZbDO> zbList = zbService.list(params);
         List<String> dateList = null;
 
         Long deptId = Long.valueOf(params.get("deptId").toString());
         String zwlx = params.get("zwlx").toString();
-        System.out.println(deptId);
-        System.out.println(zwlx);
 
         DeptDO deptDO = deptService.get(deptId);
 
