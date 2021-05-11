@@ -54,9 +54,7 @@ public class MapController {
     //避让区域维护地图
     @GetMapping("/common/map3")
     String map3(HttpServletRequest request, Model model) {
-        String pointsArr = request.getParameter("pointsArr");   //编辑的时候选择编辑的当前避让区域
         String brqyId = request.getParameter("brqyId");
-        model.addAttribute("points",pointsArr);    //编辑时 本避让区域
         Map<String,Object> params  = new HashMap<>();
         params.put("status","0");
         List<BrqyDO> brqyDOS = brqyService.list(params);  //获得所有的避让区域
