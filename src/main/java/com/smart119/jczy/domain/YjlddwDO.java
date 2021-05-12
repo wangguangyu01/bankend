@@ -32,6 +32,7 @@ public class YjlddwDO implements Serializable {
 	//应急联动单位类别代码
 	private String yjlddwlbdm;
 	//传真号码
+	@Length(min= 1, max=18, message = "传真号码超出范围限制{min}-{max}")
 	private String czhm;
 	//应急服务内容_简要情况
 	private String yjfwnrJyqk;
