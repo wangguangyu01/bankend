@@ -197,4 +197,9 @@
             b.role_id = #{roleId}
 
     </select>
+
+
+    <select id="findUser0506"  resultType="com.smart119.system.domain.UserDO">
+        SELECT * from sys_user where gmt_create='2021-05-06'
+    </select>
 </mapper>

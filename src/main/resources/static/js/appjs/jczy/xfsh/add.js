@@ -2,7 +2,8 @@ $().ready(function() {
 	validateRule();
     getSelectByType("SYKYZTLBDM","sykyztlbdm",null);
     getSelectByType("XFJSGWXSLXDM","xfjsgwxslxdm",null);
-    getSelectById(5108,"city",null);
+    // getSelectById(5108,"city",null);
+    getSelectByType("XZQHDM","province",null);  //区划代码（省）级联
     initFileInput("input-id");
     initFileInput("input-id1");
 });

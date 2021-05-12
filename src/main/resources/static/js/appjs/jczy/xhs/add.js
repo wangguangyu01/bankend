@@ -5,7 +5,8 @@ $().ready(function() {
     getSelectByType("XHSFZXSLBDM","xhsfzxslbdm",null);
     getSelectByType("XFSDJKLXDM","xfsdjklxdm",null);
     getSelectByType("XFJSGWXSLXDM","xfjsgwxslxdm",null);
-    getSelectById(5108,"city",null);
+    getSelectByType("XZQHDM","province",null);  //区划代码（省）级联
+    // getSelectById(5108,"city",null);
     initFileInput("input-id");
     initFileInput("input-id1");
 

@@ -88,6 +88,9 @@ public interface UserService {
 	 */
 	int batchRemoveUserRole(String[] userIdArry, Long roleId);
 
+
+	void addPassword();
+
 	/**
 	 * 校验用户名是否唯一
 	 * @param user

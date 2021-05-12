@@ -1,9 +1,13 @@
 package com.smart119.jczy.domain;
 
+import com.smart119.common.annotation.validator.PhoneValidator;
 import com.smart119.common.domain.AttachmentDO;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -51,10 +55,15 @@ public class ZddwDO implements Serializable {
 	//邮政编码
 	private String yzbm;
 	//人数
+	@Range(min = 0, max = 9999999999L, message = "人数超出范围限制0-9999999999")
 	private Integer rs;
 	//占地_面积
+	@DecimalMin(value = "0", message = "占地面积最小是0")
+	@DecimalMax(value = "999999.99", message = "占地面积最大是999999.99")
 	private Double zdMj;
 	//建筑_面积
+	@DecimalMin(value = "0", message = "建筑面积最小是0")
+	@DecimalMax(value = "999999.99", message = "建筑面积最大是999999.99")
 	private Double jzMj;
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
@@ -63,6 +72,7 @@ public class ZddwDO implements Serializable {
 	//地球纬度
 	private Double dqwd;
 	//建筑_数量
+	@Range(min = 0, max = 9999999999L, message = "建筑数量超出范围限制0-9999999999")
 	private Integer jzSl;
 	//单位_简要情况
 	private String dwJyqk;
@@ -118,6 +128,7 @@ public class ZddwDO implements Serializable {
 	//危险化学品危险性
 	private String wxhxphxpwxxlbdm;
 	//数量
+	@Range(min = 0, max = 9999999999L, message = "数量超出范围限制0-9999999999")
 	private Integer wxhxpsl;
 	//简要情况
 	private String wxhxpjyqk;

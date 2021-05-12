@@ -1,5 +1,6 @@
 package com.smart119.jczy.controller;
 
+import com.smart119.common.annotation.validator.BindingResultError;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
@@ -11,10 +12,12 @@ import com.smart119.jczy.service.XfclService;
 import com.smart119.jczy.service.XfclSxService;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -122,7 +125,15 @@ public class XfclController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfcl:add")
-	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfclDO xfcl){
+	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfclDO xfcl,BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(xfcl.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
+
 		String id = UUID.randomUUID().toString().replace("-", "");
 		xfcl.setXfclTywysbm(id);
 		xfcl.setCdate(new Date());
@@ -142,7 +153,14 @@ public class XfclController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:xfcl:edit")
-	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,@Validated XfclDO xfcl){
+	public R update( @RequestPart(value = "file", required = false) MultipartFile[] files,@Validated XfclDO xfcl,BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(xfcl.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, xfcl.getXfclTywysbm(), "xfcl");

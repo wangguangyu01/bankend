@@ -2,6 +2,7 @@ package com.smart119.jczy.controller;
 
 import java.util.*;
 
+import com.smart119.common.annotation.validator.BindingResultError;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
@@ -10,10 +11,12 @@ import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -128,7 +131,15 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:zddw:add")
-	public R save(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile, @Validated ZddwDO zddw){
+	public R save(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile, @Validated ZddwDO zddw,BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(zddw.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
+
 		String id = UUID.randomUUID().toString().replace("-", "");
 		zddw.setZddwTywysbm(id);
 		//重点单位增加图片
@@ -146,7 +157,14 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zddw:edit")
-	public R update(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile,@Validated ZddwDO zddw){
+	public R update(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile,@Validated ZddwDO zddw,BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(zddw.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		if(zddwFile!=null && zddwFile.length>0) {
 			attachmentService.ftpUpload(zddwFile, zddw.getZddwTywysbm(), "zddwtp");
 		}

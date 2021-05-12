@@ -2,6 +2,7 @@ package com.smart119.jczy.controller;
 
 import java.util.*;
 
+import com.smart119.common.annotation.validator.BindingResultError;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.service.DictService;
 import com.smart119.jczy.domain.WxxfzDO;
@@ -9,10 +10,13 @@ import com.smart119.jczy.domain.YjlddwDO;
 import com.smart119.jczy.service.WxxfzService;
 import com.smart119.system.service.DeptService;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -87,7 +91,15 @@ public class WxxfzController extends BaseController {
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:wxxfz:add")
-	public R save( WxxfzDO wxxfz){
+	public R save(@Validated WxxfzDO wxxfz,BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(wxxfz.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
+
 		String id = UUID.randomUUID().toString().replace("-", "");
 		wxxfz.setWxxfzTywysbm(id);
 		wxxfz.setCdate(new Date());
@@ -104,7 +116,14 @@ public class WxxfzController extends BaseController {
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:wxxfz:edit")
-	public R update( WxxfzDO wxxfz){
+	public R update(@Validated WxxfzDO wxxfz,BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(wxxfz.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		wxxfzService.update(wxxfz);
 		return R.ok();
 	}

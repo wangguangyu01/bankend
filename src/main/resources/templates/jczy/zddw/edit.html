@@ -67,11 +67,11 @@
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">联系电话：</label>
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								 <input id="lxdh" name="lxdh" class="form-control" type="text" th:value="${zddw.lxdh}">
 							</div>
 							<label class="col-sm-2 control-label">电子信箱：</label>
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<input id="dzxx" name="dzxx" class="form-control" type="text" th:value="${zddw.dzxx}">
 							</div>
 						</div>
@@ -103,21 +103,21 @@
 							</div>
 							<label class="col-sm-2 control-label">人数：</label>
 							<div class="col-sm-4">
-								<input id="rs" name="rs" class="form-control" type="text" th:value="${zddw.rs}" min="0">
+								<input id="rs" name="rs" class="form-control" type="text" th:value="${#numbers.formatDecimal(zddw.rs, 0, 0)}" min="0">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">占地面积：</label>
 							<div class="col-sm-2">
-								<input id="zdMj" name="zdMj" class="form-control" type="text" th:value="${zddw.zdMj}" min="0">
+								<input id="zdMj" name="zdMj" class="form-control" type="text" th:value="${#numbers.formatDecimal(zddw.zdMj, 0, 2)}" min="0">
 							</div>
 							<label class="col-sm-2 control-label">建筑面积：</label>
 							<div class="col-sm-2">
-								<input id="jzMj" name="jzMj" class="form-control" type="text" th:value="${zddw.jzMj}" min="0">
+								<input id="jzMj" name="jzMj" class="form-control" type="text" th:value="${#numbers.formatDecimal(zddw.jzMj, 0, 2)}" min="0">
 							</div>
 							<label class="col-sm-2 control-label">建筑数量：</label>
 							<div class="col-sm-2">
-								<input id="jzSl" name="jzSl" class="form-control" type="text" th:value="${zddw.jzSl}" min="0">
+								<input id="jzSl" name="jzSl" class="form-control" type="text" th:value="${#numbers.formatDecimal(zddw.jzSl, 0, 0)}" min="0">
 							</div>
 						</div>
 						<div class="form-group">
