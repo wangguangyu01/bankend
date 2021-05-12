@@ -11,7 +11,7 @@ $().ready(function() {
         $("#zbfwDiv").hide();
 	}*/
 });
-
+acceptJqlxType
 $.validator.setDefaults({
 	submitHandler : function() {
 		update();
@@ -83,7 +83,7 @@ var openMap2 = function(){
     layer.open({
         type:2,
         title:"选择坐标点",
-        area : [ '800px', '600px' ],
+        area : [ '90%', '600px' ],
         content:"/common/map2?deptId="+$("#deptId").val(),
         success: function(layero, index) {
             var body = layer.getChildFrame('body', index);
