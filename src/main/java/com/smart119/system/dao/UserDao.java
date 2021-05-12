@@ -33,7 +33,7 @@ public interface UserDao {
 	
 	Long[] listAllDept();
 
-    List<UserDO> findByRoleId(@Param("roleId") Long roleId);
+
 
 	List<UserDO> findUser0506();
 	List<UserDO> findByRoleId(@Param("roleId") Long roleId);
