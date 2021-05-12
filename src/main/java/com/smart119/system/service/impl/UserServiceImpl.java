@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int update(UserDO user) {
+
         int r = userMapper.update(user);
         Long userId = user.getUserId();
         List<Long> roles = user.getRoleIds();
@@ -293,6 +294,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public int batchRemoveUserRole(String[] userIdArry, Long roleId) {
         return userRoleMapper.deleteByroleIdAndUserIdArry(roleId,userIdArry);
+    }
+
+    /**
+     * 校验用户名是否唯一
+     */
+    @Override
+    public boolean checkUserName(UserDO user) {
+
+        boolean result = true;
+        Map<String, Object> map = new HashMap<>(0);
+        map.put("username", user.getUsername());
+        map.put("userId", user.getUserId());
+        if (userMapper.checkUserOne(map) > 0) {
+            return false;
+        }
+        return result;
     }
 
 }

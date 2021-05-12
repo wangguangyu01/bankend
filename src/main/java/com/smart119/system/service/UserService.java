@@ -87,4 +87,11 @@ public interface UserService {
 	 * @return
 	 */
 	int batchRemoveUserRole(String[] userIdArry, Long roleId);
+
+	/**
+	 * 校验用户名是否唯一
+	 * @param user
+	 * @return
+	 */
+	boolean checkUserName(UserDO user);
 }

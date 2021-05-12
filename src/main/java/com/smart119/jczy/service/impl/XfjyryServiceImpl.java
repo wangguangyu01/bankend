@@ -10,6 +10,7 @@ import com.smart119.system.dao.UserRoleDao;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.service.UserService;
+import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -129,8 +130,10 @@ public class XfjyryServiceImpl implements XfjyryService {
 
 		//角色
 		List<Long> roleIds = new ArrayList<>();
-		for(Long roleId : xfjyry.getRole()){
-			roleIds.add(roleId);
+    if (Objects.nonNull(xfjyry.getRole())) {
+      for (Long roleId : xfjyry.getRole()) {
+        roleIds.add(roleId);
+      }
 		}
 		userDO.setRoleIds(roleIds);
 		userService.save(userDO);

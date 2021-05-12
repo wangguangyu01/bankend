@@ -2,16 +2,19 @@ package com.smart119.jczy.controller;
 
 import java.util.*;
 
+import com.smart119.common.annotation.validator.BindingResultError;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.jczy.service.ZdbwService;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,12 +26,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 重点部位基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:50:30
  */
- 
+
 @Controller
 @RequestMapping("/jczy/zdbw")
 public class ZdbwController extends BaseController{
@@ -42,13 +45,13 @@ public class ZdbwController extends BaseController{
 
 	@Autowired
 	private DeptService deptService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:zdbw:zdbw")
 	String zdbw(){
 	    return "jczy/zdbw/zdbw";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:zdbw:zdbw")
@@ -67,7 +70,7 @@ public class ZdbwController extends BaseController{
 		PageUtils pageUtils = new PageUtils(ZdbwList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:zdbw:add")
 	String add(){
@@ -86,14 +89,23 @@ public class ZdbwController extends BaseController{
 		model.addAttribute("zdbwtzList", zdbwtzList);
 	    return "jczy/zdbw/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:zdbw:add")
-	public R save(@RequestParam("tzFile") MultipartFile[] tzFiles,@Validated ZdbwDO zdbw){
+	public R save(@RequestParam(value = "tzFile", required = false) MultipartFile[] tzFiles,
+				  @Validated ZdbwDO zdbw,
+				  BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(zdbw.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		String id = UUID.randomUUID().toString().replace("-", "");
 		zdbw.setZdbwTywysbm(id);
 		if(tzFiles!=null && tzFiles.length>0) {
@@ -110,14 +122,23 @@ public class ZdbwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zdbw:edit")
-	public R update(@RequestPart(value = "tzFile", required = false) MultipartFile[] tzFiles ,@Validated ZdbwDO zdbw){
+	public R update(@RequestPart(value = "tzFile", required = false) MultipartFile[] tzFiles ,
+					@Validated ZdbwDO zdbw,
+					BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) {
+			String bindingResultError = BindingResultError.getBindingResultError(zdbw.getClass(), bindingResult);
+			if (StringUtils.isNotBlank(bindingResultError)) {
+				return R.error(bindingResultError);
+			}
+			return R.error(bindingResult.getFieldError().getDefaultMessage());
+		}
 		if(tzFiles!=null && tzFiles.length>0) {
 			attachmentService.ftpUpload(tzFiles, zdbw.getZdbwTywysbm(), "zdbwtz");
 		}
 		zdbwService.update(zdbw);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -130,7 +151,7 @@ public class ZdbwController extends BaseController{
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -141,5 +162,5 @@ public class ZdbwController extends BaseController{
 		zdbwService.batchRemove(zdbwTywysbm);
 		return R.ok();
 	}
-	
+
 }

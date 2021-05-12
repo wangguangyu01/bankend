@@ -1,9 +1,9 @@
 package com.smart119.common.controller;
 
-import com.smart119.jczy.dao.BrqyDao;
 import com.smart119.jczy.domain.BrqyDO;
 import com.smart119.jczy.service.BrqyService;
 import com.smart119.system.domain.DeptDO;
+import com.smart119.system.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import com.smart119.system.service.DeptService;
+
 @Controller
 public class MapController {
     @Autowired
@@ -37,9 +37,7 @@ public class MapController {
     //消防救援机构管辖范围维护地图
     @GetMapping("/common/map2")
     String map2(HttpServletRequest request, Model model) {
-        String pointsArr = request.getParameter("pointsArr");
         String deptId = request.getParameter("deptId");
-        model.addAttribute("points",pointsArr);
         Map<String,Object> params  = new HashMap<>();
         params.put("status","0");
         List<DeptDO> deptDOS = deptService.list(params);
@@ -56,9 +54,7 @@ public class MapController {
     //避让区域维护地图
     @GetMapping("/common/map3")
     String map3(HttpServletRequest request, Model model) {
-        String pointsArr = request.getParameter("pointsArr");   //编辑的时候选择编辑的当前避让区域
         String brqyId = request.getParameter("brqyId");
-        model.addAttribute("points",pointsArr);    //编辑时 本避让区域
         Map<String,Object> params  = new HashMap<>();
         params.put("status","0");
         List<BrqyDO> brqyDOS = brqyService.list(params);  //获得所有的避让区域

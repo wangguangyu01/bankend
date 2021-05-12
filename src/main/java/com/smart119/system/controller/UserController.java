@@ -149,6 +149,9 @@ public class UserController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
+		if (!userService.checkUserName(user)) {
+			return R.error(1, "用户名重复，请重新输入");
+		}
 		user.setGmtModified(new Date());
 		if (userService.update(user) > 0) {
 			return R.ok();

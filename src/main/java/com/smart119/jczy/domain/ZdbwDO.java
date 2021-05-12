@@ -1,7 +1,10 @@
 package com.smart119.jczy.domain;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,14 +13,14 @@ import java.util.Date;
 
 /**
  * 重点部位基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:50:30
  */
 public class ZdbwDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//重点部位_通用唯一识别码
 	private String zdbwTywysbm;
 	//重点单位_通用唯一识别码
@@ -33,20 +36,28 @@ public class ZdbwDO implements Serializable {
 	@Length(min= 1, max=100, message = "地点名称超出范围限制{min}-{max}")
 	private String ddmc;
 	//楼层
+	@Range(min = 0, max = 600L, message = "楼层数字是0-600层")
 	private Integer bwszLc;
 	//高度
+	@DecimalMin(value = "0", message = "高度最小是0")
+	@DecimalMax(value = "9999999999.99", message = "高度最大是9999999999.99")
 	private Double bwszGd;
 	//建筑结构类型代码
 	private String jzjglxdm;
 	//建筑物使用性质代码
 	private String jzwsyxzdm;
 	//建筑_面积
+	@DecimalMin(value = "0", message = "建筑面积最小是0")
+	@DecimalMax(value = "9999999999.99", message = "建筑面积最大是9999999999.99")
 	private Double jzMj;
 	//消防电梯_数量
+	@Range(min = 0, max = 9999999L, message = "消防电梯数量是0-9999999")
 	private Integer xfdtSl;
 	//疏散出口_数量
+	@Range(min = 0, max = 9999999L, message = "疏散出口数量是0-9999999")
 	private Integer ssckSl;
 	//安全出口_数量
+	@Range(min = 0, max = 9999999L, message = "安全出口数量是0-9999999")
 	private Integer aqckSl;
 	//灭火设施_简要情况
 	private String mhssJyqk;

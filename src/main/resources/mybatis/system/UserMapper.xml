@@ -83,6 +83,14 @@
         </where>
     </select>
 
+  <select id="checkUserOne" resultType="int">
+
+    select count(*) from sys_user where username = #{username}
+    <if test="userId != null">
+      and user_id != #{userId}
+    </if>
+  </select>
+
     <insert id="save" parameterType="com.smart119.system.domain.UserDO" useGeneratedKeys="true" keyProperty="userId">
 		insert into sys_user
 		(

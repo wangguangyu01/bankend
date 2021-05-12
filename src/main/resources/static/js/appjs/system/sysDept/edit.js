@@ -11,7 +11,7 @@ $().ready(function() {
         $("#zbfwDiv").hide();
 	}*/
 });
-
+acceptJqlxType
 $.validator.setDefaults({
 	submitHandler : function() {
 		update();
@@ -83,8 +83,16 @@ var openMap2 = function(){
     layer.open({
         type:2,
         title:"选择坐标点",
-        area : [ '800px', '600px' ],
-        content:"/common/map2?pointsArr="+pointsArr+"&deptId="+$("#deptId").val()
+        area : [ '90%', '600px' ],
+        content:"/common/map2?deptId="+$("#deptId").val(),
+        success: function(layero, index) {
+            var body = layer.getChildFrame('body', index);
+            //曲线救国 pointsArr参数容易超过get请求参数长度限制
+            //给隐藏域赋值
+            body.contents().find("#points").val(pointsArr);
+            //调用子页面的JS 渲染方法
+            window[layero.find('iframe')[0]['name']].init();
+        }
     })
 }
 function saveMarker(lng,lat){

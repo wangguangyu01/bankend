@@ -89,6 +89,7 @@
         <div class="footBtn">
             <button class="btn btn-primary" @click="createMarker">确定</button>
         </div>
+        <input type="hidden" id="points"/>
     </div>
 </div>
 
@@ -106,241 +107,247 @@
 <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
 
 <script th:inline="javascript">
-    var points = [[${points}]];
-    var brqyList = [[${brqyList}]];
     var polyEditor;
     var editflag =false //编辑状态
-    var app = new Vue({
-        el: '#app',
-        data: {
-            limit: 12,
-            offset: 0,
-            total: 0,
-            file: '',
-            type: '',
-            rows: '',
-            marker:{},
-            map:{},
-            points:[],
-            flag:true,
+    var app;
+    function init() {
+        var points = $("#points").val();
+        var brqyList = [[${brqyList}]];
+        console.log("brqyList"+brqyList);
+        app = new Vue({
+            el: '#app',
+            data: {
+                limit: 12,
+                offset: 0,
+                total: 0,
+                file: '',
+                type: '',
+                rows: '',
+                marker: {},
+                map: {},
+                points: [],
+                flag: true,
 
-        },
-        methods: {
-            //开始绘制
-            createMap:function (callback) {
+            },
+            methods: {
+                //开始绘制
+                createMap: function (callback) {
+                    var _this = this;
+                    var center = [118.36594023480365, 35.11351000895431];
+                    _this.map = new AMap.Map('container', {
+                        zoom: 12,//级别
+                        center: center,//中心点坐标
+                    });
+                    var mouseTool = new AMap.MouseTool(_this.map);
+                    //监听draw事件可获取画好的覆盖物
+                    var overlays = [];
+                    mouseTool.on('draw', function (e) {
+                        overlays = [];
+                        console.log(11111111111)
+                        var arroverlays = _this.map.getAllOverlays();
+                        console.log(arroverlays);
+                        for (var i in arroverlays) {
+                            if (arroverlays[i].mytype == 'self') {
+                                _this.map.remove(arroverlays[i]);
+                            }
+                        }
+                        if (polyEditor) {
+                            polyEditor.close();
+                            editflag = false
+                            polyEditor = undefined;
+                        }
+                        e.obj.mytype = 'self'
+                        overlays.push(e.obj);
+                        console.log(overlays)
+                        polyEditor = new AMap.PolyEditor(_this.map, overlays[0])
+                        polyEditor.on('addnode', function (event) {
+                            console.log('触发事件：addnode')
+                        })
+
+                        polyEditor.on('adjust', function (event) {
+                            console.log('触发事件：adjust')
+                        })
+
+                        polyEditor.on('removenode', function (event) {
+                            console.log('触发事件：removenode')
+                        })
+
+                        polyEditor.on('end', function (event) {
+                            console.log('触发事件： end')
+                            _this.points = [];
+                            console.log(event.target.getPath())
+                            var arr = event.target.getPath()
+                            for (var i in arr) {
+                                _this.points.push({
+                                    lat: parseFloat(arr[i].lat),
+                                    lng: parseFloat(arr[i].lng)
+                                });
+                            }
+                        })
+                        _this.map.add(overlays[0]);
+                        polyEditor.open();
+                        editflag = true
+
+                    })
+
+                    function draw(type) {
+                        switch (type) {
+                            case 'marker': {
+                                mouseTool.marker({
+                                    //同Marker的Option设置
+                                });
+                                break;
+                            }
+                            case 'polyline': {
+                                mouseTool.polyline({
+                                    strokeColor: '#80d8ff'
+                                    //同Polyline的Option设置
+                                });
+                                break;
+                            }
+                            case 'polygon': {
+                                mouseTool.polygon({
+                                    fillColor: '#00b0ff',
+                                    strokeColor: '#80d8ff'
+                                    //同Polygon的Option设置
+                                });
+                                break;
+                            }
+                            case 'rectangle': {
+                                mouseTool.rectangle({
+                                    fillColor: '#00b0ff',
+                                    strokeColor: '#80d8ff'
+                                    //同Polygon的Option设置
+                                });
+                                break;
+                            }
+                            case 'circle': {
+                                mouseTool.circle({
+                                    fillColor: '#00b0ff',
+                                    strokeColor: '#80d8ff'
+                                    //同Circle的Option设置
+                                });
+                                break;
+                            }
+                        }
+                    }
+
+                    var radios = document.getElementsByName('func');
+                    for (var i = 0; i < radios.length; i += 1) {
+                        radios[i].onchange = function (e) {
+
+                            draw(e.target.value)
+                        }
+                    }
+                    draw('polygon')
+                    document.getElementById('clear').onclick = function () {
+                        if (polyEditor) {
+                            polyEditor.close();
+                            editflag = false
+                            polyEditor = undefined;
+                        }
+                        var arroverlays = _this.map.getAllOverlays();
+                        for (var i in arroverlays) {
+                            if (arroverlays[i].mytype == 'self') {
+                                _this.map.remove(arroverlays[i]);
+                            }
+                        }
+                        overlays = [];
+                    }
+                    callback();
+                },
+                createMarker: function () {
+                    if (editflag) {
+                        alert('编辑状态下不能保存')
+                        return;
+                    }
+                    if (typeof parent.saveRangeData == 'function') {
+                        console.log(this.points)
+                        parent.saveRangeData(this.points)
+                    }
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+                },
+            },
+            mounted: function () {
                 var _this = this;
-                var center = [118.36594023480365, 35.11351000895431];
-                _this.map = new AMap.Map('container', {
-                    zoom:12,//级别
-                    center: center,//中心点坐标
+                this.createMap(function () {
+                    if (points && points != "") {
+                        var point = points.split(";");
+                        var arr = [];
+                        for (var i in point) {
+                            console.log(parseFloat(point[i].split(",")[1]), parseFloat(point[i].split(",")[0]))
+                            _this.points.push({
+                                lat: parseFloat(point[i].split(",")[0]),
+                                lng: parseFloat(point[i].split(",")[1])
+                            });
+                            arr.push([parseFloat(point[i].split(",")[1]), parseFloat(point[i].split(",")[0])]);
+                        }
+                        var polygon = new AMap.Polygon({
+                            path: arr,
+                            fillColor: '#00b0ff',
+                            strokeColor: '#80d8ff'
+                        })
+                        polygon.mytype = "self";
+
+
+                        polyEditor = new AMap.PolyEditor(_this.map, polygon)
+                        polyEditor.on('addnode', function (event) {
+                            log.info('触发事件：addnode')
+                        })
+
+                        polyEditor.on('adjust', function (event) {
+                            log.info('触发事件：adjust')
+                        })
+
+                        polyEditor.on('removenode', function (event) {
+                            log.info('触发事件：removenode')
+                        })
+
+                        polyEditor.on('end', function (event) {
+                            log.info('触发事件： end')
+                            _this.points = [];
+                            console.log(event.target.getPath())
+                            var arr = event.target.getPath()
+                            for (var i in arr) {
+                                _this.points.push({
+                                    lat: parseFloat(arr[i].lat),
+                                    lng: parseFloat(arr[i].lng)
+                                });
+                            }
+                        })
+                        _this.map.add(polygon)
+                        polyEditor.open()
+                        editflag = true
+                    }
+
+                    for (var j in brqyList) {
+                        console.log("111111111");
+                        points = brqyList[j].coordinatesGaode;
+                        console.log(points);
+                        var point = points.split(";");
+                        var arr = [];
+                        for (var i in point) {
+                            console.log(parseFloat(point[i].split(",")[1]), parseFloat(point[i].split(",")[0]))
+                            _this.points.push({
+                                lat: parseFloat(point[i].split(",")[0]),
+                                lng: parseFloat(point[i].split(",")[1])
+                            });
+                            arr.push([parseFloat(point[i].split(",")[1]), parseFloat(point[i].split(",")[0])]);
+                        }
+                        var polygon = new AMap.Polygon({
+                            path: arr,
+                            fillColor: '#00b0ff',
+                            strokeColor: 'red'
+                        })
+                        polygon.mytype = "other";
+                        polygon.datainfo = brqyList[j];
+                        _this.map.add(polygon)
+                    }
                 });
-                var mouseTool = new AMap.MouseTool(_this.map);
-                //监听draw事件可获取画好的覆盖物
-                var overlays = [];
-                mouseTool.on('draw',function(e){
-                    overlays = [];
-                    console.log(11111111111)
-                    var arroverlays =  _this.map.getAllOverlays();
-                    console.log(arroverlays);
-                    for(var i in arroverlays){
-                        if(arroverlays[i].mytype =='self'){
-                            _this.map.remove(arroverlays[i]);
-                        }
-                    }
-                    if(polyEditor){
-                        polyEditor.close();
-                        editflag=false
-                        polyEditor = undefined;
-                    }
-                    e.obj.mytype = 'self'
-                    overlays.push(e.obj);
-                    console.log(overlays)
-                    polyEditor = new AMap.PolyEditor(_this.map, overlays[0])
-                    polyEditor.on('addnode', function(event) {
-                        log.info('触发事件：addnode')
-                    })
-
-                    polyEditor.on('adjust', function(event) {
-                        log.info('触发事件：adjust')
-                    })
-
-                    polyEditor.on('removenode', function(event) {
-                        log.info('触发事件：removenode')
-                    })
-
-                    polyEditor.on('end', function(event) {
-                        log.info('触发事件： end')
-                        _this.points = [];
-                        console.log(event.target.getPath())
-                        var arr = event.target.getPath()
-                        for(var i in arr){
-                            _this.points.push({
-                                lat:parseFloat(arr[i].lat),
-                                lng:parseFloat(arr[i].lng)
-                            });
-                        }
-                    })
-                    _this.map.add(overlays[0]);
-                    polyEditor.open();
-                    editflag=true
-
-                })
-
-                function draw(type) {
-                    switch (type) {
-                        case 'marker': {
-                            mouseTool.marker({
-                                //同Marker的Option设置
-                            });
-                            break;
-                        }
-                        case 'polyline': {
-                            mouseTool.polyline({
-                                strokeColor: '#80d8ff'
-                                //同Polyline的Option设置
-                            });
-                            break;
-                        }
-                        case 'polygon': {
-                            mouseTool.polygon({
-                                fillColor: '#00b0ff',
-                                strokeColor: '#80d8ff'
-                                //同Polygon的Option设置
-                            });
-                            break;
-                        }
-                        case 'rectangle': {
-                            mouseTool.rectangle({
-                                fillColor: '#00b0ff',
-                                strokeColor: '#80d8ff'
-                                //同Polygon的Option设置
-                            });
-                            break;
-                        }
-                        case 'circle': {
-                            mouseTool.circle({
-                                fillColor: '#00b0ff',
-                                strokeColor: '#80d8ff'
-                                //同Circle的Option设置
-                            });
-                            break;
-                        }
-                    }
-                }
-                var radios = document.getElementsByName('func');
-                for(var i=0;i<radios.length;i+=1){
-                    radios[i].onchange = function(e){
-
-                        draw(e.target.value)
-                    }
-                }
-                draw('polygon')
-                document.getElementById('clear').onclick = function(){
-                    if(polyEditor){
-                        polyEditor.close();
-                        editflag=false
-                        polyEditor = undefined;
-                    }
-                    var arroverlays =  _this.map.getAllOverlays();
-                    for(var i in arroverlays){
-                        if(arroverlays[i].mytype =='self'){
-                            _this.map.remove(arroverlays[i]);
-                        }
-                    }
-                    overlays = [];
-                }
-                callback();
-            },
-            createMarker:function () {
-                if(editflag){
-                    alert('编辑状态下不能保存')
-                    return;
-                }
-                if( typeof parent.saveRangeData =='function'){
-                    console.log(this.points)
-                    parent.saveRangeData(this.points)
-                }
-                var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-                parent.layer.close(index);
-            },
-        },
-        mounted:function () {
-            var _this = this;
-            this.createMap(function () {
-                if(points && points!=""){
-                    var point = points.split(";");
-                    var arr = [];
-                    for(var i in point){
-                        console.log(parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0]))
-                        _this.points.push({
-                            lat:parseFloat(point[i].split(",")[0]),
-                            lng:parseFloat(point[i].split(",")[1])
-                        });
-                        arr.push([parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0])]);
-                    }
-                    var polygon = new AMap.Polygon({
-                        path: arr,
-                        fillColor: '#00b0ff',
-                        strokeColor: '#80d8ff'
-                    })
-                    polygon.mytype = "self";
-
-
-                    polyEditor = new AMap.PolyEditor(_this.map, polygon)
-                    polyEditor.on('addnode', function(event) {
-                        log.info('触发事件：addnode')
-                    })
-
-                    polyEditor.on('adjust', function(event) {
-                        log.info('触发事件：adjust')
-                    })
-
-                    polyEditor.on('removenode', function(event) {
-                        log.info('触发事件：removenode')
-                    })
-
-                    polyEditor.on('end', function(event) {
-                        log.info('触发事件： end')
-                        _this.points = [];
-                        console.log(event.target.getPath())
-                        var arr = event.target.getPath()
-                        for(var i in arr){
-                            _this.points.push({
-                                lat:parseFloat(arr[i].lat),
-                                lng:parseFloat(arr[i].lng)
-                            });
-                        }
-                    })
-                    _this.map.add(polygon)
-                    polyEditor.open()
-                    editflag = true
-                }
-
-                for(var j in brqyList){
-                    points =  brqyList[j].coordinatesGaode;
-                    console.log(points);
-                    var point = points.split(";");
-                    var arr = [];
-                    for(var i in point){
-                        console.log(parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0]))
-                        _this.points.push({
-                            lat:parseFloat(point[i].split(",")[0]),
-                            lng:parseFloat(point[i].split(",")[1])
-                        });
-                        arr.push([parseFloat(point[i].split(",")[1]),parseFloat(point[i].split(",")[0])]);
-                    }
-                    var polygon = new AMap.Polygon({
-                        path: arr,
-                        fillColor: '#00b0ff',
-                        strokeColor: 'red'
-                    })
-                    polygon.mytype = "other";
-                    polygon.datainfo = brqyList[j];
-                    _this.map.add(polygon)
-                }
-            });
-        }
-    });
+            }
+        });
+    }
 </script>
 <script  type="text/javascript">
 

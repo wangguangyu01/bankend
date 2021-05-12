@@ -57,7 +57,10 @@ public enum ResponseStatusEnum {
 	RESCODE_2001001(2001001,"出动单确认失败"),
 
 	@ApiModelProperty(value="2001002",name="RESCODE_2001002",notes="未配置应用")
-	RESCODE_2001002(2001002,"未配置应用")
+	RESCODE_2001002(2001002,"未配置应用"),
+
+	@ApiModelProperty(value="2001003",name="RESCODE_2001003",notes="请选择一个角色")
+	RESCODE_2001003(2001003,"请选择一个角色")
 	;
 
 	/**

@@ -33,5 +33,12 @@ public interface UserDao {
 	
 	Long[] listAllDept();
 
-    List<UserDO> findByRoleId(@Param("roleId") Long roleId);
+	List<UserDO> findByRoleId(@Param("roleId") Long roleId);
+
+	/**
+	 * 查询用户名是否唯一
+	 * @param map
+	 * @return
+	 */
+	int checkUserOne(Map<String,Object> map);
 }
