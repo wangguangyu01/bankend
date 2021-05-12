@@ -43,6 +43,9 @@ function validateRule() {
                 required : true,
                 maxlength : 100
             },
+            czhm : {
+                maxlength : 18
+            },
             lxrXm : {
                 required : true,
                 maxlength:50

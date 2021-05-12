@@ -30,6 +30,7 @@ public class LqbzdwDO implements Serializable {
 	@Length(min= 1, max=100, message = "单位地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//传真号码
+	@Length(min= 1, max=18, message = "传真号码超出范围限制{min}-{max}")
 	private String czhm;
 	//单位_简要情况
 	private String dwJyqk;
