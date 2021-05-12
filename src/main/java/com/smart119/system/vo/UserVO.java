@@ -63,9 +63,9 @@ public class UserVO {
         List<Transport> transports = new ArrayList<>(1);
         transports.add(new WebSocketTransport( new StandardWebSocketClient()) );
         WebSocketClient transport = new SockJsClient(transports);
+        ((SockJsClient) transport).setHttpHeaderNames();
         WebSocketStompClient stompClient = new WebSocketStompClient(transport);
-
-        String url = "ws://192.168.1.170:8088/websocket/endpoint";
+        String url = "ws://10.50.1.41:8088/websocket/endpoint";
         stompClient.connect(url,new TestConnectHandler());
     }
 

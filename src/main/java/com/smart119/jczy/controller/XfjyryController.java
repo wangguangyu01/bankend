@@ -207,6 +207,9 @@ public class XfjyryController extends BaseController {
     @RequiresPermissions("jczy:xfjyry:add")
     public R zdsave(@RequestBody XfjyryDO xfjyry) {
 
+        if("1".equals(xfjyry.getIsCreateUser()) && Objects.nonNull(xfjyry.getRole()) && xfjyry.getRole().length==0){
+            return R.error(ResponseStatusEnum.RESCODE_2001003.getCode(), "请选择一个角色");
+        }
         xfjyry.setCdate(new Date());
         xfjyry.setCperson(getUser().getUserId().toString());
         xfjyry.setStatus("0");
@@ -224,6 +227,9 @@ public class XfjyryController extends BaseController {
     @RequiresPermissions("jczy:xfjyry:add")
     public R saveForm(XfjyryDO xfjyry) {
 
+        if("1".equals(xfjyry.getIsCreateUser()) && Objects.nonNull(xfjyry.getRole()) && xfjyry.getRole().length==0){
+            return R.error(ResponseStatusEnum.RESCODE_2001003.getCode(), "请选择一个角色");
+        }
         xfjyry.setCdate(new Date());
         xfjyry.setCperson(getUser().getUserId().toString());
         xfjyry.setStatus("0");
@@ -240,6 +246,10 @@ public class XfjyryController extends BaseController {
     @RequestMapping("/update")
     @RequiresPermissions("jczy:xfjyry:edit")
     public R update(@RequestPart(value = "file", required = false) MultipartFile[] files, XfjyryDO xfjyry) {
+
+        if("1".equals(xfjyry.getIsCreateUser())&& Objects.nonNull(xfjyry.getRole()) && xfjyry.getRole().length==0){
+            return R.error(ResponseStatusEnum.RESCODE_2001003.getCode(), "请选择一个角色");
+        }
         if(files!=null && files.length>0) {
             attachmentService.ftpUpload(files, xfjyry.getXfjyryTywysbm(), "xfjyry");
         }
