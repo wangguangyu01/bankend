@@ -50,6 +50,49 @@ function validateRule() {
             dzmc : {
                 required : true,
                 maxlength:100
+            },
+            lxdh : {
+                mobile : true,
+                digits:true,
+                maxlength:18
+            },
+            dzxx : {
+                email:true
+            },
+            yzbm : {
+                isZipCode : true
+            },
+            frdbGmsfzh : {
+                isIdentity:true
+            },
+            xfaqzrrGmsfhm : {
+                isIdentity:true
+            },
+            xfaqglrGmsfhm : {
+                isIdentity:true
+            },
+            zjzxfglrGmsfhm : {
+                isIdentity:true
+            },
+			frdbLxdh : {
+                mobile : true,
+                digits:true,
+                maxlength:18
+            },
+			xfaqzrrLxdh : {
+                mobile : true,
+                digits:true,
+                maxlength:18
+            },
+			xfaqglrLxdh : {
+                mobile : true,
+                digits:true,
+                maxlength:18
+            },
+			zjzxfglrLxdh : {
+                mobile : true,
+                digits:true,
+                maxlength:18
             }
         },
         messages : {
@@ -61,11 +104,46 @@ function validateRule() {
             },
             dzmc : {
                 required :  "请输入单位地址"
+            },
+            lxdh : {
+                digits : "请输入数字格式"
+            },
+            dzxx : {
+                email: "请输入正确的邮箱格式"
+            },
+            frdbLxdh : {
+                digits : "请输入数字格式"
+            },
+            xfaqzrrLxdh : {
+                digits : "请输入数字格式"
+            },
+            xfaqglrLxdh : {
+                digits : "请输入数字格式"
+            },
+            zjzxfglrLxdh : {
+                digits : "请输入数字格式"
             }
         }
     })
 }
 
+//校验身份证
+jQuery.validator.addMethod("isIdentity",function(value,element){
+    var id= /^(\d{15}$|^\d{18}$|^\d{17}(\d|X))$/;
+    return this.optional(element) || (id.test(value));
+},"请输入正确身份证号");
+
+jQuery.validator.addMethod("isZipCode", function(value, element) {
+    var tel = /^[0-9]{6}$/;
+    return this.optional(element) || (tel.test(value));
+}, "请输入正确的邮政编码");
+
+jQuery.validator.addMethod("mobile", function(value, element) {
+    if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+        return true;
+    }
+    return false;
+}, "联系电话格式错误");
 
 var openMap = function(){
 	var lng = $("#dqjd").val();
