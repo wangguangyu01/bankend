@@ -140,21 +140,21 @@
                             </div>
                             <label class="col-sm-2 control-label">长度（米）：</label>
                             <div class="col-sm-2">
-                                <input id="cd" name="cd" class="form-control"  th:value="${xfcl.cd}" type="text" min="0">
+                                <input id="cd" name="cd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.cd, 0, 2)}"  type="text" min="0">
                             </div>
                             <label class="col-sm-2 control-label">宽度（米）：</label>
                             <div class="col-sm-2">
-                                <input id="kd" name="kd" class="form-control"  th:value="${xfcl.kd}" type="text" min="0">
+                                <input id="kd" name="kd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.kd, 0, 2)}" type="text" min="0">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">高度（米）：</label>
                             <div class="col-sm-2">
-                                <input id="gd" name="gd" class="form-control" th:value="${xfcl.gd}" type="text" min="0">
+                                <input id="gd" name="gd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.gd, 0, 2)}" type="text" min="0">
                             </div>
                             <label class="col-sm-2 control-label">重量（吨）：</label>
                             <div class="col-sm-2">
-                                <input id="zl" name="zl"  type="text"  th:value="${xfcl.zl}" class="form-control">
+                                <input id="zl" name="zl"  type="text"  th:value="${#numbers.formatDecimal(xfcl.zl, 0, 2)}" class="form-control">
                             </div>
                             <label class="col-sm-2 control-label">生产厂家：</label>
                             <div class="col-sm-2">
@@ -224,15 +224,15 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">装载水_容积(吨)：</label>
                             <div class="col-sm-2">
-                                <input id="zzsRj" name="zzsRj" class="form-control" type="text" th:value="${xfcl.zzsRj}" min="0">
+                                <input id="zzsRj" name="zzsRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzsRj, 0, 2)}" min="0">
                             </div>
                             <label class="col-sm-2 control-label">装载A类泡沫_容积(升)：</label>
                             <div class="col-sm-2">
-                                <input id="zzalpmRj" name="zzalpmRj" class="form-control" type="text" th:value="${xfcl.zzalpmRj}" min="0">
+                                <input id="zzalpmRj" name="zzalpmRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzalpmRj, 0, 2)}" min="0">
                             </div>
                             <label class="col-sm-2 control-label">装载B类泡沫_容积(升)：</label>
                             <div class="col-sm-2">
-                                <input id="zzblpmRj" name="zzblpmRj" class="form-control" type="text" th:value="${xfcl.zzblpmRj}" min="0">
+                                <input id="zzblpmRj" name="zzblpmRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzblpmRj, 0, 2)}" min="0">
                             </div>
                         </div>
                         <div class="form-group">
@@ -255,7 +255,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">参考价_金额（元）：</label>
                             <div class="col-sm-2">
-                                <input id="ckjJe" name="ckjJe" class="form-control" type="text" th:value="${xfcl.ckjJe}" min="0">
+                                <input id="ckjJe" name="ckjJe" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.ckjJe, 0, 2)}" min="0">
                             </div>
                             <label class="col-sm-2 control-label">负责人：</label>
                             <div class="col-sm-2">
