@@ -296,6 +296,18 @@ public class UserServiceImpl implements UserService {
         return userRoleMapper.deleteByroleIdAndUserIdArry(roleId,userIdArry);
     }
 
+    @Override
+    public void addPassword() {
+        List<UserDO> userList = userMapper.findUser0506();
+        for(UserDO user:userList){
+            String password = MD5Utils.encrypt(user.getUsername(), user.getUsername());
+            user.setPassword(password);
+            userMapper.update(user);
+        }
+    }
+
+
+
     /**
      * 校验用户名是否唯一
      */

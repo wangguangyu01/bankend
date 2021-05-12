@@ -10,6 +10,7 @@ function getSelectById(dictId,objId,selected){
             $("#"+objId).empty();
             $("#"+objId).append('<option value="" >--请选择--</option>');
             if(list!=null && list!=undefined && list.length>0){
+
                 $.each(list,function(i,item){
                     if(selected!=null && selected==item.value){
                         $("#"+objId).append('<option id="'+item.id+'" value="'+item.value+'" selected="selected">'+item.name+'</option>');
@@ -19,6 +20,7 @@ function getSelectById(dictId,objId,selected){
 
                 });
             }
+
         }
     });
 }

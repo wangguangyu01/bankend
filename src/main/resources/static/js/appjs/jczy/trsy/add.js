@@ -1,8 +1,10 @@
 $().ready(function() {
 	validateRule();
-	getSelectById(5108,"city",null);
+	// getSelectById(5108,"city",null);
+    getSelectByType("XZQHDM","province",null);  //区划代码（省）级联
 	getSelectByType("SYLXDM","sylxdm",null); //水源类型代码
 	getSelectByType("SYKYZTLBDM","sykyztlbdm",null); //水源类型代码
+
 	initFileInput("input-id");
 	initFileInput("input-id1");
 });

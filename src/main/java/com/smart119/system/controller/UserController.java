@@ -14,6 +14,7 @@ import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.service.RoleService;
 import com.smart119.system.service.UserService;
+import com.smart119.system.service.impl.UserServiceImpl;
 import com.smart119.system.vo.UserVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -333,5 +334,13 @@ public class UserController extends BaseController {
 			return R.ok();
 		}
 		return R.error();
+	}
+
+
+	@PostMapping("/addPaddword")
+	@ResponseBody
+	R addPaddword(@RequestBody UserDO user) {
+		userService.addPassword();
+		return R.ok();
 	}
 }
