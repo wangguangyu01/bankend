@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -47,6 +49,8 @@ public class XfclDO implements Serializable {
 	@Length(max=100, message = "规格型号超出范围限制{max}")
 	private String ggxh;
 	//参考价_金额
+	@DecimalMin(value = "0", message = "参考价金额最小是0")
+	@DecimalMax(value = "999999999999999.99", message = "参考价金额最大是999999999999999.99")
 	private Double ckjJe;
 	//生产厂家_单位名称
 	@NotBlank(message = "生产厂家不能为空")
@@ -66,10 +70,16 @@ public class XfclDO implements Serializable {
 	@Length(min= 1, max=25, message = "机动车发动机（电动机）号超出范围限制{min}-{max}")
 	private String jdcfdjddjh;
 	//装载水_容积 吨
+	@DecimalMin(value = "0", message = "装载水容积最小是0")
+	@DecimalMax(value = "999999.99", message = "装载水容积最大是999999.99")
 	private Double zzsRj;
 	//装载A类泡沫_容积 升
+	@DecimalMin(value = "0", message = "装载A类泡沫容积最小是0")
+	@DecimalMax(value = "999999.99", message = "装载A类泡沫容积最大是999999.99")
 	private Double zzalpmRj;
 	//装载B类泡沫_容积 吨
+	@DecimalMin(value = "0", message = "装载B类泡沫容积最小是0")
+	@DecimalMax(value = "999999.99", message = "装载B类泡沫容积最大是999999.99")
 	private Double zzblpmRj;
 	//出厂日期
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -124,12 +134,20 @@ public class XfclDO implements Serializable {
 	@Length(min= 1, max=100, message = "车辆名称超出范围限制{min}-{max}")
 	private String clmc;
 	//长度
+	@DecimalMin(value = "0", message = "长度最小是0")
+	@DecimalMax(value = "999999.99", message = "长度最大是999999.99")
 	private Double cd;
 	//宽度
+	@DecimalMin(value = "0", message = "宽度最小是0")
+	@DecimalMax(value = "999999.99", message = "宽度最大是999999.99")
 	private Double kd;
 	//高度
+	@DecimalMin(value = "0", message = "高度最小是0")
+	@DecimalMax(value = "999999.99", message = "高度最大是999999.99")
 	private Double gd;
 	//重量
+	@DecimalMin(value = "0", message = "重量最小是0")
+	@DecimalMax(value = "999999.99", message = "重量最大是999999.99")
 	private Double zl;
 	//车辆位置_地球经度
 	private Double clwzDqjd;
