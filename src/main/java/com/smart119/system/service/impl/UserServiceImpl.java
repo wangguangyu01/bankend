@@ -9,6 +9,7 @@ import com.smart119.common.domain.FileDO;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
 import com.smart119.jczy.dao.XfjyryDao;
+import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
@@ -124,6 +125,11 @@ public class UserServiceImpl implements UserService {
         if (list.size() > 0) {
             userRoleMapper.batchSave(list);
         }
+        XfjyryDO xfjyryDO = xfjyryMapper.queryXfjyryByUserId(String.valueOf(user.getUserId()));
+        xfjyryDO.setXm(user.getName());
+        DeptDO deptDO = deptMapper.selectById(user.getDeptId());
+        xfjyryDO.setSjszjgTywysbm(deptDO.getXfjyjgTywysbm());
+        xfjyryMapper.update(xfjyryDO);
         return r;
     }
 

@@ -276,7 +276,7 @@
             <if test="cdate != null">`cdate` = #{cdate},</if>
             <if test="status != null">`status` = #{status},</if>
             <if test="userid != null">`userid` = #{userid},</if>
-            <if test="cperson != null">`cperson` = #{cperson}</if>
+            <if test="cperson != null">`cperson` = #{cperson},</if>
             <if test="rylbJh != null">`rylb_jh` = #{rylbJh}</if>
         </set>
         where XFJYRY_TYWYSBM = #{xfjyryTywysbm}
@@ -357,6 +357,11 @@
             <if test="xfjyxjbdmmc != null and xfjyxjbdmmc != ''">and dict2.name like '%${xfjyxjbdmmc}%'</if>
         </where>
 
+    </select>
+
+    <!--根据用户的userid查询消防人员-->
+    <select id="queryXfjyryByUserId" resultType="com.smart119.jczy.domain.XfjyryDO">
+        select * from jczy_xfjyry t where t.userid = #{userId}
     </select>
 
 </mapper>
