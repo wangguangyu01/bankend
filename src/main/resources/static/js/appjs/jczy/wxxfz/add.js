@@ -34,20 +34,59 @@ function save() {
 
 }
 function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			}
-		},
-		messages : {
-			name : {
-				required : icon + "请输入姓名"
-			}
-		}
-	})
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    $("#signupForm").validate({
+        rules : {
+            mc : {
+                required : true
+            },
+            rs : {
+                required : true
+            },
+            dzmc : {
+                required : true
+            },
+            zbLxdh : {
+                required : true,
+                mobile : true
+            },
+            fzrXm : {
+                required : true
+            },
+            fzrLxdh : {
+                required : true,
+                mobile : true
+            }
+        },
+        messages : {
+            mc : {
+                required :   "请输入名称"
+            },
+            rs : {
+                required :   "请输入人数"
+            },
+            dzmc : {
+                required :   "请输入地址名称"
+            },
+            zbLxdh : {
+                required :   "请输入值班人电话"
+            },
+            fzrXm : {
+                required :   "请输入负责人姓名"
+            },
+            fzrLxdh : {
+                required :   "请输入负责人联系电话"
+            }
+        }
+    })
 }
+
+jQuery.validator.addMethod("mobile", function(value, element) {
+    if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+        return true;
+    }
+    return false;
+}, "联系电话格式错误");
 
 function getXzqhdm(obj,objId){
     var id = $(obj).find("option:selected").attr("id");

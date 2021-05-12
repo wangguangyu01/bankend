@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,12 +22,17 @@ public class WxxfzDO implements Serializable {
 	//微型消防站_通用唯一识别码
 	private String wxxfzTywysbm;
 	//名称
+	@NotBlank(message = "名称不能为空")
+	@Length(min= 1, max=100, message = "名称超出范围限制{min}-{max}")
 	private String mc;
 	//地址名称
+	@NotBlank(message = "地址名称不能为空")
+	@Length(min= 1, max=100, message = "地址名称超出范围限制{min}-{max}")
 	private String dzmc;
 	//行政区划代码
 	private String xzqhdm;
 	//人数
+	@Range(min = 0, max = 9999999999L, message = "人数超出范围限制0-9999999999")
 	private Integer rs;
 	//装备_简要情况
 	private String zbJyqk;
