@@ -6,8 +6,16 @@ $().ready(function() {
     getSelectByType("XFSDJKLXDM","xfsdjklxdm",$("#xfsdjklxdmVal").val());
     getSelectByType("XFJSGWXSLXDM","xfjsgwxslxdm",$("#xfjsgwxslxdmVal").val());
 
-    getSelectByValue($("#provinceVal").val(),"city",$("#cityVal").val());
-    getSelectByValue($("#cityVal").val(),"xzqhdm",$("#xzqhdmVal").val());
+    // getSelectByValue($("#provinceVal").val(),"city",$("#cityVal").val());
+    // getSelectByValue($("#cityVal").val(),"xzqhdm",$("#xzqhdmVal").val());
+
+    getSelectByType("XZQHDM","province",$("#provinceVal").val());  //区划代码（省）级联
+    if($("#cityVal").val()!=null && $("#cityVal").val()!=""){
+        getSelectByValue($("#provinceVal").val(),"city",$("#cityVal").val());  //区划代码（市）级联
+    }
+    if($("#xzqhdmVal").val()!=null && $("#xzqhdmVal").val()!=""){
+        getSelectByValue($("#cityVal").val(),"xzqhdm",$("#xzqhdmVal").val());  //区划代码（区/县）级联
+    }
 
     initFileInput("input-id",xhssjtList);
     initFileInput("input-id1",xhsfwtList);
