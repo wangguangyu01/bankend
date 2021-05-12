@@ -11,7 +11,6 @@ $().ready(function() {
         $("#zbfwDiv").hide();
 	}*/
 });
-acceptJqlxType
 $.validator.setDefaults({
 	submitHandler : function() {
 		update();
