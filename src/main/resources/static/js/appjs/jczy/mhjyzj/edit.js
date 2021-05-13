@@ -93,13 +93,16 @@ function validateRule() {
             },
             yddh : {
                 required : true,
-                mobile : true
+                mobile : true,
+                maxlength:18
             },
             jtLxdh : {
-                mobile : true
+                mobile : true,
+                maxlength:18
             },
             bgLxdh : {
-                mobile : true
+                mobile : true,
+                maxlength:18
             },
             dwmc : {
                 required : true,
@@ -136,10 +139,14 @@ jQuery.validator.addMethod("isZipCode", function(value, element) {
 }, "请输入正确的邮政编码");
 
 jQuery.validator.addMethod("mobile", function(value, element) {
-    if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
-        return true;
+    if(value){
+        if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+            return true;
+        }else{
+            return false;
+        }
     }
-    return false;
+    return true;
 }, "联系电话格式错误");
 
 function initFileInput(ctrlName) {
