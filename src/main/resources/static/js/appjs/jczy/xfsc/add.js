@@ -29,9 +29,9 @@ function save() {
     })
 }
 function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    $("#signupForm").validate({
+        rules : {
             mc : {
                 required : true,
                 maxlength:50
@@ -55,6 +55,7 @@ function validateRule() {
             lxrLxdh : {
                 required : true,
                 digits:true,
+                mobile:true,
                 maxlength:18
             },
             qsxsJyqk : {
@@ -73,8 +74,8 @@ function validateRule() {
                 required : true,
                 maxlength:100
             }
-		},
-		messages : {
+        },
+        messages : {
             mc : {
                 required :  "请输入消防水池名称"
             },
@@ -106,9 +107,20 @@ function validateRule() {
             glDwmc : {
                 required :  "请输入管理单位名称"
             }
-		}
-	})
+        }
+    })
 }
+
+jQuery.validator.addMethod("mobile", function(value, element) {
+    if(value){
+        if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}, "联系电话格式错误");
 
 var openMap = function(){
     var lng = $("#dqjd").val();
