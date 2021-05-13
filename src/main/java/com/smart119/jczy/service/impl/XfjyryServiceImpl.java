@@ -120,6 +120,7 @@ public class XfjyryServiceImpl implements XfjyryService {
 
                 user.setName(xfjyry.getXm());
                 user.setXfjyjgTywysbm(xfjyry.getSjszjgTywysbm());
+                user.setEmail(xfjyry.getHlwDzxx());
                 DeptDO deptDO = deptService.getDeptId(xfjyry.getSjszjgTywysbm());
                 if (!ObjectUtils.isEmpty(deptDO)) {
                     user.setDeptId(deptDO.getDeptId());

@@ -129,7 +129,9 @@ public class UserServiceImpl implements UserService {
         xfjyryDO.setXm(user.getName());
         DeptDO deptDO = deptMapper.selectById(user.getDeptId());
         xfjyryDO.setSjszjgTywysbm(deptDO.getXfjyjgTywysbm());
+        xfjyryDO.setHlwDzxx(user.getEmail());
         xfjyryMapper.update(xfjyryDO);
+
         return r;
     }
 
