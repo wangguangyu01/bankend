@@ -78,6 +78,7 @@ function validateRule() {
             lxrLxdh : {
                 required : true,
                 digits:true,
+                mobile:true,
                 maxlength:18
             }
         },
@@ -114,6 +115,17 @@ function validateRule() {
         }
     })
 }
+
+jQuery.validator.addMethod("mobile", function(value, element) {
+    if(value){
+        if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}, "联系电话格式错误");
 
 var openDept = function(){
     layer.open({
