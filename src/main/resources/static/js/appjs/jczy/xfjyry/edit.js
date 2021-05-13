@@ -106,8 +106,23 @@ function validateRule() {
 			name : {
 				required : true
 			},
+            zjhm : {
+                isIdentity : true
+            },
+            bgLxdh : {
+                mobile : true,
+                maxlength:18
+            },
             ydLxdh : {
-                required : true
+                required : true,
+                mobile : true,
+                maxlength:18
+            },
+            nwDzxx : {
+                email:true
+            },
+            hlwDzxx : {
+                email:true
             },
             isCreateUser : {
                 required : true
@@ -129,6 +144,12 @@ function validateRule() {
                 required : icon + "请输入移动_联系电话",
                 remote : icon + "移动_联系电话已经存在"
             },
+            nwDzxx : {
+                email: "请输入正确的邮箱格式"
+            },
+            hlwDzxx : {
+                email: "请输入正确的邮箱格式"
+            },
             isCreateUser : {
                 required : icon + "请选择是否创建用户"
             },
@@ -139,6 +160,33 @@ function validateRule() {
 		}
 	})
 }
+
+//校验身份证
+jQuery.validator.addMethod("isIdentity",function(value,element){
+    if($("#cyzjlxdm").val()=="111"){
+        var id= /^(\d{15}$|^\d{18}$|^\d{17}(\d|X))$/;
+        if(id.test(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }else{
+        return true
+    }
+},"请输入正确身份证号");
+
+
+jQuery.validator.addMethod("mobile", function(value, element) {
+    if(value){
+        if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}, "联系电话格式错误");
+
 
 var openDept = function(objId){
     inpId = objId;
