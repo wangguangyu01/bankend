@@ -50,14 +50,16 @@ function validateRule() {
             },
             zbLxdh : {
                 required : true,
-                mobile : true
+                mobile : true,
+                maxlength:18
             },
             fzrXm : {
                 required : true
             },
             fzrLxdh : {
                 required : true,
-                mobile : true
+                mobile : true,
+                maxlength:18
             }
 		},
 		messages : {
