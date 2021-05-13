@@ -57,11 +57,11 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">高度：</label>
 							<div class="col-sm-4">
-								<input id="bwszGd" name="bwszGd" class="form-control" type="text" th:value="${zdbw.bwszGd}" min="0">
+								<input id="bwszGd" name="bwszGd" class="form-control" type="text" th:value="${#numbers.formatDecimal(zdbw.bwszGd, 0, 2)}" min="0">
 							</div>
 							<label class="col-sm-2 control-label">楼层：</label>
 							<div class="col-sm-4">
-								<input id="bwszLc" name="bwszLc" class="form-control" type="text" th:value="${zdbw.bwszLc}" min="0">
+								<input id="bwszLc" name="bwszLc" class="form-control" type="text" th:value="${#numbers.formatDecimal(zdbw.bwszLc, 0, 0)}" min="0">
 							</div>
 						</div>
 						<div class="form-group">
@@ -81,21 +81,21 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">建筑面积：</label>
 							<div class="col-sm-4">
-								<input id="jzMj" name="jzMj" class="form-control" type="text" th:value="${zdbw.jzMj}" min="0">
+								<input id="jzMj" name="jzMj" class="form-control" type="text" th:value="${#numbers.formatDecimal(zdbw.jzMj, 0, 2)}" min="0">
 							</div>
 							<label class="col-sm-2 control-label">消防电梯数量：</label>
 							<div class="col-sm-4">
-								<input id="xfdtSl" name="xfdtSl" class="form-control" type="text" th:value="${zdbw.xfdtSl}" min="0">
+								<input id="xfdtSl" name="xfdtSl" class="form-control" type="text" th:value="${#numbers.formatDecimal(zdbw.xfdtSl, 0, 0)}" min="0">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">疏散出口数量：</label>
 							<div class="col-sm-4">
-								<input id="ssckSl" name="ssckSl" class="form-control" type="text" th:value="${zdbw.ssckSl}" min="0">
+								<input id="ssckSl" name="ssckSl" class="form-control" type="text" th:value="${#numbers.formatDecimal(zdbw.ssckSl, 0, 0)}" min="0">
 							</div>
 							<label class="col-sm-2 control-label">安全出口数量：</label>
 							<div class="col-sm-4">
-								<input id="aqckSl" name="aqckSl" class="form-control" type="text" th:value="${zdbw.aqckSl}" min="0">
+								<input id="aqckSl" name="aqckSl" class="form-control" type="text" th:value="${#numbers.formatDecimal(zdbw.aqckSl, 0, 0)}" min="0">
 							</div>
 						</div>
 						<div class="form-group">
