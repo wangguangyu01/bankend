@@ -44,4 +44,11 @@ public interface UserDao {
 	 * @return
 	 */
 	int checkUserOne(Map<String,Object> map);
+
+	/**
+	 * 根据用户名登录系统
+	 * @param username
+	 * @return
+	 */
+	UserDO getByUserName(String username);
 }

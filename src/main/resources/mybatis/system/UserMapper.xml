@@ -202,4 +202,7 @@
     <select id="findUser0506"  resultType="com.smart119.system.domain.UserDO">
         SELECT * from sys_user where gmt_create='2021-05-06'
     </select>
+  <select id="getByUserName" resultType="com.smart119.system.domain.UserDO">
+		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM from sys_user where username = #{value}
+	</select>
 </mapper>
