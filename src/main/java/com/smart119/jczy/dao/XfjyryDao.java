@@ -20,19 +20,19 @@ import org.apache.ibatis.annotations.Param;
 public interface XfjyryDao {
 
 	XfjyryDO get(String xfjyryTywysbm);
-	
+
 	List<XfjyryDO> list(Map<String,Object> map);
 
 	List<XfjyryExcelDO> listOther(Map<String,Object> map);
-	
+
 	int count(Map<String,Object> map);
-	
+
 	int save(XfjyryDO xfjyry);
-	
+
 	int update(XfjyryDO xfjyry);
-	
+
 	int remove(String XFJYRY_TYWYSBM);
-	
+
 	int batchRemove(String[] xfjyryTywysbms);
 
 	/**
@@ -48,4 +48,12 @@ public interface XfjyryDao {
 	 * @return
 	 */
 	List<String> findUserIdByXfjyryTywysbms(String[] xfjyryTywysbms);
+
+
+	/**
+	 * 根据用户id查询消防救援人员
+	 * @param userId
+	 * @return
+	 */
+	XfjyryDO queryXfjyryByUserId(@Param("userId")String userId);
 }
