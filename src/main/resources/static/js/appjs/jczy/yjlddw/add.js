@@ -29,13 +29,13 @@ function save() {
 
 }
 function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    $("#signupForm").validate({
+        rules : {
             dwmc : {
-				required : true,
+                required : true,
                 maxlength : 50
-			},
+            },
             dzmc : {
                 required : true,
                 maxlength : 100
@@ -50,13 +50,14 @@ function validateRule() {
             lxrLxdh : {
                 required : true,
                 digits:true,
+                mobile : true,
                 maxlength:18
             }
-		},
-		messages : {
+        },
+        messages : {
             dwmc : {
-				required :  "请输入单位名称"
-			},
+                required :  "请输入单位名称"
+            },
             dzmc : {
                 required :  "请输入单位地址"
             },
@@ -67,9 +68,20 @@ function validateRule() {
                 required :  "请输入联系电话",
                 digits : "请输入数字格式"
             }
-		}
-	})
+        }
+    })
 }
+
+jQuery.validator.addMethod("mobile", function(value, element) {
+    if(value){
+        if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    return true;
+}, "联系电话格式错误");
 
 var openDept = function(){
     layer.open({
