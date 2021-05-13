@@ -81,14 +81,25 @@ function validateRule() {
                 required : true,
                 maxlength:50
             },
+            gmsfhm : {
+                isIdentity : true
+            },
             txdz : {
                 required : true,
                 maxlength:100
             },
+            yzbm : {
+                isZipCode : true
+            },
             yddh : {
                 required : true,
-                digits:true,
-                maxlength:18
+                mobile : true
+            },
+            jtLxdh : {
+                mobile : true
+            },
+            bgLxdh : {
+                mobile : true
             },
             dwmc : {
                 required : true,
@@ -112,6 +123,24 @@ function validateRule() {
         }
     })
 }
+
+//校验身份证
+jQuery.validator.addMethod("isIdentity",function(value,element){
+    var id= /^(\d{15}$|^\d{18}$|^\d{17}(\d|X))$/;
+    return this.optional(element) || (id.test(value));
+},"请输入正确身份证号");
+
+jQuery.validator.addMethod("isZipCode", function(value, element) {
+    var tel = /^[0-9]{6}$/;
+    return this.optional(element) || (tel.test(value));
+}, "请输入正确的邮政编码");
+
+jQuery.validator.addMethod("mobile", function(value, element) {
+    if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
+        return true;
+    }
+    return false;
+}, "联系电话格式错误");
 
 function initFileInput(ctrlName) {
 
