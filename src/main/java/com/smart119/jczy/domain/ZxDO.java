@@ -1,5 +1,7 @@
 package com.smart119.jczy.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +32,7 @@ public class ZxDO implements Serializable {
 	private Long userId;
 	//电话号码
 	@NotBlank(message = "电话号码不可为空")
+	@Length(message = "电话号码最多为{max}位", max = 18)
 	private String dhhm;
 	//状态
 	private String zt;
