@@ -30,8 +30,8 @@ public class UserDO implements Serializable {
     private String deptName;
 
     // 邮箱
-    @NotBlank(message = "邮箱不能为空")
-    @EmailValidator
+//    @NotBlank(message = "邮箱不能为空")
+//    @EmailValidator
     private String email;
     // 手机号
     private String mobile;

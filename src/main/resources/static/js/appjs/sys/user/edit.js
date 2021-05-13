@@ -87,7 +87,6 @@ function validateRule() {
 				equalTo : "#password"
 			},
 			email : {
-				required : true,
 				isEmail : true
 			},
 			topic : {
@@ -118,9 +117,8 @@ function validateRule() {
 				equalTo : icon + "两次输入的密码不一致"
 			},
 			email : {
-				required : icon + "请输入您的E-mail",
-				isEmail : icon + "请输入正确的E-mail地址",
-			}
+                isEmail : icon + "请输入正确的E-mail地址",
+            }
 		}
 	})
 }
