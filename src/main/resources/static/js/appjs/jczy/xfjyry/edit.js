@@ -107,7 +107,8 @@ function validateRule() {
 				required : true
 			},
             zjhm : {
-                isIdentity : true
+                isIdentity : true,
+                maxlength:30
             },
             bgLxdh : {
                 mobile : true,
