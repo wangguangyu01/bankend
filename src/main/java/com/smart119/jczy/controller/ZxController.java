@@ -84,6 +84,9 @@ public class ZxController extends BaseController {
 			if(StringUtils.isBlank(zx.getZxhm())){
 				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "坐席号码不可为空");
 			}
+			if(zx.getZxhm().length() > 18){
+				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "坐席号码最多为18位");
+			}
 			if(StringUtils.isBlank(zx.getZxmm())){
 				return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "坐席密码不可为空");
 			}
