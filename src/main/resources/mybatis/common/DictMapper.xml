@@ -159,7 +159,7 @@
 	</select>
 
 	<select id="listByParentType" resultType="com.smart119.common.domain.DictDO">
-		SELECT `id`,`name`,`value` FROM `sys_dict` where parent_id=(SELECT `id` from `sys_dict` where type=#{value} and parent_id='0') order by sort
+		SELECT `id`,`name`,`value` FROM `sys_dict` where parent_id=(SELECT `id` from `sys_dict` where type=#{value} and parent_id='0') order by id asc
 	</select>
 
 	<select id="listByParentValue" resultType="com.smart119.common.domain.DictDO">
