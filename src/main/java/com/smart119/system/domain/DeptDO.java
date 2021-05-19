@@ -103,6 +103,18 @@ public class DeptDO implements Serializable {
 	List<Map<String, Object>> zzdyList;
 
 
+	/**
+	 * 部门机构编码
+	 */
+	private String deptcode;
+
+
+	/**
+	 * 指挥中心电话
+	 */
+	private String zhzxdh;
+
+
 
 
 

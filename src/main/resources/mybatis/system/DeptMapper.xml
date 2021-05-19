@@ -9,7 +9,7 @@
 		,`XFJYJG_TYWYSBM`,`DWMC`,`DWJC`
 		,`LXR_XM`,`LXDH`,`TXDZ`,`YZBM`
 		,`DZXX`,`ZHZ_JYQK`,`DQJD`,`DQWD`
-		,`XZQHDM`,`CZHM`,`XFJYJGXZDM`,`BZ`,`ZBFW`
+		,`XZQHDM`,`CZHM`,`XFJYJGXZDM`,`BZ`,`ZBFW`, `deptcode`, `zhzxdh`
 		 from sys_dept
 		where dept_id = #{value}
 	</select>
@@ -19,7 +19,7 @@
 		,`XFJYJG_TYWYSBM`,`DWMC`,`DWJC`
 		,`LXR_XM`,`LXDH`,`TXDZ`,`YZBM`
 		,`DZXX`,`ZHZ_JYQK`,`DQJD`,`DQWD`
-		,`XZQHDM`,`CZHM`,`XFJYJGXZDM`,`BZ`,`ZBFW`
+		,`XZQHDM`,`CZHM`,`XFJYJGXZDM`,`BZ`,`ZBFW`, `deptcode`, `zhzxdh`
 		from sys_dept
 		where XFJYJG_TYWYSBM = #{value}
 	</select>
@@ -28,7 +28,7 @@
 		,`XFJYJG_TYWYSBM`,`DWMC`,`DWJC`
 		,`LXR_XM`,`LXDH`,`TXDZ`,`YZBM`
 		,`DZXX`,`ZHZ_JYQK`,`DQJD`,`DQWD`
-		,`XZQHDM`,`CZHM`,`XFJYJGXZDM`,`BZ`,`ZBFW`
+		,`XZQHDM`,`CZHM`,`XFJYJGXZDM`,`BZ`,`ZBFW`, `deptcode`, `zhzxdh`
 		from sys_dept
 		<where>
 			<if test="deptId != null and deptId != ''"> and dept_id = #{deptId} </if>
@@ -91,7 +91,9 @@
 		`ZBFW`,
 		`cdate`,
 		`cperson`,
-		`status`
+		`status`,
+		`deptcode`,
+		`zhzxdh`
 		)
 		values
 		(
@@ -117,7 +119,9 @@
 			#{zbfw},
 			#{cdate},
 			#{cperson},
-			#{status}
+			#{status},
+			#{deptcode},
+			#{zhzxdh}
 			)
 	</insert>
 
@@ -144,6 +148,8 @@
 			<if test="xfjyjgxzdm != null">`XFJYJGXZDM` = #{xfjyjgxzdm}, </if>
 			<if test="bz != null">`BZ` = #{bz}, </if>
 			<if test="zbfw != null">`ZBFW` = #{zbfw}, </if>
+			<if test="deptcode != null">`deptcode` = #{deptcode}, </if>
+			<if test="zhzxdh != null">`zhzxdh` = #{zhzxdh}, </if>
 		</set>
 		where XFJYJG_TYWYSBM = #{xfjyjgTywysbm}
 	</update>

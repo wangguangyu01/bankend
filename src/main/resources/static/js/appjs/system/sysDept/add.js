@@ -43,11 +43,23 @@ function validateRule() {
 		rules : {
 			name : {
 				required : true
+			},
+			deptcode : {
+				required : true
+			},
+			zhzxdh : {
+				required : true
 			}
 		},
 		messages : {
 			name : {
 				required : icon + "请输入姓名"
+			},
+			deptcode : {
+				required : icon + "请输入部门机构编码"
+			},
+			zhzxdh : {
+				required : icon + "请输入指挥中心电话"
 			}
 		}
 	})
