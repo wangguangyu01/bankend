@@ -81,9 +81,9 @@ public class XfclServiceImpl implements XfclService {
 	@Override
 	@Async
 	public void saveRedis(String id) {
-		Map<String,Object> xfclMap = getMap(id);
-		xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(id));
-		this.redisManager.set("sys:xfcl:"+id, JSON.toJSONString(xfclMap));
+		XfclDO xfcl = get(id);
+		xfcl.setXfclSxxx(xfclSxService.findSxAllByCltywysbm(id));
+		this.redisManager.set("sys:xfcl:"+id, JSON.toJSONString(xfcl));
 	}
 
 }
