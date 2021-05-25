@@ -139,4 +139,22 @@
 	<delete id="removeBySxId">
 		delete from jczy_xfcl_sxz where xfcl_sx_id = #{value}
 	</delete>
+
+
+	<!--根据消防车辆的统一唯一识别码 查询车辆的属性信息-->
+	<select id="findSxAllByCltywysbm" resultType="java.util.HashMap">
+		SELECT sx.clsx,sx.dw,sxz.sxz
+		from jczy_xfcl_sx sx
+		LEFT JOIN jczy_xfcl xfcl
+		on xfcl.XFZBLXDM = sx.cllx
+		LEFT JOIN jczy_xfcl_sxz sxz
+		on sxz.xfcl_sx_id = sx.id and sxz.xfcl_id=xfcl.XFCL_TYWYSBM
+		where xfcl.XFCL_TYWYSBM=#{value}
+	</select>
+
+
+	<!--根据车辆类型查询所有此类型下的消防车辆统一唯一识别码-->
+	<select id="findCltywysbmBylx" resultType="String">
+		SELECT XFCL_TYWYSBM from jczy_xfcl where XFZBLXDM=#{value}
+	</select>
 </mapper>

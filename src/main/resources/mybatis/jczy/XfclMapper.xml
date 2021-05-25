@@ -62,6 +62,66 @@
 			t.XFCL_TYWYSBM = #{value}
 	</select>
 
+
+	<select id="getMap" resultType="java.util.HashMap">
+		SELECT
+			t.`XFCL_TYWYSBM`,
+			t.`CLMC`,
+            t.`CD`,
+            t.`KD`,
+            t.`ZL`,
+            t.`GD`,
+			t.`XFZBLXDM`,
+			t.`XFCLZZGNDM`,
+			t.`XFCLDJDM`,
+			t.`XFJYJG_TYWYSBM`,
+			t.`JDCHPHM`,
+			t.`CLSBDH`,
+			t.`DWSB_SIMKKH`,
+			t.`GGXH`,
+			t.`CKJ_JE`,
+			t.`SCCJ_DWMC`,
+			t.`JDCCSYSLBDM`,
+			t.`CLQWZTLBDM`,
+			t.`SFDYCDCL_TYWYSBM`,
+			t.`BZ`,
+			t.`JDCFDJDDJH`,
+			t.`ZZS_RJ`,
+			t.`ZZALPM_RJ`,
+			t.`ZZBLPM_RJ`,
+			t.`CCRQ`,
+			t.`ZBRQ`,
+			t.`BFRQ`,
+			t.`SFZP_PDBZ`,
+			t.`SFYYXL_PDBZ`,
+			t.`FZR_XM`,
+			t.`FZR_LXDH`,
+			t.`CLXNZB_JYQK`,
+			t.`cdate`,
+			t.`cperson`,
+			t.`status`,
+			t.`CLMC`,
+			t.`CD`,
+			t.`KD`,
+			t.`ZL`,
+			t.`CLWZ_DQJD`,
+			t.`CLWZ_DQWD`,
+			t.`CLWZ_WZCJSJ`,
+			t.`FZR_TYWYSBM`,
+			t.`SHFW_DWMC`,
+			t.`DWSB`,
+			dept.`dwmc` XFJYJG,
+			d.`name` XFZBLX,
+			d1.`name` CLQWZTLB
+		FROM
+			jczy_xfcl t
+			LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+			left join sys_dict d on t.XFZBLXDM=d.`value` and d.description='消防装备器材分类与代码'
+			left join sys_dict d1 on t.CLQWZTLBDM=d1.`value` and d1.description='车辆勤务状态类别代码'
+		WHERE
+			t.XFCL_TYWYSBM = #{value}
+	</select>
+
 	<select id="list" resultType="com.smart119.jczy.domain.XfclDO">
 		SELECT
 		t.`XFCL_TYWYSBM`,
