@@ -119,10 +119,7 @@ public class XfclSxController extends BaseController {
 			List<String> xfclTywysbms = xfclSxService.findCltywysbmBylx(xfclSx.getCllx());
 			for(String xfclTywysbm:xfclTywysbms){
 				//xfcl.setXfclSxxx(xfclSxService.findSxAllByCltywysbm(id));
-				Map<String,Object> xfclMap = xfclService.getMap(xfclTywysbm);
-				xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(xfclTywysbm));
-				Map<String,String> newMap = changeData(xfclMap);
-				this.redisManager.hmset("sys:xfcl:"+xfclTywysbm, newMap);
+                xfclService.saveRedis(xfclTywysbm);
 			}
 			return R.ok();
 		}
@@ -138,10 +135,7 @@ public class XfclSxController extends BaseController {
 		if(xfclSxService.update(xfclSx)>0){
 			List<String> xfclTywysbms = xfclSxService.findCltywysbmBylx(xfclSx.getCllx());
 			for(String xfclTywysbm:xfclTywysbms){
-				Map<String,Object> xfclMap = xfclService.getMap(xfclTywysbm);
-				xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(xfclTywysbm));
-				Map<String,String> newMap = changeData(xfclMap);
-				this.redisManager.hmset("sys:xfcl:"+xfclTywysbm, newMap);
+                xfclService.saveRedis(xfclTywysbm);
 			}
 			return R.ok();
 		}else {
@@ -162,10 +156,8 @@ public class XfclSxController extends BaseController {
 		if(xfclSxService.remove(id)>0){
 			List<String> xfclTywysbms = xfclSxService.findCltywysbmBylx(xfclSx.getCllx());
 			for(String xfclTywysbm:xfclTywysbms){
-				Map<String,Object> xfclMap = xfclService.getMap(xfclTywysbm);
-				xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(xfclTywysbm));
-				Map<String,String> newMap = changeData(xfclMap);
-				this.redisManager.hmset("sys:xfcl:"+xfclTywysbm, newMap);
+                xfclService.saveRedis(xfclTywysbm);
+
 			}
 			return R.ok();
 		}
@@ -233,10 +225,7 @@ public class XfclSxController extends BaseController {
 			}
 		}
 		if(flag){
-			Map<String,Object> xfclMap = xfclService.getMap(clId);
-			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(clId));
-			Map<String,String> newMap = changeData(xfclMap);
-			this.redisManager.hmset("sys:xfcl:"+clId, newMap);
+            xfclService.saveRedis(clId);
 		}
 		return flag;
 	}
@@ -273,10 +262,7 @@ public class XfclSxController extends BaseController {
 			}
 		}
 		if(flag){
-			Map<String,Object> xfclMap = xfclService.getMap(clId);
-			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(clId));
-			Map<String,String> newMap = changeData(xfclMap);
-			this.redisManager.hmset("sys:xfcl:"+clId, newMap);
+            xfclService.saveRedis(clId);
 		}
 		return flag;
 	}

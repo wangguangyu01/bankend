@@ -155,11 +155,7 @@ public class XfclController extends BaseController{
 		}
 		if(xfclService.save(xfcl)>0){   //将车辆数据添加到 redis中
 
-			//xfcl.setXfclSxxx(xfclSxService.findSxAllByCltywysbm(id));
-			Map<String,Object> xfclMap = xfclService.getMap(id);
-			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(id));
-			Map<String,String> newMap = changeData(xfclMap);
-			this.redisManager.hmset("sys:xfcl:"+id, newMap);
+			xfclService.saveRedis(id);
 			return R.ok(xfcl);
 		}
 		return R.error();
@@ -190,10 +186,7 @@ public class XfclController extends BaseController{
 			String id = xfcl.getXfclTywysbm();
 
 			//xfcl.setXfclSxxx(xfclSxService.findSxAllByCltywysbm(id));
-			Map<String,Object> xfclMap = xfclService.getMap(id);
-			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(id));
-			Map<String,String> newMap = changeData(xfclMap);
-			this.redisManager.hmset("sys:xfcl:"+id, newMap);
+			xfclService.saveRedis(id);
 			return R.ok(xfcl);
 		}
 		return R.error();

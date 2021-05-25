@@ -1,11 +1,17 @@
 package com.smart119.jczy.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.smart119.common.redis.shiro.RedisManager;
+import com.smart119.common.utils.R;
 import com.smart119.jczy.dao.XfclDao;
 import com.smart119.jczy.domain.XfclDO;
 import com.smart119.jczy.service.XfclService;
+import com.smart119.jczy.service.XfclSxService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +21,12 @@ import java.util.Map;
 public class XfclServiceImpl implements XfclService {
 	@Autowired
 	private XfclDao xfclDao;
+
+	@Resource
+	private RedisManager redisManager;
+
+	@Autowired
+	private XfclSxService xfclSxService;
 	
 	@Override
 	public XfclDO get(String xfclTywysbm){
@@ -64,6 +76,14 @@ public class XfclServiceImpl implements XfclService {
 	@Override
 	public int carlistcount(Map<String, Object> map) {
 			return xfclDao.carlistcount(map);
+	}
+
+	@Override
+	@Async
+	public void saveRedis(String id) {
+		Map<String,Object> xfclMap = getMap(id);
+		xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(id));
+		this.redisManager.set("sys:xfcl:"+id, JSON.toJSONString(xfclMap));
 	}
 
 }

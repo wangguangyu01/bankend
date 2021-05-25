@@ -33,4 +33,6 @@ public interface XfclService {
     List<XfclDO> carlist(Map<String, Object> map);
 
 	int carlistcount(Map<String, Object> map);
+
+	void saveRedis(String key);
 }
