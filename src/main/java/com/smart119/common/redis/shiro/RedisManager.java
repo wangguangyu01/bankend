@@ -8,6 +8,7 @@ package com.smart119.common.redis.shiro;
 import java.util.*;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +21,7 @@ import redis.clients.jedis.JedisSentinelPool;
  *
  */
 @Data
+@Slf4j
 public class RedisManager {
 
     /**
@@ -492,5 +494,90 @@ public class RedisManager {
             }
         }
     }
+
+
+
+    /**
+     * 操作hash结构保存单个key
+     */
+    public Long hSet(String key, String field, String value) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.hset(key, field, value);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     * 删除hashMap的字段
+     * @param key
+     * @param fields
+     * @return
+     */
+    public Long hdel(String key, String... fields) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.hdel(key, fields);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
+
+
+    /**
+     * 获取map里面的数据所有值
+     * @param key
+     * @return
+     */
+    public Map<String,String> hgetAll(String key) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.hgetAll(key);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
+
+    /**
+     * 根据key和field获取map里面的value值
+     * @param key
+     * @return
+     */
+    public String hget(String key, String field) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.hget(key,field);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+    }
+
+
+    public Long lpush(String key, String value) {
+        Jedis jedis = this.getResource();
+        try {
+           return jedis.lpush(key, value);
+
+        } catch (Exception e) {
+            log.info("redis lpush插入失败，{}", e);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+
+
 
 }
