@@ -20,7 +20,12 @@ public class XfclServiceImpl implements XfclService {
 	public XfclDO get(String xfclTywysbm){
 		return xfclDao.get(xfclTywysbm);
 	}
-	
+
+	@Override
+	public Map<String, Object> getMap(String id) {
+		return xfclDao.getMap(id);
+	}
+
 	@Override
 	public List<XfclDO> list(Map<String, Object> map){
 		return xfclDao.list(map);

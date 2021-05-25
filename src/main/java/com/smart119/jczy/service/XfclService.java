@@ -15,6 +15,8 @@ import java.util.Map;
 public interface XfclService {
 	
 	XfclDO get(String xfclTywysbm);
+
+	Map<String,Object> getMap(String id);
 	
 	List<XfclDO> list(Map<String, Object> map);
 	

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -125,6 +126,8 @@ public class XfclDO implements Serializable {
 	private List<XfclSxzDO> xfclSxzDOList;
 
 	private String sxStr;
+
+	private List<Map<String,Object>> xfclSxxx;
 
 	//0 未调派 1已调派
 	private int dpFlag;
@@ -679,5 +682,13 @@ public class XfclDO implements Serializable {
 
 	public void setDwsb(String dwsb) {
 		this.dwsb = dwsb;
+	}
+
+	public List<Map<String, Object>> getXfclSxxx() {
+		return xfclSxxx;
+	}
+
+	public void setXfclSxxx(List<Map<String, Object>> xfclSxxx) {
+		this.xfclSxxx = xfclSxxx;
 	}
 }

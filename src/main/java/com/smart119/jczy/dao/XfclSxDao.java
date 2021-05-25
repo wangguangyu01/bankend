@@ -17,6 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface XfclSxDao {
 
 	XfclSxDO get(String id);
+
 	
 	List<XfclSxDO> list(Map<String,Object> map);
 	
@@ -37,4 +38,8 @@ public interface XfclSxDao {
 	int removeByXfclId(String xfclId);
 
 	int removeBySxId(String sxId);
+
+	List<Map<String,Object>> findSxAllByCltywysbm(String xfclTywysbm);
+
+	List<String> findCltywysbmBylx(String xfclTywysbm);
 }

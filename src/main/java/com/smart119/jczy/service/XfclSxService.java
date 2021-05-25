@@ -36,4 +36,8 @@ public interface XfclSxService {
 	int removeByXfclId(String xfclId);
 
 	int removeBySxId(String sxId);
+
+	List<Map<String,Object>> findSxAllByCltywysbm(String xfclTywysbm);
+
+	List<String> findCltywysbmBylx(String xfclTywysbm);
 }

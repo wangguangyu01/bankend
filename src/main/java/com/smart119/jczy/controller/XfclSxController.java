@@ -3,9 +3,12 @@ package com.smart119.jczy.controller;
 import java.util.*;
 
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.redis.shiro.RedisManager;
+import com.smart119.common.redis.shiro.SerializeUtils;
 import com.smart119.common.service.DictService;
 import com.smart119.jczy.domain.XfclDO;
 import com.smart119.jczy.domain.XfclSxzDO;
+import com.smart119.jczy.service.XfclService;
 import com.smart119.jczy.service.XfclSxzService;
 import com.smart119.system.service.DeptService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -26,6 +29,8 @@ import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 
+import javax.annotation.Resource;
+
 /**
  * 消防车辆属性
  * 
@@ -44,6 +49,12 @@ public class XfclSxController extends BaseController {
 
 	@Autowired
 	private XfclSxzService xfclSxzService;
+
+	@Autowired
+	private XfclService xfclService;
+
+	@Resource
+	private RedisManager redisManager;
 
 	
 	@GetMapping()
@@ -105,6 +116,14 @@ public class XfclSxController extends BaseController {
 		xfclSx.setStatus(0);
 		xfclSx.setCperson(getUserId()+"");
 		if(xfclSxService.save(xfclSx)>0){
+			List<String> xfclTywysbms = xfclSxService.findCltywysbmBylx(xfclSx.getCllx());
+			for(String xfclTywysbm:xfclTywysbms){
+				//xfcl.setXfclSxxx(xfclSxService.findSxAllByCltywysbm(id));
+				Map<String,Object> xfclMap = xfclService.getMap(xfclTywysbm);
+				xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(xfclTywysbm));
+				Map<String,String> newMap = changeData(xfclMap);
+				this.redisManager.hmset("sys:xfcl:"+xfclTywysbm, newMap);
+			}
 			return R.ok();
 		}
 		return R.error();
@@ -116,8 +135,19 @@ public class XfclSxController extends BaseController {
 	@RequestMapping("/update")
 	//@RequiresPermissions("jczy:xfclSx:edit")
 	public R update( XfclSxDO xfclSx){
-		xfclSxService.update(xfclSx);
-		return R.ok();
+		if(xfclSxService.update(xfclSx)>0){
+			List<String> xfclTywysbms = xfclSxService.findCltywysbmBylx(xfclSx.getCllx());
+			for(String xfclTywysbm:xfclTywysbms){
+				Map<String,Object> xfclMap = xfclService.getMap(xfclTywysbm);
+				xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(xfclTywysbm));
+				Map<String,String> newMap = changeData(xfclMap);
+				this.redisManager.hmset("sys:xfcl:"+xfclTywysbm, newMap);
+			}
+			return R.ok();
+		}else {
+			return R.error();
+		}
+
 	}
 	
 	/**
@@ -129,7 +159,15 @@ public class XfclSxController extends BaseController {
 	public R remove( String id){
 		xfclSxService.removeBySxId(id);  //在删除属性数据的同时 要删除所有此属性关联的属性值  之后所有车辆无此属性
 		if(xfclSxService.remove(id)>0){
-		return R.ok();
+			XfclSxDO xfclSx = xfclSxService.get(id);
+			List<String> xfclTywysbms = xfclSxService.findCltywysbmBylx(xfclSx.getCllx());
+			for(String xfclTywysbm:xfclTywysbms){
+				Map<String,Object> xfclMap = xfclService.getMap(xfclTywysbm);
+				xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(xfclTywysbm));
+				Map<String,String> newMap = changeData(xfclMap);
+				this.redisManager.hmset("sys:xfcl:"+xfclTywysbm, newMap);
+			}
+			return R.ok();
 		}
 		return R.error();
 	}
@@ -194,6 +232,12 @@ public class XfclSxController extends BaseController {
 				flag = false;
 			}
 		}
+		if(flag){
+			Map<String,Object> xfclMap = xfclService.getMap(clId);
+			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(clId));
+			Map<String,String> newMap = changeData(xfclMap);
+			this.redisManager.hmset("sys:xfcl:"+clId, newMap);
+		}
 		return flag;
 	}
 
@@ -228,7 +272,28 @@ public class XfclSxController extends BaseController {
 				flag = false;
 			}
 		}
+		if(flag){
+			Map<String,Object> xfclMap = xfclService.getMap(clId);
+			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(clId));
+			Map<String,String> newMap = changeData(xfclMap);
+			this.redisManager.hmset("sys:xfcl:"+clId, newMap);
+		}
 		return flag;
+	}
+
+
+
+	public Map<String,String> changeData(Map<String,Object> map){
+		Map<String,String> newMap =new HashMap<String,String>();
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			if(null!=entry.getValue() && !"".equals(entry.getValue())){
+				newMap.put(entry.getKey(), entry.getValue().toString());
+			}else{
+				newMap.put(entry.getKey(), "");
+			}
+
+		}
+		return newMap;
 	}
 
 

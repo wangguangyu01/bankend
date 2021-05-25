@@ -5,11 +5,7 @@ package com.smart119.common.redis.shiro;
  * @version V1.0
  */
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
@@ -202,6 +198,9 @@ public class RedisManager {
         }
         return key;
     }
+
+
+
 
     /**
      * del
@@ -455,6 +454,24 @@ public class RedisManager {
             }
         }
         return set;
+    }
+
+
+    /**
+     * 设置hash值
+     * @param key
+     * @param hash
+     * @return
+     */
+    public String hmset(String key, Map<String, String> hash) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.hmset(key, hash);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
     }
 
 }

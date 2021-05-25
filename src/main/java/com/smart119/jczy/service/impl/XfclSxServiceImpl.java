@@ -72,4 +72,14 @@ public class XfclSxServiceImpl implements XfclSxService {
 		return xfclSxDao.removeBySxId(sxId);
 	}
 
+	@Override
+	public List<Map<String, Object>> findSxAllByCltywysbm(String xfclTywysbm) {
+		return xfclSxDao.findSxAllByCltywysbm(xfclTywysbm);
+	}
+
+	@Override
+	public List<String> findCltywysbmBylx(String xfclTywysbm) {
+		return xfclSxDao.findCltywysbmBylx(xfclTywysbm);
+	}
+
 }

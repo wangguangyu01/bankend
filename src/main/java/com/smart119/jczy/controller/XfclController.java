@@ -3,6 +3,9 @@ package com.smart119.jczy.controller;
 import com.smart119.common.annotation.validator.BindingResultError;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
+import com.smart119.common.redis.shiro.RedisCache;
+import com.smart119.common.redis.shiro.RedisManager;
+import com.smart119.common.redis.shiro.SerializeUtils;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
@@ -22,6 +25,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -46,6 +53,9 @@ public class XfclController extends BaseController{
 
 	@Autowired
 	private AttachmentService attachmentService;
+
+	@Resource
+	private RedisManager redisManager;
 
 	@GetMapping()
 	@RequiresPermissions("jczy:xfcl:xfcl")
@@ -126,6 +136,7 @@ public class XfclController extends BaseController{
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:xfcl:add")
 	public R save(@RequestPart(value = "file", required = false) MultipartFile[] files, XfclDO xfcl,BindingResult bindingResult) throws Exception {
+
 		if (bindingResult.hasErrors()) {
 			String bindingResultError = BindingResultError.getBindingResultError(xfcl.getClass(), bindingResult);
 			if (StringUtils.isNotBlank(bindingResultError)) {
@@ -142,11 +153,21 @@ public class XfclController extends BaseController{
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, id, "xfcl");
 		}
-		if(xfclService.save(xfcl)>0){
+		if(xfclService.save(xfcl)>0){   //将车辆数据添加到 redis中
+
+			//xfcl.setXfclSxxx(xfclSxService.findSxAllByCltywysbm(id));
+			Map<String,Object> xfclMap = xfclService.getMap(id);
+			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(id));
+			Map<String,String> newMap = changeData(xfclMap);
+			this.redisManager.hmset("sys:xfcl:"+id, newMap);
 			return R.ok(xfcl);
 		}
 		return R.error();
 	}
+
+
+
+
 	/**
 	 * 修改
 	 */
@@ -165,8 +186,17 @@ public class XfclController extends BaseController{
 		if(files!=null && files.length>0) {
 			attachmentService.ftpUpload(files, xfcl.getXfclTywysbm(), "xfcl");
 		}
-		xfclService.update(xfcl);
-		return R.ok(xfcl);
+		if(xfclService.update(xfcl)>0){   //更新redis中的车辆数据
+			String id = xfcl.getXfclTywysbm();
+
+			//xfcl.setXfclSxxx(xfclSxService.findSxAllByCltywysbm(id));
+			Map<String,Object> xfclMap = xfclService.getMap(id);
+			xfclMap.put("CLSXXX",xfclSxService.findSxAllByCltywysbm(id));
+			Map<String,String> newMap = changeData(xfclMap);
+			this.redisManager.hmset("sys:xfcl:"+id, newMap);
+			return R.ok(xfcl);
+		}
+		return R.error();
 	}
 
 	/**
@@ -201,8 +231,10 @@ public class XfclController extends BaseController{
 	@RequiresPermissions("jczy:xfcl:remove")
 	public R remove( String xfclTywysbm){
 		xfclSxService.removeByXfclId(xfclTywysbm);  //在删除车辆信息的同时 删除车辆的属性信息
-		if(xfclService.remove(xfclTywysbm)>0){
-		return R.ok();
+		if(xfclService.remove(xfclTywysbm)>0){    //删除redis中的车辆信息
+			byte[] key = ("sys:xfcl:"+xfclTywysbm).getBytes();
+			this.redisManager.del(key);
+			return R.ok();
 		}
 		return R.error();
 	}
@@ -217,7 +249,14 @@ public class XfclController extends BaseController{
 		for(String xfclTywysbm:xfclTywysbms){
 			xfclSxService.removeByXfclId(xfclTywysbm);   //在删除车辆信息的同时 删除车辆的属性信息
 		}
-		xfclService.batchRemove(xfclTywysbms);
+
+		if(xfclService.batchRemove(xfclTywysbms)>0){
+			for(String xfclTywysbm:xfclTywysbms){   //删除redis中 车辆信息
+				byte[] key = ("sys:xfcl:"+xfclTywysbm).getBytes();
+				this.redisManager.del(key);
+				return R.ok();
+			}
+		}
 		return R.ok();
 	}
 
@@ -241,6 +280,26 @@ public class XfclController extends BaseController{
 		}
 		return R.error();
 	}
+
+
+	public Map<String,String> changeData(Map<String,Object> map){
+		Map<String,String> newMap =new HashMap<String,String>();
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			if(null!=entry.getValue() && !"".equals(entry.getValue())){
+				newMap.put(entry.getKey(), entry.getValue().toString());
+			}else{
+				newMap.put(entry.getKey(), "");
+			}
+
+		}
+		return newMap;
+	}
+
+
+
+
+
+
 
 
 }
