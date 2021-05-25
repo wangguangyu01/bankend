@@ -158,8 +158,8 @@ public class XfclSxController extends BaseController {
 	//@RequiresPermissions("jczy:xfclSx:remove")
 	public R remove( String id){
 		xfclSxService.removeBySxId(id);  //在删除属性数据的同时 要删除所有此属性关联的属性值  之后所有车辆无此属性
+		XfclSxDO xfclSx = xfclSxService.get(id);
 		if(xfclSxService.remove(id)>0){
-			XfclSxDO xfclSx = xfclSxService.get(id);
 			List<String> xfclTywysbms = xfclSxService.findCltywysbmBylx(xfclSx.getCllx());
 			for(String xfclTywysbm:xfclTywysbms){
 				Map<String,Object> xfclMap = xfclService.getMap(xfclTywysbm);
