@@ -271,8 +271,6 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
     @Async
     public void saveDeptToRedis(DeptDO deptDO) {
         DeptDO dept = this.get(deptDO.getDeptId());
-        //删除redis
-        redisManager.del("sys:dept:"+dept.getXfjyjgTywysbm());
         //查询所有机构
         List<DeptDO> deptList = this.list(new HashMap<>());
         //过滤下一级机构
