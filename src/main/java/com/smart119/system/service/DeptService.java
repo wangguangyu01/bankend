@@ -110,4 +110,8 @@ public interface DeptService extends IService<DeptDO> {
 
 	R move(Long deptId, Integer type);
 	void dgDeptList(List<DeptDO> deptList, long id,List<DeptDO> resultList);
+
+	void saveDeptToRedis(DeptDO deptDO);
+
+	void removeRedisDept(DeptDO deptDO);
 }

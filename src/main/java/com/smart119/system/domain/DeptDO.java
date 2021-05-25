@@ -114,10 +114,23 @@ public class DeptDO implements Serializable {
 	 */
 	private String zhzxdh;
 
+	/**
+	 * 子机构通用唯一识别码
+	 */
+	@TableField(exist = false)
+	private List<String> childTywysbmList;
 
+	/**
+	 * 机构名称层次结构
+	 */
+	@TableField(exist = false)
+	private String nameHierarchy;
 
-
-
+	/**
+	 * 通用唯一识别码层次结构
+	 */
+	@TableField(exist = false)
+	private String tywysbmHierarchy;
 
 
 	/**
@@ -425,7 +438,31 @@ public class DeptDO implements Serializable {
 		this.zzdyList = zzdyList;
 	}
 
-//	public String getXfjyjgTywysbmAll() {
+	public List<String> getChildTywysbmList() {
+		return childTywysbmList;
+	}
+
+	public void setChildTywysbmList(List<String> childTywysbmList) {
+		this.childTywysbmList = childTywysbmList;
+	}
+
+	public String getNameHierarchy() {
+		return nameHierarchy;
+	}
+
+	public void setNameHierarchy(String nameHierarchy) {
+		this.nameHierarchy = nameHierarchy;
+	}
+
+	public String getTywysbmHierarchy() {
+		return tywysbmHierarchy;
+	}
+
+	public void setTywysbmHierarchy(String tywysbmHierarchy) {
+		this.tywysbmHierarchy = tywysbmHierarchy;
+	}
+
+	//	public String getXfjyjgTywysbmAll() {
 //		return xfjyjgTywysbmAll;
 //	}
 //

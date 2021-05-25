@@ -4,6 +4,7 @@ import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.Tree;
 import com.smart119.common.enums.ResponseStatusEnum;
+import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.R;
 import com.smart119.system.domain.DeptDO;
@@ -17,6 +18,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +39,8 @@ public class DeptController extends BaseController {
 
 	@Autowired
 	private DictService dictService;
+
+
 
 	@GetMapping()
 	@RequiresPermissions("system:sysDept:sysDept")
@@ -125,6 +129,8 @@ public class DeptController extends BaseController {
 		}
 		try {
 			if (sysDeptService.savexml(sysDept) > 0) {
+				//存redis
+				sysDeptService.saveDeptToRedis(sysDept);
 				return R.ok();
 			}
 		} catch (Exception e) {
@@ -145,6 +151,8 @@ public class DeptController extends BaseController {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
 		if (sysDeptService.update(sysDept) > 0) {
+			//存redis
+			sysDeptService.saveDeptToRedis(sysDept);
 			return R.ok();
 		}
 		return R.error();
@@ -171,6 +179,8 @@ public class DeptController extends BaseController {
 		}
 		if(sysDeptService.checkDeptHasUser(deptDO.getXfjyjgTywysbm())) {
 			if (sysDeptService.removeById(deptId)) {
+				//删除redis
+				sysDeptService.removeRedisDept(deptDO);
 				return R.ok();
 			}
 		}else {
@@ -199,6 +209,8 @@ public class DeptController extends BaseController {
 			if(!sysDeptService.checkDeptHasUser(deptDO.getXfjyjgTywysbm())) {
 				return R.error(1, deptDO.getDwmc() + "包含用户,不允许删除");
 			}
+			//删除redis
+			sysDeptService.removeRedisDept(deptDO);
 		}
 
 		sysDeptService.batchRemove(deptIds);
@@ -252,4 +264,5 @@ public class DeptController extends BaseController {
         }
 
 	}
+
 }

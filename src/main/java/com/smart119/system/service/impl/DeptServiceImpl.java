@@ -1,5 +1,6 @@
 package com.smart119.system.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.smart119.common.domain.Tree;
@@ -11,8 +12,11 @@ import com.smart119.system.dao.DeptDao;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.beans.BeanMap;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
@@ -263,7 +267,59 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
         }
     }
 
+    @Override
+    @Async
+    public void saveDeptToRedis(DeptDO deptDO) {
+        DeptDO dept = this.get(deptDO.getDeptId());
+        //删除redis
+        redisManager.del("sys:dept:"+dept.getXfjyjgTywysbm());
+        //查询所有机构
+        List<DeptDO> deptList = this.list(new HashMap<>());
+        //过滤下一级机构
+        List<DeptDO> childList = deptList.stream().filter(o->o.getParentId().equals(dept.getDeptId())).collect(Collectors.toList());
+        //将下一级机构转换成通用唯一识别码
+        List<String> childTywysbmList = childList.stream().map(o->o.getXfjyjgTywysbm()).collect(Collectors.toList());
+        dept.setChildTywysbmList(childTywysbmList);
+
+        List<DeptDO> resultList = new ArrayList<>();
+        //向上递归查找所有上级机构
+        upDgDeptList(deptList,dept.getParentId(),resultList);
+        //将上级机构list倒序
+        Collections.reverse(resultList);
+        //拼接上级机构名称
+        String nameHierarchy = resultList.stream().map(o->o.getDwmc()).collect(Collectors.joining("/"));
+        if(nameHierarchy!=null && !nameHierarchy.equals("")){
+            nameHierarchy+="/"+dept.getDwmc();
+        }else{
+            nameHierarchy=dept.getDwmc();
+        }
+        dept.setNameHierarchy(nameHierarchy);
+
+        //拼接上级机构通用唯一识别码
+        String tywysbmHierarchy = resultList.stream().map(o->o.getXfjyjgTywysbm()).collect(Collectors.joining(","));
+        if(tywysbmHierarchy!=null && !tywysbmHierarchy.equals("")){
+            tywysbmHierarchy+=","+dept.getXfjyjgTywysbm();
+        }else{
+            tywysbmHierarchy=dept.getXfjyjgTywysbm();
+        }
+        dept.setTywysbmHierarchy(tywysbmHierarchy);
+        //存入redis
+        redisManager.set("sys:dept:"+dept.getXfjyjgTywysbm(), JSON.toJSONString(dept));
+    }
+
+    @Override
+    @Async
+    public void removeRedisDept(DeptDO deptDO) {
+        redisManager.del("sys:dept:"+deptDO.getXfjyjgTywysbm());
+    }
 
 
+    public void upDgDeptList(List<DeptDO> deptList, long parentId,List<DeptDO> resultList) {
+        List<DeptDO> filterDeptList = deptList.stream().filter(o->o.getDeptId().equals(parentId)).collect(Collectors.toList());
+        for(DeptDO deptDO:filterDeptList){
+            resultList.add(deptDO);
+            upDgDeptList(deptList,deptDO.getParentId(),resultList);
+        }
+    }
 
 }

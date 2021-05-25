@@ -159,6 +159,25 @@ public class RedisManager {
      *
      * @param key
      * @param value
+     * @return
+     */
+    public String set(String key, String value) {
+        Jedis jedis = this.getResource();
+        try {
+            jedis.set(key, value);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return value;
+    }
+
+    /**
+     * set
+     *
+     * @param key
+     * @param value
      * @param expire
      * @return
      */
