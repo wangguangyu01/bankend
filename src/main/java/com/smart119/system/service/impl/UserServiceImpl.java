@@ -154,8 +154,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<String> listRoles(Long userId) {
-        return null;
+    public Set<Long> listRoles(Long userId) {
+        List<Long> roleIdList = userRoleMapper.listRoleId(userId);
+        Set<Long> roleIdSet = new HashSet<>(roleIdList);
+        return roleIdSet;
     }
 
     @Override

@@ -8,8 +8,12 @@ import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.R;
 import com.smart119.system.domain.DeptDO;
+import com.smart119.system.domain.RoleDO;
 import com.smart119.system.service.DeptService;
+import com.smart119.system.service.RoleService;
+import com.smart119.system.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +44,13 @@ public class DeptController extends BaseController {
 	@Autowired
 	private DictService dictService;
 
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private RoleService roleService;
+
+
 
 
 	@GetMapping()
@@ -53,17 +64,34 @@ public class DeptController extends BaseController {
 	@GetMapping("/list")
 	@RequiresPermissions("system:sysDept:sysDept")
 	public List<DeptDO> list(@RequestParam Map<String, Object> params) {
+		if (ObjectUtils.isEmpty(getUser())) {
+			return null;
+		}
 		List<DeptDO> sysDeptList = sysDeptService.list(new HashMap<>(0));
 		List<DeptDO> resultList = new ArrayList<>();
+		boolean flag = false;
 		if(!sysDeptList.isEmpty()){
-			Optional<DeptDO> filterDept = sysDeptList.stream().filter(o->o.getDeptId().equals(getUser().getDeptId())).findFirst();
-			if(filterDept.isPresent()){
-				DeptDO deptDO = filterDept.get();
-				//前端树状表格必须要有一个根节点
-				deptDO.setParentId(0L);
-				resultList.add(deptDO);
+			Set<Long> roleIds = userService.listRoles(getUserId());
+			for (Long roleId: roleIds) {
+				RoleDO roleDO  = roleService.get(roleId);
+				if (StringUtils.equals(roleDO.getRoleName(), "超级用户角色")) {
+					flag = true;
+					break;
+				}
 			}
-			sysDeptService.dgDeptList(sysDeptList, getUser().getDeptId(), resultList);
+			if (flag) {
+				resultList.addAll(sysDeptList);
+			} else {
+				Optional<DeptDO> filterDept = sysDeptList.stream().filter(o->o.getDeptId().equals(getUser().getDeptId())).findFirst();
+				if(filterDept.isPresent()){
+					DeptDO deptDO = filterDept.get();
+					//前端树状表格必须要有一个根节点
+					deptDO.setParentId(0L);
+					resultList.add(deptDO);
+				}
+				sysDeptService.dgDeptList(sysDeptList, getUser().getDeptId(), resultList);
+			}
+
 			if(!ObjectUtils.isEmpty(params.get("dwmc"))){
 				resultList = resultList.stream().filter(o->o.getDwmc().contains(params.get("dwmc").toString())).collect(Collectors.toList());
 			}
@@ -220,6 +248,21 @@ public class DeptController extends BaseController {
 	@GetMapping("/tree")
 	@ResponseBody
 	public Tree<DeptDO> tree() {
+		if (ObjectUtils.isEmpty(getUser())) {
+			return null;
+		}
+		Set<Long> roleIds = userService.listRoles(getUserId());
+		boolean flag = false;
+		for (Long roleId: roleIds) {
+			RoleDO roleDO  = roleService.get(roleId);
+			if (StringUtils.equals(roleDO.getRoleName(), "超级用户角色")) {
+				flag = true;
+				break;
+			}
+		}
+		if (flag) {
+			getUser().setDeptId(0L);
+		}
 		Tree<DeptDO> tree = new Tree<DeptDO>();
 //		tree = sysDeptService.getTree();
 		tree = sysDeptService.getTree(getUser().getDeptId());

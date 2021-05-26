@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.smart119.system.domain.UserRoleDO;
 import com.smart119.system.vo.UserVO;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public interface UserService {
 
 	boolean exit(Map<String, Object> params);
 
-	Set<String> listRoles(Long userId);
+	Set<Long> listRoles(Long userId);
 
 	int resetPwd(UserVO userVO,UserDO userDO) throws Exception;
 	int adminResetPwd(UserVO userVO) throws Exception;
@@ -97,4 +98,7 @@ public interface UserService {
 	 * @return
 	 */
 	boolean checkUserName(UserDO user);
+
+
+
 }
