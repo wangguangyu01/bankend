@@ -2,17 +2,26 @@ package com.smart119.jczy.controller;
 
 import com.smart119.common.utils.*;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.smart119.common.config.Constant;
 import com.smart119.common.service.DictService;
+import com.smart119.jqxx.utils.ExportExcel;
 import com.smart119.system.domain.UserDO;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +41,8 @@ import com.smart119.jczy.domain.FzjcDO;
 import com.smart119.jczy.service.FzjcService;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 辅助决策
@@ -187,5 +198,26 @@ public class FzjcController {
         fzjcService.batchRemove(fzjcIds);
         return R.ok();
     }
+
+
+
+
+    @GetMapping("/exportData")
+    public void exportData( Map<String, Object> params,   HttpServletResponse response) {
+
+        try {
+            String fileName = "辅助决策"+ DateFormatUtils.format(new Date(),"yyyyMMdd");
+            ExportExcel exportExcel = fzjcService.exportData(params, fileName);
+            fileName = URLEncoder.encode(fileName, "UTF-8") +".xlsx";
+            exportExcel.writeUTF8(response, fileName).dispose();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+
 
 }

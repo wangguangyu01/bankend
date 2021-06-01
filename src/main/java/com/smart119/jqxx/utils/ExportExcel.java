@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -98,6 +99,7 @@ public class ExportExcel {
     /**
      * 构造函数
      * 获取导出数据，get方法和属性的同时使用excel注释的话，读取属性
+     *  @param title 表格标题，传“空值”，表示无标题
      * @param clazz 导出的对象
      */
     public ExportExcel(String title, Class<?> clazz) {
@@ -330,7 +332,7 @@ public class ExportExcel {
                     cellFormatString = "0.00";
                 }else if(val instanceof Date) {
                     cell.setCellValue((Date) val);
-                    cellFormatString = "yyyy-MM-dd HH:mm";
+                    cellFormatString = "yyyy-MM-dd HH:mm:ss";
                 }else {
                     cell.setCellValue((String)Class.forName(this.getClass().getName().replaceAll(this.getClass().getSimpleName(),
                             "fieldtype."+val.getClass().getSimpleName()+"Type")).getMethod("setValue", Object.class).invoke(null, val));
@@ -370,6 +372,19 @@ public class ExportExcel {
         response.reset();
         response.setContentType("application/octet-stream; charset=utf-8");
         response.setHeader("Content-Disposition", "attachment; filename="+new String(fileName.getBytes("gb2312"), "ISO8859-1"));
+        write(response.getOutputStream());
+        return this;
+    }
+
+
+    /**
+     * 输出到客户端
+     * @param fileName 输出文件名
+     */
+    public ExportExcel writeUTF8(HttpServletResponse response, String fileName) throws IOException{
+        response.reset();
+        response.setContentType("application/octet-stream; charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename="+fileName);
         write(response.getOutputStream());
         return this;
     }
