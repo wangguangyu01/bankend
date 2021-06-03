@@ -118,6 +118,7 @@ public class TaskManageController extends BaseController {
                     for (int i = 0; i < vo.getDataList().size(); i++) {
                         exportExcel.addCell(row,i,vo.getDataList().get(i));
                     }
+                    exportExcel.addCell(row,0,vo.getDpdzName());
                 }
                 exportExcel.write(response, fileName).dispose();
             } catch (IOException e) {
