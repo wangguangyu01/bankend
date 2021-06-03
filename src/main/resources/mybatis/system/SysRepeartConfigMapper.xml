@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.system.dao.SysRepeatConfigDao">
+
+
+
+    <select id="selectPageVo" resultType="com.smart119.system.domain.SysRepeatConfigDo">
+        select * from sys_repeat_config r order by r.id
+    </select>
+
+    <update id="changeStatus">
+        update  sys_repeat_config set `status` = #{status} where `id` = #{id}
+    </update>
+
+
+
+</mapper>

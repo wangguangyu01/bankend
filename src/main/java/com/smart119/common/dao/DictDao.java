@@ -21,6 +21,8 @@ public interface DictDao {
 
 	List<DictDO> list(Map<String, Object> map);
 
+
+
 	int count(Map<String, Object> map);
 
 	int save(DictDO dict);
@@ -40,6 +42,8 @@ public interface DictDao {
 	List<DictDO> listByParentId(Long id);
 
 	List<DictDO> listByParentType(String type);
+
+	List<DictDO> queryListByType(String type);
 
 	List<DictDO> listByParentValue(String value);
 
@@ -67,5 +71,19 @@ public interface DictDao {
 	 * @return
 	 */
 	List<DictDO> queryByDictType(String type);
+
+
+	/**
+	 * 查询数据字典
+	 * @return
+	 */
+	List<String> queryDictTypeList();
+
+	/**
+	 *
+	 * @param parentId
+	 * @return
+	 */
+	String queryGroupConcat(Long parentId);
 
 }

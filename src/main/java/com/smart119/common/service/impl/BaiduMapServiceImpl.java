@@ -4,17 +4,20 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.smart119.common.config.BootdoConfig;
+import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.service.BaiduMapService;
 import com.smart119.common.utils.LngLonUtil;
 import com.smart119.jczy.domain.BrqyDO;
 import com.smart119.jczy.service.BrqyService;
+import com.smart119.webapi.dao.GaodeKeyDao;
+import com.smart119.webapi.domain.GaodeKeyDO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @ClassName : BaiduMapServiceImpl
@@ -32,6 +35,15 @@ public class BaiduMapServiceImpl implements BaiduMapService{
 
     @Autowired
     private BrqyService brqyService;
+
+    @Autowired
+    private RedisManager redisManager;
+
+    @Autowired
+    private GaodeKeyDao gaodeKeyDao;
+
+    @Value("${map.gao.url:https://restapi.amap.com/}")
+    private String routeRecommendationGaodePrefix;
 
     /**
      *
@@ -328,6 +340,60 @@ public class BaiduMapServiceImpl implements BaiduMapService{
             }
         }
         return brqyStr;
+    }
+
+
+    @Override
+    public String getGdRegionCenterCoordinates(String adcode) {
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String,Object> map = new HashMap<>();
+        map.put("extensions", "all");
+        map.put("subdistrict", 0);
+        if ("371301".equals(adcode)) {
+            adcode = "371300";
+        }
+        map.put("keywords", adcode);
+        Set<String> gaodeKeys = getGaodeKeyStrings();
+        Iterator<String> it = gaodeKeys.iterator();
+        while (it.hasNext()) {
+            String gaodeKey = it.next();
+            map.put("ak", gaodeKey);
+            String res = restTemplate.getForObject(routeRecommendationGaodePrefix + "v3/config/district?keywords={keywords}&subdistrict={subdistrict}&extensions={extensions}&key={ak}",
+                    String.class, map);
+            JSONObject jsonObject =JSONObject.parseObject(res);
+            if(jsonObject.get("status").equals("1")){
+                JSONArray jsonArray =  jsonObject.getJSONArray("districts");
+                if (!ObjectUtils.isEmpty(jsonArray)) {
+                    Map districtMap = (Map)jsonArray.get(0);
+                    String center = (String)districtMap.get("center");
+                    return center;
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+    /**
+     * 获取高德的key的集合
+     * @return
+     */
+    private Set<String> getGaodeKeyStrings() {
+        Set<String> stringSet = redisManager.getSetAllElement("resource:gaodekey");
+        List<String> gaodeKeyList = new ArrayList<>();
+        if (ObjectUtils.isEmpty(stringSet)) {
+            GaodeKeyDO gaodeKeyParam = new GaodeKeyDO();
+            gaodeKeyParam.setType(1);
+            gaodeKeyParam.setStatus(0);
+            gaodeKeyList = gaodeKeyDao.queryListUseable(gaodeKeyParam);
+            if (!gaodeKeyList.isEmpty()) {
+                redisManager.setAddElement("resource:gaodekey", gaodeKeyList);
+            }
+        }
+        gaodeKeyList.add(bootdoConfig.getGaodeMapApiKey());
+        stringSet.addAll(gaodeKeyList);
+        return stringSet;
     }
 
 

@@ -1,8 +1,12 @@
 package com.smart119.common.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.smart119.common.redis.shiro.RedisManager;
+import com.smart119.common.service.BaiduMapService;
 import com.smart119.common.utils.StringUtils;
 import com.smart119.system.domain.UserDO;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +16,23 @@ import java.util.stream.Collectors;
 import com.smart119.common.dao.DictDao;
 import com.smart119.common.domain.DictDO;
 import com.smart119.common.service.DictService;
+import org.springframework.util.ObjectUtils;
 
 
 @Service
 public class DictServiceImpl implements DictService {
     @Autowired
     private DictDao dictDao;
+
+
+    @Autowired
+    private RedisManager redisManager;
+
+
+    @Autowired
+    private BaiduMapService baiduMapService;
+
+
 
     @Override
     public DictDO get(Long id) {
@@ -67,6 +82,16 @@ public class DictServiceImpl implements DictService {
         param.put("value", value);
         String rString = dictDao.list(param).get(0).getName();
         return rString;
+    }
+
+
+    @Override
+    public DictDO getDict(String type, String value) {
+        Map<String, Object> param = new HashMap<String, Object>(16);
+        param.put("type", type);
+        param.put("value", value);
+        DictDO dictDO = dictDao.list(param).get(0);
+        return dictDO;
     }
 
     @Override
@@ -196,7 +221,6 @@ public class DictServiceImpl implements DictService {
 
         DictDO DictDO = dictList.parallelStream().filter(o->o.getType()!=null && o.getType().equals(type) && (o.getValue()==null || o.getValue().equals(""))).collect(Collectors.toList()).get(0);
         List<DictDO> dictList1 =  dictList.stream().filter(o->o.getParentId().equals(DictDO.getId())).collect(Collectors.toList());
-
         for(DictDO dictDO:dictList1){
             Map<String, Object> map = getChilByIdNew(dictList,dictDO);
             retList.add(map);
@@ -242,5 +266,86 @@ public class DictServiceImpl implements DictService {
     @Override
     public List<DictDO> queryByDictType(String type) {
         return dictDao.queryByDictType(type);
+    }
+
+
+    @Override
+    public Stack findDictBreadCrumbs(Long id, Stack stack) {
+        DictDO dictDO = dictDao.get(id);
+        if (!ObjectUtils.isEmpty(dictDO)) {
+            if (!ObjectUtils.isEmpty(dictDO.getParentId()) && dictDO.getParentId() != 0L) {
+                stack.push(dictDO);
+                findDictBreadCrumbs(dictDO.getParentId(), stack);
+            } else {
+                if (org.apache.commons.lang3.StringUtils.isNotBlank(dictDO.getName())) {
+                    stack.push(dictDO);
+                }
+            }
+        }
+        return stack;
+    }
+
+    @Override
+    public Map<String, Object> dictBreadCrumbsHandle(Long id) {
+        Stack stack = new Stack();
+        stack = findDictBreadCrumbs(id, stack);
+        // 拼接文字
+        String nameHierarchy = "";
+        String idHierarchy = "";
+        while (!stack.isEmpty()) {
+            DictDO dictDO =  (DictDO) stack.pop();
+            if (dictDO.getParentId() != 0) {
+                if (stack.search(dictDO) != stack.size() -1) {
+                    nameHierarchy += dictDO.getName() + "/";
+                    idHierarchy += dictDO.getId() + ":";
+                } else {
+                    nameHierarchy += dictDO.getName();
+                    idHierarchy += dictDO.getId();
+                }
+            }
+        }
+
+        stack.empty();
+        Map<String, Object> map = new HashMap<>();
+        map.put("nameHierarchy", nameHierarchy);
+        map.put("idhierarchy", idHierarchy);
+        return map;
+    }
+
+
+    @Override
+    public List<String> queryDictTypeList() {
+        return dictDao.queryDictTypeList();
+    }
+
+
+    @Override
+    public String queryGroupConcat(Long parentId) {
+        return dictDao.queryGroupConcat(parentId);
+    }
+
+
+    @Override
+    public List<DictDO> queryListByType(String type) {
+        return dictDao.queryListByType(type);
+    }
+
+    @Override
+    public List<DictDO> querychildren(DictDO dictDO, List<DictDO> dictList) {
+        Map<String,Object> param = new HashMap<>();
+        param.put("parentId", dictDO.getId());
+        List<DictDO> dictDOList = dictDao.getChild(param);
+        if (ObjectUtils.isEmpty(dictList)) {
+            dictList = new ArrayList<>();
+            dictList.add(dictDO);
+        }
+        if (!ObjectUtils.isEmpty(dictDOList)) {
+            for (DictDO dict : dictDOList) {
+                dictList.add(dict);
+                querychildren(dict, dictList);
+
+            }
+        }
+        return dictList;
     }
 }

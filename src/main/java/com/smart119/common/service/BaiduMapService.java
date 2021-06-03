@@ -23,4 +23,8 @@ public interface BaiduMapService {
     Object routeRecommendationGaodeJc(String fromZb, String toZb);
 
 
+
+    public String getGdRegionCenterCoordinates(String adcode);
+
+
 }
