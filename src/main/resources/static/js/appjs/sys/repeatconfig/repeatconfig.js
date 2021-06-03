@@ -164,7 +164,7 @@ function remove(id) {
             url: prefix + "/remove",
             type: "post",
             data: {
-                'fzjcId': id
+                'id': id
             },
             success: function (r) {
                 if (r.code == 0) {
