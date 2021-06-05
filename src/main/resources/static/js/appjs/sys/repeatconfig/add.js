@@ -1,6 +1,6 @@
 $().ready(function() {
 	validateRule();
-	$('#repeatType').val("1");
+	$('#thresholdType').val("1");
 	$(".areaRange").hide();
 
 });
@@ -14,7 +14,7 @@ function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/system/repeatconfig/save",
+		url : "/system/thresholdConfig/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		success : function(data) {
@@ -39,13 +39,13 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			repeatType : {
+			thresholdType : {
 				required : true
 			}
 		},
 		messages : {
-			repeatType : {
-				required : icon + "请选择警情多报类型",
+			thresholdType : {
+				required : icon + "请选择阈值类型",
 			}
 		}
 	})
@@ -53,7 +53,7 @@ function validateRule() {
 
 
 function changeRepeatType() {
-	var repeatType = $('#repeatType').val();
+	var repeatType = $('#thresholdType').val();
 	if (repeatType === '1') {
 		$(".areaRange").hide();
 	} else {

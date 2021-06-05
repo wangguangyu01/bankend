@@ -2,15 +2,17 @@ package com.smart119.system.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.utils.PageMybatisPlusUtils;
 import com.smart119.common.utils.PageUtils;
-import com.smart119.system.dao.SysRepeatConfigDao;
-import com.smart119.system.domain.SysRepeatConfigDo;
+import com.smart119.system.dao.SysThresholdConfigDao;
+import com.smart119.system.domain.SysThresholdConfigDo;
 import com.smart119.system.domain.UserDO;
-import com.smart119.system.service.SysRepeatConfigService;
+import com.smart119.system.service.SysThresholdConfigService;
 import com.smart119.system.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -21,22 +23,25 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SysRepeatConfigServiceImpl implements SysRepeatConfigService {
+public class SysThresholdConfigServiceImpl implements SysThresholdConfigService {
 
 
     @Resource
-    private SysRepeatConfigDao sysRepeatConfigDao;
+    private SysThresholdConfigDao sysThresholdConfigDao;
 
     @Resource
     private UserService userService;
 
+    @Autowired
+    private RedisManager redisManager;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
-        Page<SysRepeatConfigDo> page = new Page();
+        Page<SysThresholdConfigDo> page = new Page();
         PageMybatisPlusUtils.pageHelperUtils(params, page);
-        IPage<SysRepeatConfigDo> pageVo = sysRepeatConfigDao.selectPageVo(page, params);
+        IPage<SysThresholdConfigDo> pageVo = sysThresholdConfigDao.selectPageVo(page, params);
         if (pageVo.getTotal() > 0) {
-            for (SysRepeatConfigDo sysRepeatConfigDo: pageVo.getRecords()) {
+            for (SysThresholdConfigDo sysRepeatConfigDo: pageVo.getRecords()) {
                 if (!ObjectUtils.isEmpty(sysRepeatConfigDo.getCreateUserId())) {
                    UserDO createUser = userService.get(sysRepeatConfigDo.getCreateUserId());
                    sysRepeatConfigDo.setCreateUserName(createUser.getUsername());
@@ -54,15 +59,15 @@ public class SysRepeatConfigServiceImpl implements SysRepeatConfigService {
 
 
     @Override
-    public SysRepeatConfigDo queryById(Long id) {
-        return sysRepeatConfigDao.selectById(id);
+    public SysThresholdConfigDo queryById(Long id) {
+        return sysThresholdConfigDao.selectById(id);
     }
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean saveSysRepeatConfig(SysRepeatConfigDo sysRepeatConfigDo) {
-         int count = sysRepeatConfigDao.insert(sysRepeatConfigDo);
+    public boolean saveSysRepeatConfig(SysThresholdConfigDo sysRepeatConfigDo) {
+         int count = sysThresholdConfigDao.insert(sysRepeatConfigDo);
          if (count > 0 ) {
              return true;
          }
@@ -72,8 +77,8 @@ public class SysRepeatConfigServiceImpl implements SysRepeatConfigService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean changeStatus(Long id, String cmd) {
-        sysRepeatConfigDao.changeStatus(id, cmd);
-        SysRepeatConfigDo sysRepeatConfigDo = sysRepeatConfigDao.selectById(id);
+        sysThresholdConfigDao.changeStatus(id, cmd);
+        SysThresholdConfigDo sysRepeatConfigDo = sysThresholdConfigDao.selectById(id);
         if (StringUtils.equals(sysRepeatConfigDo.getStatus(), cmd)) {
             return  true;
         }
@@ -83,9 +88,9 @@ public class SysRepeatConfigServiceImpl implements SysRepeatConfigService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean updateSysRepeatConfig(SysRepeatConfigDo sysRepeatConfigDo) {
-        sysRepeatConfigDao.updateById(sysRepeatConfigDo);
-        SysRepeatConfigDo sysRepeatConfigDoData = sysRepeatConfigDao.selectById(sysRepeatConfigDo.getId());
+    public boolean updateSysRepeatConfig(SysThresholdConfigDo sysRepeatConfigDo) {
+        sysThresholdConfigDao.updateById(sysRepeatConfigDo);
+        SysThresholdConfigDo sysRepeatConfigDoData = sysThresholdConfigDao.selectById(sysRepeatConfigDo.getId());
         if (sysRepeatConfigDoData.getUpdateUserId().equals(sysRepeatConfigDo.getUpdateUserId())) {
             return true;
         }
@@ -100,8 +105,8 @@ public class SysRepeatConfigServiceImpl implements SysRepeatConfigService {
         for (String idStr: ids) {
             longList.add(NumberUtils.toLong(idStr, -4));
         }
-        sysRepeatConfigDao.deleteBatchIds(longList);
-        List<SysRepeatConfigDo> sysRepeatConfigDos = sysRepeatConfigDao.selectBatchIds(longList);
+        sysThresholdConfigDao.deleteBatchIds(longList);
+        List<SysThresholdConfigDo> sysRepeatConfigDos = sysThresholdConfigDao.selectBatchIds(longList);
         if (sysRepeatConfigDos.size() == 0) {
             return true;
         }
@@ -113,8 +118,8 @@ public class SysRepeatConfigServiceImpl implements SysRepeatConfigService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public boolean removeRepeatConfigById(Long id) {
-        sysRepeatConfigDao.deleteById(id);
-        SysRepeatConfigDo sysRepeatConfigDo = sysRepeatConfigDao.selectById(id);
+        sysThresholdConfigDao.deleteById(id);
+        SysThresholdConfigDo sysRepeatConfigDo = sysThresholdConfigDao.selectById(id);
         if (ObjectUtils.isEmpty(sysRepeatConfigDo)) {
             return true;
         }

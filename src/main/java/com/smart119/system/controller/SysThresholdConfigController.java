@@ -4,11 +4,9 @@ import com.smart119.common.controller.BaseController;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.R;
 import com.smart119.common.utils.StringUtils;
-import com.smart119.common.utils.UUIDGenerator;
-import com.smart119.jczy.domain.FzjcDO;
-import com.smart119.system.domain.SysRepeatConfigDo;
+import com.smart119.system.domain.SysThresholdConfigDo;
 import com.smart119.system.domain.UserDO;
-import com.smart119.system.service.SysRepeatConfigService;
+import com.smart119.system.service.SysThresholdConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.SecurityUtils;
@@ -22,32 +20,31 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 
 @Controller
-@RequestMapping("/system/repeatconfig")
+@RequestMapping("/system/thresholdConfig")
 @Slf4j
-public class SysRepeatConfigController extends BaseController {
+public class SysThresholdConfigController extends BaseController {
 
     @Resource
-    private SysRepeatConfigService sysRepeatConfigService;
+    private SysThresholdConfigService sysThresholdConfigService;
 
 
     @GetMapping()
-    @RequiresPermissions("system:repeatconfig:repeatconfig")
+    @RequiresPermissions("system:thresholdConfig:thresholdConfig")
     String repeatConfig() {
-        return "system/repeatconfig/repeatconfig";
+        return "system/thresholdConfig/thresholdConfig";
     }
 
 
     @ResponseBody
     @GetMapping("/list")
-    @RequiresPermissions("system:repeatconfig:repeatconfig")
+    @RequiresPermissions("system:thresholdConfig:thresholdConfig")
     public PageUtils list(@RequestParam Map<String, Object> params) {
         //查询列表数据
-        PageUtils page = sysRepeatConfigService.queryPage(params);
+        PageUtils page = sysThresholdConfigService.queryPage(params);
         return page;
     }
 
@@ -59,16 +56,16 @@ public class SysRepeatConfigController extends BaseController {
             if (ObjectUtils.isEmpty(id)) {
                 return R.error("主键没有传入");
             }
-            SysRepeatConfigDo sysRepeatConfigDo = sysRepeatConfigService.queryById(id);
+            SysThresholdConfigDo sysRepeatConfigDo = sysThresholdConfigService.queryById(id);
             if (ObjectUtils.isEmpty(sysRepeatConfigDo)) {
                 return R.error("没有查到");
             }
-            boolean flag = sysRepeatConfigService.changeStatus(id, status);
+            boolean flag = sysThresholdConfigService.changeStatus(id, status);
             if (flag) {
                 return R.ok();
             }
         } catch (Exception e) {
-            log.info("警情多报配置: /system/repeatconfig/changeStatus{}:", e);
+            log.info("警情多报配置: /system/thresholdConfig/changeStatus{}:", e);
         }
 
         return R.error();
@@ -76,9 +73,9 @@ public class SysRepeatConfigController extends BaseController {
 
 
     @GetMapping("/add")
-    @RequiresPermissions("system:repeatconfig:add")
+    @RequiresPermissions("system:thresholdConfig:add")
     String add(Model model) {
-        return "system/repeatconfig/add";
+        return "system/thresholdConfig/add";
     }
 
 
@@ -87,8 +84,8 @@ public class SysRepeatConfigController extends BaseController {
      */
     @ResponseBody
     @PostMapping("/save")
-    @RequiresPermissions("system:repeatconfig:add")
-    public R save(@Validated SysRepeatConfigDo sysRepeatConfigDo, BindingResult bindingResult) {
+    @RequiresPermissions("system:thresholdConfig:add")
+    public R save(@Validated SysThresholdConfigDo sysRepeatConfigDo, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return R.error(bindingResult.getFieldError().getDefaultMessage());
         }
@@ -99,7 +96,7 @@ public class SysRepeatConfigController extends BaseController {
         sysRepeatConfigDo.setStatus("1");
         sysRepeatConfigDo.setUpdateUserId(user.getUserId());
         sysRepeatConfigDo.setUpdateTime(sysRepeatConfigDo.getCreateTime());
-        if (sysRepeatConfigService.saveSysRepeatConfig(sysRepeatConfigDo)) {
+        if (sysThresholdConfigService.saveSysRepeatConfig(sysRepeatConfigDo)) {
             return R.ok();
         } else {
             return R.error();
@@ -108,28 +105,28 @@ public class SysRepeatConfigController extends BaseController {
 
 
     @GetMapping("/edit/{id}")
-    @RequiresPermissions("system:repeatconfig:edit")
+    @RequiresPermissions("system:thresholdConfig:edit")
     String edit(@PathVariable("id") String id, Model model) {
         if (StringUtils.isBlank(id)) {
             return "缺少必传参数";
         }
-        SysRepeatConfigDo sysRepeatConfigDo = sysRepeatConfigService.queryById(
+        SysThresholdConfigDo sysThresholdConfigDo = sysThresholdConfigService.queryById(
                 NumberUtils.toLong(id, -1));
-        model.addAttribute("sysRepeatConfigDo", sysRepeatConfigDo);
-        return "system/repeatconfig/edit";
+        model.addAttribute("sysThresholdConfigDo", sysThresholdConfigDo);
+        return "system/thresholdConfig/edit";
     }
 
 
     @PostMapping("/update")
-    @RequiresPermissions("system:repeatconfig:edit")
+    @RequiresPermissions("system:thresholdConfig:edit")
     @ResponseBody
-    public R update(@Validated SysRepeatConfigDo sysRepeatConfigDo, BindingResult bindingResult) {
+    public R update(@Validated SysThresholdConfigDo sysRepeatConfigDo, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return R.error(bindingResult.getFieldError().getDefaultMessage());
         }
         try {
             UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
-            SysRepeatConfigDo sysRepeatConfigDoData = sysRepeatConfigService.queryById(sysRepeatConfigDo.getId());
+            SysThresholdConfigDo sysRepeatConfigDoData = sysThresholdConfigService.queryById(sysRepeatConfigDo.getId());
             if (ObjectUtils.isEmpty(sysRepeatConfigDoData)) {
                 return R.error("查询不到此配置");
             }
@@ -139,12 +136,12 @@ public class SysRepeatConfigController extends BaseController {
             if (!ObjectUtils.isEmpty(sysRepeatConfigDo.getTimeRange())) {
                 sysRepeatConfigDoData.setTimeRange(sysRepeatConfigDo.getTimeRange());
             }
-            if (!ObjectUtils.isEmpty(sysRepeatConfigDo.getRepeatType())) {
-                sysRepeatConfigDoData.setRepeatType(sysRepeatConfigDo.getRepeatType());
+            if (StringUtils.isNotBlank(sysRepeatConfigDo.getThresholdType())) {
+                sysRepeatConfigDoData.setThresholdType(sysRepeatConfigDo.getThresholdType());
             }
             sysRepeatConfigDoData.setUpdateUserId(user.getUserId());
             sysRepeatConfigDoData.setUpdateTime(new Date());
-            boolean flag = sysRepeatConfigService.updateSysRepeatConfig(sysRepeatConfigDoData);
+            boolean flag = sysThresholdConfigService.updateSysRepeatConfig(sysRepeatConfigDoData);
             if (flag) {
                 return R.ok();
             }
@@ -160,10 +157,10 @@ public class SysRepeatConfigController extends BaseController {
      */
     @PostMapping("/remove")
     @ResponseBody
-    @RequiresPermissions("system:repeatconfig:remove")
+    @RequiresPermissions("system:thresholdConfig:remove")
     public R remove(String id) {
         Long idLong = NumberUtils.toLong(id, -1);
-        if (sysRepeatConfigService.removeRepeatConfigById(idLong)) {
+        if (sysThresholdConfigService.removeRepeatConfigById(idLong)) {
             return R.ok();
         }
         return R.error();
@@ -174,9 +171,9 @@ public class SysRepeatConfigController extends BaseController {
      */
     @PostMapping("/batchRemove")
     @ResponseBody
-    @RequiresPermissions("system:repeatconfig:batchRemove")
+    @RequiresPermissions("system:thresholdConfig:batchRemove")
     public R remove(@RequestParam("ids[]") String[] ids) {
-         if (sysRepeatConfigService.removeRepeatConfigBatch(ids)) {
+         if (sysThresholdConfigService.removeRepeatConfigBatch(ids)) {
              return R.ok();
          }
         return R.error();

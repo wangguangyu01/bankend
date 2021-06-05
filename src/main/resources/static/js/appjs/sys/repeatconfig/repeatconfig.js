@@ -1,4 +1,4 @@
-var prefix = "/system/repeatconfig";
+var prefix = "/system/thresholdConfig";
 $(function () {
     load();
 });
@@ -60,13 +60,13 @@ function load() {
                         }
                     },
                     {
-                        field: 'repeatType',
-                        title: '判断警情多报类型',
+                        field: 'thresholdType',
+                        title: '阈值类型',
                         visible: true,
                         formatter: function (value, row, index) {
-                            if (row.repeatType === '1') {
+                            if (row.thresholdType === '1') {
                                 return "根据电话判断多报";
-                            } else if (row.repeatType === '2') {
+                            } else if (row.thresholdType === '2') {
                                 return "根据地址范围判断多报";
                             }
                         }

@@ -1,11 +1,14 @@
 package com.smart119.system.service;
 
 import com.smart119.common.utils.PageUtils;
-import com.smart119.system.domain.SysRepeatConfigDo;
+import com.smart119.system.domain.SysThresholdConfigDo;
 
 import java.util.Map;
 
-public interface SysRepeatConfigService {
+public interface SysThresholdConfigService {
+
+
+    public final static String REDIS_CONFIG = "redis:config";
 
 
     PageUtils queryPage(Map<String, Object> params);
@@ -24,13 +27,13 @@ public interface SysRepeatConfigService {
      * @param id
      * @return
      */
-   SysRepeatConfigDo queryById(Long id);
+   SysThresholdConfigDo queryById(Long id);
 
 
-   boolean saveSysRepeatConfig(SysRepeatConfigDo sysRepeatConfigDo);
+   boolean saveSysRepeatConfig(SysThresholdConfigDo sysRepeatConfigDo);
 
 
-   boolean updateSysRepeatConfig(SysRepeatConfigDo sysRepeatConfigDo);
+   boolean updateSysRepeatConfig(SysThresholdConfigDo sysRepeatConfigDo);
 
 
 

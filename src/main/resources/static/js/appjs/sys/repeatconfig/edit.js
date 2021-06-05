@@ -12,7 +12,7 @@ function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/system/repeatconfig/update",
+		url : "/system/thresholdConfig/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		success : function(data) {
@@ -34,12 +34,12 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			repeatType : {
+			thresholdType : {
 				required : true
 			}
 		},
 		messages : {
-			repeatType : {
+			thresholdType : {
 				required : icon + "请选择警情多报类型",
 			}
 		}

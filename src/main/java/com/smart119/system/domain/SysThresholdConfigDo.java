@@ -25,9 +25,9 @@ import java.util.Date;
  */
 @Getter
 @Setter
-@TableName("sys_repeat_config")
+@TableName("sys_threshold_config")
 @ApiModel(value = "警情多报配置", description = "警情多报配置")
-public class SysRepeatConfigDo implements Serializable {
+public class SysThresholdConfigDo implements Serializable {
 
 
     /**
@@ -43,21 +43,21 @@ public class SysRepeatConfigDo implements Serializable {
      */
     @ApiModelProperty(value="警情多报类型")
     @NotBlank(message = "警情多报类型为空")
-    private String repeatType;
+    private String thresholdType;
 
 
     /**
      * 时间范围
      */
-    @ApiModelProperty(value="时间范围", example = "0.0")
-    private Double timeRange;
+    @ApiModelProperty(value="时间范围", example = "0")
+    private Integer timeRange;
 
 
     /**
      * 区域范围
      */
-    @ApiModelProperty(value="区域范围", example = "0.0")
-    private Double areaRange;
+    @ApiModelProperty(value="区域范围", example = "0")
+    private Integer areaRange;
 
 
     /**
@@ -121,10 +121,10 @@ public class SysRepeatConfigDo implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SysRepeatConfigDo that = (SysRepeatConfigDo) o;
+        SysThresholdConfigDo that = (SysThresholdConfigDo) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (repeatType != null ? !repeatType.equals(that.repeatType) : that.repeatType != null) return false;
+        if (thresholdType != null ? !thresholdType.equals(that.thresholdType) : that.thresholdType != null) return false;
         if (timeRange != null ? !timeRange.equals(that.timeRange) : that.timeRange != null) return false;
         if (areaRange != null ? !areaRange.equals(that.areaRange) : that.areaRange != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
@@ -137,7 +137,7 @@ public class SysRepeatConfigDo implements Serializable {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (repeatType != null ? repeatType.hashCode() : 0);
+        result = 31 * result + (thresholdType != null ? thresholdType.hashCode() : 0);
         result = 31 * result + (timeRange != null ? timeRange.hashCode() : 0);
         result = 31 * result + (areaRange != null ? areaRange.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
@@ -152,7 +152,7 @@ public class SysRepeatConfigDo implements Serializable {
     public String toString() {
         return "SysRepeatConfigDo{" +
                 "id=" + id +
-                ", repeatType='" + repeatType + '\'' +
+                ", thresholdType='" + thresholdType + '\'' +
                 ", timeRange=" + timeRange +
                 ", areaRange=" + areaRange +
                 ", status='" + status + '\'' +

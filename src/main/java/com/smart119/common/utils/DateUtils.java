@@ -4,7 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -31,14 +38,57 @@ public class DateUtils {
      */
     public final static String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    /**
+     * 线程安全的时间格式化类
+     */
+    public final static DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     public static String format(Date date) {
         return format(date, DATE_PATTERN);
     }
 
     public static String format(Date date, String pattern) {
         if (date != null) {
-            SimpleDateFormat df = new SimpleDateFormat(pattern);
-            return df.format(date);
+            Instant instant = date.toInstant();
+            ZoneId zoneId = ZoneId.systemDefault();
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, zoneId);
+            String dateStr = "";
+            if (pattern.equals(DateUtils.DATE_TIME_PATTERN)) {
+                dateStr = df.format(localDateTime);
+            } else {
+                DateTimeFormatter df = DateTimeFormatter.ofPattern(pattern);
+                dateStr = df.format(localDateTime);
+            }
+            return dateStr;
+        }
+        return null;
+    }
+
+
+    /**
+     * 根据pattern格式，解析时间
+     *
+     * @param dateStr 时间
+     * @param pattern 格式
+     * @return
+     */
+    public static Date parseDate(String dateStr, String pattern) {
+        if (StringUtils.isBlank(dateStr)) {
+            return null;
+        }
+        boolean flag = validDateTime(dateStr);
+        if (flag) {
+            LocalDateTime localDateTime = null;
+            if (pattern.equals(DateUtils.DATE_TIME_PATTERN)) {
+                localDateTime = LocalDateTime.parse(dateStr, df);
+            } else {
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+                localDateTime = LocalDateTime.parse(dateStr, dateTimeFormatter);
+            }
+            ZoneId zoneId = ZoneId.systemDefault();
+            ZonedDateTime zdt = localDateTime.atZone(zoneId);
+            Date date = Date.from(zdt.toInstant());
+            return date;
         }
         return null;
     }
@@ -120,6 +170,27 @@ public class DateUtils {
         } else {
             return false;
         }
+    }
+
+
+    /**
+     * 从一个时间计算，或者是这个时间之后的日期时间，或是之前的日期时间
+     * @param date 计算日期时间的基础时间
+     * @param timeUnit
+     *        时间单位，如果是小时， Calendar.HOUR
+     *        时间单位，如果是分钟， Calendar.MINUTE
+     *        时间单位，如果是秒，   Calendar.SECOND
+     *        时间单位，如果是日，  Calendar.DATE
+     *        时间单位，如果是月， Calendar.MONTH
+     *        时间单位，如果是年， Calendar.YEAR
+     * @param amount 传入date时间的差值，支持整数
+     * @return
+     */
+    public static Date calculateDate(Date date, int timeUnit , int amount) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(timeUnit,  amount);
+        return calendar.getTime();
     }
 
 }
