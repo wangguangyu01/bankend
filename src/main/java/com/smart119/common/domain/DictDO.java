@@ -1,21 +1,27 @@
 package com.smart119.common.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-
+import java.util.List;
 
 
 /**
  * 字典表
- * 
+ *
  * @author chglee
  * @email 1992lcg@163.com
  * @date 2017-09-29 18:28:07
  */
+@Data
+@ToString
 public class DictDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//编号
 	private Long id;
 	//标签名
@@ -45,6 +51,38 @@ public class DictDO implements Serializable {
 
 
 	private String childNum;
+
+
+
+
+
+	/**
+	 * 层级name
+	 */
+	@TableField(exist = false)
+	private String nameHierarchy;
+
+	/**
+	 * id层级
+	 */
+	@TableField(exist = false)
+	private String idHierarchy;
+
+
+
+	@TableField(exist = false)
+	private String childrenIds;
+
+
+	/**
+	 * 行政区中心坐标
+	 */
+	@TableField(exist = false)
+	private String center;
+
+
+
+
 
 	/**
 	 * 设置：编号
@@ -211,22 +249,4 @@ public class DictDO implements Serializable {
 		this.childNum = childNum;
 	}
 
-	@Override
-	public String toString() {
-		return "DictDO{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", value='" + value + '\'' +
-				", type='" + type + '\'' +
-				", description='" + description + '\'' +
-				", sort=" + sort +
-				", parentId=" + parentId +
-				", createBy=" + createBy +
-				", createDate=" + createDate +
-				", updateBy=" + updateBy +
-				", updateDate=" + updateDate +
-				", remarks='" + remarks + '\'' +
-				", delFlag='" + delFlag + '\'' +
-				'}';
-	}
 }

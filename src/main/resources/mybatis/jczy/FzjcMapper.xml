@@ -124,7 +124,7 @@
 
     <delete id="batchRemove">
         delete from jczy_fzjc where FZJC_ID in
-        <foreach item="fzjcId" collection="array" open="(" separator="," close=")">
+        <foreach item="fzjcId" collection="fzjcIds" open="(" separator="," close=")">
             #{fzjcId}
         </foreach>
     </delete>

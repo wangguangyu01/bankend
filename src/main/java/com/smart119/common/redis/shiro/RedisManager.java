@@ -578,6 +578,74 @@ public class RedisManager {
     }
 
 
+    /**
+     * 移除列表元素
+     * @param key
+     * @param count
+     *        count > 0 : 从表头开始向表尾搜索，移除与 VALUE 相等的元素，数量为 COUNT 。
+     *        count < 0 : 从表尾开始向表头搜索，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值。
+     *        count = 0 : 移除表中所有与 VALUE 相等的值。
+     * @param value
+     * @return
+     */
+    public Long lrem(String key, long count, String value) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.lrem(key, count, value);
+
+        } catch (Exception e) {
+            log.info("redis lrem插入失败，{}", e);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 查询列表指定的开始位置到结束位置的元素
+     * @param key
+     * @param start
+     * @param stop
+     * @return
+     */
+    public List<String> lrange(String key, long start,  long stop) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.lrange(key, start, stop);
+
+        } catch (Exception e) {
+            log.info("redis lrange插入失败，{}", e);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
+
+
+    /**
+     * 查询列表所有元素
+     * @param key
+     * @return
+     */
+    public List<String> lrange(String key) {
+        Jedis jedis = this.getResource();
+        try {
+            return jedis.lrange(key, 0, -1);
+
+        } catch (Exception e) {
+            log.info("redis lrange插入失败，{}", e);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
+        }
+        return null;
+    }
 
 
 }

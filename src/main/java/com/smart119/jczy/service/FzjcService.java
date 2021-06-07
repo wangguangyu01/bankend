@@ -36,5 +36,6 @@ public interface FzjcService extends IService<FzjcDO> {
 	PageUtils queryPage(Map<String, Object> params);
 
 
-	public ExportExcel exportData(Map<String, Object> params, String fileName) throws InvocationTargetException, IllegalAccessException;
+	public ExportExcel exportData(Map<String, Object> params, String fileName)
+			throws InvocationTargetException, IllegalAccessException;
 }
