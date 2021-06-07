@@ -16,6 +16,7 @@ import com.smart119.system.service.RoleService;
 import com.smart119.system.service.UserService;
 import com.smart119.system.service.impl.UserServiceImpl;
 import com.smart119.system.vo.UserVO;
+import java.util.Objects;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,9 +89,7 @@ public class UserController extends BaseController {
 	@PostMapping("/updateUserById")
 	@ResponseBody
 	R updateUserById(@RequestBody UserDO user) {
-		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
+
 		if (userService.update(user) > 0) {
 			return R.ok();
 		}
@@ -130,10 +129,12 @@ public class UserController extends BaseController {
 	@PostMapping("/save")
 	@ResponseBody
 	R save(UserDO user) {
-		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+
+		UserDO userDO=userService.getUserByUsername(user.getUsername());
+    if (Objects.nonNull(userDO)){
+			return R.error(1, "用户名重复，请重新输入用户名");
 		}
-		user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
+      user.setPassword(MD5Utils.encrypt(user.getUsername(), user.getPassword()));
 		user.setGmtCreate(new Date());
 		user.setGmtModified(new Date());
 		if (userService.save(user) > 0) {
@@ -147,9 +148,6 @@ public class UserController extends BaseController {
 	@PostMapping("/update")
 	@ResponseBody
 	R update(@Validated UserDO user) {
-		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
-			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
-		}
 		if (!userService.checkUserName(user)) {
 			return R.error(1, "用户名重复，请重新输入");
 		}

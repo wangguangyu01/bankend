@@ -52,6 +52,9 @@ public enum ResponseStatusEnum {
 	@ApiModelProperty(value="10009",name="RESCODE_10009",notes="接口签名错误")
 	RESCODE_10009(10009,"接口签名错误"),
 
+	@ApiModelProperty(value="10010",name="RESCODE_10010",notes="用户名或密码错误")
+	RESCODE_10010(10010,"用户名或密码错误"),
+
 
 	@ApiModelProperty(value="2001001",name="RESCODE_2001001",notes="出动单确认失败")
 	RESCODE_2001001(2001001,"出动单确认失败"),

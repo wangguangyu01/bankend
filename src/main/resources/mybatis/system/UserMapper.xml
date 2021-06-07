@@ -4,7 +4,7 @@
 <mapper namespace="com.smart119.system.dao.UserDao">
 
     <select id="get" resultType="com.smart119.system.domain.UserDO">
-		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM from sys_user where user_id = #{value}
+		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM,salt from sys_user where user_id = #{value}
 	</select>
 
     <select id="list" resultType="com.smart119.system.domain.UserDO">
@@ -112,7 +112,8 @@
 			`province`,
 			`city`,
 			`district`,
-             XFJYJG_TYWYSBM
+      XFJYJG_TYWYSBM,
+      salt
 		)
 		values
 		(
@@ -134,7 +135,8 @@
 			#{province},
 			#{city},
 			#{district},
-            #{xfjyjgTywysbm}
+      #{xfjyjgTywysbm},
+      #{username}
 		)
 	</insert>
 
@@ -203,6 +205,6 @@
         SELECT * from sys_user where gmt_create='2021-05-06'
     </select>
   <select id="getByUserName" resultType="com.smart119.system.domain.UserDO">
-		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM from sys_user where username = #{value}
+		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM,salt from sys_user where username = #{value}
 	</select>
 </mapper>

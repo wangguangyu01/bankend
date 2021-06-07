@@ -17,6 +17,8 @@ import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.MenuDO;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.MenuService;
+import com.smart119.system.service.UserService;
+import java.util.Objects;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -57,6 +59,8 @@ public class LoginController extends BaseController {
 
     @Autowired
     private RedisManager redisManager;
+    @Autowired
+    private UserService userService;
 
     @GetMapping({"/", ""})
     String welcome(Model model) {
@@ -69,8 +73,7 @@ public class LoginController extends BaseController {
     String index(Model model,HttpServletRequest request) {
         List<Tree<MenuDO>> menus = menuService.listMenuTree(getUserId());
         model.addAttribute("menus", menus);
-        model.addAttribute("name", getUser().getName());
-        FileDO fileDO = fileService.get(getUser().getPicId());
+         FileDO fileDO = fileService.get(getUser().getPicId());
         if (fileDO != null && fileDO.getUrl() != null) {
             if (fileService.isExist(fileDO.getUrl())) {
                 model.addAttribute("picUrl", fileDO.getUrl());
@@ -98,32 +101,38 @@ public class LoginController extends BaseController {
     R ajaxLogin(String username, String password,String verify,HttpServletRequest request) {
 
 //        上线是打开下方，跳过验证码注解
-//        try {
-//            //从session中获取随机数
-//            String random = (String) request.getSession().getAttribute(RandomValidateCodeUtil.RANDOMCODEKEY);
-//            if (StringUtils.isBlank(verify)) {
-//                return R.error("请输入验证码");
-//            }
-//            if (random.equals(verify)) {
-//            } else {
-//                return R.error("请输入正确的验证码");
-//            }
-//        } catch (Exception e) {
-//            logger.error("验证码校验失败", e);
-//            return R.error("验证码校验失败");
-//        }
+        try {
+            //从session中获取随机数
+            String random = (String) request.getSession()
+                .getAttribute(RandomValidateCodeUtil.RANDOMCODEKEY);
+            if (StringUtils.isBlank(verify)) {
+                return R.error("请输入验证码");
+            }
+            if (random.equals(verify)) {
+            } else {
+                return R.error("请输入正确的验证码");
+            }
+        } catch (Exception e) {
+            logger.error("验证码校验失败", e);
+            return R.error("验证码校验失败");
+        }
+        //使用用户ID作
         String lockKey = "user:lock:" + username;
         String errorCountKey = "user:login:error:" + username;
         if (redisManager.exist(lockKey)) {
             return R.error(ResponseStatusEnum.RESCODE_10005.getCode(),"登录尝试次数过多，用户已被限制登录，请稍后尝试");
         }
-        password = MD5Utils.encrypt(username, password);
+
+        //按照用户名查询用户
+        UserDO userDO = userService.getUserByUsername(username);
+        if (Objects.isNull(userDO)) {
+            return R.error(ResponseStatusEnum.RESCODE_10010);
+        }
+        password = MD5Utils.encrypt(userDO.getSalt(),password);
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         Subject subject = SecurityUtils.getSubject();
         try {
             subject.login(token);
-
-
             UserDO user = (UserDO) subject.getPrincipals().getPrimaryPrincipal();
             Map params = new HashMap();
             params.put("userid",user.getUserId());

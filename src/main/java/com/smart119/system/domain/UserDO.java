@@ -1,37 +1,48 @@
 package com.smart119.system.domain;
 
-import com.smart119.common.annotation.validator.EmailValidator;
 import com.smart119.jczy.domain.XfjyryDO;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+@Data
 public class UserDO implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    //
     private Long userId;
-    // 用户名
+    /**
+     * 用户名
+     */
     private String username;
-    // 用户真实姓名
+    /**
+     * 用户真实姓名
+     */
     @Length(min= 2, max=50, message = "姓名超出范围限制{min}-{max}")
     private String name;
-    // 密码
+    /**
+     * 密码
+     */
     private String password;
-
+    /**
+     * 新密码
+     */
     private String newpassword;
 
-    // 部门
+    /**
+     * 部门
+     */
     private Long deptId;
+    /**
+     * 部门名称
+     */
     private String deptName;
 
-    // 邮箱
-//    @NotBlank(message = "邮箱不能为空")
-//    @EmailValidator
+    /**
+     * 邮箱
+     */
     private String email;
     // 手机号
     private String mobile;
@@ -64,186 +75,11 @@ public class UserDO implements Serializable {
     private String district;
     //消防救援机构_通用唯一识别码
     private String xfjyjgTywysbm;
-
-
+    /**
+     * 密码加密加盐的值
+     */
+    private String salt;
     private XfjyryDO xfjyryDO;
-
-    public String getXfjyjgTywysbm() {
-        return xfjyjgTywysbm;
-    }
-
-    public void setXfjyjgTywysbm(String xfjyjgTywysbm) {
-        this.xfjyjgTywysbm = xfjyjgTywysbm;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Long getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId) {
-        this.deptId = deptId;
-    }
-
-    public String getDeptName() {
-        return deptName;
-    }
-
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Long getUserIdCreate() {
-        return userIdCreate;
-    }
-
-    public void setUserIdCreate(Long userIdCreate) {
-        this.userIdCreate = userIdCreate;
-    }
-
-    public Date getGmtCreate() {
-        return gmtCreate;
-    }
-
-    public void setGmtCreate(Date gmtCreate) {
-        this.gmtCreate = gmtCreate;
-    }
-
-    public Date getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
-    }
-
-    public List<Long> getRoleIds() {
-        return roleIds;
-    }
-
-    public void setRoleIds(List<Long> roleIds) {
-        this.roleIds = roleIds;
-    }
-
-    public Long getSex() {
-        return sex;
-    }
-
-    public void setSex(Long sex) {
-        this.sex = sex;
-    }
-
-    public Date getBirth() {
-        return birth;
-    }
-
-    public void setBirth(Date birth) {
-        this.birth = birth;
-    }
-
-    public Long getPicId() {
-        return picId;
-    }
-
-    public void setPicId(Long picId) {
-        this.picId = picId;
-    }
-
-    public String getLiveAddress() {
-        return liveAddress;
-    }
-
-    public void setLiveAddress(String liveAddress) {
-        this.liveAddress = liveAddress;
-    }
-
-    public String getHobby() {
-        return hobby;
-    }
-
-    public void setHobby(String hobby) {
-        this.hobby = hobby;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
     @Override
     public String toString() {
         return "UserDO{" +
@@ -269,21 +105,5 @@ public class UserDO implements Serializable {
                 ", city='" + city + '\'' +
                 ", district='" + district + '\'' +
                 '}';
-    }
-
-    public String getNewpassword() {
-        return newpassword;
-    }
-
-    public void setNewpassword(String newpassword) {
-        this.newpassword = newpassword;
-    }
-
-    public XfjyryDO getXfjyryDO() {
-        return xfjyryDO;
-    }
-
-    public void setXfjyryDO(XfjyryDO xfjyryDO) {
-        this.xfjyryDO = xfjyryDO;
     }
 }

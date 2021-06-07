@@ -99,6 +99,12 @@ public interface UserService {
 	 */
 	boolean checkUserName(UserDO user);
 
+	/**
+	 * 根据用户名获取用户信息
+	 * @param username
+	 * @return
+	 */
+	UserDO getUserByUsername(String username);
 
 
 }
