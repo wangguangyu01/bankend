@@ -56,8 +56,8 @@ public class SysThresholdConfigDo implements Serializable {
     /**
      * 区域范围
      */
-    @ApiModelProperty(value="区域范围", example = "0")
-    private Integer areaRange;
+    @ApiModelProperty(value="区域范围", example = "0.0")
+    private Double areaRange;
 
 
     /**
