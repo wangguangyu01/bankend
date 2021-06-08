@@ -126,12 +126,13 @@ public class UserServiceImpl implements UserService {
             userRoleMapper.batchSave(list);
         }
         XfjyryDO xfjyryDO = xfjyryMapper.queryXfjyryByUserId(String.valueOf(user.getUserId()));
-        xfjyryDO.setXm(user.getName());
-        DeptDO deptDO = deptMapper.selectById(user.getDeptId());
-        xfjyryDO.setSjszjgTywysbm(deptDO.getXfjyjgTywysbm());
-        xfjyryDO.setHlwDzxx(user.getEmail());
-        xfjyryMapper.update(xfjyryDO);
-
+        if (Objects.nonNull(xfjyryDO)) {
+            xfjyryDO.setXm(user.getName());
+            DeptDO deptDO = deptMapper.selectById(user.getDeptId());
+            xfjyryDO.setSjszjgTywysbm(deptDO.getXfjyjgTywysbm());
+            xfjyryDO.setHlwDzxx(user.getEmail());
+            xfjyryMapper.update(xfjyryDO);
+        }
         return r;
     }
 
@@ -163,8 +164,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int resetPwd(UserVO userVO, UserDO userDO) throws Exception {
         if (Objects.equals(userVO.getUserDO().getUserId(), userDO.getUserId())) {
-            if (Objects.equals(MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdOld()), userDO.getPassword())) {
-                userDO.setPassword(MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdNew()));
+            if (Objects.equals(MD5Utils.encrypt(userDO.getSalt(), userVO.getPwdOld()),
+                userDO.getPassword())) {
+                userDO.setPassword(MD5Utils.encrypt(userDO.getSalt(), userVO.getPwdNew()));
                 return userMapper.update(userDO);
             } else {
                 throw new Exception("输入的旧密码有误！");
@@ -180,7 +182,7 @@ public class UserServiceImpl implements UserService {
         if ("admin".equals(userDO.getUsername())) {
             throw new Exception("超级管理员的账号不允许直接重置！");
         }
-        userDO.setPassword(MD5Utils.encrypt(userDO.getUsername(), userVO.getPwdNew()));
+        userDO.setPassword(MD5Utils.encrypt(userDO.getSalt(), userVO.getPwdNew()));
         return userMapper.update(userDO);
 
 
@@ -332,6 +334,14 @@ public class UserServiceImpl implements UserService {
             return false;
         }
         return result;
+    }
+
+    /**
+     * 根据用户名获取用户信息
+     */
+    @Override
+    public UserDO getUserByUsername(String username) {
+        return userMapper.getByUserName(username);
     }
 
 }

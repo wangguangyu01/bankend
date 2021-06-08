@@ -2,6 +2,7 @@ package com.smart119.system.shiro;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import com.smart119.common.config.ApplicationContextRegister;
@@ -51,8 +52,8 @@ public class UserRealm extends AuthorizingRealm {
 		// 查询用户信息
 		UserDO user = userMapper.getByUserName(username);
 
-		// 账号不存在
-		if (user == null) {
+    // 账号不存在
+    if (Objects.isNull(user)) {
 			throw new UnknownAccountException("账号或密码不正确");
 		}
 
