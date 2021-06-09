@@ -290,7 +290,21 @@ public class XfclController extends BaseController{
 
 
 
+	/**
+	 * 初始化redis 消防车辆数据
+	 */
+	@ResponseBody
+	@PostMapping("/initRedisXfcl")
+	public R initRedisXfcl() throws Exception {
 
+		List<String> xfclIdList = xfclService.findAllXfclTywysbm();
+		for(String id:xfclIdList){
+			xfclService.saveRedis(id);
+		}
+
+		return R.ok();
+
+	}
 
 
 

@@ -34,4 +34,6 @@ public interface XfclDao {
     int carlistcount(Map<String, Object> map);
 
 	List<XfclDO> carlist(Map<String, Object> map);
+
+	List<String> findAllXfclTywysbm();
 }

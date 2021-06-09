@@ -169,6 +169,9 @@ public class XfclDO implements Serializable {
 	@Length(min= 1, max=100, message = "定位设备超出范围限制{min}-{max}")
 	private String dwsb;
 
+	@NotBlank(message = "自定义排序不饿能为空")
+	@Length(min= 1, max=100000, message = "自定义排序超出范围限制{min}-{max}")
+	private String zdypx;
 
 
 	public Double getGd() {
@@ -690,5 +693,13 @@ public class XfclDO implements Serializable {
 
 	public void setXfclSxxx(List<Map<String, Object>> xfclSxxx) {
 		this.xfclSxxx = xfclSxxx;
+	}
+
+	public String getZdypx() {
+		return zdypx;
+	}
+
+	public void setZdypx(String zdypx) {
+		this.zdypx = zdypx;
 	}
 }

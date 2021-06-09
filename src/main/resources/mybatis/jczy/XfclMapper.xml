@@ -50,6 +50,7 @@
 			t.`FZR_TYWYSBM`,
 			t.`SHFW_DWMC`,
 			t.`DWSB`,
+			t.`ZDYPX`,
 			dept.`dwmc` XFJYJG,
 			d.`name` XFZBLX,
 			d1.`name` CLQWZTLB
@@ -110,6 +111,7 @@
 			t.`FZR_TYWYSBM`,
 			t.`SHFW_DWMC`,
 			t.`DWSB`,
+			t.`ZDYPX`,
 			dept.`dwmc` XFJYJG,
 			d.`name` XFZBLX,
 			d1.`name` CLQWZTLB
@@ -159,6 +161,7 @@
 		t.`cdate`,
 		t.`cperson`,
 		t.`status`,
+		t.`ZDYPX`,
 		dept.`dwmc` XFJYJG,
 		d.`name` XFZBLX,
 		d1.`name` CLQWZTLB,
@@ -214,7 +217,7 @@
                 order by ${sort} ${order}
             </when>
 			<otherwise>
-                order by t.cdate desc
+                order by CAST(t.ZDYPX as SIGNED)
 			</otherwise>
         </choose>
 		<if test="offset != null and limit != null">
@@ -258,6 +261,7 @@
 		t.`cdate`,
 		t.`cperson`,
 		t.`status`,
+		t.`ZDYPX`,
 		dept.`dwmc` XFJYJG,
 		d.`name` XFZBLX,
 		d1.`name` CLQWZTLB,
@@ -440,7 +444,8 @@
 			`CLWZ_WZCJSJ`,
 			`FZR_TYWYSBM`,
 			`SHFW_DWMC`,
-			`DWSB`
+			`DWSB`,
+			`ZDYPX`
 		)
 		values
 		(
@@ -484,7 +489,8 @@
 			#{clwzWzcjsj},
 			#{fzrTywysbm},
 			#{shfwDwmc},
-			#{dwsb}
+			#{dwsb},
+			#{zdypx}
 		)
 	</insert>
 
@@ -535,6 +541,7 @@
 			<if test="shfwDwmc != null">`SHFW_DWMC` = #{shfwDwmc}, </if>
 			<if test="dwsb != null">`DWSB` = #{dwsb}, </if>
 			<if test="status != null">`status` = #{status}</if>
+			<if test="zdypx != null">`ZDYPX` = #{zdypx}</if>
 		</set>
 		where XFCL_TYWYSBM = #{xfclTywysbm}
 	</update>
@@ -549,5 +556,9 @@
 			#{xfclTywysbm}
 		</foreach>
 	</delete>
+
+	<select id="findAllXfclTywysbm" resultType="String">
+		SELECT XFCL_TYWYSBM from jczy_xfcl
+	</select>
 
 </mapper>

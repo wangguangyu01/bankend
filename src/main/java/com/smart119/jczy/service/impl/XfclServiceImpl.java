@@ -86,4 +86,9 @@ public class XfclServiceImpl implements XfclService {
 		this.redisManager.set("sys:xfcl:"+id, JSON.toJSONString(xfcl));
 	}
 
+	@Override
+	public List<String> findAllXfclTywysbm() {
+		return xfclDao.findAllXfclTywysbm();
+	}
+
 }

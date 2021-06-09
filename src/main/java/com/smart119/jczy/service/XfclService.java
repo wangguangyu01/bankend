@@ -35,4 +35,6 @@ public interface XfclService {
 	int carlistcount(Map<String, Object> map);
 
 	void saveRedis(String key);
+
+	List<String> findAllXfclTywysbm();
 }
