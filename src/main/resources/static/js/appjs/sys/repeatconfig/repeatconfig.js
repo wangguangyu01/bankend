@@ -73,13 +73,13 @@ function load() {
                     },
                     {
                         field: 'timeRange',
-                        title: '时间范围规则',
+                        title: '时间范围规则（分钟）',
                         visible: true
 
                     },
                     {
                         field: 'areaRange',
-                        title: '区域范围规则',
+                        title: '区域范围规则（米）',
                         visible: true
 
                     },
@@ -93,14 +93,14 @@ function load() {
                     },
                     {
                         field: 'status',
-                        title: '停起操作',
+                        title: '停用/启用',
                         formatter: function (value, row, index) {
-                            var e = '<a class="btn btn-success btn-xs" href="#" mce_href="#" title="点击开启" onclick="changeStatus(\''
+                            var e = '<a class="btn btn-success btn-xs" href="#" mce_href="#" title="点击启用" onclick="changeStatus(\''
                                 + row.id + '\',\'' + 1
-                                + '\')"><i class="fa fa-hourglass-start"></i>开启</a> ';
-                            var f = '<a class="btn btn-danger btn-xs" href="#" mce_href="#" title="点击关闭" onclick="changeStatus(\''
+                                + '\')"><i class="fa fa-hourglass-start"></i>启用</a> ';
+                            var f = '<a class="btn btn-danger btn-xs" href="#" mce_href="#" title="点击停用" onclick="changeStatus(\''
                                 + row.id + '\',\'' + 0
-                                + '\')"><i class="fa fa-square-o">关闭</i></a> ';
+                                + '\')"><i class="fa fa-square-o">停用</i></a> ';
                             if (row.status == 0) {
                                 return e;
                             } else {

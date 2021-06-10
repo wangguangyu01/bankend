@@ -169,6 +169,9 @@ public class XfclDO implements Serializable {
 	@Length(min= 1, max=100, message = "定位设备超出范围限制{min}-{max}")
 	private String dwsb;
 
+
+
+	@Length(min= 1, max=100000, message = "自定义排序超出范围限制{min}-{max}")
 	private Integer zdypx;
 
 

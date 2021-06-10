@@ -1,8 +1,10 @@
 package com.smart119;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.smart119.common.annotation.Excel;
 import com.smart119.common.config.BootdoConfig;
+import com.smart119.common.domain.DictDO;
 import com.smart119.common.redis.shiro.RedisManager;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.*;
@@ -80,6 +82,9 @@ class Smart119ApplicationTest {
 
 
 
+
+
+
     @BeforeEach
     public void beforeInitRedis() {
         redisTemplate.opsForValue().set("fafa", "fafage");
@@ -139,9 +144,6 @@ class Smart119ApplicationTest {
         Map map = ExportExcel.getExcel(FzjcDO.class);
         List<String> list = (List<String>)map.get("headTitle");
         List<String> fields = (List<String>)map.get("exportField");
-        for (String o: list) {
-            System.out.println(String.valueOf(o));
-        }
         Class cla = FzjcDO.class;
         Method[] methods = cla.getMethods();
         Field[] fieldArr = cla.getDeclaredFields();
@@ -237,6 +239,32 @@ class Smart119ApplicationTest {
         String password22 = MD5Utils.encrypt("admin", password111);
         System.out.println(password22.equals("27bd386e70f280e24c2f4f2a549b82cf"));
     }
+
+
+    @Test
+    public void testQueryDict() {
+        Map<String, Object> paramMap = new HashMap<>();
+        List<DictDO> dictDOList = dictService.queryByDictType("ZHQKDM");
+        String jsonArr = JSONArray.toJSONString(dictDOList);
+        System.out.println(jsonArr);
+        redisManager.hSet("resource:dictkey", "ZHQKDM", "东方饭店");
+    }
+
+
+
+    @Test
+    public void  testQuerychildren() {
+        List<DictDO> dictDOList = new ArrayList<>();
+        DictDO dictDO = dictService.get(10216L);
+        if (!ObjectUtils.isEmpty(dictDO)) {
+            List<DictDO> dictDOList1 = dictService.querychildren(dictDO, dictDOList);
+            System.out.println("dictDOList---->" + dictDOList1);
+        }
+
+    }
+
+
+
 
 }
 

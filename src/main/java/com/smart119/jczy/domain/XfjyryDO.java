@@ -2,8 +2,10 @@ package com.smart119.jczy.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -119,6 +121,11 @@ public class XfjyryDO implements Serializable {
 	private String username;
 	//登录密码
 	private String password;
+
+
+
+	@Length(min= 1, max=100000, message = "自定义排序超出范围限制{min}-{max}")
+	private Integer zdypx;
 
 	/**
 	 * 是否创建用户 0-否  1-是 (辅助字段，数据表无该字段)
