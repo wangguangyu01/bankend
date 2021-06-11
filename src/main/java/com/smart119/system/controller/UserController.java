@@ -1,5 +1,6 @@
 package com.smart119.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.smart119.common.annotation.Log;
 import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
@@ -10,9 +11,11 @@ import com.smart119.jczy.domain.XfjyryDO;
 import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.domain.RoleDO;
+import com.smart119.system.domain.UserConfigDO;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.DeptService;
 import com.smart119.system.service.RoleService;
+import com.smart119.system.service.UserConfigService;
 import com.smart119.system.service.UserService;
 import com.smart119.system.service.impl.UserServiceImpl;
 import com.smart119.system.vo.UserVO;
@@ -50,6 +53,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private XfjyryService xfjyryService;
+
+	@Autowired
+	private UserConfigService userConfigService;
 
 	@Value("${rsa-private}")
 	private String privateKeyCode;
@@ -222,6 +228,21 @@ public class UserController extends BaseController {
 		return prefix + "/reset_pwd";
 	}
 
+	//@RequiresPermissions("sys:user:updateUserConfig")
+	@Log("请求修改个人用户配置信息")
+	@GetMapping("/updateUserConfig/{id}")
+	String updateUserConfig(@PathVariable("id") Long userId, Model model) {
+		QueryWrapper query = new QueryWrapper();
+		query.eq("user_id", userId);
+		UserConfigDO userConfigDO = userConfigService.getOne(query);
+		if (Objects.isNull(userConfigDO)) {
+			userConfigDO = new UserConfigDO();
+			userConfigDO.setUserId(userId);
+		}
+		model.addAttribute("userConfig", userConfigDO);
+		return prefix + "/updateUserConfig";
+	}
+
 	@Log("提交更改用户密码")
 	@PostMapping("/resetPwd")
 	@ResponseBody
@@ -235,6 +256,27 @@ public class UserController extends BaseController {
 			return R.ok();
 		}catch (Exception e){
 			return R.error(1,e.getMessage());
+		}
+
+	}
+
+	@Log("更新用户配置")
+	@PostMapping("/updateUserConfig")
+	@ResponseBody
+	R updateUserConfig(UserConfigDO userConfigDO) {
+
+		if (Objects.isNull(userConfigDO.getUserId())) {
+			return R.error(1, "用户ID不能为空");
+		}
+		try {
+			if (Objects.nonNull(userConfigDO.getId()) && userConfigDO.getId() > 0) {
+				userConfigService.updateById(userConfigDO);
+			} else {
+				userConfigService.save(userConfigDO);
+			}
+			return R.ok();
+		} catch (Exception e) {
+			return R.error(1, e.getMessage());
 		}
 
 	}

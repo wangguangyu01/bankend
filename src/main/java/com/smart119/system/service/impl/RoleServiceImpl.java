@@ -1,10 +1,15 @@
 package com.smart119.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.smart119.system.dao.RoleAppDao;
+import com.smart119.system.domain.RoleAppDO;
+import com.smart119.system.service.RoleAppService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +38,8 @@ public class RoleServiceImpl implements RoleService {
     UserDao userMapper;
     @Autowired
     UserRoleDao userRoleMapper;
+    @Autowired
+    private RoleAppService roleAppService;
 
     @Override
     public List<RoleDO> list() {
@@ -61,6 +68,7 @@ public class RoleServiceImpl implements RoleService {
     public int save(RoleDO role) {
         int count = roleMapper.save(role);
         List<Long> menuIds = role.getMenuIds();
+        List<Integer> appIds = role.getAppIds();
         Long roleId = role.getRoleId();
         List<RoleMenuDO> rms = new ArrayList<>();
         for (Long menuId : menuIds) {
@@ -72,6 +80,16 @@ public class RoleServiceImpl implements RoleService {
         roleMenuMapper.removeByRoleId(roleId);
         if (rms.size() > 0) {
             roleMenuMapper.batchSave(rms);
+        }
+        List<RoleAppDO> apps = new ArrayList<>();
+        for (Integer appId : appIds) {
+            RoleAppDO appDO = new RoleAppDO();
+            appDO.setRoleId(roleId);
+            appDO.setAppId(appId);
+            apps.add(appDO);
+        }
+        if (CollectionUtils.isNotEmpty(apps)) {
+            roleAppService.saveBatch(apps);
         }
         return count;
     }
@@ -96,6 +114,7 @@ public class RoleServiceImpl implements RoleService {
         int r = roleMapper.update(role);
         List<Long> menuIds = role.getMenuIds();
         Long roleId = role.getRoleId();
+        List<Integer> appIds = role.getAppIds();
         roleMenuMapper.removeByRoleId(roleId);
         List<RoleMenuDO> rms = new ArrayList<>();
         for (Long menuId : menuIds) {
@@ -107,6 +126,21 @@ public class RoleServiceImpl implements RoleService {
         if (rms.size() > 0) {
             roleMenuMapper.batchSave(rms);
         }
+
+        List<RoleAppDO> apps = new ArrayList<>();
+        QueryWrapper delQuery=new QueryWrapper();
+        delQuery.eq("role_id",role.getRoleId());
+        roleAppService.remove(delQuery);
+        for (Integer appId : appIds) {
+            RoleAppDO appDO = new RoleAppDO();
+            appDO.setRoleId(roleId);
+            appDO.setAppId(appId);
+            apps.add(appDO);
+        }
+        if (CollectionUtils.isNotEmpty(apps)) {
+            roleAppService.saveBatch(apps);
+        }
+
         return r;
     }
 

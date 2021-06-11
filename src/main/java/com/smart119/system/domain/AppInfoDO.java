@@ -1,5 +1,6 @@
 package com.smart119.system.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -83,5 +84,10 @@ public class AppInfoDO implements Serializable {
      */
     @ApiModelProperty(value = "创建时间", name = "createDate")
     private Date createDate;
+
+
+    @TableField(exist = false)
+    private String appSign;
+
 
 }

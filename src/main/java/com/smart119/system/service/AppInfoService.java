@@ -3,6 +3,7 @@ package com.smart119.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.smart119.system.domain.AppInfoDO;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,4 +26,11 @@ public interface AppInfoService extends IService<AppInfoDO>{
 	int remove(Integer id);
 
 	int batchRemove(Integer[] ids);
+
+	/**
+	 * 根据角色ID查询App应用列表
+	 * @param roleId
+	 * @return
+	 */
+	List<AppInfoDO> queryByRoleId(Long roleId);
 }

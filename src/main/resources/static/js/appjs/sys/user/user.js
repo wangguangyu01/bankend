@@ -90,7 +90,10 @@ function load() {
 							var f = '<a class="btn btn-success btn-sm ' + s_resetPwd_h + '" href="#" title="重置密码"  mce_href="#" onclick="resetPwd(\''
 								+ row.userId
 								+ '\')"><i class="fa fa-key"></i></a> ';
-							return e + d + f;
+              var h = '<a class="btn btn-primary btn-sm ' + update_user_config + '" href="#" title="个人设置"  mce_href="#" onclick="updateUserConfig(\''
+                  + row.userId
+                  + '\')"><i class="fa fa-key">个人设置</i></a> ';
+							return e + d + f+h;
 						}
 					} ]
 			});
@@ -149,6 +152,16 @@ function resetPwd(id) {
 		area : [ '400px', '260px' ],
 		content : prefix + '/resetPwd/' + id // iframe的url
 	});
+}
+function updateUserConfig(id) {
+  layer.open({
+    type : 2,
+    title : '个人配置',
+    maxmin : true,
+    shadeClose : false, // 点击遮罩关闭层
+    area : [ '400px', '260px' ],
+    content : prefix + '/updateUserConfig/' + id // iframe的url
+  });
 }
 function batchRemove() {
 	var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
