@@ -55,6 +55,26 @@ public class ControllerDO implements Serializable {
     @Digits(integer = 10, fraction = 0, message = "端口内容非法")
     private Integer port;
 
+
+    /**
+     * 设备id
+     */
+    @ApiModelProperty(value = "设备id", name = "slaveId")
+    //校验端口字段：不为空、数字、小于9999999999
+    @NotNull
+    @Digits(integer = 10, fraction = 0, message = "设备id非法")
+    private Integer slaveId;
+
+
+    /**
+     * 寄存器地址
+     */
+    @ApiModelProperty(value = "寄存器地址", name = "address")
+    @NotNull
+    private Integer address;
+
+
+
     /**
      * 名称
      */

@@ -45,6 +45,16 @@ function validateRule() {
 				digits : true,
 				range : [1,9999999999]
 			},
+			slaveId : {
+				required : true,
+				digits : true,
+				range : [1,9999999999]
+			},
+			address : {
+				required : true,
+				digits : true,
+				range : [0,9999999999]
+			},
 			name : {
 				required : true,
 				maxlength : 100
@@ -64,6 +74,16 @@ function validateRule() {
 			},
 			port : {
 				required : icon + "请输入端口"
+			},
+			slaveId : {
+				required : icon + "请输入设备id",
+				digits: icon + "设备id不合法",
+				range: icon + "设备id范围在[1,9999999999]"
+			},
+			address : {
+				required : icon + "请输入寄存器地址",
+				digits: icon + "寄存器地址不合法",
+				range: icon + "寄存器地址范围在[1,9999999999]"
 			},
 			name : {
 				required : icon + "请输入姓名"

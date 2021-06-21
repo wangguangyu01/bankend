@@ -13,6 +13,8 @@
 		<result property="xfjyjgTywysbm" column="xfjyjg_tywysbm"/>
 		<result property="createTime" column="create_time"/>
 		<result property="updateTime" column="update_time"/>
+		<result property="slaveId" column="slave_id"/>
+		<result property="address" column="address"/>
 	</resultMap>
 	<select id="selectPageVo" resultType="com.smart119.iot.domain.ControllerDO">
 		select
@@ -67,7 +69,9 @@
 		t.xfjyjg_tywysbm as xfjyjgTywysbm,
 		t.create_time as createTime,
 		t.update_time as updateTime,
-		d.DWMC as deptName
+		d.DWMC as deptName,
+		t.slave_id as slaveId,
+		t.address as address
 		from
 		iot_controller t
 		left join sys_dept d on d.XFJYJG_TYWYSBM = t.xfjyjg_tywysbm
