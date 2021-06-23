@@ -15,6 +15,28 @@
 								<div class="col-sm-4">
 									<input id="name" name="name" th:value="${kbmb.name}" class="form-control" type="text">
 								</div>
+
+								<label class="col-sm-2 control-label">警情类型：</label>
+								<input type="hidden" id="jqflydm_val" th:value="${kbmb.jqflydm}" />
+								<div class="col-sm-4">
+									<!--<input id="xfjyryzwqkdm" name="xfjyryzwqkdm" class="form-control" type="text">-->
+									<select data-placeholder="警情类型" name="jqflydm" id="jqflydm" title="警情类型"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">模板类型：</label>
+								<input type="hidden" id="type_val" th:value="${kbmb.type}" />
+								<div class="col-sm-4">
+									<!--<input id="xfjyryzwqkdm" name="xfjyryzwqkdm" class="form-control" type="text">-->
+									<select data-placeholder="模板类型" name="type" id="type" title="模板类型"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">模板内容：</label>

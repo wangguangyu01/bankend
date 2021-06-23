@@ -1,4 +1,6 @@
 $().ready(function() {
+    getSelectByType("JQLB_DL","jqflydm",null);  //常用证件类型
+    getSelectByType("JQKBLB","type",null);  //常用证件类型
 	validateRule();
 });
 

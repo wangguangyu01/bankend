@@ -1,5 +1,8 @@
 $().ready(function() {
-	validateRule();
+    validateRule();
+    getSelectByType("JQLB_DL","jqflydm",$("#jqflydm_val").val());  //常用证件类型
+    getSelectByType("JQKBLB","type",$("#type_val").val());  //性别代码
+
 });
 
 $.validator.setDefaults({

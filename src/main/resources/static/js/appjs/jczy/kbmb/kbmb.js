@@ -63,16 +63,18 @@ function load() {
 																{
 									field : 'remarks', 
 									title : '备注',
-                                    width : 500
+                                    width : 200
 								},
-								// 								{
-								// 	field : 'cdate',
-								// 	title : '创建时间'
-								// },
-								// 								{
-								// 	field : 'cperson',
-								// 	title : '创建人员id'
-								// },
+																{
+									field : 'jqlxName',
+									title : '警情类型',
+									width : 150
+								},
+																{
+									field : 'kblbName',
+									title : '快报类型',
+									width : 150
+								},
 								// 								{
 								// 	field : 'status',
 								// 	title : '状态'
