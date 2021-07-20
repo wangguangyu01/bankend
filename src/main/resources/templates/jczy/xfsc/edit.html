@@ -18,16 +18,8 @@
                             <div class="col-sm-4">
                                 <input id="mc" name="mc" class="form-control" type="text" th:value="${xfsc.mc}">
                             </div>
-                            <label class="col-sm-2 control-label">水源可用状态：</label>
-                            <div class="col-sm-4">
-                                <select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择水源可用状态" required>
-                                    <option value="">--请选择--</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-2 control-label">消防水池地址：</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 <input id="dzmc" name="dzmc" class="form-control" type="text" th:value="${xfsc.dzmc}">
                             </div>
                         </div>
@@ -90,7 +82,23 @@
                                 <input id="sybgcGd" name="sybgcGd" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfsc.sybgcGd, 0, 2)}" min="0">
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">供水单位名称：</label>
+                            <div class="col-sm-4">
+                                <input id="gsDwmc" name="gsDwmc" class="form-control" type="text" th:value="${xfsc.gsDwmc}">
+                            </div>
+                            <label class="col-sm-2 control-label">管理单位名称：</label>
+                            <div class="col-sm-4">
+                                <input id="glDwmc" name="glDwmc" class="form-control" type="text" th:value="${xfsc.glDwmc}">
+                            </div>
+                        </div>
+                          <div class="form-group">
+                                <label class="col-sm-2 control-label">水源可用状态：</label>-->
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择水源可用状态" required>
+                                        <option value="">--请选择--</option>
+                                    </select>
+                                </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">停车位置地点名称：</label>
                             <div class="col-sm-4">
@@ -111,17 +119,6 @@
                             <label class="col-sm-2 control-label">流量（升/秒）：</label>
                             <div class="col-sm-4">
                                 <input id="ll" name="ll" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfsc.ll, 0, 0)}" min="0">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">供水单位名称：</label>
-                            <div class="col-sm-4">
-                                <input id="gsDwmc" name="gsDwmc" class="form-control" type="text" th:value="${xfsc.gsDwmc}">
-                            </div>
-                            <label class="col-sm-2 control-label">管理单位名称：</label>
-                            <div class="col-sm-4">
-                                <input id="glDwmc" name="glDwmc" class="form-control" type="text" th:value="${xfsc.glDwmc}">
                             </div>
                         </div>
                         <div class="form-group">

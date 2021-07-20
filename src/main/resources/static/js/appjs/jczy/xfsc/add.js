@@ -40,14 +40,30 @@ function validateRule() {
                 required : true,
                 maxlength:100
             },
+            rj : {
+                required : true,
+                maxlength:100
+            },
+            cslRj : {
+                required : true,
+                maxlength:100
+            },
+            qsGd : {
+                required : true,
+                maxlength:100
+            },
+            sybgcGd : {
+                required : true,
+                maxlength:100
+            },
             ssldMc : {
                 required : true,
                 maxlength:100
             },
-            wbdwDwmc : {
-                required : true,
-                maxlength:100
-            },
+            // wbdwDwmc : {
+            //     required : true,
+            //     maxlength:100
+            // },
             lxrXm : {
                 required : true,
                 maxlength:50
@@ -62,18 +78,18 @@ function validateRule() {
                 required : true,
                 maxlength:300
             },
-            tcwzDdmc : {
-                required : true,
-                maxlength:100
-            },
+            // tcwzDdmc : {
+            //     required : true,
+            //     maxlength:100
+            // },
             gsDwmc : {
                 required : true,
                 maxlength:100
             },
-            glDwmc : {
-                required : true,
-                maxlength:100
-            }
+            // glDwmc : {
+            //             //     required : true,
+            //             //     maxlength:100
+            //             // }
         },
         messages : {
             mc : {
@@ -82,12 +98,24 @@ function validateRule() {
             dzmc : {
                 required :  "请输入消防水池地址"
             },
+            rj : {
+                required :  "请输入容积"
+            },
+            cslRj : {
+                required :  "请输入储水容积"
+            },
+            qsGd : {
+                required :  "请输入取水高度"
+            },
+            sybgcGd : {
+                required :  "请输入水源标高差高度"
+            },
             ssldMc : {
                 required :  "请输入所属路段名称"
             },
-            wbdwDwmc : {
-                required :  "请输入维保单位名称"
-            },
+            // wbdwDwmc : {
+            //     required :  "请输入维保单位名称"
+            // },
             lxrXm : {
                 required :  "请输入联系人"
             },
@@ -98,15 +126,15 @@ function validateRule() {
             qsxsJyqk : {
                 required :  "请输入取水形式_简要情况"
             },
-            tcwzDdmc : {
-                required :  "请输入停车位置地点名称"
-            },
+            // tcwzDdmc : {
+            //     required :  "请输入停车位置地点名称"
+            // },
             gsDwmc : {
                 required :  "请输入供水单位名称"
             },
-            glDwmc : {
-                required :  "请输入管理单位名称"
-            }
+            // glDwmc : {
+            //     required :  "请输入管理单位名称"
+            // }
         }
     })
 }

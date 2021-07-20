@@ -13,6 +13,7 @@
 # Short-Description: start and stop devops
 ### END INIT INFO
 #./etc/rc.d/init.d/functions
+source /etc/profile
 if [ -L $0 ]; then
     initscript=`/bin/readlink -f $0`
 else
