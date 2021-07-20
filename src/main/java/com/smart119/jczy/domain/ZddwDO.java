@@ -30,49 +30,94 @@ public class ZddwDO implements Serializable {
 	@NotBlank(message = "重点单位名称不能为空")
 	@Length(min= 1, max=100, message = "重点单位名称超出范围限制{min}-{max}")
 	private String dwmc;
+	//单位简称
+	@NotBlank(message = "单位简称不能为空")
+	private String dwjc;
+
 	//单位拼音简称
 	@NotBlank(message = "单位拼音简称不能为空")
 	@Length(min= 1, max=100, message = "单位拼音简称超出范围限制{min}-{max}")
 	private String dwpyjc;
-	//经济所有制类型代码
-	private String jjsyzlxdm;
-	//成立_日期
-	private Date clRq;
+
 	//单位火灾危害性分类与代码
+	@NotBlank(message = "单位火灾危害性分类与代码不能为空")
 	private String dwhzwhxflydm;
-	//单位自然性质代码
-	private String dwzrxzdm;
+
 	//单位地址
 	@NotBlank(message = "单位地址不能为空")
 	@Length(min= 1, max=100, message = "单位地址超出范围限制{min}-{max}")
 	private String dzmc;
+
+	//地球经度
+	private Double dqjd;
+
+	//地球纬度
+	private Double dqwd;
+
+	//联系人
+	@NotBlank(message = "联系人不能为空")
+	private String lxr;
+
 	//联系电话
+	@NotBlank(message = "联系电话不能为空")
 	private String lxdh;
+
+	//行政区划代码
+	@NotBlank(message = "行政区划代码不能为空")
+	private String xzqhdm;
+
+	//消防救援机构_通用唯一识别码
+	@NotBlank(message = "消防救援机构_通用唯一识别码不能为空")
+	private String xfjyjgTywysbm;
+
+	//法人代表姓名
+	@NotBlank(message = "地联系人不能为空")
+	private String frdbXm;
+
+	//法人代表联系电话
+	@NotBlank(message = "法人代表姓名不能为空")
+	private String frdbLxdh;
+
+	//消防安全责任人姓名
+	@NotBlank(message = "消防安全责任人姓名不能为空")
+	private String xfaqzrrXm;
+
+	//消防安全责任人联系电话
+	@NotBlank(message = "消防安全责任人联系电话不能为空")
+	private String xfaqzrrLxdh;
+
+	//消防安全管理人姓名
+	@NotBlank(message = "消防安全管理人姓名不能为空")
+	private String xfaqglrXm;
+
+	//消防安全管理人联系电话
+	@NotBlank(message = "消防安全管理人联系电话不能为空")
+	private String xfaqglrLxdh;
+
+	//简要情况
+	@NotBlank(message = "简要情况不能为空")
+	private String wxhxpjyqk;
+
+
+
+
+	//经济所有制类型代码
+	private String jjsyzlxdm;
+	//成立_日期
+	private Date clRq;
+	//单位自然性质代码
+	private String dwzrxzdm;
 	//电子信箱
 	private String dzxx;
-	//行政区划代码
-	private String xzqhdm;
 	//邮政编码
 	private String yzbm;
 	//人数
-	@Range(min = 0, max = 9999999999L, message = "人数超出范围限制0-9999999999")
 	private Integer rs;
 	//占地_面积
-	@DecimalMin(value = "0", message = "占地面积最小是0")
-	@DecimalMax(value = "999999.99", message = "占地面积最大是999999.99")
 	private Double zdMj;
 	//建筑_面积
-	@DecimalMin(value = "0", message = "建筑面积最小是0")
-	@DecimalMax(value = "999999.99", message = "建筑面积最大是999999.99")
 	private Double jzMj;
-	//消防救援机构_通用唯一识别码
-	private String xfjyjgTywysbm;
-	//地球经度
-	private Double dqjd;
-	//地球纬度
-	private Double dqwd;
 	//建筑_数量
-	@Range(min = 0, max = 9999999999L, message = "建筑数量超出范围限制0-9999999999")
 	private Integer jzSl;
 	//单位_简要情况
 	private String dwJyqk;
@@ -82,24 +127,12 @@ public class ZddwDO implements Serializable {
 	private String nbxfssJyqk;
 	//防火设施_简要情况
 	private String fhssJyqk;
-	//法人代表姓名
-	private String frdbXm;
 	//法人代表公民身份证号
 	private String frdbGmsfzh;
-	//法人代表联系电话
-	private String frdbLxdh;
-	//消防安全责任人姓名
-	private String xfaqzrrXm;
 	//消防安全责任人公民身份证号
 	private String xfaqzrrGmsfhm;
-	//消防安全责任人联系电话
-	private String xfaqzrrLxdh;
-	//消防安全管理人姓名
-	private String xfaqglrXm;
 	//消防安全管理人公民身份证号
 	private String xfaqglrGmsfhm;
-	//消防安全管理人联系电话
-	private String xfaqglrLxdh;
 	//专兼职消防管理人姓名
 	private String zjzxfglrXm;
 	//专兼职消防管理人公民身份证号码
@@ -121,17 +154,13 @@ public class ZddwDO implements Serializable {
 	//危险化学品名称
 	private String wxhxpmc;
 	//危险化学品分类
-
 	private String wxhxpwxhxpflydm;
 	//化学品状态
 	private String wxhxphxpztlbdm;
 	//危险化学品危险性
 	private String wxhxphxpwxxlbdm;
 	//数量
-	@Range(min = 0, max = 9999999999L, message = "数量超出范围限制0-9999999999")
 	private Integer wxhxpsl;
-	//简要情况
-	private String wxhxpjyqk;
 	//地址名称
 	private String wxhxpdzmc;
 
@@ -665,5 +694,22 @@ public class ZddwDO implements Serializable {
 	 */
 	public String getBz() {
 		return bz;
+	}
+
+
+	public String getDwjc() {
+		return dwjc;
+	}
+
+	public void setDwjc(String dwjc) {
+		this.dwjc = dwjc;
+	}
+
+	public String getLxr() {
+		return lxr;
+	}
+
+	public void setLxr(String lxr) {
+		this.lxr = lxr;
 	}
 }

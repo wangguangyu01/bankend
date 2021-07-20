@@ -89,11 +89,6 @@ function validateRule() {
                 mobile : true,
                 digits:true,
                 maxlength:18
-            },
-            zjzxfglrLxdh : {
-                mobile : true,
-                digits:true,
-                maxlength:18
             }
         },
         messages : {
@@ -119,9 +114,6 @@ function validateRule() {
                 digits : "请输入数字格式"
             },
             xfaqglrLxdh : {
-                digits : "请输入数字格式"
-            },
-            zjzxfglrLxdh : {
                 digits : "请输入数字格式"
             }
         }

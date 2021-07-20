@@ -12,7 +12,7 @@
 							<div class="form-group">	
 								<label class="col-sm-2 control-label">单位名称：</label>
 								<div class="col-sm-4">
-									<input id="dwmc" name="dwmc" class="form-control" type="text">
+									<input id="dwmc" name="dwmc" class="form-control" type="text" required>
 								</div>
 
 								<label class="col-sm-2 control-label">联动单位类别：</label>
@@ -28,15 +28,9 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">单位地址：</label>
 								<div class="col-sm-4">
-									<input id="dwdz" name="dwdz" class="form-control" type="text">
+									<input id="dwdz" name="dwdz" class="form-control" type="text" required>
 								</div>
 
-								<label class="col-sm-2 control-label">传真号码：</label>
-								<div class="col-sm-4">
-									<input id="czhm" name="czhm" class="form-control" type="text">
-								</div>
-							</div>
-							<div class="form-group">
 								<label class="col-sm-2 control-label">消防救援机构：</label>
 								<div class="col-sm-4">
 									<!--<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="form-control" type="text">-->
@@ -46,35 +40,32 @@
 										readonly="readonly" placeholder="消防救援机构" title="消防救援机构" required>
 								</div>
 
-								<label class="col-sm-2 control-label">联系人：</label>
-								<div class="col-sm-4">
-									<input id="lxr" name="lxr" class="form-control" type="text">
-								</div>
-
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">联系电话：</label>
+								<label class="col-sm-2 control-label">联系人：</label>
 								<div class="col-sm-4">
-									<input id="lxdh" name="lxdh" class="form-control" type="text">
+									<input id="lxr" name="lxr" class="form-control" type="text" required>
 								</div>
 
-								<!--<label class="col-sm-2 control-label">行政区划代码：</label>-->
-								<!--<div class="col-sm-4">-->
-									<!--<input id="xzqhdm" name="xzqhdm" class="form-control" type="text">-->
-								<!--</div>-->
+								<label class="col-sm-2 control-label">联系电话：</label>
+								<div class="col-sm-4">
+									<input id="lxdh" name="lxdh" class="form-control" type="text" required>
+								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">地球经度：</label>
 								<div class="col-sm-4">
-									<input id="dqjd" name="dqjd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly"  placeholder="请选择">
+									<input id="dqjd" name="dqjd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly"  placeholder="请选择" required value="118.359278">
 								</div>
 
 								<label class="col-sm-2 control-label">地球纬度：</label>
 								<div class="col-sm-4">
-									<input id="dqwd" name="dqwd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly"  placeholder="请选择">
+									<input id="dqwd" name="dqwd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly"  placeholder="请选择" required value="35.107927">
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">所在区划：</label>
 								<!--<div class="col-sm-10">-->
@@ -99,12 +90,14 @@
 									</select>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">保障能力_简要情况：</label>
 								<div class="col-sm-10">
-									<textarea id="bznlJyqk" name="bznlJyqk" class="form-control"></textarea>
+									<textarea id="bznlJyqk" name="bznlJyqk" class="form-control" required></textarea>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">保障概述_简要情况：</label>
 								<div class="col-sm-10">
@@ -117,6 +110,19 @@
 									<textarea id="dwjyqk" name="dwjyqk" class="form-control"></textarea>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">传真号码：</label>
+								<div class="col-sm-4">
+									<input id="czhm" name="czhm" class="form-control" type="text">
+								</div>
+							</div>
+
+
+
+
+
+
 							<div class="form-group">
 								<div class="col-sm-10 col-sm-offset-2">
 									<button type="submit" class="btn btn-primary">提交</button>

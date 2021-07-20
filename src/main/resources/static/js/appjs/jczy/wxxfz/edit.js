@@ -48,11 +48,7 @@ function validateRule() {
             dzmc : {
                 required : true
             },
-            zbLxdh : {
-                required : true,
-                mobile : true,
-                maxlength:18
-            },
+
             fzrXm : {
                 required : true
             },
@@ -72,9 +68,7 @@ function validateRule() {
             dzmc : {
                 required :   "请输入地址名称"
             },
-            zbLxdh : {
-                required :   "请输入值班人电话"
-            },
+
             fzrXm : {
                 required :   "请输入负责人姓名"
             },

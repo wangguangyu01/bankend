@@ -97,6 +97,7 @@ function getSelectAll(type,divClass,inputId,spanId){
             });
             html += '</ul>';
             $("."+divClass).append(html);
+            console.log(123123);
             addOnclick(divClass,inputId,spanId);
         }
     });
@@ -119,6 +120,7 @@ function decomposeChild(list){
 }
 
 function addOnclick(divClass,inputId,spanId){
+    console.log(456456);
     $('.'+divClass+' li a').click(function(){
         title = $(this).attr("data-title");
         id = $(this).attr("data-index");
@@ -126,7 +128,7 @@ function addOnclick(divClass,inputId,spanId){
         //$("#category_id").val(id);
         $("#"+inputId).val(id);
         $("#"+inputId).change()
-        if($("#childAttr").val()=="yes" && inputId=="xfzblxdm"){
+        if($("#childAttr").val()=="yes" && (inputId=="xfzblxdm" || inputId=="xldm") ){
             addChildAttr($("#childAttr").attr("class"));
         }
     })

@@ -13,24 +13,26 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">名称：</label>
 								<div class="col-sm-4">
-									<input id="mc" name="mc" class="form-control" type="text" th:value="${wxxfz.mc}">
+									<input id="mc" name="mc" class="form-control" type="text" th:value="${wxxfz.mc}" required>
 								</div>
 								<label class="col-sm-2 control-label">人数：</label>
 								<div class="col-sm-4">
-									<input id="rs" name="rs" class="form-control" type="text" th:value="${#numbers.formatDecimal(wxxfz.rs, 0, 0)}" min="0">
+									<input id="rs" name="rs" class="form-control" type="text" th:value="${#numbers.formatDecimal(wxxfz.rs, 0, 0)}" min="0" required>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">地址名称：</label>
 								<div class="col-sm-4">
-									<input id="dzmc" name="dzmc" class="form-control" type="text" th:value="${wxxfz.dzmc}">
+									<input id="dzmc" name="dzmc" class="form-control" type="text" th:value="${wxxfz.dzmc}" required>
 								</div>
-								<label class="col-sm-2 control-label">值班人电话：</label>
-								<div class="col-sm-4">
-									<input id="zbLxdh" name="zbLxdh" class="form-control" type="text" th:value="${wxxfz.zbLxdh}">
-								</div>
+
+
+
 							</div>
+
 							<div class="form-group">
+
 								<label class="col-sm-2 control-label">行政区划：</label>
 								<div class="col-sm-8" style="width:25%">
 									<input type="hidden" id="provinceVal" th:value="${province}"/>
@@ -54,22 +56,25 @@
 									</select>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">装备_简要情况：</label>
 								<div class="col-sm-10">
-									<textarea id="zbJyqk" name="zbJyqk" class="form-control" th:text="${wxxfz.zbJyqk}"></textarea>
+									<textarea id="zbJyqk" name="zbJyqk" class="form-control" th:text="${wxxfz.zbJyqk}" required></textarea>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">负责人姓名：</label>
 								<div class="col-sm-4">
-									<input id="fzrXm" name="fzrXm" class="form-control" type="text" th:value="${wxxfz.fzrXm}">
+									<input id="fzrXm" name="fzrXm" class="form-control" type="text" th:value="${wxxfz.fzrXm}" required>
 								</div>
 								<label class="col-sm-2 control-label">负责人电话：</label>
 								<div class="col-sm-4">
-									<input id="fzrLxdh" name="fzrLxdh" class="form-control" type="text" th:value="${wxxfz.fzrLxdh}">
+									<input id="fzrLxdh" name="fzrLxdh" class="form-control" type="text" th:value="${wxxfz.fzrLxdh}" required>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">地球精度：</label>
 								<div class="col-sm-4">
@@ -80,6 +85,18 @@
 									<input id="dqwd" name="dqwd" class="form-control" type="text" onclick="openMap()" style="cursor: pointer;" readonly="readonly" placeholder="请选择" th:value="${wxxfz.dqwd}" required>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">值班人电话：</label>
+								<div class="col-sm-4">
+									<input id="zbLxdh" name="zbLxdh" class="form-control" type="text" th:value="${wxxfz.zbLxdh}">
+								</div>
+							</div>
+
+
+
+
+
 
 							<div class="form-group">
 								<div class="col-sm-10 col-sm-offset-2">
