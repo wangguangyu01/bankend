@@ -1,6 +1,7 @@
 package com.smart119.jczy.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -121,6 +122,15 @@ public class XfjyryDO implements Serializable {
 	private String username;
 	//登录密码
 	private String password;
+
+
+	/**
+	 * 参加工作日期
+	 */
+	@ApiModelProperty(value="参加工作时间",name="workrq")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+	private Date workrq;
 
 
 

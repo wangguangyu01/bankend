@@ -71,13 +71,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">消防设施状况分类：</label>
-                            <div class="col-sm-2">
-                                <div class="XFSSZKFLYDM-DIV dropdown">
-                                    <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-white"  style="width: 100%;text-align: left;"><span id="xfsszkflydm-title">--请选择--</span> <span class="caret pull-right" style="position: relative;top: 10px;"></span></a>
-                                </div>
-                                <input type="text" name="xfsszkflydm" id="xfsszkflydm" value="" class="validate_hidden" title="请选择消防设施状况分类" required/>
-                            </div>
+
                             <label class="col-sm-2 control-label">地球经度：</label>
                             <div class="col-sm-2">
                                 <input id="dqjd" name="dqjd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
@@ -88,7 +82,32 @@
                                 <input id="dqwd" name="dqwd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
                                        readonly="readonly" placeholder="请选择" title="请在地图上选择消火栓位置" required>
                             </div>
+
+                            <label class="col-sm-2 control-label">消火栓放置形式类别：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="xhsfzxslbdm" name="xhsfzxslbdm">
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">消防水带接口类型：</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="xfsdjklxdm" name="xfsdjklxdm">
+                                    <option value="">--请选择--</option>
+                                </select>
+                            </div>
+                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <div class="col-sm-4">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+                                    id="deptName" name="deptName" class="form-control" type="text"
+                                    style="cursor: pointer;" onclick="openDept()"
+                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">道路路口路段_简要情况：</label>
                             <div class="col-sm-10">
@@ -96,11 +115,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">消火栓放置形式类别：</label>
+                            <label class="col-sm-2 control-label">消防设施状况分类：</label>
                             <div class="col-sm-2">
-                                <select class="form-control" id="xhsfzxslbdm" name="xhsfzxslbdm">
-                                    <option value="">--请选择--</option>
-                                </select>
+                                <div class="XFSSZKFLYDM-DIV dropdown">
+                                    <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-white"  style="width: 100%;text-align: left;"><span id="xfsszkflydm-title">--请选择--</span> <span class="caret pull-right" style="position: relative;top: 10px;"></span></a>
+                                </div>
+                                <input type="text" name="xfsszkflydm" id="xfsszkflydm" value="" class="validate_hidden" title="请选择消防设施状况分类" required/>
                             </div>
                             <label class="col-sm-2 control-label">建造日期：</label>
                             <div class="col-sm-2">
@@ -114,12 +134,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">消防水带接口类型：</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="xfsdjklxdm" name="xfsdjklxdm">
-                                    <option value="">--请选择--</option>
-                                </select>
-                            </div>
+
                             <label class="col-sm-2 control-label">所属管网名称：</label>
                             <div class="col-sm-2">
                                 <input id="ssgwMc" name="ssgwMc" class="form-control" type="text">
@@ -170,20 +185,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">联系人：</label>
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <input id="lxrXm" name="lxrXm" class="form-control" type="text">
                             </div>
                             <label class="col-sm-2 control-label">联系电话：</label>
-                            <div class="col-sm-2">
+                            <div class="col-sm-4">
                                 <input id="lxrLxdh" name="lxrLxdh" class="form-control" type="text">
                             </div>
-                            <label class="col-sm-2 control-label">消防救援机构：</label>
-                            <div class="col-sm-2">
-                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
-                                    id="deptName" name="deptName" class="form-control" type="text"
-                                    style="cursor: pointer;" onclick="openDept()"
-                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
-                            </div>
+
                         </div>
 
                         <div class="form-group">

@@ -53,7 +53,15 @@
 			t.`ZDYPX`,
 			dept.`dwmc` XFJYJG,
 			d.`name` XFZBLX,
-			d1.`name` CLQWZTLB
+			d1.`name` CLQWZTLB,
+			t.GPS_VID    as gpsVid,
+			t.`GPS_VKEY` as gpsVkey,
+			t.`PMLX`,
+		    t.`CYSL`,
+		    t.`JSGD`,
+		    t.`BLL_NUM`,
+		    t.`PLL_NUM`,
+		    t.`ZPMZL`
 		FROM
 			jczy_xfcl t
 			LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
@@ -64,7 +72,7 @@
 	</select>
 
 
-	<select id="getMap" resultType="java.util.HashMap">
+	<select id="getMap" resultType="java.util.Map">
 		SELECT
 			t.`XFCL_TYWYSBM`,
 			t.`CLMC`,
@@ -114,7 +122,15 @@
 			t.`ZDYPX`,
 			dept.`dwmc` XFJYJG,
 			d.`name` XFZBLX,
-			d1.`name` CLQWZTLB
+			d1.`name` CLQWZTLB,
+			t.GPS_VID    as gpsVid,
+			t.`GPS_VKEY` as gpsVkey,
+			t.`PMLX`,
+			t.`CYSL`,
+			t.`JSGD`,
+			t.`BLL_NUM`,
+			t.`PLL_NUM`,
+			t.`ZPMZL`
 		FROM
 			jczy_xfcl t
 			LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
@@ -166,7 +182,15 @@
 		d.`name` XFZBLX,
 		d1.`name` CLQWZTLB,
 		d2.`name` XFCLZZGN,
-		d3.`name` XFCLDJ
+		d3.`name` XFCLDJ,
+		t.GPS_VID    as gpsVid,
+		t.`GPS_VKEY` as gpsVkey,
+		t.`PMLX`,
+		t.`CYSL`,
+		t.`JSGD`,
+		t.`BLL_NUM`,
+		t.`PLL_NUM`,
+		t.`ZPMZL`
 		FROM
 		jczy_xfcl t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
@@ -266,7 +290,15 @@
 		d.`name` XFZBLX,
 		d1.`name` CLQWZTLB,
 		d2.`name` XFCLZZGN,
-		d3.`name` XFCLDJ
+		d3.`name` XFCLDJ,
+		t.GPS_VID    as gpsVid,
+		t.`GPS_VKEY` as gpsVkey,
+		t.`PMLX`,
+		t.`CYSL`,
+		t.`JSGD`,
+		t.`BLL_NUM`,
+		t.`PLL_NUM`,
+		t.`ZPMZL`
 		FROM
 		jczy_xfcl t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
@@ -445,7 +477,15 @@
 			`FZR_TYWYSBM`,
 			`SHFW_DWMC`,
 			`DWSB`,
-			`ZDYPX`
+			`ZDYPX`,
+		    `GPS_VID`,
+		    `GPS_VKEY`,
+			`PMLX`,
+			`CYSL`,
+			`JSGD`,
+			`BLL_NUM`,
+			`PLL_NUM`,
+			`ZPMZL`
 		)
 		values
 		(
@@ -490,7 +530,15 @@
 			#{fzrTywysbm},
 			#{shfwDwmc},
 			#{dwsb},
-			#{zdypx}
+			#{zdypx},
+			#{gpsVid},
+			#{gpsVkey},
+			#{pmlx},
+			#{cysl},
+			#{jsgd},
+			#{bllNum},
+			#{pllNum},
+			#{zpmzl}
 		)
 	</insert>
 
@@ -541,7 +589,15 @@
 			<if test="shfwDwmc != null">`SHFW_DWMC` = #{shfwDwmc}, </if>
 			<if test="dwsb != null">`DWSB` = #{dwsb}, </if>
 			<if test="status != null">`status` = #{status}</if>
-			<if test="zdypx != null">`ZDYPX` = #{zdypx}</if>
+			<if test="zdypx != null">`ZDYPX` = #{zdypx},</if>
+			<if test="gpsVid != null">`GPS_VID` = #{gpsVid},</if>
+			<if test="gpsVkey != null">`GPS_VKEY` = #{gpsVkey}</if>
+			<if test="pmlx != null">`PMLX` = #{pmlx}, </if>
+			<if test="cysl != null">`CYSL` = #{cysl}, </if>
+			<if test="jsgd != null">`JSGD` = #{jsgd}, </if>
+			<if test="bllNum != null">`BLL_NUM` = #{bllNum}, </if>
+			<if test="pllNum != null">`PLL_NUM` = #{pllNum}, </if>
+			<if test="zpmzl != null">`ZPMZL` = #{zpmzl} </if>
 		</set>
 		where XFCL_TYWYSBM = #{xfclTywysbm}
 	</update>
@@ -559,6 +615,114 @@
 
 	<select id="findAllXfclTywysbm" resultType="String">
 		SELECT XFCL_TYWYSBM from jczy_xfcl
+	</select>
+
+
+    <update id="updateCar" parameterType="com.smart119.jczy.domain.XfclDO">
+        update jczy_xfcl
+        <set>
+            CLQWZTLBDM = #{clqwztlbdm}
+        </set>
+        where XFCL_TYWYSBM = #{xfclTywysbm}
+    </update>
+
+
+    <select id="selectPageVoApp" resultType="java.util.Map">
+        SELECT
+        XFCL_TYWYSBM,
+        dict1.`name` as XFZBLXDM,
+        dict2.`name` as XFCLZZGNDM,
+        dict3.`name` as CLQWZTLBDM,
+        dept.DWMC,
+        JDCHPHM,
+        SFDYCDCL_TYWYSBM
+        from jczy_xfcl xfcl
+        LEFT JOIN sys_dept dept
+        on dept.XFJYJG_TYWYSBM = xfcl.XFJYJG_TYWYSBM
+        LEFT JOIN sys_dict dict1
+        on dict1.`value`=xfcl.XFZBLXDM and dict1.type='XFZBLXDM'
+        LEFT JOIN sys_dict dict2
+        on dict2.`value`=xfcl.XFCLZZGNDM and dict2.type='XFCLZZGNDM'
+        LEFT JOIN sys_dict dict3
+        on dict3.`value`=xfcl.CLQWZTLBDM and dict3.type='CLQWZTLBDM'
+
+        <where>
+            and xfcl.status=0
+            <if test="params.searchContent != null and params.searchContent !=''">
+                and (dict2.`name` like '%${params.searchContent}%'
+                or dict3.`name` like '%${params.searchContent}%'
+                or dept.DWMC like '%${params.searchContent}%'
+                or xfcl.JDCHPHM like '%${params.searchContent}%'
+                or dict1.`name` like '%${params.searchContent}%'
+                )
+            </if>
+            <if test="params.sfdycdclTywysbm != null and params.sfdycdclTywysbm !=''">
+                and xfcl.SFDYCDCL_TYWYSBM = #{params.sfdycdclTywysbm}
+            </if>
+            <if test="params.deptList != null and params.deptList.size() > 0">and xfcl.XFJYJG_TYWYSBM in
+                <foreach collection="params.deptList" item="item" index="index" separator="," open="(" close=")">
+                    #{item.xfjyjgTywysbm}
+                </foreach>
+            </if>
+            <if test="params.clqwztlbdm != null and params.clqwztlbdm !=''">
+                and xfcl.CLQWZTLBDM = #{params.clqwztlbdm}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="getDpCarList" resultType="com.smart119.jczy.domain.XfclDO">
+        SELECT
+        c.XFCL_TYWYSBM,
+        c.CLMC,
+        c.JDCHPHM
+        FROM
+        jczy_xfcl c
+        LEFT JOIN jqxx_jqcjdp_car jqcjdp_car ON jqcjdp_car.XFJYCL_TYWYSBM = c.XFCL_TYWYSBM
+        LEFT JOIN jqxx_jqcjdp jqcjdp ON jqcjdp.JQCJDP_TYWYSBM = jqcjdp_car.JQCJDP_TYWYSBM
+        LEFT JOIN jqxx_jbxx jbxx ON jbxx.JQ_TYWYSBM = jqcjdp.JQ_TYWYSBM
+        WHERE 1=1
+        <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and c.XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+        <if test="jqbh != null and jqbh != ''">and jbxx.JQBH = #{jqbh}</if>
+    </select>
+
+    <select id="getDpCarListByCcbh" resultType="com.smart119.jczy.domain.XfclDO">
+        SELECT
+        c.XFCL_TYWYSBM,
+        c.CLMC,
+        c.JDCHPHM
+        FROM
+        jczy_xfcl c
+        LEFT JOIN jqxx_jqcjdp_car jqcjdp_car ON jqcjdp_car.XFJYCL_TYWYSBM = c.XFCL_TYWYSBM
+        LEFT JOIN jqxx_jqcjdp_dz dz on jqcjdp_car.DPDZ_TYWYSBM = dz.DPDZ_TYWYSBM
+        LEFT JOIN jqxx_jqcjdp jqcjdp ON jqcjdp.JQCJDP_TYWYSBM = dz.DP_TYWYSBM
+        LEFT JOIN jqxx_jbxx jbxx ON jbxx.JQ_TYWYSBM = jqcjdp.JQ_TYWYSBM
+        WHERE 1=1
+        <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and c.XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+        <if test="ccbh != null and ccbh != ''">and dz.CDDH = #{ccbh}</if>
+    </select>
+
+
+    <select id="queryByDpdzTyywbs" resultType="java.lang.String">
+        SELECT cl.XFCL_TYWYSBM as xfclTywysbm
+        FROM jczy_xfcl cl
+                 LEFT JOIN jczy_zzdy_xfcl zzdycl ON cl.XFCL_TYWYSBM = zzdycl.XFCL_TYWYSBM
+                 LEFT JOIN jqxx_jqcjdp_zzdy dpzzdy on zzdycl.ZZDY_TYWYBS = dpzzdy.ZZDY_TYWYBS
+                 LEFT JOIN jqxx_jqcjdp_dz dz on dz.DPDZ_TYWYSBM = dpzzdy.DPDZ_TYWYSBM
+        where dz.DPDZ_TYWYSBM = #{dpdzTywysbm}
+    </select>
+
+
+    <update id="updateClqwztlbdm" parameterType="java.util.Map">
+        update jczy_xfcl set CLQWZTLBDM = #{clqwztlbdm} where XFCL_TYWYSBM in
+        <foreach collection="xfclTywysbms" item="xfclTywysbm" open="(" close=")" separator=",">
+            #{xfclTywysbm}
+        </foreach>
+    </update>
+
+
+	<select id="queryGPSParams" resultType="java.util.Map">
+
 	</select>
 
 </mapper>

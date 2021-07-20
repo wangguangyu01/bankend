@@ -64,6 +64,13 @@
                         <input id="jdccsyslbdmVal" th:value="${xfcl.jdccsyslbdm}" type="hidden">
 
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <div class="col-sm-2">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${xfcl.xfjyjgTywysbm}"> <input
+                                    id="deptName" name="deptName" class="form-control" type="text"
+                                    style="cursor: pointer;"
+                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${xfcl.xfjyjg}">
+                            </div>
                             <input type="hidden" id="childAttr" value="yes" class="xfzblxdm"/>
                             <label class="col-sm-2 control-label">车辆名称：</label>
                             <div class="col-sm-2">
@@ -76,20 +83,47 @@
                                 </div>
                                 <input type="hidden" name="xfzblxdm" id="xfzblxdm"  th:value="${xfcl.xfzblxdm}" title="请选择消防装备器材分类" required/>
                             </div>
+
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">消防车辆作战功能：</label>
                             <div class="col-sm-2">
                                 <select class="form-control" id="xfclzzgndm" name="xfclzzgndm" title="请选择消防车辆作战功能" required>
                                     <option value="">--请选择--</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <label class="col-sm-2 control-label">举升高度(米)：</label>
                             <div class="col-sm-2">
-                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${xfcl.xfjyjgTywysbm}"> <input
-                                    id="deptName" name="deptName" class="form-control" type="text"
-                                    style="cursor: pointer;"
-                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${xfcl.xfjyjg}">
+                                <input id="jsgd" name="jsgd" class="form-control" type="text" min="0" th:value="${xfcl.jsgd}">
+                            </div>
+                            <label class="col-sm-2 control-label">乘员数量(人)：</label>
+                            <div class="col-sm-2">
+                                <input id="cysl" name="cysl" class="form-control" type="text" min="0" th:value="${xfcl.cysl}">
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">泡沫类型：</label>
+                            <div class="col-sm-2">
+                                <input id="pmlx" name="pmlx" class="form-control" type="text" min="0" th:value="${xfcl.pmlx}">
+                            </div>
+                            <label class="col-sm-2 control-label">泵流量/升/秒：</label>
+                            <div class="col-sm-2">
+                                <input id="bllNum" name="bllNum" class="form-control" type="text" min="0" th:value="${xfcl.bllNum}">
+                            </div>
+                            <label class="col-sm-2 control-label">炮流量/升/秒：</label>
+                            <div class="col-sm-2">
+                                <input id="pllNum" name="pllNum" class="form-control" type="text" min="0" th:value="${xfcl.pllNum}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">载泡沫量/吨：</label>
+                            <div class="col-sm-2">
+                                <input id="zpmzl" name="zpmzl" class="form-control" type="text" min="0" th:value="${xfcl.zpmzl}">
                             </div>
                             <label class="col-sm-2 control-label">机动车号牌号码：</label>
                             <div class="col-sm-2">
@@ -100,6 +134,56 @@
                                 <input id="clsbdh" name="clsbdh" class="form-control" type="text" th:value="${xfcl.clsbdh}">
                             </div>
                         </div>
+
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">长度（米）：</label>
+                            <div class="col-sm-2">
+                                <input id="cd" name="cd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.cd, 0, 2)}"  type="text" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">宽度（米）：</label>
+                            <div class="col-sm-2">
+                                <input id="kd" name="kd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.kd, 0, 2)}" type="text" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">高度（米）：</label>
+                            <div class="col-sm-2">
+                                <input id="gd" name="gd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.gd, 0, 2)}" type="text" min="0">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">（最大）重量（吨）：</label>
+                            <div class="col-sm-2">
+                                <input id="zl" name="zl"  type="text"  th:value="${#numbers.formatDecimal(xfcl.zl, 0, 2)}" class="form-control">
+                            </div>
+                            <label class="col-sm-2 control-label">装载水_容积(吨)：</label>
+                            <div class="col-sm-2">
+                                <input id="zzsRj" name="zzsRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzsRj, 0, 2)}" min="0">
+                            </div>
+                            <label class="col-sm-2 control-label">机动车发动机（电动机）号：</label>
+                            <div class="col-sm-2">
+                                <input id="jdcfdjddjh" name="jdcfdjddjh" class="form-control" type="text" th:value="${xfcl.jdcfdjddjh}">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">出厂日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="ccrq" name="ccrq" placeholder="请选择出厂日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfcl.ccrq}==null?null:${#dates.format(xfcl.ccrq,'yyyy-MM-dd')}"/>
+                            </div>
+                            <label class="col-sm-2 control-label">装备日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="zbrq" name="zbrq" placeholder="请选择装备日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfcl.zbrq}==null?null:${#dates.format(xfcl.zbrq,'yyyy-MM-dd')}"/>
+                            </div>
+                            <label class="col-sm-2 control-label">报废日期：</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="laydate-icon layer-date form-control" id="bfrq" name="bfrq" placeholder="请选择报废日期"
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfcl.bfrq}==null?null:${#dates.format(xfcl.bfrq,'yyyy-MM-dd')}"/>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label">定位设备：</label>
                             <div class="col-sm-2">
@@ -134,27 +218,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">机动车发动机（电动机）号：</label>
+                            <label class="col-sm-2 control-label">装载A类泡沫_容积(升)：</label>
                             <div class="col-sm-2">
-                                <input id="jdcfdjddjh" name="jdcfdjddjh" class="form-control" type="text" th:value="${xfcl.jdcfdjddjh}">
+                                <input id="zzalpmRj" name="zzalpmRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzalpmRj, 0, 2)}" min="0">
                             </div>
-                            <label class="col-sm-2 control-label">长度（米）：</label>
+                            <label class="col-sm-2 control-label">装载B类泡沫_容积(升)：</label>
                             <div class="col-sm-2">
-                                <input id="cd" name="cd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.cd, 0, 2)}"  type="text" min="0">
-                            </div>
-                            <label class="col-sm-2 control-label">宽度（米）：</label>
-                            <div class="col-sm-2">
-                                <input id="kd" name="kd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.kd, 0, 2)}" type="text" min="0">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">高度（米）：</label>
-                            <div class="col-sm-2">
-                                <input id="gd" name="gd" class="form-control" th:value="${#numbers.formatDecimal(xfcl.gd, 0, 2)}" type="text" min="0">
-                            </div>
-                            <label class="col-sm-2 control-label">重量（吨）：</label>
-                            <div class="col-sm-2">
-                                <input id="zl" name="zl"  type="text"  th:value="${#numbers.formatDecimal(xfcl.zl, 0, 2)}" class="form-control">
+                                <input id="zzblpmRj" name="zzblpmRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzblpmRj, 0, 2)}" min="0">
                             </div>
                             <label class="col-sm-2 control-label">生产厂家：</label>
                             <div class="col-sm-2">
@@ -224,37 +294,6 @@
                             <label class="col-sm-2 control-label">备注：</label>
                             <div class="col-sm-10">
                                 <textarea id="bz" name="bz" class="form-control" th:text="${xfcl.bz}"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">装载水_容积(吨)：</label>
-                            <div class="col-sm-2">
-                                <input id="zzsRj" name="zzsRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzsRj, 0, 2)}" min="0">
-                            </div>
-                            <label class="col-sm-2 control-label">装载A类泡沫_容积(升)：</label>
-                            <div class="col-sm-2">
-                                <input id="zzalpmRj" name="zzalpmRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzalpmRj, 0, 2)}" min="0">
-                            </div>
-                            <label class="col-sm-2 control-label">装载B类泡沫_容积(升)：</label>
-                            <div class="col-sm-2">
-                                <input id="zzblpmRj" name="zzblpmRj" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfcl.zzblpmRj, 0, 2)}" min="0">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">出厂日期：</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="laydate-icon layer-date form-control" id="ccrq" name="ccrq" placeholder="请选择出厂日期"
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfcl.ccrq}==null?null:${#dates.format(xfcl.ccrq,'yyyy-MM-dd')}"/>
-                            </div>
-                            <label class="col-sm-2 control-label">装备日期：</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="laydate-icon layer-date form-control" id="zbrq" name="zbrq" placeholder="请选择装备日期"
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfcl.zbrq}==null?null:${#dates.format(xfcl.zbrq,'yyyy-MM-dd')}"/>
-                            </div>
-                            <label class="col-sm-2 control-label">报废日期：</label>
-                            <div class="col-sm-2">
-                                <input type="text" class="laydate-icon layer-date form-control" id="bfrq" name="bfrq" placeholder="请选择报废日期"
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" th:value="${xfcl.bfrq}==null?null:${#dates.format(xfcl.bfrq,'yyyy-MM-dd')}"/>
                             </div>
                         </div>
                         <div class="form-group">
