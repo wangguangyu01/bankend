@@ -4,20 +4,20 @@
 <mapper namespace="com.smart119.common.dao.DictDao">
 
     <select id="get" resultType="com.smart119.common.domain.DictDO">
-        select `id`
-             , `name`
-             , `value`
-             , `type`
-             , `description`
-             , `sort`
-             , `parent_id`
-             , `create_by`
-             , `create_date`
-             , `update_by`
-             , `update_date`
-             , `remarks`
-             , `del_flag`
-             , (SELECT count(bb.id) from sys_dict as bb where bb.parent_id = sys_dict.id) as `childNum`
+        select `id`,
+               `name`,
+               `value`,
+               `type`,
+               `description`,
+               `sort`,
+               `parent_id`,
+               `create_by`,
+               `create_date`,
+               `update_by`,
+               `update_date`,
+               `remarks`,
+               `del_flag`,
+               (SELECT count(bb.id) from sys_dict as bb where bb.parent_id = sys_dict.id) as `childNum`
         from sys_dict
         where id = #{value}
     </select>
