@@ -1,6 +1,5 @@
 package com.smart119.common.task;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.smart119.common.service.ExliveService;
 import com.smart119.jczy.dao.XfclDao;
 import com.smart119.jczy.domain.XfclDO;
@@ -9,8 +8,7 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
-import sun.jvm.hotspot.opto.HaltNode;
+
 
 import javax.annotation.Resource;
 import java.util.HashMap;
