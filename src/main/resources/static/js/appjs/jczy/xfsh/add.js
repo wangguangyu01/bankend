@@ -42,36 +42,40 @@ function validateRule() {
                 required : true,
                 maxlength:100
             },
-            ssldMc : {
+            // ssldMc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            gd : {
                 required : true,
                 maxlength:100
             },
-            ssgwMc : {
-                required : true,
-                maxlength:100
-            },
-            gsDwmc : {
-                required : true,
-                maxlength:100
-            },
-            glDwmc : {
-                required : true,
-                maxlength:100
-            },
-            wbDwmc : {
-                required : true,
-                maxlength:100
-            },
-            lxrXm : {
-                required : true,
-                maxlength:50
-            },
-            lxrLxdh : {
-                required : true,
-                digits:true,
-                mobile:true,
-                maxlength:18
-            }
+            // ssgwMc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            // gsDwmc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            // glDwmc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            // wbDwmc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            // lxrXm : {
+            //     required : true,
+            //     maxlength:50
+            // },
+            // lxrLxdh : {
+            //     required : true,
+            //     digits:true,
+            //     mobile:true,
+            //     maxlength:18
+            // }
         },
         messages : {
             mc : {
@@ -80,28 +84,31 @@ function validateRule() {
             dzmc : {
                 required :  "请输入消防水鹤地址"
             },
-            ssldMc : {
-                required :  "请输入所属路段名称"
+            // ssldMc : {
+            //     required :  "请输入所属路段名称"
+            // },
+            gd : {
+                required :  "请输入高度"
             },
-            ssgwMc : {
-                required :  "请输入所属管网名称"
-            },
-            gsDwmc : {
-                required :  "请输入供水单位名称"
-            },
-            glDwmc : {
-                required :  "请输入管理单位名称"
-            },
-            wbDwmc : {
-                required :  "请输入维保单位名称"
-            },
-            lxrXm : {
-                required :  "请输入联系人"
-            },
-            lxrLxdh : {
-                required :  "请输入联系电话",
-                digits : "请输入数字格式"
-            }
+            // ssgwMc : {
+            //     required :  "请输入所属管网名称"
+            // },
+            // gsDwmc : {
+            //     required :  "请输入供水单位名称"
+            // },
+            // glDwmc : {
+            //     required :  "请输入管理单位名称"
+            // },
+            // wbDwmc : {
+            //     required :  "请输入维保单位名称"
+            // },
+            // lxrXm : {
+            //     required :  "请输入联系人"
+            // },
+            // lxrLxdh : {
+            //     required :  "请输入联系电话",
+            //     digits : "请输入数字格式"
+            // }
 
         }
     })

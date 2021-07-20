@@ -18,17 +18,18 @@
                             <div class="col-sm-2">
                                 <input id="dzmc" name="dzmc" class="form-control" type="text">
                             </div>
-                            <label class="col-sm-2 control-label">水源可用状态：</label>
-                            <div class="col-sm-2">
-                                <select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择水源可用状态" required>
-                                    <option value="">--请选择--</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-2 control-label">高度（米）：</label>
                             <div class="col-sm-2">
                                 <input id="gd" name="gd" class="form-control" type="text" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <div class="col-sm-2">
+                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
+                                    id="deptName" name="deptName" class="form-control" type="text"
+                                    style="cursor: pointer;" onclick="openDept()"
+                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
                             </div>
                             <label class="col-sm-2 control-label">地球经度：</label>
                             <div class="col-sm-2">
@@ -111,12 +112,11 @@
                             <div class="col-sm-2">
                                 <input id="lxrLxdh" name="lxrLxdh" class="form-control" type="text">
                             </div>
-                            <label class="col-sm-2 control-label">消防救援机构：</label>
+                            <label class="col-sm-2 control-label">水源可用状态：</label>
                             <div class="col-sm-2">
-                                <input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
-                                    id="deptName" name="deptName" class="form-control" type="text"
-                                    style="cursor: pointer;" onclick="openDept()"
-                                    readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+                                <select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择水源可用状态">
+                                    <option value="">--请选择--</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -144,12 +144,12 @@
                             <label class="col-sm-2 control-label">建造日期：</label>
                             <div class="col-sm-2">
                                 <input type="text" class="laydate-icon layer-date form-control" id="jizRq" name="jizRq" placeholder="请选择建造日期"
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期" required/>
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期" />
                             </div>
                             <label class="col-sm-2 control-label">启用日期：</label>
                             <div class="col-sm-2">
                                 <input type="text" class="laydate-icon layer-date form-control" id="qyRq" name="qyRq" placeholder="请选择启用日期"
-                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期" required/>
+                                       onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期" />
                             </div>
                         </div>
                         <div class="form-group">

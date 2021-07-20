@@ -42,58 +42,58 @@ public class XfshDO implements Serializable {
 	//水源可用状态类别代码
 	private String sykyztlbdm;
 	//所属路段_名称
-	@NotBlank(message = "所属路段名称不能为空")
-	@Length(min= 1, max=100, message = "所属路段名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "所属路段名称不能为空")
+//	@Length(min= 1, max=100, message = "所属路段名称超出范围限制{min}-{max}")
 	private String ssldMc;
 	//所属管网_名称
-	@NotBlank(message = "所属管网名称不能为空")
-	@Length(min= 1, max=100, message = "所属管网名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "所属管网名称不能为空")
+//	@Length(min= 1, max=100, message = "所属管网名称超出范围限制{min}-{max}")
 	private String ssgwMc;
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
 	//管网直径_宽度
-	@DecimalMin(value = "0", message = "体积最小是0")
-	@DecimalMax(value = "999999.99", message = "体积最大是999999.99")
+//	@DecimalMin(value = "0", message = "体积最小是0")
+//	@DecimalMax(value = "999999.99", message = "体积最大是999999.99")
 	private Double gwzjKd;
 	//管网_压力
-	@DecimalMin(value = "0", message = "管网压力最小是0")
-	@DecimalMax(value = "999999.99", message = "管网压力最大是999999.99")
+//	@DecimalMin(value = "0", message = "管网压力最小是0")
+//	@DecimalMax(value = "999999.99", message = "管网压力最大是999999.99")
 	private Double gwYl;
 	//流量
-	@DecimalMin(value = "0", message = "流量最小是0")
-	@DecimalMax(value = "999999.99", message = "流量最大是999999.99")
+//	@DecimalMin(value = "0", message = "流量最小是0")
+//	@DecimalMax(value = "999999.99", message = "流量最大是999999.99")
 	private Double ll;
 	//进水管直径_宽度
-	@DecimalMin(value = "0", message = "进水管直径宽度最小是0")
-	@DecimalMax(value = "999999.99", message = "进水管直径宽度最大是999999.99")
+//	@DecimalMin(value = "0", message = "进水管直径宽度最小是0")
+//	@DecimalMax(value = "999999.99", message = "进水管直径宽度最大是999999.99")
 	private Double jsgzjKd;
 	//出水管直径_宽度
-	@DecimalMin(value = "0", message = "出水管直径宽度最小是0")
-	@DecimalMax(value = "999999.99", message = "出水管直径宽度最大是999999.99")
+//	@DecimalMin(value = "0", message = "出水管直径宽度最小是0")
+//	@DecimalMax(value = "999999.99", message = "出水管直径宽度最大是999999.99")
 	private Double csgzjKd;
 	//加水车道数_数量
-	@DecimalMin(value = "0", message = "加水车道数数量最小是0")
-	@DecimalMax(value = "999999.99", message = "加水车道数数量最大是999999.99")
+//	@DecimalMin(value = "0", message = "加水车道数数量最小是0")
+//	@DecimalMax(value = "999999.99", message = "加水车道数数量最大是999999.99")
 	private Double jscdsSl;
 	//供水_单位名称
-	@NotBlank(message = "供水单位名称不能为空")
-	@Length(min= 1, max=100, message = "供水单位名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "供水单位名称不能为空")
+//	@Length(min= 1, max=100, message = "供水单位名称超出范围限制{min}-{max}")
 	private String gsDwmc;
 	//管理_单位名称
-	@NotBlank(message = "管理单位名称不能为空")
-	@Length(min= 1, max=100, message = "管理单位名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "管理单位名称不能为空")
+//	@Length(min= 1, max=100, message = "管理单位名称超出范围限制{min}-{max}")
 	private String glDwmc;
 	//维保_单位名称
-	@NotBlank(message = "维保单位名称不能为空")
-	@Length(min= 1, max=100, message = "维保单位名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "维保单位名称不能为空")
+//	@Length(min= 1, max=100, message = "维保单位名称超出范围限制{min}-{max}")
 	private String wbDwmc;
 	//联系人
-	@NotBlank(message = "联系人不能为空")
-	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
+//	@NotBlank(message = "联系人不能为空")
+//	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
 	private String lxrXm;
 	//联系电话
-	@PhoneValidator(message = "联系电话格式错误")
-	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
+//	@PhoneValidator(message = "联系电话格式错误")
+//	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String lxrLxdh;
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
