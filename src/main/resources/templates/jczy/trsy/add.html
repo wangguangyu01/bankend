@@ -10,39 +10,16 @@
                 <div class="ibox-content">
                     <form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">名称：</label>
+                            <label class="col-sm-2 control-label">天然水源名称：</label>
                             <div class="col-sm-4">
                                 <input id="mc" name="mc" class="form-control" type="text">
                             </div>
-							<label class="col-sm-2 control-label">地址名称：</label>
+							<label class="col-sm-2 control-label">天然水源地址：</label>
 							<div class="col-sm-4">
 								<input id="dzmc" name="dzmc" class="form-control" type="text">
 							</div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">高度（米）：</label>
-                            <div class="col-sm-4">
-                                <input id="gd" name="gd" class="form-control" type="text" min="0">
-                            </div>
-							<label class="col-sm-2 control-label">水源类型：</label>
-							<div class="col-sm-4">
-								<select data-placeholder="水源类型" name="sylxdm" id="sylxdm" title="水源类型"
-										class="form-control chosen-select" tabindex="2" required>
-									<option value="">--请选择水源类型--</option>
-								</select>
-							</div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">容积（吨）：</label>
-                            <div class="col-sm-4">
-                                <input id="rj" name="rj" class="form-control" type="text" min="0">
-                            </div>
-							<label class="col-sm-2 control-label">面积（平方米）：</label>
-							<div class="col-sm-4">
-								<input id="mj" name="mj" class="form-control" type="text" min="0">
-							</div>
-                        </div>
-                        <div class="form-group">
+						<div class="form-group">
 							<label class="col-sm-2 control-label">地球经度：</label>
 							<div class="col-sm-4">
 								<input id="dqjd" name="dqjd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
@@ -52,6 +29,47 @@
 							<div class="col-sm-4">
 								<input id="dqwd" name="dqwd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
 									   readonly="readonly" placeholder="请选择" title="请在地图上选择天然水源位置" required>
+							</div>
+						</div>
+                        <div class="form-group">
+							<label class="col-sm-2 control-label">水源类型：</label>
+							<div class="col-sm-4">
+								<select data-placeholder="水源类型" name="sylxdm" id="sylxdm" title="水源类型"
+										class="form-control chosen-select" tabindex="2" required>
+									<option value="">--请选择水源类型--</option>
+								</select>
+							</div>
+							<label class="col-sm-2 control-label">水源可用状态：</label>
+							<div class="col-sm-4">
+								<select data-placeholder="水源可用状态类别" name="sykyztlbdm" id="sykyztlbdm" title="水源可用状态"
+										class="form-control chosen-select" tabindex="2" required>
+									<option value="">--请选择水源可用状态--</option>
+								</select>
+							</div>
+                        </div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">有无枯水期：</label>
+							<div class="col-sm-4">
+								<label class="radio-inline">
+									<input type="radio" name="ywksqPdbz" value="0" checked/> 有
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="ywksqPdbz" value="1"/> 无
+								</label>
+							</div>
+							<label class="col-sm-2 control-label">枯水期跨度简要情况：</label>
+							<div class="col-sm-4">
+								<textarea id="ksqkdJyqk" name="ksqkdJyqk" class="form-control"></textarea>
+							</div>
+						</div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">容积（吨）：</label>
+                            <div class="col-sm-4">
+                                <input id="rj" name="rj" class="form-control" type="text" min="0">
+                            </div>
+							<label class="col-sm-2 control-label">面积（平方米）：</label>
+							<div class="col-sm-4">
+								<input id="mj" name="mj" class="form-control" type="text" min="0">
 							</div>
                         </div>
                         <div class="form-group">
@@ -67,30 +85,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">水源可用状态：</label>
-                            <div class="col-sm-4">
-								<select data-placeholder="水源可用状态类别" name="sykyztlbdm" id="sykyztlbdm" title="水源可用状态"
-										class="form-control chosen-select" tabindex="2" required>
-									<option value="">--请选择水源可用状态--</option>
-								</select>
-                            </div>
-							<label class="col-sm-2 control-label">有无枯水期：</label>
+							<label class="col-sm-2 control-label">高度（米）：</label>
 							<div class="col-sm-4">
-								<label class="radio-inline">
-									<input type="radio" name="ywksqPdbz" value="0"/> 有
-								</label>
-								<label class="radio-inline">
-									<input type="radio" name="ywksqPdbz" value="1"/> 无
-								</label>
+								<input id="gd" name="gd" class="form-control" type="text" min="0">
 							</div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">枯水期跨度简要情况：</label>
-                            <div class="col-sm-10">
-								<textarea id="ksqkdJyqk" name="ksqkdJyqk" class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
 							<label class="col-sm-2 control-label">消防救援机构：</label>
 							<div class="col-sm-2">
 								<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
@@ -125,18 +123,18 @@
 							<label class="col-sm-2 control-label">建造日期：</label>
 							<div class="col-sm-2">
 								<input type="text" class="laydate-icon layer-date form-control" id="jizRq" name="jizRq" placeholder="请选择建造日期"
-									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期" required/>
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期" />
 							</div>
 							<label class="col-sm-2 control-label">启用日期：</label>
 							<div class="col-sm-2">
 								<input type="text" class="laydate-icon layer-date form-control" id="qyRq" name="qyRq" placeholder="请选择启用日期"
-									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期" required/>
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期" />
 							</div>
                         </div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">实景图：</label>
 							<div class="col-sm-4">
-								<input id='input-id' multiple type="file" name="sjFile" data-show-caption="true"/>
+								<input id='input-id' multiple type="file" name="sjFile" data-show-caption="true" required />
 							</div>
 							<label class="col-sm-2 control-label">方位图：</label>
 							<div class="col-sm-4">

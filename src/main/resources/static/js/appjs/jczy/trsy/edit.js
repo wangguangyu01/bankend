@@ -44,14 +44,14 @@ function validateRule() {
                 required : true,
                 maxlength:100
             },
-            szqkJyqk : {
-                required : true,
-                maxlength:300
-            },
-            sjbhJyqk : {
-                required : true,
-                maxlength:300
-            },
+            // szqkJyqk : {
+            //     required : true,
+            //     maxlength:300
+            // },
+            // sjbhJyqk : {
+            //     required : true,
+            //     maxlength:300
+            // },
             ksqkdJyqk : {
                 required : true,
                 maxlength:300
@@ -64,12 +64,12 @@ function validateRule() {
             dzmc : {
                 required :  "请输入天然水源地址"
             },
-            szqkJyqk : {
-                required :  "请输入水质情况简要情况"
-            },
-            sjbhJyqk : {
-                required :  "请输入四季变化简要情况"
-            },
+            // szqkJyqk : {
+            //     required :  "请输入水质情况简要情况"
+            // },
+            // sjbhJyqk : {
+            //     required :  "请输入四季变化简要情况"
+            // },
             ksqkdJyqk : {
                 required :  "请输入枯水期跨度简要情况"
             }

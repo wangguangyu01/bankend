@@ -27,8 +27,8 @@ public class TrsyDO implements Serializable {
 	@Length(min= 1, max=100, message = "天然水源名称超出范围限制{min}-{max}")
 	private String mc;
 	//高度
-	@DecimalMin(value = "0", message = "高度最小是0")
-	@DecimalMax(value = "999999.99", message = "高度最大是999999.99")
+//	@DecimalMin(value = "0", message = "高度最小是0")
+//	@DecimalMax(value = "999999.99", message = "高度最大是999999.99")
 	private Double gd;
 	//水源类型代码
 	private String sylxdm;
@@ -37,24 +37,24 @@ public class TrsyDO implements Serializable {
 	@Length(min= 1, max=100, message = "天然水源地址超出范围限制{min}-{max}")
 	private String dzmc;
 	//容积
-	@DecimalMin(value = "0", message = "容积最小是0")
-	@DecimalMax(value = "999999.99", message = "容积最大是999999.99")
+//	@DecimalMin(value = "0", message = "容积最小是0")
+//	@DecimalMax(value = "999999.99", message = "容积最大是999999.99")
 	private Double rj;
 	//面积
-	@DecimalMin(value = "0", message = "面积最小是0")
-	@DecimalMax(value = "999999.99", message = "面积最大是999999.99")
+//	@DecimalMin(value = "0", message = "面积最小是0")
+//	@DecimalMax(value = "999999.99", message = "面积最大是999999.99")
 	private Double mj;
 	//地球经度
 	private Double dqjd;
 	//地球纬度
 	private Double dqwd;
 	//水质情况_简要情况
-	@NotBlank(message = "水质情况简要情况不能为空")
-	@Length(min= 1, max=300, message = "水质情况简要情况超出范围限制{min}-{max}")
+//	@NotBlank(message = "水质情况简要情况不能为空")
+//	@Length(min= 1, max=300, message = "水质情况简要情况超出范围限制{min}-{max}")
 	private String szqkJyqk;
 	//四季变化_简要情况
-	@NotBlank(message = "四季变化简要情况不能为空")
-	@Length(min= 1, max=300, message = "四季变化简要情况超出范围限制{min}-{max}")
+//	@NotBlank(message = "四季变化简要情况不能为空")
+//	@Length(min= 1, max=300, message = "四季变化简要情况超出范围限制{min}-{max}")
 	private String sjbhJyqk;
 	//水源可用状态类别代码
 	private String sykyztlbdm;
