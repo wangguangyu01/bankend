@@ -2,6 +2,49 @@
 <html>
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<style type="text/css">
+	.dropdown-submenu {
+		position: relative;
+	}
+	.dropdown-submenu > .dropdown-menu {
+		top: 0;
+		left: 100%;
+		margin-top: -6px;
+		margin-left: -1px;
+		-webkit-border-radius: 0 6px 6px 6px;
+		-moz-border-radius: 0 6px 6px;
+		border-radius: 0 6px 6px 6px;
+	}
+	.dropdown-submenu:hover > .dropdown-menu {
+		display: block;
+	}
+	.dropdown-submenu > a:after {
+		display: block;
+		content: " ";
+		float: right;
+		width: 0;
+		height: 0;
+		border-color: transparent;
+		border-style: solid;
+		border-width: 5px 0 5px 5px;
+		border-left-color: #ccc;
+		margin-top: 5px;
+		margin-right: -10px;
+	}
+	.dropdown-submenu:hover > a:after {
+		border-left-color: #fff;
+	}
+	.dropdown-submenu.pull-left {
+		float: none;
+	}
+	.dropdown-submenu.pull-left > .dropdown-menu {
+		left: -100%;
+		margin-left: 10px;
+		-webkit-border-radius: 6px 0 6px 6px;
+		-moz-border-radius: 6px 0 6px 6px;
+		border-radius: 6px 0 6px 6px;
+	}
+</style>
 <body class="gray-bg">
 	<div class="wrapper wrapper-content ">
 		<div class="row">
@@ -14,12 +57,7 @@
 								<div class="col-sm-4">
 									<input id="xm" name="xm" class="form-control" type="text">
 								</div>
-								<label class="col-sm-2 control-label">公民身份号码：</label>
-								<div class="col-sm-4">
-									<input id="gmsfhm" name="gmsfhm" class="form-control" type="text" >
-								</div>
-							</div>
-							<div class="form-group">
+
 								<label class="col-sm-2 control-label">性别：</label>
 								<div class="col-sm-4">
 									<select data-placeholder="性别" name="xbdm" id="xbdm" title="性别"
@@ -27,54 +65,65 @@
 										<option value="">--选择类别--</option>
 									</select>
 								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">公民身份号码：</label>
+								<div class="col-sm-4">
+									<input id="gmsfhm" name="gmsfhm" class="form-control" type="text" >
+								</div>
 								<label class="col-sm-2 control-label">学历：</label>
 								<div class="col-sm-4">
+									<input type="hidden" id="childAttr" value="yes" class="xldm"/>
 									<div class="XLDM-DIV dropdown">
 										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xldm-title">选择学历</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+											<span id="xldm-title">--请选择--</span>
+											<span class="caret pull-right " style="position: relative;top: 10px;"></span>
 										</a>
+										<input type="hidden" name="xldm" id="xldm" value="" title="请选择学历" required />
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">消防岗位类别：</label>
+								<label class="col-sm-2 control-label">联系电话：</label>
 								<div class="col-sm-4">
-									<input type="hidden" name="xfgwlbdm" id="xfgwlbdm" value="" />
-									<div class="XFGWFLYDM-DIV dropdown">
+									<input id="yddh" name="yddh" class="form-control" type="text">
+								</div>
+
+								<label class="col-sm-2 control-label">单位名称：</label>
+								<div class="col-sm-4">
+									<input id="dwmc" name="dwmc" class="form-control" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+
+								<label class="col-sm-2 control-label">是否队伍内部专家：</label>
+								<div class="col-sm-4">
+
+									<select data-placeholder="是否队伍内部专家" name="sfdwnbzjPdbz" title="是否队伍内部专家" id="sfdwnbzjPdbz"
+											class="form-control chosen-select" tabindex="2" required>
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">消防专家领域类别：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xfzjlylbdm" id="xfzjlylbdm" value="" />
+									<div class="XFZJLYLBDM-DIV dropdown">
 										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xfgwlbdm-title">选择分类</span>
+											<span id="xfzjlylbdm-title">选择分类</span>
 											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
 										</a>
 									</div>
 								</div>
-								<label class="col-sm-2 control-label">出生_日期：</label>
-								<div class="col-sm-4">
-									<input type="text" class="laydate-icon layer-date form-control" id="csRq" name="csRq"  placeholder="请选择出生日期"
-										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly"/>
-								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">籍贯：</label>
-								<div class="col-sm-8" style="width:25%">
-									<select data-placeholder="省/直辖市" name="province" id="province" title="省/直辖市" onchange="getXzqhdm(this,'city')"
-											class="form-control chosen-select" tabindex="2" >
-										<option value="">--选择类别--</option>
-									</select>
+								<label class="col-sm-2 control-label">通信地址：</label>
+								<div class="col-sm-4">
+									<input id="txdz" name="txdz" class="form-control" type="text">
 								</div>
-								<div class="col-sm-8" style="width:25%">
-									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'jgdm')"
-											class="form-control chosen-select" tabindex="2" >
-										<option value="">--选择类别--</option>
-									</select>
-								</div>
-								<div class="col-sm-8" style="width:25%">
-									<select data-placeholder="区/县" name="jgdm" title="区/县" id="jgdm"
-											class="form-control chosen-select" tabindex="2" >
-										<option value="">--选择类别--</option>
-									</select>
-								</div>
+
 							</div>
+
 							<div class="form-group">
 
 								<label class="col-sm-2 control-label">行政区划：</label>
@@ -97,26 +146,61 @@
 									</select>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">籍贯：</label>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="省/直辖市" name="province" id="province" title="省/直辖市" onchange="getXzqhdm(this,'city')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'jgdm')"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+								<div class="col-sm-8" style="width:25%">
+									<select data-placeholder="区/县" name="jgdm" title="区/县" id="jgdm"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--选择类别--</option>
+									</select>
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防岗位类别：</label>
+								<div class="col-sm-4">
+									<input type="hidden" name="xfgwlbdm" id="xfgwlbdm" value="" />
+									<div class="XFGWFLYDM-DIV dropdown">
+										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
+											<span id="xfgwlbdm-title">选择分类</span>
+											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
+										</a>
+									</div>
+								</div>
+								<label class="col-sm-2 control-label">出生_日期：</label>
+								<div class="col-sm-4">
+									<input type="text" class="laydate-icon layer-date form-control" id="csRq" name="csRq"  placeholder="请选择出生日期"
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly"/>
+								</div>
+							</div>
+
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">居住_地址名称：</label>
 								<div class="col-sm-4">
 									<input id="jzhDzmc" name="jzhDzmc" class="form-control" type="text">
 								</div>
-								<label class="col-sm-2 control-label">通信地址：</label>
-								<div class="col-sm-4">
-									<input id="txdz" name="txdz" class="form-control" type="text">
-								</div>
-							</div>
-							<div class="form-group">
+
 								<label class="col-sm-2 control-label">邮政编码：</label>
 								<div class="col-sm-4">
 									<input id="yzbm" name="yzbm" class="form-control" type="text">
 								</div>
-								<label class="col-sm-2 control-label">联系电话：</label>
-								<div class="col-sm-4">
-									<input id="yddh" name="yddh" class="form-control" type="text">
-								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">家庭_联系电话：</label>
 								<div class="col-sm-4">
@@ -127,37 +211,15 @@
 									<input id="bgLxdh" name="bgLxdh" class="form-control" type="text">
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">单位名称：</label>
-								<div class="col-sm-4">
-									<input id="dwmc" name="dwmc" class="form-control" type="text">
-								</div>
-								<label class="col-sm-2 control-label">是否队伍内部专家：</label>
-								<div class="col-sm-4">
 
-									<select data-placeholder="是否队伍内部专家" name="sfdwnbzjPdbz" title="是否队伍内部专家" id="sfdwnbzjPdbz"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--选择类别--</option>
-									</select>
-								</div>
-							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">消防专家领域类别：</label>
-								<div class="col-sm-4">
-									<input type="hidden" name="xfzjlylbdm" id="xfzjlylbdm" value="" />
-									<div class="XFZJLYLBDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xfzjlylbdm-title">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
-								</div>
+
 								<label class="col-sm-2 control-label">消防救援机构：</label>
 								<div class="col-sm-4">
 									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden"> <input
 										id="xfjyjgTywysbmName" name="deptName" class="form-control" type="text"
 										style="cursor: pointer;" onclick="openDept('xfjyjgTywysbm')"
-										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required>
+										readonly="readonly" title="请选择消防救援机构" >
 								</div>
 							</div>
 

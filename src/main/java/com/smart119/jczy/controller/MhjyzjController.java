@@ -98,17 +98,21 @@ public class MhjyzjController extends BaseController {
 
 		model.addAttribute("xfjyjgTywysbm_name",deptService.findNameByTYWYSBM(mhjyzj.getXfjyjgTywysbm()));
 
+
 		String qh_city = dictService.findParentValue(mhjyzj.getXzqhdm());
 		String qh_province = dictService.findParentValue(qh_city);
 
 		model.addAttribute("qh_province", qh_province);  //区划代码-省
 		model.addAttribute("qh_city", qh_city);  //区划代码-市
 
-		String jg_city = dictService.findParentValue(mhjyzj.getJgdm());
-		String jg_province = dictService.findParentValue(jg_city);
+		if(mhjyzj.getJgdm()!=null && !"".equals(mhjyzj.getJgdm())){
+			String jg_city = dictService.findParentValue(mhjyzj.getJgdm());
+			String jg_province = dictService.findParentValue(jg_city);
 
-		model.addAttribute("jg_province", jg_province);  //籍贯代码-省
-		model.addAttribute("jg_city", jg_city);  //籍贯代码-市
+			model.addAttribute("jg_province", jg_province);  //籍贯代码-省
+			model.addAttribute("jg_city", jg_city);  //籍贯代码-市
+		}
+
 
 		Map m = new HashMap();
 		m.put("fid",mhjyzjTywysbm);

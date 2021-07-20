@@ -1,5 +1,8 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -9,15 +12,16 @@ import java.util.Date;
 
 
 /**
- * 
- * 
+ *
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-02-03 15:35:11
  */
+@Data
 public class JjyyDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//警情用语_通用唯一识别码
 	private String id;
 	//警情用语名称
@@ -36,6 +40,11 @@ public class JjyyDO implements Serializable {
 	private String cperson;
 	//状态 0:再用，1:删除
 	private Integer status;
+
+	/**
+	 *  警情分类代码
+	 */
+	private String jqfldm;
 
 	public String getId() {
 		return id;

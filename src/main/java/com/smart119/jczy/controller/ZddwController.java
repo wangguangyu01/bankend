@@ -131,7 +131,10 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@PostMapping("/save")
 	@RequiresPermissions("jczy:zddw:add")
-	public R save(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile, @Validated ZddwDO zddw,BindingResult bindingResult) throws Exception {
+	public R save(
+			@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile,
+			@RequestPart(value = "yuanFile", required = false) MultipartFile[] yuanFile,
+			@Validated ZddwDO zddw,BindingResult bindingResult) throws Exception {
 		if (bindingResult.hasErrors()) {
 			String bindingResultError = BindingResultError.getBindingResultError(zddw.getClass(), bindingResult);
 			if (StringUtils.isNotBlank(bindingResultError)) {
@@ -146,6 +149,10 @@ public class ZddwController extends BaseController{
 		if(zddwFile!=null && zddwFile.length>0) {
 			attachmentService.ftpUpload(zddwFile, id, "zddwtp");
 		}
+		//预案附件
+		if(yuanFile!=null && yuanFile.length>0) {
+			attachmentService.ftpUpload(yuanFile, id, "yuanFile");
+		}
 		if(zddwService.save(zddw)>0){
 			return R.ok();
 		}
@@ -157,7 +164,10 @@ public class ZddwController extends BaseController{
 	@ResponseBody
 	@RequestMapping("/update")
 	@RequiresPermissions("jczy:zddw:edit")
-	public R update(@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile,@Validated ZddwDO zddw,BindingResult bindingResult) throws Exception {
+	public R update(
+			@RequestPart(value = "zddwFile", required = false) MultipartFile[] zddwFile,
+			@RequestPart(value = "yuanFile", required = false) MultipartFile[] yuanFile,
+			@Validated ZddwDO zddw,BindingResult bindingResult) throws Exception {
 		if (bindingResult.hasErrors()) {
 			String bindingResultError = BindingResultError.getBindingResultError(zddw.getClass(), bindingResult);
 			if (StringUtils.isNotBlank(bindingResultError)) {
@@ -167,6 +177,10 @@ public class ZddwController extends BaseController{
 		}
 		if(zddwFile!=null && zddwFile.length>0) {
 			attachmentService.ftpUpload(zddwFile, zddw.getZddwTywysbm(), "zddwtp");
+		}
+		//预案附件
+		if(yuanFile!=null && yuanFile.length>0) {
+			attachmentService.ftpUpload(yuanFile, zddw.getZddwTywysbm(), "yuanFile");
 		}
 		zddwService.update(zddw);
 		return R.ok();

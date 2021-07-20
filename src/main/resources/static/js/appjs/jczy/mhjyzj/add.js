@@ -1,11 +1,12 @@
 $().ready(function() {
 	validateRule();
+    getSelectAll("XLDM","XLDM-DIV","xldm","xldm-title");  //学历代码
     getSelectByType("XBDM","xbdm",null);  //性别代码
     getSelectByType("XZQHDM","province",null);  //籍贯（省）级联
     getSelectByType("XZQHDM","province2",null);  //区划代码（省）级联
     getSelectByType("s_f","sfdwnbzjPdbz",null);  //是否为队伍专家
 
-    getSelectAll("XLDM","XLDM-DIV","xldm","xldm-title");  //学历代码
+
     getSelectAll("XFGWFLYDM","XFGWFLYDM-DIV","xfgwlbdm","xfgwlbdm-title");  //消防岗位分类与代码
     getSelectAll("XFZJLYLBDM","XFZJLYLBDM-DIV","xfzjlylbdm","xfzjlylbdm-title");  //消防专家领域类别
     initFileInput("input-id");
@@ -49,6 +50,7 @@ $.validator.setDefaults({
 });
 function update() {
 
+
     $("#signupForm").ajaxSubmit({
         type : "POST",
         url : "/jczy/mhjyzj/save",
@@ -64,6 +66,8 @@ function update() {
             }
         }
     })
+
+
 }
 
 function validateRule() {
@@ -75,7 +79,7 @@ function validateRule() {
                 maxlength:50
             },
             gmsfhm : {
-                isIdentity : true
+                required : true
             },
             txdz : {
                 required : true,
@@ -115,6 +119,9 @@ function validateRule() {
             },
             dwmc : {
                 required : "请输入单位名称"
+            },
+            gmsfhm : {
+                required : "请输入身份号码"
             }
         }
     })
@@ -202,5 +209,22 @@ function initFileInput(ctrlName) {
             {caption: "Lighthouse.jpg", size: 549000, width: "120px", url: "/file-upload-batch/2", key: 2},
         ],
     })
+
+}
+
+
+function addChildAttr(id){
+    var input = $("#"+id);
+
+    var html = "";
+    html += '<div class="form-group cllxSX" style="background-color:#eee">';
+    html += '<label class="col-sm-2 control-label">请选择学历</label>';
+    html += '</div>';
+
+
+    input.parent().parent().after(html);
+
+
+
 
 }

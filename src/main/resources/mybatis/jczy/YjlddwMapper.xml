@@ -21,6 +21,7 @@
         t.`cdate`,
         t.`cperson`,
         t.`status`,
+        t.`BZNL_JYQK`,
         dept.`dwmc` XFJYJG
         FROM
         jczy_yjlddw t
@@ -46,6 +47,7 @@
         t.`cdate`,
         t.`cperson`,
         t.`status`,
+        t.`BZNL_JYQK`,
         d.`name` area,
         d1.`name` city,
         d2.`name` province,
@@ -137,7 +139,8 @@
 			`XZQHDM`, 
 			`cdate`, 
 			`cperson`, 
-			`status`
+			`status`,
+			`BZNL_JYQK`
 		)
 		values
 		(
@@ -156,7 +159,8 @@
 			#{xzqhdm}, 
 			#{cdate}, 
 			#{cperson}, 
-			#{status}
+			#{status},
+			#{bznlJyqk}
 		)
 	</insert>
 
@@ -178,6 +182,7 @@
             <if test="cdate != null">`cdate` = #{cdate},</if>
             <if test="cperson != null">`cperson` = #{cperson},</if>
             <if test="status != null">`status` = #{status}</if>
+            <if test="bznlJyqk != null">`BZNL_JYQK` = #{bznlJyqk}</if>
         </set>
         where YJLDDW_TYWYSBM = #{yjlddwTywysbm}
     </update>
