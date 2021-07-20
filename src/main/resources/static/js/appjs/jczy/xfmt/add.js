@@ -41,26 +41,30 @@ function validateRule() {
                 required : true,
                 maxlength:100
             },
-            szsyMc : {
-                required : true,
-                maxlength:100
-            },
-            ssldMc : {
-                required : true,
-                maxlength:100
-            },
-            qsxsJyqk : {
-                required : true,
-                maxlength:300
-            },
-            tcwzDdmc : {
-                required : true,
-                maxlength:100
-            },
-            glDwmc : {
-                required : true,
-                maxlength:100
-            }
+			qsGd:{
+				required : true,
+				maxlength:100
+			},
+            // szsyMc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            // ssldMc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            // qsxsJyqk : {
+            //     required : true,
+            //     maxlength:300
+            // },
+            // tcwzDdmc : {
+            //     required : true,
+            //     maxlength:100
+            // },
+            // glDwmc : {
+            //     required : true,
+            //     maxlength:100
+            // }
         },
         messages : {
             mc : {
@@ -69,21 +73,24 @@ function validateRule() {
             dzmc : {
                 required :  "请输入消防码头地址"
             },
-            szsyMc : {
-                required :  "请输入所在水源名称"
-            },
-            ssldMc : {
-                required :  "请输入所属路段名称"
-            },
-            qsxsJyqk : {
-                required :  "请输入取水形式简要情况"
-            },
-            tcwzDdmc : {
-                required :  "请输入停车位置地点名称"
-            },
-            glDwmc : {
-                required :  "请输入管理单位名称"
-            }
+			qsGd : {
+				required :  "请输入取水高度"
+			},
+            // szsyMc : {
+            //     required :  "请输入所在水源名称"
+            // },
+            // ssldMc : {
+            //     required :  "请输入所属路段名称"
+            // },
+            // qsxsJyqk : {
+            //     required :  "请输入取水形式简要情况"
+            // },
+            // tcwzDdmc : {
+            //     required :  "请输入停车位置地点名称"
+            // },
+            // glDwmc : {
+            //     required :  "请输入管理单位名称"
+            // }
         }
     })
 }

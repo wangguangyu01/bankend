@@ -19,16 +19,8 @@
 								<div class="col-sm-4">
 									<input id="mc" name="mc" class="form-control" type="text" th:value="${xfmt.mc}" />
 								</div>
-								<label class="col-sm-2 control-label">消防码头可用状态：</label>
-								<div class="col-sm-4">
-									<select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择可用状态" required >
-										<option value="">--请选择--</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
 								<label class="col-sm-2 control-label">地址名称：</label>
-								<div class="col-sm-10">
+								<div class="col-sm-4">
 									<input id="dzmc" name="dzmc" class="form-control" type="text" th:value="${xfmt.dzmc}">
 								</div>
 							</div>
@@ -42,6 +34,19 @@
 								<div class="col-sm-4">
 									<input id="dqwd" name="dqwd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
 										   readonly="readonly" placeholder="请选择" title="请在地图上选择消防码头位置" required th:value="${xfmt.dqwd}" >
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">取水高度（米）：</label>
+								<div class="col-sm-4">
+									<input id="qsGd" name="qsGd" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfmt.qsGd, 0, 2)}" min="0">
+								</div>
+								<label class="col-sm-2 control-label">消防救援机构：</label>
+								<div class="col-sm-2">
+									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${xfmt.xfjyjgTywysbm}"> <input
+										id="deptName" name="deptName" class="form-control" type="text"
+										style="cursor: pointer;" onclick="openDept()"
+										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${xfmt.xfjyjg}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -61,9 +66,11 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">取水高度（米）：</label>
+								<label class="col-sm-2 control-label">消防码头可用状态：</label>
 								<div class="col-sm-4">
-									<input id="qsGd" name="qsGd" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfmt.qsGd, 0, 2)}" min="0">
+									<select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择可用状态"  >
+										<option value="">--请选择--</option>
+									</select>
 								</div>
 								<label class="col-sm-2 control-label">水源标高差高度（米）：</label>
 								<div class="col-sm-4">
@@ -84,13 +91,6 @@
 								<label class="col-sm-2 control-label">管理单位名称：</label>
 								<div class="col-sm-4">
 									<input id="glDwmc" name="glDwmc" class="form-control" type="text" th:value="${xfmt.glDwmc}">
-								</div>
-								<label class="col-sm-2 control-label">消防救援机构：</label>
-								<div class="col-sm-2">
-									<input id="xfjyjgTywysbm" name="xfjyjgTywysbm" class="hidden" th:value="${xfmt.xfjyjgTywysbm}"> <input
-										id="deptName" name="deptName" class="form-control" type="text"
-										style="cursor: pointer;" onclick="openDept()"
-										readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required th:value="${xfmt.xfjyjg}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -118,18 +118,18 @@
 								<label class="col-sm-2 control-label">建造日期：</label>
 								<div class="col-sm-2">
 									<input type="text" class="laydate-icon layer-date form-control" id="jizRq" name="jizRq" placeholder="请选择建造日期"
-										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期" required th:value="${xfmt.jizRq}==null?null:${#dates.format(xfmt.jizRq,'yyyy-MM-dd')}"/>
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择建造日期"  th:value="${xfmt.jizRq}==null?null:${#dates.format(xfmt.jizRq,'yyyy-MM-dd')}"/>
 								</div>
 								<label class="col-sm-2 control-label">启用日期：</label>
 								<div class="col-sm-2">
 									<input type="text" class="laydate-icon layer-date form-control" id="qyRq" name="qyRq" placeholder="请选择启用日期"
-										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期" required th:value="${xfmt.qyRq}==null?null:${#dates.format(xfmt.qyRq,'yyyy-MM-dd')}"/>
+										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期"  th:value="${xfmt.qyRq}==null?null:${#dates.format(xfmt.qyRq,'yyyy-MM-dd')}"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">实景图：</label>
 								<div class="col-sm-4">
-									<input id='input-id' multiple type="file" name="sjFile" data-show-caption="true"/>
+									<input id='input-id' multiple type="file" name="sjFile" data-show-caption="true" required/>
 								</div>
 								<label class="col-sm-2 control-label">方位图：</label>
 								<div class="col-sm-4">
