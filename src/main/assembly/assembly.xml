@@ -29,12 +29,20 @@
             <outputDirectory>conf</outputDirectory>
             <includes>
                 <include>*.xml</include>
-                <include>*.yml</include>
+                <!--<include>*.yml</include>-->
                 <include>*.properties</include>
                 <include>*.json</include>
+              <include>application-${profiles.active}.yml</include>
 <!--                 <include>application-${activatedProperties}.properties</include> -->
             </includes>
         </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/classes</directory>
+      <outputDirectory>conf</outputDirectory>
+      <includes>
+        <include>application.yml</include>
+      </includes>
+    </fileSet>
         <fileSet>
             <directory>src/main/resources/config</directory>
             <outputDirectory>conf/config</outputDirectory>

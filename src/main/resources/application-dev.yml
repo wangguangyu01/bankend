@@ -12,7 +12,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.40.1.161:3306/smart119_0218?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://10.40.1.161:3306/smart119_test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: abc@123
     #password: ENC(q3rJHyQxFAfpLHxLp89cAw==)
@@ -82,6 +82,11 @@ appId: 5
 #是否开启swagger文档
 swagger:
   show: false
+
+#Shiro相关配置
+security:
+  shiro:
+    globalSessionTimeout: 28800  # 登录过期时长8小时
 
 log:
   path: ../logs/
