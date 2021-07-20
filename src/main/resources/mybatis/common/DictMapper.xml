@@ -324,6 +324,17 @@
         where aa.type = #{type}
     </select>
 
+
+
+
+
+
+    <select id="getSelectByXfjbType" resultType="com.smart119.common.domain.DictDO">
+        select *
+        from sys_dict as bb
+    </select>
+
+
 </mapper>
 
 
