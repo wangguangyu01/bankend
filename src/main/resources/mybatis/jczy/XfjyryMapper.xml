@@ -4,7 +4,7 @@
 <mapper namespace="com.smart119.jczy.dao.XfjyryDao">
 
     <select id="get" resultType="com.smart119.jczy.domain.XfjyryDO">
-		select `XFJYRY_TYWYSBM`,`XM`,`CYZJLXDM`,`ZJHM`,`XBDM`,`BZSZJG_TYWYSBM`,`SJSZJG_TYWYSBM`,`MZDM`,`JGDM`,`ZZMMDM`,`RDRQ`,`CSRQ`,`XLDM`,`XWDM`,`XFZJLYLBDM`,`HYZKDM`,`YZBM`,`XFJYRYLBDM`,`XFJYRYZTDM`,`XFJYRYZWQKDM`,`XFGWFLYDM`,`ZYJSZWLBDM`,`XFJYXJBDM`,`BG_LXDH`,`YD_LXDH`,`HLW_DZXX`,`NW_DZXX`,`TXDZ`,`SFZJ_PDBZ`,`BZ`,`rylb_jh`,userid
+		select `XFJYRY_TYWYSBM`,`XM`,`CYZJLXDM`,`ZJHM`,`XBDM`,`BZSZJG_TYWYSBM`,`SJSZJG_TYWYSBM`,`MZDM`,`JGDM`,`ZZMMDM`,`RDRQ`,`CSRQ`,`WORKRQ`,`XLDM`,`XWDM`,`XFZJLYLBDM`,`HYZKDM`,`YZBM`,`XFJYRYLBDM`,`XFJYRYZTDM`,`XFJYRYZWQKDM`,`XFGWFLYDM`,`ZYJSZWLBDM`,`XFJYXJBDM`,`BG_LXDH`,`YD_LXDH`,`HLW_DZXX`,`NW_DZXX`,`TXDZ`,`SFZJ_PDBZ`,`BZ`,`rylb_jh`,userid
 		from jczy_xfjyry as xfjyry
 		where XFJYRY_TYWYSBM = #{value}
 	</select>
@@ -46,7 +46,8 @@
         t.`cperson` ,
         d.DWMC SJSZJG,
         dict1.name as xfgwflmc,
-        dict2.name as xfjyxjb
+        dict2.name as xfjyxjb,
+        t.`WORKRQ`
         FROM
         jczy_xfjyry t
         left join sys_dept d on t.SJSZJG_TYWYSBM = d.XFJYJG_TYWYSBM
@@ -198,7 +199,8 @@
 			`cperson`,
 			`sfcd`,
             `userid`,
-            `rylb_jh`
+            `rylb_jh`,
+            `WORKRQ`
 		)
 		values
 		(
@@ -237,7 +239,8 @@
 			#{cperson},
 			'0',
             #{userid},
-            #{rylbJh}
+            #{rylbJh},
+		    #{workrq}
 		)
 	</insert>
 
@@ -277,7 +280,8 @@
             <if test="status != null">`status` = #{status},</if>
             <if test="userid != null">`userid` = #{userid},</if>
             <if test="cperson != null">`cperson` = #{cperson},</if>
-            <if test="rylbJh != null">`rylb_jh` = #{rylbJh}</if>
+            <if test="rylbJh != null">`rylb_jh` = #{rylbJh},</if>
+            <if test="workrq != null">`WORKRQ` = #{workrq}</if>
         </set>
         where XFJYRY_TYWYSBM = #{xfjyryTywysbm}
     </update>

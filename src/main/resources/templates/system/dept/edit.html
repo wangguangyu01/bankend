@@ -38,17 +38,6 @@
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">部门机构编码：</label>
-								<div class="col-sm-4">
-									<input id="deptcode" name="deptcode" th:value="${sysDept.deptcode}" class="form-control" type="text" required>
-								</div>
-								<label class="col-sm-2 control-label">部门机构值班电话：</label>
-								<div class="col-sm-4">
-									<input id="zhzxdh" name="zhzxdh" th:value="${sysDept.zhzxdh}" class="form-control" type="text" required>
-								</div>
-							</div>
-
-							<div class="form-group">
 								<label class="col-sm-2 control-label">机构负责人：</label>
 								<div class="col-sm-4">
 									<input id="lxrXm" name="lxrXm" th:value="${sysDept.lxrXm}" class="form-control" type="text" required>
@@ -59,16 +48,7 @@
 								</div>
 							</div>
 
-							<div class="form-group">
-								<label class="col-sm-2 control-label">邮政编码：</label>
-								<div class="col-sm-4">
-									<input id="yzbm" name="yzbm" th:value="${sysDept.yzbm}" class="form-control" type="text">
-								</div>
-								<label class="col-sm-2 control-label">电子邮箱：</label>
-								<div class="col-sm-4">
-									<input id="dzxx" name="dzxx" th:value="${sysDept.dzxx}" class="form-control" type="text">
-								</div>
-							</div>
+
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">地球经度：</label>
@@ -80,12 +60,7 @@
 									<input id="dqwd" name="dqwd" th:value="${sysDept.dqwd}" class="form-control" type="text" onclick="openMap()"  style="cursor: pointer;" readonly="readonly" placeholder="请选择">
 								</div>
 							</div>
-							<div class="form-group" id="zbfwDiv">
-								<label class="col-sm-2 control-label">管辖范围：</label>
-								<div class="col-sm-10">
-									<input  id="zbfw" name="zbfw" th:value="${sysDept.zbfw}" class="form-control" type="text" onclick="openMap2()" style="cursor: pointer;" readonly="readonly" placeholder="请选择">
-								</div>
-							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">行政区划代码：</label>
 								<div class="col-sm-3">
@@ -107,11 +82,27 @@
 									</select>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<label class="col-sm-2 control-label">传真号码：</label>
-								<div class="col-sm-4">
-									<input id="czhm" name="czhm" th:value="${sysDept.czhm}" class="form-control" type="text">
+								<label class="col-sm-2 control-label">通讯地址：</label>
+								<div class="col-sm-10">
+									<textarea id="txdz" name="txdz" th:text="${sysDept.txdz}" class="form-control" required="" aria-required="true"></textarea>
 								</div>
+							</div>
+
+							<div class="form-group" id="zbfwDiv">
+								<label class="col-sm-2 control-label">管辖范围：</label>
+								<div class="col-sm-10">
+									<input  id="zbfw" name="zbfw" th:value="${sysDept.zbfw}" class="form-control" type="text" onclick="openMap2()" style="cursor: pointer;" readonly="readonly" placeholder="请选择">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">邮政编码：</label>
+								<div class="col-sm-4">
+									<input id="yzbm" name="yzbm" th:value="${sysDept.yzbm}" class="form-control" type="text">
+								</div>
+
 								<label class="col-sm-2 control-label">消防救援机构性质代码：</label>
 								<div class="col-sm-4">
 									<input type="hidden" name="xfjyjgxzdm" id="xfjyjgxzdm" th:value="${sysDept.xfjyjgxzdm}" required title="请选择消防救援机构性质"/>
@@ -123,14 +114,31 @@
 									</div>
 									<label for="xfjyjgxzdm" class="error"></label>
 								</div>
+
 							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">通讯地址：</label>
-								<div class="col-sm-10">
-									<textarea id="txdz" name="txdz" th:text="${sysDept.txdz}" class="form-control" required="" aria-required="true"></textarea>
+								<label class="col-sm-2 control-label">传真号码：</label>
+								<div class="col-sm-4">
+									<input id="czhm" name="czhm" th:value="${sysDept.czhm}" class="form-control" type="text">
+								</div>
+								<label class="col-sm-2 control-label">电子邮箱：</label>
+								<div class="col-sm-4">
+									<input id="dzxx" name="dzxx" th:value="${sysDept.dzxx}" class="form-control" type="text">
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">部门机构编码：</label>
+								<div class="col-sm-4">
+									<input id="deptcode" name="deptcode" th:value="${sysDept.deptcode}" class="form-control" type="text" required>
+								</div>
+								<label class="col-sm-2 control-label">部门机构值班电话：</label>
+								<div class="col-sm-4">
+									<input id="zhzxdh" name="zhzxdh" th:value="${sysDept.zhzxdh}" class="form-control" type="text" required>
+								</div>
+							</div>
+
 
 							<div class="form-group">
 								<label class="col-sm-2 control-label">职责_简要情况：</label>

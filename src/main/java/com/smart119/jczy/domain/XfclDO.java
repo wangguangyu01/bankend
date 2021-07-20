@@ -1,7 +1,9 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -21,6 +23,8 @@ import java.util.Map;
  * @email 1992lcg@163.com
  * @date 2021-01-15 11:28:42
  */
+@TableName("jczy_xfcl")
+@Data
 public class XfclDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -132,6 +136,13 @@ public class XfclDO implements Serializable {
 	//0 未调派 1已调派
 	private int dpFlag;
 
+	@ApiModelProperty(value = "GPS定位的车辆id", name = "gpsVid")
+	private String gpsVid;
+
+	@ApiModelProperty(value = "GPS定位的车辆授权码", name = "gpsVkey")
+	private String gpsVkey;
+
+
 	//车辆名称
 	@NotBlank(message = "车辆名称不能为空")
 	@Length(min= 1, max=100, message = "车辆名称超出范围限制{min}-{max}")
@@ -173,6 +184,43 @@ public class XfclDO implements Serializable {
 
 	@Length(min= 1, max=100000, message = "自定义排序超出范围限制{min}-{max}")
 	private Integer zdypx;
+
+
+	/**
+	 *  泡沫类型
+	 */
+	@ApiModelProperty(value="泡沫类型",name="pmlx")
+	private String pmlx;
+
+	/**
+	 *  乘员数量
+	 */
+	@ApiModelProperty(value="乘员数量",name="cysl")
+	private Integer cysl;
+
+	/**
+	 *  举升高度
+	 */
+	@ApiModelProperty(value="举升高度",name="jsgd")
+	private Double jsgd;
+
+	/**
+	 *  泵流量/升/秒
+	 */
+	@ApiModelProperty(value="泵流量/升/秒",name="bllNum")
+	private Double bllNum;
+
+	/**
+	 *  炮流量/升/秒
+	 */
+	@ApiModelProperty(value="炮流量/升/秒",name="pllNum")
+	private Double pllNum;
+
+	/**
+	 *  载泡沫量/吨
+	 */
+	@ApiModelProperty(value="载泡沫量/吨",name="zpmzl")
+	private String zpmzl;
 
 
 	public Double getGd() {
