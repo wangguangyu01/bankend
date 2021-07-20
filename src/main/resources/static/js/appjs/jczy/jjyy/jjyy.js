@@ -68,6 +68,10 @@ function load() {
                         title: '警情用语类型'
                     },
                     {
+                        field: 'jqfldm',
+                        title: '警情分类'
+                    },
+                    {
                         field: 'remarks',
                         title: '备注'
                     },
