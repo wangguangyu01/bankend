@@ -41,8 +41,8 @@ public class XfscDO implements Serializable {
 	@DecimalMax(value = "999999.99", message = "储水量容积最大是999999.99")
 	private Double cslRj;
 	//维保单位_单位名称
-	@NotBlank(message = "维保单位单位名称不能为空")
-	@Length(min= 1, max=100, message = "维保单位单位名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "维保单位单位名称不能为空")
+//	@Length(min= 1, max=100, message = "维保单位单位名称超出范围限制{min}-{max}")
 	private String wbdwDwmc;
 	//联系人
 	@NotBlank(message = "联系人不能为空")
@@ -75,24 +75,24 @@ public class XfscDO implements Serializable {
 	@DecimalMax(value = "999999.99", message = "水源标高差高度最大是999999.99")
 	private Double sybgcGd;
 	//停车位置_地点名称
-	@NotBlank(message = "停车位置地点名称不能为空")
-	@Length(min= 1, max=100, message = "停车位置地点名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "停车位置地点名称不能为空")
+//	@Length(min= 1, max=100, message = "停车位置地点名称超出范围限制{min}-{max}")
 	private String tcwzDdmc;
 	//停车_数量
-	@Range(min = 0, max = 999999999L, message = "停车数量超出范围限制0-999999999")
+//	@Range(min = 0, max = 999999999L, message = "停车数量超出范围限制0-999999999")
 	private Integer tcSl;
 	//消防给水管网形式类型代码
 	private String xfjsgwxslxdm;
 	//流量
-	@Range(min = 0, max = 999999999L, message = "流量超出范围限制0-999999999")
+//	@Range(min = 0, max = 999999999L, message = "流量超出范围限制0-999999999")
 	private Integer ll;
 	//供水_单位名称
 	@NotBlank(message = "供水单位名称不能为空")
 	@Length(min= 1, max=100, message = "供水单位名称超出范围限制{min}-{max}")
 	private String gsDwmc;
 	//管理_单位名称
-	@NotBlank(message = "管理单位名称不能为空")
-	@Length(min= 1, max=100, message = "管理单位名称超出范围限制{min}-{max}")
+//	@NotBlank(message = "管理单位名称不能为空")
+//	@Length(min= 1, max=100, message = "管理单位名称超出范围限制{min}-{max}")
 	private String glDwmc;
 	//创建时间
 	private Date cdate;
