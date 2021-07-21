@@ -4,20 +4,29 @@
 <mapper namespace="com.smart119.jczy.dao.JczyjjyyDao">
 
 	<select id="get" resultType="com.smart119.jczy.domain.JjyyDO">
-		select `id`,`name`,`type`,`remarks`,DATE_FORMAT(cdate,'%Y-%m-%d %H:%i:%s')  as cdate,`cperson`,`status` from jjyy where id = #{value}
+		select `id`,`name`,`type`,`jqfldm`,`remarks`,DATE_FORMAT(cdate,'%Y-%m-%d %H:%i:%s')  as cdate,`cperson`,`status` from jjyy where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.smart119.jczy.domain.JjyyDO">
-		SELECT j.id,j.`name`,d.name type,j.remarks,j.cperson,j.cdate,j.`status` from jjyy j LEFT JOIN sys_dict d ON d.`value` = j.type
-		<where>
+		SELECT j.id,
+		       j.`name`,
+		       (select d.`name` from sys_dict d where d.`value` = j.`type` and d.`type` = 'JJYYLX' ) type,
+		       (SELECT d.`name`FROM sys_dict d WHERE d.`value` = j.`jqfldm` AND d.`type` = 'JQFLYDM'  and d.parent_id != '0')  jqfldm,
+		       j.remarks,
+		       j.cperson,
+		       j.cdate,
+		       j.`status`
+		from jjyy j
+		      <where>
 		  		  <if test="id != null and id != ''"> and j.id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and j.name like '%${name}%'  </if>
 		  		  <if test="type != null and type != ''"> and j.type = #{type} </if>
+			      <if test="jqfldm != null and jqfldm != ''"> and j.jqfldm = #{jqfldm} </if>
 		  		  <if test="remarks != null and remarks != ''"> and j.remarks = #{remarks} </if>
 		  		  <if test="cdate != null and cdate != ''"> and j.cdate = #{cdate} </if>
 		  		  <if test="cperson != null and cperson != ''"> and j.cperson = #{cperson} </if>
 		  		  <if test="status != null and status != ''"> and j.status = #{status} </if>
-			       AND d.type = 'JJYYLX' and j.status = '0'
+			      and j.status = '0'
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -31,10 +40,10 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
  	<select id="count" resultType="int">
 		SELECT count(*) from jjyy j LEFT JOIN sys_dict d ON d.`value` = j.type
-		 <where>  
+		 <where>
 		  		  <if test="id != null and id != ''"> and j.id = #{id} </if>
 		  		  <if test="name != null and name != ''"> and j.name like '%${name}%'  </if>
 		  		  <if test="type != null and type != ''"> and j.type = #{type} </if>
@@ -45,49 +54,52 @@
 			 AND d.type = 'JJYYLX' and j.status = '0'
 		  		</where>
 	</select>
-	 
+
 	<insert id="save" parameterType="com.smart119.jczy.domain.JjyyDO">
 		insert into jjyy
 		(
-			`id`, 
-			`name`, 
-			`type`, 
-			`remarks`, 
-			`cdate`, 
-			`cperson`, 
+			`id`,
+			`name`,
+			`type`,
+			`jqfldm`,
+			`remarks`,
+			`cdate`,
+			`cperson`,
 			`status`
 		)
 		values
 		(
-			#{id}, 
-			#{name}, 
-			#{type}, 
+			#{id},
+			#{name},
+			#{type},
+		    #{jqfldm},
 			#{remarks},
 			DATE_FORMAT(#{cdate},'%Y-%m-%d %H:%i:%s') ,
-			#{cperson}, 
+			#{cperson},
 			#{status}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.smart119.jczy.domain.JjyyDO">
-		update jjyy 
+		update jjyy
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="remarks != null">`remarks` = #{remarks}, </if>
 			<if test="cdate != null">`cdate` = DATE_FORMAT({cdate},'%Y-%m-%d %H:%i:%s') , </if>
 			<if test="cperson != null">`cperson` = #{cperson}, </if>
-			<if test="status != null">`status` = #{status}</if>
+			<if test="status != null">`status` = #{status},</if>
+			<if test="jqfldm != null">`jqfldm` = #{jqfldm}</if>
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="remove">
 		delete from jjyy where id = #{value}
 	</delete>
-	
+
 	<delete id="batchRemove">
-		delete from jjyy where id in 
+		delete from jjyy where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

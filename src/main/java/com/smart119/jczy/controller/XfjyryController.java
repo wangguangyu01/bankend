@@ -22,6 +22,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -124,11 +125,18 @@ public class XfjyryController extends BaseController {
 
         model.addAttribute("sjszjgTywysbm_name", deptService.findNameByTYWYSBM(xfjyry.getSjszjgTywysbm()));
 
-        String city = dictService.findParentValue(xfjyry.getJgdm());
-        String province = dictService.findParentValue(city);
+        if (!ObjectUtils.isEmpty(xfjyry) && StringUtils.isNotBlank(xfjyry.getJgdm())) {
+            String city = dictService.findParentValue(xfjyry.getJgdm());
+            if (StringUtils.isNotBlank(city)) {
+                String province = dictService.findParentValue(city);
+                model.addAttribute("city", city);  //籍贯代码-市
+                model.addAttribute("province", province);  //籍贯代码-省
+            }
 
-        model.addAttribute("province", province);  //籍贯代码-省
-        model.addAttribute("city", city);  //籍贯代码-市
+        }
+
+
+
         Map m = new HashMap();
         m.put("fid",xfjyry.getXfjyryTywysbm());
         m.put("fType","xfjyry");

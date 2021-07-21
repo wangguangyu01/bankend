@@ -25,19 +25,19 @@ public class YjlddwDO implements Serializable {
 	@NotBlank(message = "单位名称不能为空")
 	@Length(min= 1, max=100, message = "单位名称超出范围限制{min}-{max}")
 	private String dwmc;
+	//应急联动单位类别代码
+	@NotBlank(message = "应急联动单位类别代码不能为空")
+	private String yjlddwlbdm;
 	//单位地址
 	@NotBlank(message = "单位地址不能为空")
 	@Length(min= 1, max=100, message = "单位地址超出范围限制{min}-{max}")
 	private String dzmc;
-	//应急联动单位类别代码
-	private String yjlddwlbdm;
-	//传真号码
-	@Length(min= 1, max=18, message = "传真号码超出范围限制{min}-{max}")
-	private String czhm;
+	//消防救援机构_通用唯一识别码
+	@NotBlank(message = "消防救援机构_通用唯一识别码不能为空")
+	private String xfjyjgTywysbm;
 	//应急服务内容_简要情况
+	@NotBlank(message = "应急服务内容_简要情况不能为空")
 	private String yjfwnrJyqk;
-	//单位_简要情况
-	private String dwJyqk;
 	//联系人
 	@NotBlank(message = "联系人不能为空")
 	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
@@ -50,10 +50,18 @@ public class YjlddwDO implements Serializable {
 	private Double dqjd;
 	//地球纬度
 	private Double dqwd;
-	//消防救援机构_通用唯一识别码
-	private String xfjyjgTywysbm;
 	//行政区划代码
+	@NotBlank(message = "行政区划代码不能为空")
 	private String xzqhdm;
+	//保障能力_简要情况
+	@NotBlank(message = "保障能力_简要情况不能为空")
+	private String bznlJyqk;
+
+
+	//传真号码
+	private String czhm;
+	//单位_简要情况
+	private String dwJyqk;
 	//创建时间
 	private Date cdate;
 	//创建人
@@ -70,6 +78,8 @@ public class YjlddwDO implements Serializable {
 	private String xfjyjg;
 
 	private String yjlddwlb;
+
+
 
 	/**
 	 * 设置：应急联动单位_通用唯一识别码
@@ -302,5 +312,13 @@ public class YjlddwDO implements Serializable {
 
 	public void setYjlddwlb(String yjlddwlb) {
 		this.yjlddwlb = yjlddwlb;
+	}
+
+	public String getBznlJyqk() {
+		return bznlJyqk;
+	}
+
+	public void setBznlJyqk(String bznlJyqk) {
+		this.bznlJyqk = bznlJyqk;
 	}
 }

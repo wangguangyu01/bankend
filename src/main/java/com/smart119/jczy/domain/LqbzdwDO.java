@@ -25,21 +25,15 @@ public class LqbzdwDO implements Serializable {
 	@NotBlank(message = "单位名称不能为空")
 	@Length(min= 1, max=100, message = "单位名称超出范围限制{min}-{max}")
 	private String dwmc;
-	//单位地址
-	@NotBlank(message = "单位地址不能为空")
-	@Length(min= 1, max=100, message = "单位地址超出范围限制{min}-{max}")
-	private String dzmc;
-	//传真号码
-	@Length(min= 1, max=18, message = "传真号码超出范围限制{min}-{max}")
-	private String czhm;
-	//单位_简要情况
-	private String dwJyqk;
 	//联勤保障类别代码
+	@NotBlank(message = "联勤保障类别代码不能为空")
 	private String lqbzlbdm;
+	//消防救援机构_通用唯一识别码
+	@NotBlank(message = "消防救援机构_通用唯一识别码不能为空")
+	private String xfjyjgTywysbm;
 	//保障能力_简要情况
+	@NotBlank(message = "保障能力_简要情况不能为空")
 	private String bznlJyqk;
-	//保障概述_简要情况
-	private String bzgsJyqk;
 	//联系人
 	@NotBlank(message = "联系人不能为空")
 	@Length(min= 1, max=50, message = "联系人超出范围限制{min}-{max}")
@@ -48,14 +42,25 @@ public class LqbzdwDO implements Serializable {
 	@PhoneValidator(message = "联系电话格式错误")
 	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
 	private String lxrLxdh;
+	//单位地址
+	@NotBlank(message = "单位地址不能为空")
+	@Length(min= 1, max=100, message = "单位地址超出范围限制{min}-{max}")
+	private String dzmc;
 	//地球经度
 	private Double dqjd;
 	//地球纬度
 	private Double dqwd;
-	//消防救援机构_通用唯一识别码
-	private String xfjyjgTywysbm;
 	//行政区划代码
+	@NotBlank(message = "行政区划代码不能为空")
 	private String xzqhdm;
+
+
+	//传真号码
+	private String czhm;
+	//单位_简要情况
+	private String dwJyqk;
+	//保障概述_简要情况
+	private String bzgsJyqk;
 	//创建时间
 	private Date cdate;
 	//创建人

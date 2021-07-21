@@ -21,16 +21,43 @@ public class MhjyzjDO implements Serializable {
 	
 	//灭火救援专家_通用唯一识别码
 	private String mhjyzjTywysbm;
-	//公民身份号码
-	private String gmsfhm;
+
 	//姓名
 	@NotBlank(message = "姓名不能为空")
 	@Length(min= 1, max=50, message = "姓名超出范围限制{min}-{max}")
 	private String xm;
 	//性别代码
+	@NotBlank(message = "性别不能为空")
 	private String xbdm;
+	//公民身份号码
+	@NotBlank(message = "身份号码不能为空")
+	@Length(min= 18, max=18, message = "身份号码为18位")
+	private String gmsfhm;
 	//学历代码
+	@NotBlank(message = "学历不能为空")
 	private String xldm;
+	//联系电话
+	@PhoneValidator(message = "联系电话格式错误")
+	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
+	private String yddh;
+	//单位名称
+	@NotBlank(message = "单位名称不能为空")
+	@Length(min= 1, max=100, message = "单位名称超出范围限制{min}-{max}")
+	private String dwmc;
+	//是否队伍内部专家_判断标识
+	@NotBlank(message = "是否队伍内部专家不能为空")
+	private String sfdwnbzjPdbz;
+	//消防专家领域类别代码
+	@NotBlank(message = "消防专家领域类别不能为空")
+	private String xfzjlylbdm;
+	//通信地址
+	@NotBlank(message = "通信地址不能为空")
+	@Length(min= 1, max=100, message = "通信地址超出范围限制{min}-{max}")
+	private String txdz;
+	//行政区划代码
+	@NotBlank(message = "行政区划不能为空")
+	private String xzqhdm;
+
 	//消防岗位类别代码
 	private String xfgwlbdm;
 	//籍贯代码
@@ -39,34 +66,16 @@ public class MhjyzjDO implements Serializable {
 	private Date csRq;
 	//居住_地址名称
 	private String jzhDzmc;
-	//通信地址
-	@NotBlank(message = "通信地址不能为空")
-	@Length(min= 1, max=100, message = "通信地址超出范围限制{min}-{max}")
-	private String txdz;
 	//邮政编码
 	private String yzbm;
-	//联系电话
-	@PhoneValidator(message = "联系电话格式错误")
-	@Length(min= 5, max=18, message = "联系电话超出范围限制{min}-{max}")
-	private String yddh;
 	//家庭_联系电话
 	private String jtLxdh;
 	//办公_联系电话
 	private String bgLxdh;
-	//单位名称
-	@NotBlank(message = "单位名称不能为空")
-	@Length(min= 1, max=100, message = "单位名称超出范围限制{min}-{max}")
-	private String dwmc;
 	//备注
 	private String bz;
-	//是否队伍内部专家_判断标识
-	private String sfdwnbzjPdbz;
-	//消防专家领域类别代码
-	private String xfzjlylbdm;
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
-	//行政区划代码
-	private String xzqhdm;
 	//创建时间
 	private Date cdate;
 	//状态

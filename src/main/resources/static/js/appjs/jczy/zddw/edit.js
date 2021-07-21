@@ -10,6 +10,7 @@ $().ready(function() {
 	getSelectByType("WXHXPFLYDM","wxhxpwxhxpflydm",$("#wxhxpwxhxpflydmVal").val());
 	getSelectByType("HXPWXXLBDM","wxhxphxpwxxlbdm",$("#wxhxphxpwxxlbdmVal").val());
 	initFileInput("input-id",zddwtpList);
+    initFileInput("yuanFile",zddwtpList);
 });
 
 $.validator.setDefaults({
