@@ -1,0 +1,117 @@
+smart119:
+  uploadPath: c:/var/uploaded_files/
+  username: admin
+  password: 111111
+  baiduMapApiKey: vU6GCDwes9ROs5r84QCBvCQEMRcCNOgn
+  gaodeMapApiKey: 6abf4a07a2d27ca236c01b4be5341be9
+logging:
+  level:
+    root: info
+    com.bootdo: debug
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.40.1.161:3306/smart119_uat?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: abc@123
+    #password: ENC(q3rJHyQxFAfpLHxLp89cAw==)
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    #useGlobalDataSourceStat: true
+  redis:
+    host: 10.40.1.162
+    port: 6379
+    password:
+    # 连接超时时间（毫秒）
+    timeout: 10000ms
+    jedis:
+      pool:
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 10
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 100
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+  rabbitmq:
+    host: 10.40.1.222
+    mq.port: 5672
+    mq.username: nationaleconomy
+    mq.password: nationaleconomy
+    publisher-returns: true
+    listener:
+      simple:
+        acknowledge-mode: auto
+        concurrency: 1
+        max-concurrency: 1
+        retry:
+          enabled: true
+ftp:
+  ip: 10.40.1.222
+  user: nationaleconomy
+  password: abc123
+  uploadFolder: dataImport
+
+jasypt:
+  encryptor:
+    password: jasypt
+
+appId:
+
+#是否开启swagger文档
+swagger:
+  show: false
+
+#Shiro相关配置
+security:
+  shiro:
+    globalSessionTimeout: 28800  # 登录过期时长8小时
+
+log:
+  path: ../logs/
+  level: info
+
+mybatis-plus:
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射
+    map-underscore-to-camel-case: true
+    # 全局地开启或关闭配置文件中的所有映射器已经配置的任何缓存，默认为 true
+    cache-enabled: false
+    #懒加载
+    #aggressive-lazy-loading: true
+    #NONE：不启用自动映射 PARTIAL：只对非嵌套的 resultMap 进行自动映射 FULL：对所有的 resultMap 都进行自动映射
+    #auto-mapping-behavior: partial
+    #NONE：不做任何处理 (默认值)WARNING：以日志的形式打印相关警告信息 FAILING：当作映射失败处理，并抛出异常和详细信息
+    #auto-mapping-unknown-column-behavior: none
+    #如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
+    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapperLocations: classpath*:mybatis/**/*Mapper.xml
+#[弃用]配置缓存和session存储方式，默认ehcache,可选redis,[弃用]调整至 spring cache type【shiro.用户，权限，session，spring.cache通用】
+#[弃用]cacheType: ehcache
+exlive:
+  url: http://218.201.137.206:89/gpsonline/GPSAPI
+  username: linyizhidui
+  password: ENC(CMc+WyHblTbtKghS8TnCMQ==)
