@@ -22,7 +22,7 @@ function initFileInput(ctrlName) {
     control.fileinput({
         language: 'zh', //设置语言
         //uploadUrl: "upload/insert", //上传的地址
-        allowedFileExtensions: ['jpg', 'gif', 'png','exe'],//接收的文件后缀
+        allowedFileExtensions: ['jpg', 'gif', 'png','jpeg'],//接收的文件后缀
         //uploadExtraData:{"id": 1, "fileName":'123.jpg'},
         uploadAsync: true, //默认异步上传
         showUpload: false, //是否显示上传按钮
@@ -104,42 +104,30 @@ function validateRule() {
                 maxlength : 50
 			},
             ggxh : {
-                required : true,
                 maxlength : 100
             },
-            ckjJe : {
-                required : true
-            },
             ppMc : {
-                required : true,
                 maxlength : 100
             },
             sccjDwmc : {
-                required : true,
                 maxlength : 100
             },
             zrrXm : {
-                required : true,
                 maxlength : 50
             },
             pch : {
-                required : true,
                 maxlength : 100
             },
             zycfJyqk : {
-                required : true,
                 maxlength : 300
             },
             syfwJyqk : {
-                required : true,
                 maxlength : 300
             },
             xfzbJyqk : {
-                required : true,
                 maxlength : 300
             },
             shfwDwmc : {
-                required : true,
                 maxlength : 100
             },
             zbxnzbJyqk : {
@@ -150,36 +138,6 @@ function validateRule() {
 		messages : {
             xfzbMc : {
                 required : "请输入消防装备器材名称"
-            },
-            ggxh : {
-                required : "请输入规格型号"
-            },
-            ckjJe : {
-                required : "请输入参考价"
-            },
-            ppMc : {
-                required : "请输入品牌名称"
-            },
-            sccjDwmc : {
-                required : "请输入生产厂家"
-            },
-            zrrXm : {
-                required : "请输入责任人"
-            },
-            pch : {
-                required : "请输入批次号"
-            },
-            zycfJyqk : {
-                required : "请输入主要成分_简要情况"
-            },
-            syfwJyqk : {
-                required : "请输入适用范围_简要情况"
-            },
-            xfzbJyqk : {
-                required : "请输入消防装备_简要情况"
-            },
-            shfwDwmc : {
-                required : "请输入售后服务单位名称"
             },
             zbxnzbJyqk : {
                 required : "请输入装备性能简要情况"

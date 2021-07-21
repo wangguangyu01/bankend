@@ -36,24 +36,20 @@ public class XfzbDO implements Serializable {
 	//消防救援机构_通用唯一识别码
 	private String xfjyjgTywysbm;
 	//规格型号
-	@NotBlank(message = "规格型号不能为空")
-	@Length(min= 1, max=100, message = "规格型号超出范围限制{min}-{max}")
+	@Length(min= 0, max=100, message = "规格型号超出范围限制{min}-{max}")
 	private String ggxh;
 	//参考价_金额
 	@DecimalMin(value = "0", message = "参考价金额最小是0")
 	@DecimalMax(value = "999999999999999.99", message = "参考价金额不能超过是999999999999999.99")
 	private BigDecimal ckjJe;
 	//品牌_名称
-	@NotBlank(message = "品牌名称不能为空")
-	@Length(min= 1, max=100, message = "品牌名称超出范围限制{min}-{max}")
+	@Length(min= 0, max=100, message = "品牌名称超出范围限制{min}-{max}")
 	private String ppMc;
 	//生产厂家_单位名称
-	@NotBlank(message = "生产厂家不能为空")
-	@Length(min= 1, max=100, message = "生产厂家超出范围限制{min}-{max}")
+	@Length(min= 0, max=100, message = "生产厂家超出范围限制{min}-{max}")
 	private String sccjDwmc;
 	//责任人_姓名
-	@NotBlank(message = "责任人不能为空")
-	@Length(min= 1, max=50, message = "责任人超出范围限制{min}-{max}")
+	@Length(min= 0, max=50, message = "责任人超出范围限制{min}-{max}")
 	private String zrrXm;
 	//装备入库_日期
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -64,8 +60,7 @@ public class XfzbDO implements Serializable {
 	@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
 	private Date zbsxRq;
 	//批次号
-	@NotBlank(message = "批次号不能为空")
-	@Length(min= 1, max=50, message = "批次号超出范围限制{min}-{max}")
+	@Length(min= 0, max=50, message = "批次号超出范围限制{min}-{max}")
 	private String pch;
 	//计量度量单位代码
 	private String jldldwdm;
@@ -80,22 +75,18 @@ public class XfzbDO implements Serializable {
 	@DecimalMax(value = "9999999999.99", message = "体积最大是9999999999.99")
 	private Double tj;
 	//主要成分_简要情况
-	@NotBlank(message = "主要成分_简要情况不能为空")
-	@Length(min= 1, max=300, message = "主要成分_简要情况超出范围限制{min}-{max}")
+	@Length(min= 0, max=300, message = "主要成分_简要情况超出范围限制{min}-{max}")
 	private String zycfJyqk;
 	//适用范围_简要情况
-	@NotBlank(message = "适用范围_简要情况不能为空")
-	@Length(min= 1, max=300, message = "适用范围_简要情况超出范围限制{min}-{max}")
+	@Length(min= 0, max=300, message = "适用范围_简要情况超出范围限制{min}-{max}")
 	private String syfwJyqk;
 	//消防装备状态类别代码
 	private String xfzbztlbdm;
 	//消防装备_简要情况
-	@NotBlank(message = "消防装备_简要情况不能为空")
-	@Length(min= 1, max=300, message = "消防装备_简要情况超出范围限制{min}-{max}")
+	@Length(min= 0, max=300, message = "消防装备_简要情况超出范围限制{min}-{max}")
 	private String xfzbJyqk;
 	//售后服务_单位名称
-	@NotBlank(message = "售后服务不能为空")
-	@Length(min= 1, max=100, message = "售后服务超出范围限制{min}-{max}")
+	@Length(min= 0, max=100, message = "售后服务超出范围限制{min}-{max}")
 	private String shfwDwmc;
 	//是否装配_判断标识 0是 1 否
 	private String sfzpPdbz;

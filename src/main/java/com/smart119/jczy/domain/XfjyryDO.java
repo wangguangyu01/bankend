@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
@@ -134,7 +135,7 @@ public class XfjyryDO implements Serializable {
 
 
 
-	@Length(min= 1, max=100000, message = "自定义排序超出范围限制{min}-{max}")
+	@Range(min= 1, max=100000L, message = "自定义排序超出范围限制{min}-{max}")
 	private Integer zdypx;
 
 	/**

@@ -143,7 +143,6 @@ function validateRule() {
 			},
             ydLxdh : {
                 required : icon + "请输入移动_联系电话",
-                remote : icon + "移动_联系电话已经存在"
             },
             nwDzxx : {
                 email: "请输入正确的邮箱格式"
@@ -220,7 +219,7 @@ function initFileInput(ctrlName) {
     control.fileinput({
         language: 'zh', //设置语言
         //uploadUrl: "upload/insert", //上传的地址
-        allowedFileExtensions: ['jpg', 'gif', 'png','exe'],//接收的文件后缀
+        allowedFileExtensions: ['jpg', 'gif', 'png', 'jpeg'],//接收的文件后缀
         //uploadExtraData:{"id": 1, "fileName":'123.jpg'},
         uploadAsync: true, //默认异步上传
         showUpload: false, //是否显示上传按钮
