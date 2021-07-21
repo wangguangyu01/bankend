@@ -77,7 +77,7 @@ jasypt:
   encryptor:
     password: jasypt
 
-appId: 5
+appId:
 
 #是否开启swagger文档
 swagger:
