@@ -103,6 +103,36 @@ function getSelectAll(type,divClass,inputId,spanId){
     });
 }
 
+function getSelectAllCallBack(type,divClass,inputId,spanId,callback){
+    console.log(111);
+    $.ajax({
+        url : "/common/dict/getChildAll",
+        type : "get",
+        data : {
+            'type' : type
+        },
+        success : function(list) {
+            list = list.filter(function (t) {
+                return t.id==1168;
+            })
+            list = [list[0].child[0]];
+            var html = '<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">';
+            $.each(list,function(n,obj) {
+                if(obj.child!=null && obj.child.length>0){
+                    html += '<li class="dropdown-submenu"><a data-index="'+obj.value+'" data-title="'+obj.name+'">'+obj.name+'</a>'
+                    html += decomposeChild(obj.child);
+                }else{
+                    html += '<li><a data-index="'+obj.value+'" data-title="'+obj.name+'">'+obj.name+'</a>'
+                }
+                html += '</li>';
+            });
+            html += '</ul>';
+            $("."+divClass).append(html);
+            addOnclick(divClass,inputId,spanId);
+            callback();
+        }
+    });
+}
 
 function decomposeChild(list){
     var html = '<ul class="dropdown-menu"> ';
