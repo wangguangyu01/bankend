@@ -194,6 +194,7 @@ function initFileInput(ctrlName,attachmentDOList) {
 	});
 
 	var control = $('#' + ctrlName);
+    control.getFile()
 	control.fileinput({
 		language: 'zh', //设置语言
 		//uploadUrl: "upload/insert", //上传的地址
