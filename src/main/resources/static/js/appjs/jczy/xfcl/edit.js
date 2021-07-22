@@ -119,6 +119,10 @@ function validateRule() {
             clxnzbJyqk : {
                 required : true,
                 maxlength : 300
+            },
+            zpmzl:{
+                required : true,
+                maxlength : 300
             }
         },
         messages : {
@@ -148,6 +152,9 @@ function validateRule() {
             },
             clxnzbJyqk : {
                 required : "请输入车辆性能指标_简要情况"
+            },
+            zpmzl : {
+                required : "请输入消防泡沫量/吨"
             }
         }
 	})

@@ -73,7 +73,7 @@ public class XfclDO implements Serializable {
 	@Length(min= 1, max=300, message = "备注超出范围限制{min}-{max}")
 	private String bz;
 	//机动车发动机（电动机）号
-	@Length(min= 1, max=25, message = "机动车发动机（电动机）号超出范围限制{min}-{max}")
+	//@Length(min= 1, max=25, message = "机动车发动机（电动机）号超出范围限制{min}-{max}")
 	private String jdcfdjddjh;
 	//装载水_容积 吨
 	@DecimalMin(value = "0", message = "装载水容积最小是0")
