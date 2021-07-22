@@ -9,6 +9,10 @@ logging:
     root: info
     com.bootdo: debug
 spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.50.1.13:8848
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver

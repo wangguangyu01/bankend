@@ -2,6 +2,9 @@ server:
   session-timeout: 1000
   port: 8888
 spring:
+  application:
+    #用于nacos注册名
+    name: smart119-backend
   thymeleaf:
     #mode: LEGACYHTML5
     cache: false
