@@ -43,7 +43,21 @@ public interface ExliveService {
     List<String> loadLocation() throws JsonProcessingException;
 
 
-    public void updateXfclPostion() throws JsonProcessingException;
+    /**
+     * 查询车辆的id以及授权码
+     * @throws JsonProcessingException
+     */
+    List<String> queryXfclVidAndVkey() throws JsonProcessingException;
+
+
+    /**
+     * 同步gps的汽车的位置
+     * @throws JsonProcessingException
+     */
+    void updateGpsPostion() throws JsonProcessingException;
+
+
+
 
 
 }

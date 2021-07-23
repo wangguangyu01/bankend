@@ -148,46 +148,54 @@ public class ExliveServiceImpl implements ExliveService {
 
 
     @Override
-    public void updateXfclPostion() throws JsonProcessingException {
+    public List<String> queryXfclVidAndVkey() throws JsonProcessingException {
         List<String> vehicleList = this.loadLocation();
+        for (String vehicleStr : vehicleList) {
+            JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
+            String xfclGpsName = String.valueOf(vehicleJson.get("name"));
+            redisManager.set("resource:gps:"+xfclGpsName, vehicleStr);
+        }
+        return vehicleList;
+    }
+
+
+
+    @Override
+    public void updateGpsPostion() throws JsonProcessingException {
+        long startTimeMillis = System.currentTimeMillis();
+        log.info("GPS接口更新车辆位置开始时间---》{}", startTimeMillis);
+        List<String> vehicleList = queryXfclVidAndVkey();
         List<XfclDO> xfclDOS = xfclDao.selectList(null);
-        for (XfclDO xfclDO : xfclDOS) {
+        for (XfclDO xfclDO: xfclDOS) {
             for (String vehicleStr : vehicleList) {
                 JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
                 String xfclGpsName = String.valueOf(vehicleJson.get("name"));
                 if (StringUtils.contains(xfclGpsName, xfclDO.getJdchphm())
                         || StringUtils.contains(xfclGpsName, xfclDO.getClmc())) {
-                    updateGpsPostion(xfclDO, vehicleJson);
-                }
+                    String url = exliveUrl + "?version=1&method=loadLocation&vid=" + String.valueOf(vehicleJson.get("id"))
+                            + "&vKey=" + String.valueOf(vehicleJson.get("vKey"));
+                    String res = restTemplate.postForObject(url, null, String.class);
+                    JSONObject jsonObject = JSONObject.parseObject(res);
+                    if (!jsonObject.isEmpty() && jsonObject.containsKey("locs")) {
+                        JSONArray locsArray = jsonObject.getJSONArray("locs");
+                        StringBuffer stringBuffer = new StringBuffer(10);
+                        if (!locsArray.isEmpty()) {
+                            List<Map> mapList = locsArray.toJavaList(Map.class);
+                            for (Map map : mapList) {
+                                //经度
+                                String lng = String.valueOf(map.get("lng"));
+                                //纬度
+                                String lat = String.valueOf(map.get("lat"));
+                                xfclDO.setClwzDqjd(NumberUtils.toDouble(lng, -500));
+                                xfclDO.setClwzDqwd(NumberUtils.toDouble(lat, -500));
+                                xfclDO.setClwzWzcjsj(new Date());
+                                xfclDO.setGpsVid(String.valueOf(vehicleJson.get("id")));
+                                xfclDO.setGpsVkey((String) vehicleJson.get("vKey"));
+                                xfclDao.update(xfclDO);
+                            }
+                        }
+                    }
 
-            }
-        }
-    }
-
-
-    public void updateGpsPostion(XfclDO xfclDO, JSONObject vehicleJson) {
-        long startTimeMillis = System.currentTimeMillis();
-        log.info("GPS接口更新车辆位置开始时间---》{}", startTimeMillis);
-        String url = exliveUrl + "?version=1&method=loadLocation&vid=" + String.valueOf(vehicleJson.get("id"))
-                + "&vKey=" + String.valueOf(vehicleJson.get("vKey"));
-        String res = restTemplate.postForObject(url, null, String.class);
-        JSONObject jsonObject = JSONObject.parseObject(res);
-        if (!jsonObject.isEmpty() && jsonObject.containsKey("locs")) {
-            JSONArray locsArray = jsonObject.getJSONArray("locs");
-            StringBuffer stringBuffer = new StringBuffer(10);
-            if (!locsArray.isEmpty()) {
-                List<Map> mapList = locsArray.toJavaList(Map.class);
-                for (Map map : mapList) {
-                    //经度
-                    String lng = String.valueOf(map.get("lng"));
-                    //纬度
-                    String lat = String.valueOf(map.get("lat"));
-                    xfclDO.setClwzDqjd(NumberUtils.toDouble(lng, -500));
-                    xfclDO.setClwzDqwd(NumberUtils.toDouble(lat, -500));
-                    xfclDO.setClwzWzcjsj(new Date());
-                    xfclDO.setGpsVid(String.valueOf(vehicleJson.get("id")));
-                    xfclDO.setGpsVkey((String) vehicleJson.get("vKey"));
-                    xfclDao.update(xfclDO);
                 }
             }
         }

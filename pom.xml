@@ -344,9 +344,7 @@
         <profile>
             <!-- 开发环境 -->
             <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+
             <properties>
                 <profiles.active>dev</profiles.active>
                 <!-- swagger接口 -->
@@ -356,6 +354,9 @@
         <profile>
             <!-- 测试环境 -->
             <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <profiles.active>test</profiles.active>
             </properties>
