@@ -1,3 +1,5 @@
+server:
+  port: 8001
 smart119:
   uploadPath: c:/var/uploaded_files/
   username: admin
