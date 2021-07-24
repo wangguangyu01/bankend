@@ -188,8 +188,17 @@ function initFileInput(ctrlName,attachmentDOList) {
     var imgArry = [];
     var removeArry = [];
     $.each(attachmentDOList, function (i, item) {
-        imgArry.push('<img src="/attach/ftpDownload?id=' + item.attachmentId + '" alt="' + item.name + '" class="file-preview-image" title="' + item.name + '" style="width:100%">')
-        var obj = {"caption": item.name, "url": "/attach/ftpDelete?id=" + item.attachmentId};
+        var suffix = item.name.substr(item.name.lastIndexOf(".") + 1);
+        var src;
+        if( suffix == "doc" || suffix == "docx"){
+            src = "/img/word.jpg";
+        }else if(suffix == "pdf"){
+            src="/img/pdf.png";
+        }else{
+            src="/attach/ftpDownload?id=" + item.attachmentId;
+        }
+        imgArry.push('<img src="' + src + '" alt="' + item.name + '" class="file-preview-image" title="' + item.name + '" style="width:100%">')
+        var obj = {"caption": item.name, "url": "/attach/ftpDelete?id=" + item.attachmentId, "downloadUrl": "/attach/ftpDownload?id=" + item.attachmentId};
         removeArry.push(obj);
     });
 
@@ -206,6 +215,7 @@ function initFileInput(ctrlName,attachmentDOList) {
             showRemove: true, //显示移除按钮
             showPreview: true, //是否显示预览
             showCaption: false,//是否显示标题
+
             browseClass: "btn btn-primary", //按钮样式
             //dropZoneEnabled: true,//是否显示拖拽区域
             //minImageWidth: 50, //图片的最小宽度
