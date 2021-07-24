@@ -197,7 +197,7 @@ function initFileInput(ctrlName,attachmentDOList) {
         }else{
             src="/attach/ftpDownload?id=" + item.attachmentId;
         }
-        imgArry.push('<img src="' + src + '" alt="' + item.name + '" class="file-preview-image" title="' + item.name + '" style="width:100%">')
+        imgArry.push('<img src="' + src + '" alt="' + item.name + '" class="file-preview-image" title="' + item.name + '" style="width:100%;height:100%">')
         var obj = {"caption": item.name, "url": "/attach/ftpDelete?id=" + item.attachmentId, "downloadUrl": "/attach/ftpDownload?id=" + item.attachmentId};
         removeArry.push(obj);
     });
