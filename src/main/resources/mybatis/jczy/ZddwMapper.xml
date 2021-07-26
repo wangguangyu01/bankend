@@ -294,13 +294,7 @@
         (
         SELECT
         t.*,
-        ROUND(
-        6378.138 * 2 * ASIN(
-        SQRT(
-        POW( SIN( ( t.DQWD * PI( ) / 180- #{wd} * PI( ) / 180 ) / 2 ), 2 ) + COS( t.DQJD * PI( ) / 180 ) * COS( #{jd} * PI( ) / 180 ) * POW( SIN( ( t.DQJD * PI( ) / 180- #{jd} * PI( ) / 180 ) / 2 ), 2 )
-        )
-        ) * 1000
-        ) AS distance
+        calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
         FROM
         jczy_zddw t
         HAVING
