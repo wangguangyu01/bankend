@@ -294,7 +294,7 @@
         (
         SELECT
         t.*,
-        calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
+        calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance  
         FROM
         jczy_zddw t
         HAVING
