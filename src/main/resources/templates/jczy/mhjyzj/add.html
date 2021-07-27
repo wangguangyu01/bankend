@@ -51,7 +51,7 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm"  enctype="multipart/form-data">
+						<form class="form-horizontal m-t" id="signupForm" >
 							<div class="form-group">
 								<label class="col-sm-2 control-label">姓名：</label>
 								<div class="col-sm-4">
@@ -94,6 +94,7 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">联系电话：</label>
 								<div class="col-sm-4">
@@ -118,12 +119,13 @@
 
 								<label class="col-sm-2 control-label">消防专家领域类别：</label>
 								<div class="col-sm-4">
-									<input type="hidden" name="xfzjlylbdm" id="xfzjlylbdm" value="" />
+									<input type="hidden" id="" class="xfzjlylbdm"  />
 									<div class="XFZJLYLBDM-DIV dropdown">
 										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
 											<span id="xfzjlylbdm-title">选择分类</span>
 											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
 										</a>
+										<input type="hidden" name="xfzjlylbdm" id="xfzjlylbdm" value="" title="请选择学历" required />
 									</div>
 								</div>
 							</div>
@@ -258,6 +260,7 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
+
 	<script type="text/javascript" src="/js/appjs/jczy/mhjyzj/add.js">
 	</script>
 </body>

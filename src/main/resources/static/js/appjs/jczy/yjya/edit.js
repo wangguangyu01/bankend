@@ -130,3 +130,17 @@ function initFileInput(ctrlName) {
 	})
 
 }
+
+var openZddw = function(){
+    layer.open({
+        type:2,
+        title:"选择重点单位",
+        area : [ '600px', '450px' ],
+        content:"/jczy/zddw/zddwSelect"
+    })
+}
+
+function saveZddw(selectContent){
+    $("#yadxTywysbm").val(selectContent['zddwTywysbm']);
+    $("#yadxName").val(selectContent['dwmc']);
+}

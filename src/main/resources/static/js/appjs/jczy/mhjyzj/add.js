@@ -73,6 +73,7 @@ function update() {
 function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#signupForm").validate({
+        ignore: "",//开启对hidden元素的验证
         rules : {
             xm : {
                 required : true,
