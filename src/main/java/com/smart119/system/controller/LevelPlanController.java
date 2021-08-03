@@ -97,6 +97,7 @@ public class LevelPlanController extends BaseController{
 			levelPlan.setPlanTypeName(dictByTypeVal.get(0).getName());
 			levelPlan.setPlanType(policestaionTypeLevelDOS.get(0).getPOLICESTAIONTYPETYWYSBM());
 			levelPlan.setPlanLevel(policestaionTypeLevelDOS.get(0).getPOLICESTAIONLEVELTYWYSBM());
+			levelPlan.setZhcs(policestaionTypeLevelDOS.get(0).getZhcs());
 		}
 		for(PolicestaionTypeLevelDO aaa:policestaionTypeLevelDOS){
 			Map ma= new HashMap();
@@ -129,6 +130,7 @@ public class LevelPlanController extends BaseController{
 				policestaionTypeLevelDO.setPOLICESTAIONLEVELTYPETYWYSBM(UUID.randomUUID().toString().replace("-",""));
 				policestaionTypeLevelDO.setPOLICESTAIONTYPETYWYSBM(linkedHashMap.get("pOLICESTAIONTYPETYWYSBM").toString());
 				policestaionTypeLevelDO.setPOLICESTAIONLEVELTYWYSBM(linkedHashMap.get("pOLICESTAIONLEVELTYWYSBM").toString());
+				policestaionTypeLevelDO.setZhcs(linkedHashMap.get("zhcs").toString());
 				policestaionTypeLevelDO.setXFCLTYWYSBM(linkedHashMap.get("xFCLTYWYSBM").toString());
 				policestaionTypeLevelDO.setXFCLNUM(linkedHashMap.get("xFCLNUM").toString());
 				policestaionTypeLevelDO.setCdate(new Date());

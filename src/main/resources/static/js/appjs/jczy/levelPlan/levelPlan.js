@@ -57,7 +57,10 @@ function load() {
                             },			{
                                 field : 'planType',
                                 title : '警情分类'
-                            },				{
+                            },		{
+                                field : 'zhcs',
+                                title : '场所'
+                            },					{
 									field : 'planContent', 
 									title : '等级预案描述' 
 								},

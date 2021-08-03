@@ -81,4 +81,7 @@ public class LevelPlanDO implements Serializable {
 
             @TableField(exist = false)
             private List<PolicestaionTypeLevelDO> policeTypeLevelList;
+
+    @TableField(exist = false)
+    private String zhcs;
 }
