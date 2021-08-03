@@ -46,4 +46,7 @@ public class PolicestaionTypeLevelDO {
     //
     @TableField(value = "status")
     private String status;
+
+    @TableField(value = "zhcs")
+    private String zhcs;
 }

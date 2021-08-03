@@ -4,7 +4,7 @@ $().ready(function() {
     getSelectAll("JQFLYDM","JQLB-DIV","jqlb","jqlb-title");
     getSelectAll("XFZBLXDM","CLLXDM-DIV","cllxdm","cllxdm-title");
     getSelectByType("JQDJDM","JQDJDM",levelPlan.planLevel);
-    console.log(levelPlan);
+    getSelectByType("ZHCS","ZHCS",levelPlan.zhcs);
     for(var i in levelPlan.policeTypeLevelList){
         initCar(levelPlan.policeTypeLevelList[i])
 	}
@@ -115,6 +115,7 @@ function save() {
         policeTypeLevelList.push({
             pOLICESTAIONTYPETYWYSBM:$("#jqlb").val(),
             pOLICESTAIONLEVELTYWYSBM:$("#JQDJDM").val(),
+            zhcs: $("#ZHCS").val(),
             xFCLTYWYSBM:$(this).val(),
             xFCLNUM: $($("[name='num']")[i]).val()
         })
@@ -123,7 +124,6 @@ function save() {
     levelPlan.planName = $("#planName").val();
     levelPlan.planContent = $("#planContent").val();
     levelPlan.policeTypeLevelList = policeTypeLevelList;
-    console.log(levelPlan);
     $.ajax({
         cache : true,
         type : "POST",

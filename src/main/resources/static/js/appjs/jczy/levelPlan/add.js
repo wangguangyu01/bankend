@@ -3,6 +3,7 @@ $().ready(function() {
     getSelectAll("JQFLYDM","JQLB-DIV","jqlb","jqlb-title");
     getSelectAll("XFZBLXDM","CLLXDM-DIV","cllxdm","cllxdm-title");
     getSelectByType("JQDJDM","JQDJDM",null);
+    getSelectByType("ZHCS","ZHCS",null);
 });
 
 $.validator.setDefaults({
@@ -80,7 +81,8 @@ function save() {
              pOLICESTAIONTYPETYWYSBM:$("#jqlb").val(),
              pOLICESTAIONLEVELTYWYSBM:$("#JQDJDM").val(),
              xFCLTYWYSBM:$(this).val(),
-             xFCLNUM: $($("[name='num']")[i]).val()
+             xFCLNUM: $($("[name='num']")[i]).val(),
+             zhcs: $("#ZHCS").val()
 		 })
      })
     levelPlan.planName = $("#planName").val();
@@ -130,6 +132,9 @@ function validateRule() {
 			},
             JQDJDM : {
                 required : icon + "请选择警情等级"
+            },
+            ZHCS : {
+                required : icon + "请选择场所"
             },
 		}
 	})
