@@ -45,16 +45,16 @@ function load() {
                 // 返回false将会终止请求
                 columns : [
                     {
+                        field : 'xzqhdm',
+                        title : '行政区划代码'
+                    },
+                    {
                         field : 'mc',
-                        title : '警情类型名称'
+                        title : '行政区域名称'
                     },
                     {
                         field : 'count',
                         title : '数量'
-                    },
-                    {
-                        field : 'percentage',
-                        title : '百分比'
                     }]
             });
 }
