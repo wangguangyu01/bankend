@@ -2,41 +2,40 @@
 <html>
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<
 <body class="gray-bg">
 	<div class="wrapper wrapper-content ">
-		<div class="col-sm-12">
-			<div class="ibox">
-				<div class="ibox-body">
-					<div class="fixed-table-toolbar">
-						<!--<div class="columns pull-left">-->
-							<!--<button shiro:hasPermission="webapi:jbxx:add" type="button" class="btn  btn-primary" onclick="add()">-->
-								<!--<i class="fa fa-plus" aria-hidden="true"></i>添加-->
-							<!--</button>-->
-							<!--<button shiro:hasPermission="webapi:jbxx:batchRemove" type="button" class="btn  btn-danger"-->
-								<!--onclick="batchRemove()">-->
-								<!--<i class="fa fa-trash" aria-hidden="true"></i>删除-->
-							<!--</button>-->
-						<!--</div>-->
-						<div class="columns pull-right">
-							<button class="btn btn-success" onclick="load()">查询</button>
-						</div>
-						<div class="pull-right col-md-3">
-							<input type="text" class="laydate-icon layer-date form-control" id="startDate" name="startDate"  placeholder="请选择开始日期"
-								   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${startDate}==null?null:${#dates.format(startDate,'yyyy-MM-dd')}"/>
-						</div>
-
-						<div class="pull-right" style="line-height: 34px;">——</div>
-						<div class="pull-right col-md-3">
-							<input type="text" class="laydate-icon layer-date form-control" id="endDate" name="endDate"  placeholder="请选择结束日期"
-								   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly" th:value="${endDate}==null?null:${#dates.format(endDate,'yyyy-MM-dd')}"/>
-						</div>
-						<div class="columns pull-right col-md-2 nopadding">
-							<input id="searchName" type="text" class="form-control"
-								placeholder="">
-						</div>
+		<div class="row">
+			<div class="col-sm-3">
+				<div class="ibox ibox-body">
+					<div class="ibox-title">
+						<h5>选择部门</h5>
 					</div>
-					<table id="exampleTable" data-mobile-responsive="true">
-					</table>
+					<div class="ibox-content">
+						<div id="jstree"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-9">
+				<div class="ibox">
+					<div class="ibox-body">
+						<div class="fixed-table-toolbar">
+							<div class="columns pull-right">
+								<button class="btn btn-success" onclick="reLoad()">查询</button>
+							</div>
+							<div class="pull-right col-md-3">
+								<input type="text" class="laydate-icon layer-date form-control" id="endDate" name="endDate"  placeholder="请选择结束日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;"  th:value="${endDate}==null?null:${#dates.format(endDate,'yyyy-MM-dd')}"/>
+							</div>
+							<div class="pull-right" style="line-height: 34px;">——</div>
+							<div class="pull-right col-md-3">
+								<input type="text" class="laydate-icon layer-date form-control" id="startDate" name="startDate"  placeholder="请选择开始日期"
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;"  th:value="${startDate}==null?null:${#dates.format(startDate,'yyyy-MM-dd')}"/>
+							</div>
+						</div>
+						<table id="exampleTable" data-mobile-responsive="true">
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -140,6 +140,27 @@ public class JbxxDO implements Serializable {
 	private ZddwDO zddwDO;
 
 
+	//数量
+	private String count;
+
+	public String getCount() {
+		return count;
+	}
+
+	public void setCount(String count) {
+		this.count = count;
+	}
+
+	public String getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(String percentage) {
+		this.percentage = percentage;
+	}
+
+	//百分比
+	private String percentage;
 
 
 	/**

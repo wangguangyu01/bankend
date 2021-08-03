@@ -1,7 +1,8 @@
 package com.smart119.jczy.service;
 
-import com.smart119.common.utils.PageUtils;
+import com.smart119.webapi.domain.JbxxDO;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +15,6 @@ import java.util.Map;
 public interface JqtjService {
 
 
-	PageUtils queryPage(Map<String, Object> params);
+	List<JbxxDO> list(Map<String, Object> params);
 
 }
