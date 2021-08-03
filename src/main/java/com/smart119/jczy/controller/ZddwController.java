@@ -28,8 +28,8 @@ import com.smart119.common.utils.R;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 
- * 
+ *
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:32:48
@@ -51,7 +51,7 @@ public class ZddwController extends BaseController{
 
 	@Autowired
 	private AttachmentService attachmentService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:zddw:zddw")
 	String Zddw(){
@@ -100,7 +100,7 @@ public class ZddwController extends BaseController{
 		PageUtils pageUtils = new PageUtils(zddwList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:zddw:add")
 	String add(){
@@ -122,9 +122,15 @@ public class ZddwController extends BaseController{
 		m.put("fType","zddwtp");
 		List<AttachmentDO> zddwtpList = attachmentService.list(m);
 		model.addAttribute("zddwtpList", zddwtpList);
+		//回显附件
+		Map mYuAnFile = new HashMap();
+		mYuAnFile.put("fid",zddwTywysbm);
+		mYuAnFile.put("fType","yuanFile");
+		List<AttachmentDO> zddwYuAnFileList = attachmentService.list(mYuAnFile);
+		model.addAttribute("zddwYuAnFileList", zddwYuAnFileList);
 	    return "jczy/zddw/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -185,7 +191,7 @@ public class ZddwController extends BaseController{
 		zddwService.update(zddw);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -198,7 +204,7 @@ public class ZddwController extends BaseController{
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -225,4 +231,41 @@ public class ZddwController extends BaseController{
 		PageUtils pageUtils = new PageUtils(zddwList, total);
 		return pageUtils;
 	}
+
+
+	@GetMapping("/zddwSelect")
+	String zddwSelect(){
+		return "jczy/zddw/selectZddw";
+	}
+
+
+	@ApiOperation("查询重点单位信息")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "dwmc", value = "单位名称", required = true, dataType = "String",dataTypeClass = String.class,paramType = "query")
+	})
+	@ResponseBody
+	@GetMapping("/selectList")
+	@ApiResponses(value = {@ApiResponse(code = 200, message = "访问成功",response= ZddwDO.class)})
+	public PageUtils selectList(@RequestParam Map<String, Object> params){
+		if(null == params.get("offset")){
+			params.put("offset",0);
+		}
+		if(null == params.get("limit")){
+			params.put("limit",9999);
+		}
+		Query query = new Query(params);
+		List<DeptDO> deptList = new ArrayList<>();
+		if(params.get("deptId")!=null && !params.get("deptId").equals("")){
+			deptList = deptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+		}else{
+			deptList = deptService.listChildren(getUser().getDeptId());
+		}
+		query.put("deptList",deptList);
+		List<ZddwDO> zddwList = zddwService.list(query);
+		int total = zddwService.count(query);
+		PageUtils pageUtils = new PageUtils(zddwList, total);
+		return pageUtils;
+	}
+
+
 }

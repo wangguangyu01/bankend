@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.JqtjDao">
+
+
+    <select id="list" resultType="java.util.HashMap">
+        SELECT distinct
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '1'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+
+
+        group by jqxx_jbxx.JQ_TYWYSBM) B) as count,
+        '火灾救援' AS mc,
+        CONCAT(
+        CAST(
+        round(
+        (
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '1'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+
+        group by jqxx_jbxx.JQ_TYWYSBM) B) / (
+        select COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+
+        group by jqxx_jbxx.JQ_TYWYSBM )A
+        )
+        ) * 100,
+        3
+        ) AS CHAR
+        ),
+        '%'
+        ) AS percentage
+        FROM
+        jqxx_jqcjdp_dz C
+        WHERE
+        1=1
+        <if test="deptList != null and deptList.size() > 0">and C.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+
+        UNION ALL
+        SELECT distinct
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '2'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) as count,
+        '抢险救援' AS mc,
+        CONCAT(
+        CAST(
+        round(
+        (
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '2'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) / (
+        select COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM )A
+        )
+        ) * 100,
+        3
+        ) AS CHAR
+        ),
+        '%'
+        ) AS percentage
+        FROM
+        jqxx_jqcjdp_dz C
+        WHERE
+        1=1
+        <if test="deptList != null and deptList.size() > 0">and C.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        UNION ALL
+        SELECT distinct
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '3'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) as count,
+        '反恐排爆' AS mc,
+        CONCAT(
+        CAST(
+        round(
+        (
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '3'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) / (
+        select COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM )A
+        )
+        ) * 100,
+        3
+        ) AS CHAR
+        ),
+        '%'
+        ) AS percentage
+        FROM
+        jqxx_jqcjdp_dz C
+        WHERE
+        1=1
+        <if test="deptList != null and deptList.size() > 0">and C.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        UNION ALL
+        SELECT distinct
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '4'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) as count,
+        '公务执勤' AS mc,
+        CONCAT(
+        CAST(
+        round(
+        (
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '4'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+
+        group by jqxx_jbxx.JQ_TYWYSBM) B) / (
+        select COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM )A
+        )
+        ) * 100,
+        3
+        ) AS CHAR
+        ),
+        '%'
+        ) AS percentage
+        FROM
+        jqxx_jqcjdp_dz C
+        WHERE
+        1=1
+        <if test="deptList != null and deptList.size() > 0">and C.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        UNION ALL
+        SELECT distinct
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '5'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) as count,
+        '社会救助' AS mc,
+        CONCAT(
+        CAST(
+        round(
+        (
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND LEFT (jqxx_jbxx.JQFLYDM, 1) = '5'
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) / (
+        select COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+
+        group by jqxx_jbxx.JQ_TYWYSBM )A
+        )
+        ) * 100,
+        3
+        ) AS CHAR
+        ),
+        '%'
+        ) AS percentage
+        FROM
+        jqxx_jqcjdp_dz C
+        WHERE
+        1=1
+        <if test="deptList != null and deptList.size() > 0">and C.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        UNION ALL
+        SELECT distinct
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND (LEFT (jqxx_jbxx.JQFLYDM, 1) = '6' or jqxx_jbxx.JQFLYDM is null)
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) as count,
+        '其他出动' AS mc,
+        CONCAT(
+        CAST(
+        round(
+        (
+        (SELECT COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND (LEFT (jqxx_jbxx.JQFLYDM, 1) = '6' or jqxx_jbxx.JQFLYDM is null)
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM) B) / (
+        select COUNT(*) FROM (SELECT
+        count(*)
+        FROM
+        jqxx_jbxx ,
+        jqxx_jqcjdp,
+        jqxx_jqcjdp_dz
+        where 1=1
+        AND jqxx_jqcjdp.JQCJDP_TYWYSBM = jqxx_jqcjdp_dz.DP_TYWYSBM
+        AND jqxx_jbxx.JQ_TYWYSBM = jqxx_jqcjdp.JQ_TYWYSBM
+
+        <if test="deptList != null and deptList.size() > 0">and jqxx_jqcjdp_dz.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &gt;= #{startDate}
+        </if>
+
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jqcjdp_dz.cdate   &lt;= #{endDate}
+        </if>
+        group by jqxx_jbxx.JQ_TYWYSBM )A
+        )
+        ) * 100,
+        3
+        ) AS CHAR
+        ),
+        '%'
+        ) AS percentage
+        FROM
+        jqxx_jqcjdp_dz C
+        WHERE
+        1=1
+        <if test="deptList != null and deptList.size() > 0">and C.XFJYJG_TYWYSBM in
+            <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+                #{item.xfjyjgTywysbm}
+            </foreach>
+        </if>
+
+
+    </select>
+
+
+</mapper>

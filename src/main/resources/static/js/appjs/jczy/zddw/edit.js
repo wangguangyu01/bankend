@@ -10,7 +10,7 @@ $().ready(function() {
 	getSelectByType("WXHXPFLYDM","wxhxpwxhxpflydm",$("#wxhxpwxhxpflydmVal").val());
 	getSelectByType("HXPWXXLBDM","wxhxphxpwxxlbdm",$("#wxhxphxpwxxlbdmVal").val());
 	initFileInput("input-id",zddwtpList);
-    initFileInput("yuanFile",zddwtpList);
+    initFileInput("yuanFile",zddwYuAnFileList);
 });
 
 $.validator.setDefaults({
@@ -185,47 +185,96 @@ function getXzqhdm(obj,objId){
 }
 
 function initFileInput(ctrlName,attachmentDOList) {
-	var imgArry=[];
-	var removeArry = [];
-	$.each(attachmentDOList, function(i,item){
-		imgArry.push('<img src="/attach/ftpDownload?id='+item.attachmentId+'" alt="'+item.name+'" class="file-preview-image" title="'+item.name+'" style="width:100%">')
-		var obj = {"caption":item.name,"url":"/attach/ftpDelete?id="+item.attachmentId};
-		removeArry.push(obj);
-	});
+    var imgArry = [];
+    var removeArry = [];
+    $.each(attachmentDOList, function (i, item) {
+        var suffix = item.name.substr(item.name.lastIndexOf(".") + 1);
+        var src;
+        if( suffix == "doc" || suffix == "docx"){
+            src = "/img/word.jpg";
+        }else if(suffix == "pdf"){
+            src="/img/pdf.png";
+        }else{
+            src="/attach/ftpDownload?id=" + item.attachmentId;
+        }
+        imgArry.push('<img src="' + src + '" alt="' + item.name + '" class="file-preview-image" title="' + item.name + '" style="width:100%;height:100%">')
+        var obj = {"caption": item.name, "url": "/attach/ftpDelete?id=" + item.attachmentId, "downloadUrl": "/attach/ftpDownload?id=" + item.attachmentId};
+        removeArry.push(obj);
+    });
 
-	var control = $('#' + ctrlName);
-	control.fileinput({
-		language: 'zh', //设置语言
-		//uploadUrl: "upload/insert", //上传的地址
-		allowedFileExtensions: ['jpg', 'gif', 'png','exe'],//接收的文件后缀
-		//uploadExtraData:{"id": 1, "fileName":'123.jpg'},
-		uploadAsync: true, //默认异步上传
-		showUpload: false, //是否显示上传按钮
-		showRemove : true, //显示移除按钮
-		showPreview : true, //是否显示预览
-		showCaption: false,//是否显示标题
-		browseClass: "btn btn-primary", //按钮样式
-		//dropZoneEnabled: true,//是否显示拖拽区域
-		//minImageWidth: 50, //图片的最小宽度
-		//minImageHeight: 50,//图片的最小高度
-		//maxImageWidth: 1000,//图片的最大宽度
-		//maxImageHeight: 1000,//图片的最大高度
-		//maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-		//minFileCount: 0,
-		//maxFileCount: 10, //表示允许同时上传的最大文件个数
-		enctype: 'multipart/form-data',
-		validateInitialCount:true,
-		previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-		msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
-		layoutTemplates :{
-			//actionDelete:'', //去除上传预览的缩略图中的删除图标
-			//actionUpload:'',//去除上传预览缩略图中的上传图片；
-			//actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
-		},
-		initialPreview: imgArry,
-		//initialPreviewAsData: true,
-		initialPreviewConfig: removeArry,
-		overwriteInitial: false
-	})
+    if (ctrlName === 'yuanFile') {
+        var control = $('#' + ctrlName);
+    //    control.getFile();
+        control.fileinput({
+            language: 'zh', //设置语言
+            //uploadUrl: "upload/insert", //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png', 'jpeg', 'pdf', 'doc', 'docx'],//接收的文件后缀
+            //uploadExtraData:{"id": 1, "fileName":'123.jpg'},
+            uploadAsync: true, //默认异步上传
+            showUpload: false, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            showCaption: false,//是否显示标题
 
+            browseClass: "btn btn-primary", //按钮样式
+            //dropZoneEnabled: true,//是否显示拖拽区域
+            //minImageWidth: 50, //图片的最小宽度
+            //minImageHeight: 50,//图片的最小高度
+            //maxImageWidth: 1000,//图片的最大宽度
+            //maxImageHeight: 1000,//图片的最大高度
+            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            //minFileCount: 0,
+            //maxFileCount: 10, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount: true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            layoutTemplates: {
+                //actionDelete:'', //去除上传预览的缩略图中的删除图标
+                //actionUpload:'',//去除上传预览缩略图中的上传图片；
+                //actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
+            },
+            initialPreview: imgArry,
+            //initialPreviewAsData: true,
+            initialPreviewConfig: removeArry,
+            overwriteInitial: false
+        })
+    }
+    if (ctrlName === 'input-id') {
+        var control = $('#' + ctrlName);
+      //  control.getFile();
+        control.fileinput({
+            language: 'zh', //设置语言
+            //uploadUrl: "upload/insert", //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png', 'jpeg'],//接收的文件后缀
+            //uploadExtraData:{"id": 1, "fileName":'123.jpg'},
+            uploadAsync: true, //默认异步上传
+            showUpload: false, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            showPreview: true, //是否显示预览
+            showCaption: false,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            //dropZoneEnabled: true,//是否显示拖拽区域
+            //minImageWidth: 50, //图片的最小宽度
+            //minImageHeight: 50,//图片的最小高度
+            //maxImageWidth: 1000,//图片的最大宽度
+            //maxImageHeight: 1000,//图片的最大高度
+            //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            //minFileCount: 0,
+            //maxFileCount: 10, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount: true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            layoutTemplates: {
+                //actionDelete:'', //去除上传预览的缩略图中的删除图标
+                //actionUpload:'',//去除上传预览缩略图中的上传图片；
+                //actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
+            },
+            initialPreview: imgArry,
+            //initialPreviewAsData: true,
+            initialPreviewConfig: removeArry,
+            overwriteInitial: false
+        })
+    }
 }

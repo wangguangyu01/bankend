@@ -17,10 +17,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.*;
 
 @RestController
@@ -95,6 +98,17 @@ public class FzjcApiController extends BaseController{
     public R getFzjcTslistByJqTywysbm(@RequestParam("jqTywysbm") String jqTywysbm){
         List<FzjctsDO> fzjctsDOList = fzjctsService.getFzjcTslistByJqTywysbm(jqTywysbm);
         return R.ok(fzjctsDOList);
+    }
+    @GetMapping("/getFile")
+    public ResponseEntity<FileSystemResource> getFile() throws IOException {
+        Map<String,Object>map=new HashMap<>();
+        map.put("time","2021-08-02--2021-08-03");
+        map.put("zd1","222");
+        map.put("zd2","3333");
+        map.put("zd3","44444");
+        map.put("zd4","44444");
+        map.put("zd5","555555555");
+        return  fzjctsService.uplodadRepFile(map);
     }
 
 

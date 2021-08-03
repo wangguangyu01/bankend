@@ -22,7 +22,7 @@ public class GPSPostitionTaskJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         try {
-            exliveService.updateXfclPostion();
+            exliveService.updateGpsPostion();
         } catch (Exception e) {
             e.printStackTrace();
         }

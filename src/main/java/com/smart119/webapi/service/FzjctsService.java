@@ -1,7 +1,10 @@
 package com.smart119.webapi.service;
 
 import com.smart119.webapi.domain.FzjctsDO;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,5 +32,5 @@ public interface FzjctsService {
 	int batchRemove(String[] fzjctsIds);
 
 	List<FzjctsDO> getFzjcTslistByJqTywysbm(String jqTywysbm);
-
+	ResponseEntity<FileSystemResource> uplodadRepFile(Map<String,Object> map) throws IOException;
 }

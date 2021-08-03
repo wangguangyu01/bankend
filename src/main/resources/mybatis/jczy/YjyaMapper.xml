@@ -5,10 +5,10 @@
 
     <select id="get" resultType="com.smart119.jczy.domain.YjyaDO">
 		select `YJYA_TYWYSBM`,`MC`,`YAZLDM`,`YJYALXLBDM`,`YANR_JYQK`,`YADX_TYWYSBM`,`YAGS_JYQK`,`YAZZ_RQSJ`,`YAZZR_XM`,`YAZZDW_DWMC`,y.`XFJYJG_TYWYSBM`,y.`XZQHDM`,y.`cdate`,y.`cperson`,y.`status`
-		,d.name YJYALXLB
-		,dept.`dwmc` XFJYJG
+		,d.name YJYALXLB,dept.`dwmc` XFJYJG,zddw.DWMC as YADX_NAME
 		from jczy_yjya y LEFT JOIN sys_dict d ON d.value = y.YJYALXLBDM
 		LEFT JOIN sys_dept dept ON y.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		left join jczy_zddw zddw on zddw.ZDDW_TYWYSBM = y.YADX_TYWYSBM
 		where YJYA_TYWYSBM = #{value}
 		and d.description = '应急预案类型类别代码'
 
@@ -181,6 +181,7 @@
         d.NAME YJYALXLB,
         dept.`dwmc` XFJYJG,
         d2.NAME YAZL ,
+        zddw.DWMC as YADX_NAME,
         (case when dp.JQCJDP_YA_ID is null then 0 else 1 end ) DP_STATUS
         FROM
         jczy_yjya y
@@ -188,6 +189,7 @@
         LEFT JOIN sys_dict d2 ON d2.VALUE= y.YAZLDM and d2.description = '预案种类代码'
         LEFT JOIN sys_dept dept ON y.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
         left join jqxx_jqcjdp_ya dp on y.YJYA_TYWYSBM=dp.YJYA_TYWYSBM and dp.JQ_TYWYSBM=#{jqTywysbm}
+        left join jczy_zddw zddw on zddw.ZDDW_TYWYSBM = t.YADX_TYWYSBM
         where y.status = 0
         <if test="yjyalxlbdm != null and yjyalxlbdm != ''">and YJYALXLBDM = #{yjyalxlbdm}</if>
     </select>

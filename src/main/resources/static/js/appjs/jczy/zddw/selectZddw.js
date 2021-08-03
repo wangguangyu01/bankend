@@ -60,6 +60,9 @@ function selectBtn() {
         parent.layer.alert("请选择重点单位");
         return false;
     }else{
+        console.log(selectContent['dwmc']);
+        console.log(selectContent['xfjyjg']);
+        console.log(selectContent['xfjyjgTywysbm']);
         parent.saveZddw(selectContent);
         var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
         parent.layer.close(index);

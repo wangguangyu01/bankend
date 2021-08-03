@@ -1,5 +1,8 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -55,6 +58,10 @@ public class YjyaDO implements Serializable {
 
 	// 0未调派 1已调派
 	private String dpStatus;
+
+	//预案对象_名称
+	@TableField(exist = false)
+	private String yadxName;
 
 	/**
 	 * 设置：应急预案_通用唯一识别码
@@ -287,5 +294,13 @@ public class YjyaDO implements Serializable {
 
 	public void setDpStatus(String dpStatus) {
 		this.dpStatus = dpStatus;
+	}
+
+	public String getYadxName() {
+		return yadxName;
+	}
+
+	public void setYadxName(String yadxName) {
+		this.yadxName = yadxName;
 	}
 }
