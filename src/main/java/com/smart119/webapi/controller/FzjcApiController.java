@@ -23,6 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
@@ -110,6 +112,29 @@ public class FzjcApiController extends BaseController{
         map.put("zd5","555555555");
         return  fzjctsService.uplodadRepFile(map);
     }
-
+    @GetMapping("/getFileExle")
+    public void  getFileExle(HttpServletResponse response, HttpServletRequest request) throws IOException {
+        Map<String,Object>map=new HashMap<>();
+        map.put("time","2021-08-02--2021-08-03");
+        map.put("org","临沂消防支队");
+        map.put("title","标题");
+        map.put("zd1","11111");
+        map.put("zd2","2222");
+        map.put("zd3","3333");
+        map.put("zd4","44444");
+        map.put("zd5","555555555");
+        map.put("zd6","6666");
+        map.put("zd7","77777");
+        map.put("zd8","88888");
+        map.put("zd9","11111");
+        map.put("zd10","2222");
+        map.put("zd11","3333");
+        map.put("zd12","44444");
+        map.put("zd13","555555555");
+        map.put("zd14","6666");
+        map.put("zd15","77777");
+        map.put("zd16","88888");
+          fzjctsService.uplodadRepFileExle(map, response, request);
+    }
 
 }
