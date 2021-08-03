@@ -4,7 +4,7 @@
 <mapper namespace="com.smart119.jczy.dao.JqtjDao">
 
 
-    <select id="list" resultType="java.util.HashMap">
+    <select id="list" resultType="com.smart119.webapi.domain.JbxxDO">
         SELECT distinct
         (SELECT COUNT(*) FROM (SELECT
         count(*)
