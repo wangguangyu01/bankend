@@ -7464,6 +7464,9 @@ a.a_link_fa-plus:active{
     background: #0372d5;
     color: #FFFFFF;
 }
+.nav > li > a:focus, .nav > li > a:hover {
+    background: none;
+}
 .btn-primary {
     background-color: #67c23a;
     border-color: #67c23a;
