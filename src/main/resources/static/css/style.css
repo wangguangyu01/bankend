@@ -7451,6 +7451,9 @@ a.a_link_fa-plus:active{
     border-left: 0px solid #19aa8d;
     background: rgba(255,255,225,0.1);
 }
+.navbar.navbar-static-top{
+    background: rgb(6, 18, 33);
+}
 .nav-second-level li a {
     padding: 11px 15px 11px 10px;
 }
@@ -7492,4 +7495,11 @@ a.a_link_fa-plus:active{
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open .dropdown-toggle.btn-danger {
     background-color: #fe5849;
     border-color: #fe5849;
+}
+.btn-default {
+    background-color: #777777;
+    border-color: #777777;
+}
+.nav.navbar-right>li>a {
+    color: #fff;
 }
