@@ -54,7 +54,7 @@ public class ZzdyServiceImpl implements ZzdyService {
 		String id=UUID.randomUUID().toString().replace("-", "");
 		zzdy.setZzdyTywybs(id);
 		zzdy.setCdate(new Date());
-		zzdy.setStatus("0");
+		zzdy.setStatus("0200");
 		zzdy.setCperson(getUserId()+"");
 		if(zzdyDao.save(zzdy)>0){
 			String [] xfccl=zzdy.getXfclTywysbm().split(",");
