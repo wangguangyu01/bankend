@@ -25,4 +25,5 @@ public interface JqtjDao extends BaseMapper<JbxxDO> {
     List<JqtjDO> listExcel(Map<String, Object> params);
 
 
+    List<Map<String, Object>> getHourList(Map<String, Object> map);
 }
