@@ -59,14 +59,6 @@ function load() {
             });
 }
 function reLoad() {
-    if($('#startDate').val()==""){
-        layer.msg("请选择开始时间！");
-        return false;
-    }
-    if($('#endDate').val()==""){
-        layer.msg("请选择结束时间！");
-        return false;
-    }
     $('#exampleTable').bootstrapTable('refresh');
 }
 
