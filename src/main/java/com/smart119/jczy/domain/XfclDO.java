@@ -144,6 +144,7 @@ public class XfclDO implements Serializable {
 	private String gpsVkey;
 
 
+
 	//车辆名称
 	@NotBlank(message = "车辆名称不能为空")
 	@Length(min= 1, max=100, message = "车辆名称超出范围限制{min}-{max}")
@@ -222,6 +223,18 @@ public class XfclDO implements Serializable {
 	 */
 	@ApiModelProperty(value="载泡沫量/吨",name="zpmzl")
 	private String zpmzl;
+
+
+
+
+	/**
+	 * 设备id
+	 */
+	@ApiModelProperty(value = "设备id", name = "deviceId")
+	private String deviceId;
+
+
+
 
 
 	public Double getGd() {
