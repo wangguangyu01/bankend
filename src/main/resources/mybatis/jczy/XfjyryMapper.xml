@@ -47,7 +47,8 @@
         d.DWMC SJSZJG,
         dict1.name as xfgwflmc,
         dict2.name as xfjyxjb,
-        t.`WORKRQ`
+        t.`WORKRQ`,
+        t.`zdypx`
         FROM
         jczy_xfjyry t
         left join sys_dept d on t.SJSZJG_TYWYSBM = d.XFJYJG_TYWYSBM
@@ -101,7 +102,7 @@
                 order by ${sort} ${order}
             </when>
             <otherwise>
-                order by t.cdate desc
+                order by t.zdypx asc
             </otherwise>
         </choose>
         <if test="offset != null and limit != null">
@@ -200,7 +201,8 @@
 			`sfcd`,
             `userid`,
             `rylb_jh`,
-            `WORKRQ`
+            `WORKRQ`,
+		    `zdypx`
 		)
 		values
 		(
@@ -240,7 +242,8 @@
 			'0',
             #{userid},
             #{rylbJh},
-		    #{workrq}
+		    #{workrq},
+		    #{zdypx}
 		)
 	</insert>
 
@@ -281,7 +284,8 @@
             <if test="userid != null">`userid` = #{userid},</if>
             <if test="cperson != null">`cperson` = #{cperson},</if>
             <if test="rylbJh != null">`rylb_jh` = #{rylbJh},</if>
-            <if test="workrq != null">`WORKRQ` = #{workrq}</if>
+            <if test="workrq != null">`WORKRQ` = #{workrq},</if>
+            <if test="zdypx != null">`zdypx` = #{zdypx}</if>
         </set>
         where XFJYRY_TYWYSBM = #{xfjyryTywysbm}
     </update>

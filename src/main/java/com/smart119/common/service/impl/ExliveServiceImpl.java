@@ -169,9 +169,8 @@ public class ExliveServiceImpl implements ExliveService {
         for (XfclDO xfclDO: xfclDOS) {
             for (String vehicleStr : vehicleList) {
                 JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
-                String xfclGpsName = String.valueOf(vehicleJson.get("name"));
-                if (StringUtils.contains(xfclGpsName, xfclDO.getJdchphm())
-                        || StringUtils.contains(xfclGpsName, xfclDO.getClmc())) {
+                String gprs = String.valueOf(vehicleJson.get("gprs"));
+                if (StringUtils.equals(xfclDO.getDeviceId(), gprs)) {
                     String url = exliveUrl + "?version=1&method=loadLocation&vid=" + String.valueOf(vehicleJson.get("id"))
                             + "&vKey=" + String.valueOf(vehicleJson.get("vKey"));
                     String res = restTemplate.postForObject(url, null, String.class);

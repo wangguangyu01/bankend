@@ -59,7 +59,7 @@ public class ZzdyController extends BaseController {
 		String xfjyjgTywysbm = getUser().getXfjyjgTywysbm();
 
 		params.put("xfjyjgTywysbm",xfjyjgTywysbm);
-		params.put("status","0");
+		//params.put("status","0");
 		//查询列表数据
         Query query = new Query(params);
 		List<DeptDO> deptList = new ArrayList<>();

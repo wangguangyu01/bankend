@@ -1,5 +1,6 @@
 package com.smart119.jczy.service;
 
+import com.smart119.jczy.domain.QyjqtjDO;
 import com.smart119.webapi.domain.JbxxDO;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.Map;
 public interface QyjqtjService {
 
 	List<JbxxDO> qyjqtjList(Map<String, Object> params);
+
+	List<QyjqtjDO> qyjqtjExcel(Map<String, Object> params);
 }

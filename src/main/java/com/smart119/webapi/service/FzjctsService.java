@@ -34,6 +34,7 @@ public interface FzjctsService {
 	int batchRemove(String[] fzjctsIds);
 
 	List<FzjctsDO> getFzjcTslistByJqTywysbm(String jqTywysbm);
+
 	ResponseEntity<FileSystemResource> uplodadRepFile(Map<String,Object> map) throws IOException;
 
 	void uplodadRepFileExle(Map<String, Object> map, HttpServletResponse response, HttpServletRequest request) throws IOException;

@@ -2,6 +2,9 @@ package com.smart119.jczy.controller;
 
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.utils.PageUtils;
+import com.smart119.common.utils.R;
+import com.smart119.jczy.domain.JqtjDO;
+import com.smart119.jczy.domain.WblxrExcelDO;
 import com.smart119.jczy.service.JqtjService;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
@@ -75,4 +78,26 @@ public class JqtjController extends BaseController {
 		return pageUtils;
 	}
 
+	@ResponseBody
+	@GetMapping("/jqtjExcel")
+	@RequiresPermissions("jczy:jqtj:jqtjExcel")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String",paramType = "body"),
+			@ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String",paramType = "body"),
+			@ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String",paramType = "body")
+	})
+	public R exportStream(@RequestParam Map<String, Object> params){
+
+
+		List<DeptDO> deptList = new ArrayList<>();
+		if(params.get("deptId")!=null && !params.get("deptId").equals("")){
+			deptList = deptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+		}else{
+			deptList = deptService.listChildren(getUser().getDeptId());
+		}
+		params.put("deptList",deptList);
+
+		List<JqtjDO> jqtjList = jqtjService.listExcel(params);
+		return R.ok(jqtjList);
+	}
 }

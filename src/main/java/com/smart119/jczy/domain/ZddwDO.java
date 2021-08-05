@@ -15,15 +15,15 @@ import java.util.List;
 
 
 /**
- * 
- * 
+ *
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:32:48
  */
 public class ZddwDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//重点单位_通用唯一识别码
 	private String zddwTywysbm;
 	//单位名称
@@ -95,7 +95,6 @@ public class ZddwDO implements Serializable {
 	private String xfaqglrLxdh;
 
 	//简要情况
-	@NotBlank(message = "简要情况不能为空")
 	private String wxhxpjyqk;
 
 

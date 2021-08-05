@@ -1,6 +1,7 @@
 package com.smart119.jczy.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.smart119.jczy.domain.QyjqtjDO;
 import com.smart119.webapi.domain.JbxxDO;
 
 import java.util.List;
@@ -15,4 +16,7 @@ import java.util.Map;
 public interface QyjqtjDao extends BaseMapper<JbxxDO> {
 
     List<JbxxDO> qyjqtjList(Map<String, Object> params);
+
+
+    List<QyjqtjDO> qyjqtjExcel(Map<String, Object> params);
 }

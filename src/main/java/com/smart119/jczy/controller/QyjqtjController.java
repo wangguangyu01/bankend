@@ -2,7 +2,11 @@ package com.smart119.jczy.controller;
 
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.utils.PageUtils;
+import com.smart119.common.utils.R;
+import com.smart119.jczy.domain.QyjqtjDO;
 import com.smart119.jczy.service.QyjqtjService;
+import com.smart119.system.domain.DeptDO;
+import com.smart119.system.service.DeptService;
 import com.smart119.webapi.domain.JbxxDO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -15,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +38,9 @@ public class QyjqtjController extends BaseController {
 
 	@Autowired
 	private QyjqtjService qyjqtjService;
+
+	@Autowired
+	private DeptService deptService;
 
 	@GetMapping()
 	@RequiresPermissions("jczy:qyjqtj:qyjqtj")
@@ -53,5 +61,16 @@ public class QyjqtjController extends BaseController {
 		PageUtils pageUtils = new PageUtils(qyjqtjList, qyjqtjList.size());
 		return pageUtils;
 	}
+	@ResponseBody
+	@GetMapping("/qyjqtjExcel")
+	@RequiresPermissions("jczy:qyjqtj:qyjqtjExcel")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String",paramType = "body"),
+			@ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String",paramType = "body")
+	})
+	public R jqtjExcel(@RequestParam Map<String, Object> params){
 
+		List<QyjqtjDO> jqtjList = qyjqtjService.qyjqtjExcel(params);
+		return R.ok(jqtjList);
+	}
 }

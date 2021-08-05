@@ -1,5 +1,6 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 
 @Data
+@TableName("jczy_xfjyry")
 public class XfjyryDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
