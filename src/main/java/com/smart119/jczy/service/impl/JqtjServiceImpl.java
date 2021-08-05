@@ -1,6 +1,7 @@
 package com.smart119.jczy.service.impl;
 
 import com.smart119.jczy.dao.JqtjDao;
+import com.smart119.jczy.domain.JqtjDO;
 import com.smart119.jczy.service.JqtjService;
 import com.smart119.webapi.domain.JbxxDO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,9 @@ public class JqtjServiceImpl implements JqtjService {
         return jqtjDao.list(params);
     }
 
-	
+
+    @Override
+    public List<JqtjDO> listExcel(Map<String, Object> params){
+        return jqtjDao.listExcel(params);
+    }
 }

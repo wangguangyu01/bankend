@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -124,12 +125,15 @@ public class FzjctsServiceImpl implements FzjctsService {
 	@Override
 	public void uplodadRepFileExle(Map<String, Object> map,HttpServletResponse response,HttpServletRequest request) throws IOException {
 
-		 this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
+		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(currentTime);
+		 this.createExcel(map ,"reportXlsl.ftl","警情综合统计"+ dateString,response,request);
 	}
 	/**
 	 * 导出exce
 	 * @param dataMap 导出的数据Map
-	 * @param valueName web-info下.ftl文件名称（后缀也要写上）
+	 * @param valueName web-nfo下.ftl文件名称（后缀也要写上）
 	 * @param excelName 导出文件的名称
 	 * @param response 响应到浏览器 用于下载的一些设置
 	 * @param request  前台请求对象，获取一些路径等

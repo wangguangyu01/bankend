@@ -18,5 +18,12 @@
         group by a.XZQHDM order by a.XZQHDM ;
     </select>
 
-
+    <select id="qyjqtjExcel" resultType="com.smart119.jczy.domain.QyjqtjDO">
+        select  (select d.name from sys_dict d
+        where d.type = 'XZQHDM' and d.value = a.XZQHDM and d.value != '' and d.value is not null ) as mc,
+        count(JQ_TYWYSBM) as count
+        from jqxx_jbxx a where 1=1 and a.XZQHDM != '371300' and a.XZQHDM != '371301' and a.XZQHDM != ''
+        <include refid="queryParam"/>
+        group by a.XZQHDM order by a.XZQHDM ;
+    </select>
 </mapper>

@@ -171,3 +171,35 @@ function batchRemove() {
 
     });
 }
+function Excel() {
+
+    $.ajax({
+        url: prefix + "/qyjqtjExcel", // 服务器数据的加载地址
+        type: "get",
+        data: {
+            startDate:$('#startDate').val(),
+            endDate:$('#endDate').val()
+        },
+        success: function (r) {
+            exportList = r.data
+            // 列标题，逗号隔开，每一个逗号就是隔开一个单元格
+            let str = `行政区域名称,数量\n`;
+            // 增加\t为了不让表格显示科学计数法或者其他格式
+            for(let i = 0 ; i < exportList.length ; i++ ){
+                for(const key in exportList[i]){
+                    str+=`${exportList[i][key] + '\t'},`;
+                }
+                str+='\n';
+            }
+            // encodeURIComponent解决中文乱码
+            const uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
+            // 通过创建a标签实现
+            const link = document.createElement("a");
+            link.href = uri;
+            // 对下载的文件命名
+            link.download =  "行政区域警情统计数据表.csv";
+            link.click();
+        }
+
+    });
+}

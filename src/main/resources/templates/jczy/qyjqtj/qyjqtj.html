@@ -12,6 +12,9 @@
 					<div class="columns pull-right">
 						<button class="btn btn-success" onclick="reLoad()">查询</button>
 					</div>
+					<button shiro:hasPermission="jczy:qyjqtj:qyjqtjExcel" type="button" class="btn  btn-primary" onclick="Excel()">
+						<i class="fa fa-plus" aria-hidden="true"></i>导出
+					</button>
 					<div class="pull-right col-md-3">
 						<input type="text" class="laydate-icon layer-date form-control" id="endDate" name="endDate"  placeholder="请选择结束日期"
 							   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;"  th:value="${endDate}==null?null:${#dates.format(endDate,'yyyy-MM-dd')}"/>

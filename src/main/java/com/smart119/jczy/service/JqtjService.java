@@ -1,5 +1,6 @@
 package com.smart119.jczy.service;
 
+import com.smart119.jczy.domain.JqtjDO;
 import com.smart119.webapi.domain.JbxxDO;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface JqtjService {
 
 
 	List<JbxxDO> list(Map<String, Object> params);
+
+	List<JqtjDO> listExcel(Map<String, Object> params);
 
 }
