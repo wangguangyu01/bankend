@@ -1,7 +1,10 @@
 package com.smart119.webapi.service.impl;
 
+import com.smart119.jczy.dao.JqtjDao;
+import com.smart119.jczy.dao.QyjqtjDao;
 import com.smart119.webapi.dao.FzjctsDao;
 import com.smart119.webapi.domain.FzjctsDO;
+import com.smart119.webapi.domain.JbxxDO;
 import com.smart119.webapi.service.FzjctsService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.*;
 
 
@@ -36,6 +40,10 @@ public class FzjctsServiceImpl implements FzjctsService {
 			e.printStackTrace();
 		}
 	}
+	@Autowired
+    private QyjqtjDao  qyjqtjDao;
+    @Autowired
+    private JqtjDao jqtjDao;
 	@Autowired
 	private FzjctsDao fzjctsDao;
 	
@@ -84,7 +92,8 @@ public class FzjctsServiceImpl implements FzjctsService {
 		Template t = null;
 		try {
 			// 获取模板文件
-			t = configuration.getTemplate("report.ftl", "ISO8859-1"); // 获取模板文件
+            //configuration.setDefaultEncoding("ISO8859-1");
+			t = configuration.getTemplate("report.ftl", ENCODING); // 获取模板文件
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,9 +104,9 @@ public class FzjctsServiceImpl implements FzjctsService {
 		OutputStreamWriter writer = null;
 		File file=null;
 		try {
-			 file = new File( getUrl+"/" + UUID.randomUUID().toString() + ".doc");
+			 file = new File( getUrl+"/temp/" + UUID.randomUUID().toString() + ".doc");
 			out = new FileOutputStream(file);
-			writer = new OutputStreamWriter(out, "ISO8859-1");
+			writer = new OutputStreamWriter(out, ENCODING);
 			t.process(map, writer);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -123,8 +132,8 @@ public class FzjctsServiceImpl implements FzjctsService {
 	}
 	@Override
 	public void uplodadRepFileExle(Map<String, Object> map,HttpServletResponse response,HttpServletRequest request) throws IOException {
+		this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
 
-		 this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
 	}
 	/**
 	 * 导出exce
@@ -141,7 +150,7 @@ public class FzjctsServiceImpl implements FzjctsService {
 		ServletOutputStream out = null;
 		try {
 			Template template = configuration.getTemplate(valueName);
-			File file = new File( getUrl+"/" + UUID.randomUUID().toString() + ".xls");
+			File file = new File( getUrl+"/temp/" + UUID.randomUUID().toString() + ".xls");
 			try {
 				Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
 				template.process(dataMap, w);
@@ -173,6 +182,74 @@ public class FzjctsServiceImpl implements FzjctsService {
 		}catch (Exception e){
 
 		}
+
+
 	}
 
+    public Map<String,Object> getZBbaotit(String beginTime,String endTime,Map<String,Object> params){
+        Map<String,Object> returnList=new HashMap<>();
+	    StringBuffer time=new StringBuffer();
+	    time.append(getTime(beginTime,endTime));
+	    //获取接警电话数量
+        Map<String,Object> jjCount=jqtjDao.getBJcout(params);
+        if(jjCount.get("count") !=null){
+           time.append("全市共接报警电话"+jjCount.get("count")+"起,");
+        }
+        //获取接警出动数量
+        Map<String,Object> cdCount=jqtjDao.getCdcout(params);
+        if(cdCount.get("count") !=null){
+            time.append("接警出动"+cdCount.get("count")+"起,");
+        }
+        //火灾类型数量统计
+        List<Map<String,Object>>hzList=jqtjDao.getListType(params);
+        String hzpj=null;
+        if(hzList.size()>0){
+            time.append("其中");
+            for (int i = 0; i < hzList.size(); i++) {
+                Map<String,Object> mapp=hzList.get(i);
+                time.append(mapp.get("type").toString()+mapp.get("count")+"起、");
+                if(mapp.get("type").equals("火灾扑救")){
+                    hzpj=mapp.get("count").toString();
+                }
+            }
+            if(hzpj !=null){
+                time.append(hzpj+"起火灾中,");
+            }
+
+        }
+        //地区火灾扑救数量统计'
+        List<Map<String,Object>>deptHzList=jqtjDao.hzpuList(params);
+        for (int j = 0; j < deptHzList.size(); j++) {
+            Map<String,Object>deptmap=deptHzList.get(j);
+            time.append(deptmap.get("qy").toString()+deptmap.get("count")+"起,");
+        }
+        //上一天接警数量与本次查询时间百分比
+        Map<String,Object> jjCount2=jqtjDao.getBJcout2(params);
+        String order="";
+        String order2="";
+        String sum="";
+        String sum2="";
+        int a=Integer.parseInt(jjCount.get("count").toString());
+        int b=Integer.parseInt(jjCount2.get("count").toString());
+        DecimalFormat df=new DecimalFormat("0.00");
+        if(a>=b){
+            order="上升";order2="增加";
+            sum=df.format((float)(a-b)/a*100)+"%";
+            sum2=String.valueOf(a-b);
+        }else{
+            order="下降";order2="减少";
+            sum=df.format((float)(b-a)/b*100)+"%";
+            sum2=String.valueOf(b-a);
+        }
+        time.append("环比24小时,接警话务量"+order+sum+",");
+        time.append("接警出动与昨日相比"+order2+sum2+"起");
+        returnList.put("xfjcj",time);
+	    return  returnList;
+    }
+    public String getTime(String beginTime,String endTime){
+	    String time="";
+	    time+= Integer.parseInt(beginTime.substring(5,7))+"月"+Integer.parseInt(beginTime.substring(8,10))+"日 至 "
+               + Integer.parseInt( endTime.substring(5,7))+"月"+Integer.parseInt(endTime.substring(8,10))+"日,";
+	    return  time;
+    }
 }

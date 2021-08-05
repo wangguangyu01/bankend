@@ -37,4 +37,6 @@ public interface FzjctsService {
 	ResponseEntity<FileSystemResource> uplodadRepFile(Map<String,Object> map) throws IOException;
 
 	void uplodadRepFileExle(Map<String, Object> map, HttpServletResponse response, HttpServletRequest request) throws IOException;
+
+    Map<String, Object> getZBbaotit(String startDate, String endDate, Map<String, Object> map);
 }

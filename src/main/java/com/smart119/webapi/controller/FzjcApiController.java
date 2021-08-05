@@ -105,35 +105,43 @@ public class FzjcApiController extends BaseController{
     public ResponseEntity<FileSystemResource> getFile() throws IOException {
         Map<String,Object>map=new HashMap<>();
         map.put("time","2021-08-02--2021-08-03");
-        map.put("zd1","222");
-        map.put("zd2","3333");
-        map.put("zd3","44444");
-        map.put("zd4","44444");
-        map.put("zd5","555555555");
+        map.put("startDate","2021-06-02");
+        map.put("endDate","2021-08-03");
+        map.put("zd1","");
+        map.put("zd2","");
+        map.put("zd3","");
+        map.put("zd4","");
+        map.put("zd5","");
+        Map<String,Object>mapp=fzjctsService.getZBbaotit(map.get("startDate").toString(),map.get("endDate").toString(),map);
+        map.put("zd1",mapp.get("xfjcj").toString());
         return  fzjctsService.uplodadRepFile(map);
     }
     @GetMapping("/getFileExle")
-    public void  getFileExle(HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public void  getFileExle(String time1,String time2,HttpServletResponse response, HttpServletRequest request) throws IOException {
         Map<String,Object>map=new HashMap<>();
         map.put("time","2021-08-02--2021-08-03");
+        map.put("startDate","2021-06-02");
+        map.put("enDate","2021-08-03");
         map.put("org","临沂消防支队");
         map.put("title","标题");
-        map.put("zd1","11111");
-        map.put("zd2","2222");
-        map.put("zd3","3333");
-        map.put("zd4","44444");
-        map.put("zd5","555555555");
-        map.put("zd6","6666");
-        map.put("zd7","77777");
-        map.put("zd8","88888");
-        map.put("zd9","11111");
-        map.put("zd10","2222");
-        map.put("zd11","3333");
-        map.put("zd12","44444");
-        map.put("zd13","555555555");
-        map.put("zd14","6666");
-        map.put("zd15","77777");
-        map.put("zd16","88888");
+        map.put("zd1","字段1");
+        map.put("zd2","字段2");
+        map.put("zd3","");
+        map.put("zd4","");
+        map.put("zd5","");
+        map.put("zd6","");
+        map.put("zd7","");
+        map.put("zd8","");
+        map.put("zd9","");
+        map.put("zd10","");
+        map.put("zd11","");
+        map.put("zd12","");
+        map.put("zd13","");
+        map.put("zd14","");
+        map.put("zd15","");
+        map.put("zd16","");
+        map.put("time1",time1);
+        map.put("time2",time2);
           fzjctsService.uplodadRepFileExle(map, response, request);
     }
 

@@ -581,5 +581,100 @@
 
     </select>
 
+    <select id="getListType" resultType="java.util.HashMap">
+              SELECT
+            count( 1 ) count,
+        CASE
+                WHEN LEFT ( jbxx.JQFLYDM, 1 ) = 1 THEN
+                '火灾扑救'
+                WHEN LEFT ( jbxx.JQFLYDM, 1 ) = 2 THEN
+                '抢险救援'
+                WHEN LEFT ( jbxx.JQFLYDM, 1 ) = 3 THEN
+                '反恐排爆'
+                WHEN LEFT ( jbxx.JQFLYDM, 1 ) = 4 THEN
+                '公务执勤'
+                WHEN LEFT ( jbxx.JQFLYDM, 1 ) = 5 THEN
+                '社会救助' ELSE '其他行动'
+            END type
+        FROM
+            (
+            SELECT
+            jqxx_jbxx.JQFLYDM,
+            jqxx_jbxx.JQ_TYWYSBM
+            FROM
+            jqxx_jbxx,
+            ( SELECT JQ_TYWYSBM FROM jqxx_xfclcdxx GROUP BY JQ_TYWYSBM ) cdxx
+            WHERE
 
+            jqxx_jbxx.JQ_TYWYSBM = cdxx.JQ_TYWYSBM
+
+
+        <if test="startDate != null and  startDate != '' ">
+            and jqxx_jbxx.cdate   &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and  endDate != '' ">
+            and jqxx_jbxx.cdate   &lt;= #{endDate}
+        </if>
+
+            GROUP BY
+                jqxx_jbxx.JQ_TYWYSBM,
+                LEFT ( jqxx_jbxx.JQFLYDM, 1 )
+            ) jbxx
+        GROUP BY
+            LEFT ( jbxx.JQFLYDM, 1 )
+
+    </select>
+    <select id="getBJcout" resultType="java.util.HashMap">
+        select count(1) count FROM jqxx_bjjl
+         where 1=1
+        <if test="startDate != null and  startDate != '' ">
+            and cdate &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and  endDate != '' ">
+            and   cdate  &lt;= #{endDate}
+        </if>
+
+    </select>
+    <select id="getBJcout2" resultType="java.util.HashMap">
+        select count(1) count FROM jqxx_bjjl
+        where 1=1
+        <if test="startDate != null and  startDate != '' ">
+           and  cdate &gt;= DATE_FORMAT( DATE_SUB(#{startDate}, INTERVAL 1 DAY ), '%Y-%m-%d %H:%i:%S' )
+        </if>
+        <if test="endDate != null and  endDate != '' ">
+            and cdate  &lt;= DATE_FORMAT( DATE_SUB(#{endDate}, INTERVAL 1 DAY ), '%Y-%m-%d %H:%i:%S' )
+        </if>
+    </select>
+    <select id="getCdcout" resultType="java.util.HashMap">
+      SELECT
+        sum( CASE WHEN cdxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ) count
+     FROM
+        jqxx_jbxx jbxx
+         JOIN ( SELECT JQ_TYWYSBM FROM jqxx_xfclcdxx GROUP BY JQ_TYWYSBM ) cdxx ON jbxx.JQ_TYWYSBM = cdxx.JQ_TYWYSBM
+        where 1=1
+        <if test="startDate != null and  startDate != '' ">
+            and jbxx.cdate   &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and  endDate != '' ">
+            and jbxx.cdate   &lt;= #{endDate}
+        </if>
+    </select>
+
+    <select id="hzpuList" resultType="java.util.HashMap">
+        SELECT
+        a.XZQHDM AS xzqhdm,
+        dic.NAME AS qy
+        ,count(a.JQ_TYWYSBM ) AS count
+        FROM
+        jqxx_jbxx a
+        LEFT JOIN sys_dict dic ON a.XZQHDM = dic.`value`
+        AND dic.type = 'XZQHDM'
+        JOIN ( SELECT JQ_TYWYSBM FROM jqxx_xfclcdxx WHERE JQ_TYWYSBM IS NOT NULL GROUP BY JQ_TYWYSBM ) cdxx ON a.JQ_TYWYSBM = cdxx.JQ_TYWYSBM
+        where 1=1 and a.XZQHDM != '371300' and a.XZQHDM != '371301' and a.XZQHDM != ''
+         and LEFT ( a.JQFLYDM, 1 )=1
+        <if test="startDate != null and startDate != '' and  endDate != null and  endDate != ''">
+            and ( a.LASJ BETWEEN #{startDate} and #{endDate} )
+        </if>
+        group by a.XZQHDM order by a.XZQHDM ;
+    </select>
 </mapper>
