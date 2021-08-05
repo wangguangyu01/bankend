@@ -4,7 +4,7 @@
 <mapper namespace="com.smart119.jczy.dao.JqtjDao">
 
 
-    <select id="list" resultType="com.smart119.webapi.domain.JbxxDO">
+    <select id="list" resultType="java.util.HashMap">
         SELECT distinct
         (SELECT COUNT(*) FROM (SELECT
         count(*)
@@ -580,7 +580,6 @@
 
 
     </select>
-
     <select id="listExcel" resultType="com.smart119.jczy.domain.JqtjDO">
         SELECT distinct
         (SELECT COUNT(*) FROM (SELECT
@@ -1253,5 +1252,29 @@
             and ( a.LASJ BETWEEN #{startDate} and #{endDate} )
         </if>
         group by a.XZQHDM order by a.XZQHDM ;
+    </select>
+    <select id="getHourList" resultType="java.util.HashMap">
+      SELECT
+          CONVERT(substring(jbxx.cdate,11,3) , SIGNED) hour,
+          sum( CASE WHEN jbxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ) jqcount ,
+            sum( CASE WHEN cdxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ) count ,
+            sum( CASE WHEN LEFT ( jbxx.JQFLYDM, 1 ) = 1 THEN 1 ELSE 0 END ) hzcount,
+            sum(ifNULL(clxx.count,0) )as clcount,
+            sum(ifNULL(clxx.count,0) )as xycount
+        FROM
+            jqxx_jbxx jbxx
+            left JOIN ( SELECT JQ_TYWYSBM FROM jqxx_xfclcdxx GROUP BY JQ_TYWYSBM ) cdxx ON jbxx.JQ_TYWYSBM = cdxx.JQ_TYWYSBM
+            left JOIN (SELECT count(1) count,JQ_TYWYSBM FROM jqxx_xfclcdxx WHERE JQ_TYWYSBM IS NOT NULL GROUP BY JQ_TYWYSBM) clxx  ON jbxx.    JQ_TYWYSBM = clxx.JQ_TYWYSBM
+            left JOIN (SELECT count(1) count,JQ_TYWYSBM FROM jqxx_xfrycdxx WHERE JQ_TYWYSBM IS NOT NULL GROUP BY JQ_TYWYSBM) xyxx  ON jbxx.    JQ_TYWYSBM = xyxx.JQ_TYWYSBM
+        WHERE
+            1 =1
+        <if test="startDate != null and  startDate != '' ">
+            and jbxx.cdate   &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and  endDate != '' ">
+            and jbxx.cdate   &lt;= #{endDate}
+        </if>
+	   GROUP BY  substring(jbxx.cdate,11,3)
+	   ORDER BY  CONVERT( substring(jbxx.cdate,11,3) , SIGNED)  ASC
     </select>
 </mapper>

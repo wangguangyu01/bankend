@@ -35,9 +35,15 @@ public interface FzjctsService {
 
 	List<FzjctsDO> getFzjcTslistByJqTywysbm(String jqTywysbm);
 
-	ResponseEntity<FileSystemResource> uplodadRepFile(Map<String,Object> map) throws IOException;
+
 
 	void uplodadRepFileExle(Map<String, Object> map, HttpServletResponse response, HttpServletRequest request) throws IOException;
 
     Map<String, Object> getZBbaotit(String startDate, String endDate, Map<String, Object> map);
+
+    List<Map<String, Object>> getHourList(Map<String, Object> map);
+
+    void downloadTemplate(HttpServletResponse response, HttpServletRequest request, String filename, String templeteName) throws IOException;
+
+    String uplodadRepFile(Map<String, Object> map, String s) throws IOException;
 }
