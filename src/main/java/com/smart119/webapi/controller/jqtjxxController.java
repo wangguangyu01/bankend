@@ -15,10 +15,12 @@ import com.smart119.webapi.service.FzjctsService;
 import com.smart119.webapi.service.JbxxService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +28,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 
-@RestController
-@RequestMapping("/webapi/fzjc")
+@Controller
+@RequestMapping("/webapi/jjtjxxll")
 @Api(value = "辅助决策API", description = "辅助决策API")
-public class FzjcApiController extends BaseController{
+public class jqtjxxController extends BaseController{
 
     @Resource
     private FzjcService fzjcService;
@@ -45,60 +47,6 @@ public class FzjcApiController extends BaseController{
     @Autowired
     private JbxxService jbxxService;
 
-    @GetMapping("/getFzjcList")
-    @ApiOperation("查询辅助决策")
-    public PageUtils list(@RequestParam Map<String, Object> params){
-        //查询列表数据
-        Query query = new Query(params);
-        List<FzjcDO> fzjcList = fzjcService.list(query);
-        int total = fzjcService.count(query);
-        PageUtils pageUtils = new PageUtils(fzjcList, total);
-        return pageUtils;
-    }
-
-
-
-    @GetMapping("/getFzjcById")
-    @ApiOperation("查询辅助决策详情")
-    public R getFzjcById(@RequestParam("fzjcId") String fzjcId){
-        FzjcDO fzjc = fzjcService.get(fzjcId);
-        return R.ok(fzjc);
-    }
-
-    @GetMapping("/fzjcTs")
-    @ApiOperation("辅助决策推送")
-    public R fzjcTs(@RequestParam("fzjcId") String fzjcId,@RequestParam("jqTywysbm") String jqTywysbm){
-        String id = UUID.randomUUID().toString().replace("-", "");
-        FzjctsDO fzjctsDO = new FzjctsDO();
-        fzjctsDO.setFzjctsId(id);
-        fzjctsDO.setCdate(new Date());
-        fzjctsDO.setFzjcId(fzjcId);
-        fzjctsDO.setJqTywysbm(jqTywysbm);
-        fzjctsDO.setCperson(getUserId()+"");
-        fzjctsDO.setStatus(0);
-        fzjctsDO.setTsr(getUserId()+"");
-        fzjctsDO.setTssj(new Date());
-        fzjctsService.save(fzjctsDO);
-        FzjcDO fzjc = fzjcService.get(fzjcId);
-        Map map = new HashMap();
-        map.put("fzjcInfo",fzjc);
-        map.put("jqTywysbm",jqTywysbm);
-
-        Map param = new HashMap();
-        param.put("jqTywysbm",jqTywysbm);
-        List<JbxxDO> jbxxList = jbxxService.list(param);
-        map.put("xfjyjgtywysbm",jbxxList.get(0).getXfjgid());
-
-        rabbitMQClient.sendMessageToExchange("fzjcts", JSON.toJSONString(map));
-        return R.ok();
-    }
-
-    @GetMapping("/getFzjcTslistByJqTywysbm")
-    @ApiOperation("查询辅助决策推送")
-    public R getFzjcTslistByJqTywysbm(@RequestParam("jqTywysbm") String jqTywysbm){
-        List<FzjctsDO> fzjctsDOList = fzjctsService.getFzjcTslistByJqTywysbm(jqTywysbm);
-        return R.ok(fzjctsDOList);
-    }
     /////跳转页面
     @GetMapping()
     //@RequiresPermissions("webapi:fzjc:jqtjlist")
@@ -107,6 +55,7 @@ public class FzjcApiController extends BaseController{
     }
     //值班信息统计信息
     @GetMapping("/getZbFile")
+    @ResponseBody
     public Map<String,Object> getZbFile(String startDate,String endDate) throws IOException {
         Map<String,Object>map=new HashMap<>();
         map.put("startDate",startDate);
@@ -120,9 +69,10 @@ public class FzjcApiController extends BaseController{
         return  map;
     }
     @GetMapping("/getFile")
+    @ResponseBody
     public String getFile(String time,String startDate,String endDate) throws IOException {
         Map<String,Object>map=new HashMap<>();
-        map.put("time",time);
+        //map.put("time",time);
         map.put("startDate",startDate);
         map.put("endDate",endDate);
         map.put("zd2","");
@@ -131,9 +81,11 @@ public class FzjcApiController extends BaseController{
         map.put("zd5","");
         Map<String,Object>mapp=fzjctsService.getZBbaotit(map.get("startDate").toString(),map.get("endDate").toString(),map);
         map.put("zd1",mapp.get("xfjcj").toString());
+        map.put("time",mapp.get("time").toString());
         return  fzjctsService.uplodadRepFile(map,"report.ftl");
     }
     @GetMapping("/getFileExle")
+    @ResponseBody
     public void  getFileExle(String time1,String time2,HttpServletResponse response, HttpServletRequest request) throws IOException {
         Map<String,Object>map=new HashMap<>();
         map.put("time","2021-08-02--2021-08-03");
@@ -164,6 +116,7 @@ public class FzjcApiController extends BaseController{
 
     //警情时段分布
     @GetMapping("/getHourList")
+    @ResponseBody
     public List<Map<String,Object>> getHourList(String startDate,String endDate) throws IOException {
         Map<String,Object>map=new HashMap<>();
         map.put("startDate",startDate);
@@ -171,6 +124,7 @@ public class FzjcApiController extends BaseController{
         return  fzjctsService.getHourList(map);
     }
     @GetMapping("/getHourFile")
+    @ResponseBody
     public String getHourFile(String time,String startDate,String endDate,String org,String gettime) throws IOException {
         Map<String,Object>map=new HashMap<>();
         map.put("time",time);
@@ -182,6 +136,7 @@ public class FzjcApiController extends BaseController{
         return  fzjctsService.uplodadRepFile(map,"report3.ftl");
     }
     @GetMapping("/getUpload")
+    @ResponseBody
     public void downloadTemplate(HttpServletResponse response, HttpServletRequest request,String filename, String templeteName) throws IOException {
          fzjctsService.downloadTemplate(response,request,filename,templeteName);
     }

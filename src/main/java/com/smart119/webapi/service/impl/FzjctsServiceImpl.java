@@ -1,5 +1,6 @@
 package com.smart119.webapi.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.smart119.jczy.dao.JqtjDao;
 import com.smart119.jczy.dao.QyjqtjDao;
 import com.smart119.webapi.dao.FzjctsDao;
@@ -8,6 +9,7 @@ import com.smart119.webapi.domain.JbxxDO;
 import com.smart119.webapi.service.FzjctsService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.apache.poi.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -194,7 +196,10 @@ public class FzjctsServiceImpl implements FzjctsService {
     public Map<String,Object> getZBbaotit(String beginTime,String endTime,Map<String,Object> params){
         Map<String,Object> returnList=new HashMap<>();
         StringBuffer time=new StringBuffer();
-        time.append(getTime(beginTime,endTime));
+        if(!StringUtils.isEmpty(beginTime) && !StringUtils.isEmpty(endTime)){
+            time.append(getTime(beginTime,endTime));
+            returnList.put("time",getTime(beginTime,endTime));
+        }
         //获取接警电话数量
         Map<String,Object> jjCount=jqtjDao.getBJcout(params);
         if(jjCount.get("count") !=null){
@@ -249,6 +254,7 @@ public class FzjctsServiceImpl implements FzjctsService {
         time.append("环比24小时,接警话务量"+order+sum+",");
         time.append("接警出动与昨日相比"+order2+sum2+"起");
         returnList.put("xfjcj",time);
+
         return  returnList;
     }
 
