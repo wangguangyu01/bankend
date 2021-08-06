@@ -197,8 +197,8 @@ public class FzjctsServiceImpl implements FzjctsService {
         Map<String,Object> returnList=new HashMap<>();
         StringBuffer time=new StringBuffer();
         if(StringUtils.isNotEmpty(beginTime)&& StringUtils.isNotEmpty(endTime)){
-            time.append(getTime(beginTime,endTime));
-            returnList.put("time",getTime(beginTime,endTime));
+            time.append(getTime(beginTime,endTime,true));
+            returnList.put("time",getTime(beginTime,endTime,false));
         }
         //获取接警电话数量
         Map<String,Object> jjCount=jqtjDao.getBJcout(params);
@@ -265,16 +265,16 @@ public class FzjctsServiceImpl implements FzjctsService {
         return  returnList;
     }
 
-    public String getTime(String beginTime,String endTime) throws ParseException {
+    public String getTime(String beginTime,String endTime,Boolean status) throws ParseException {
         String time="";
-//        time+= Integer.parseInt(beginTime.substring(5,7))+"月"+Integer.parseInt(beginTime.substring(8,10))+"日 至 "
-//                + Integer.parseInt( endTime.substring(5,7))+"月"+Integer.parseInt(endTime.substring(8,10))+"日,";
-
-      time+=gettt(beginTime)+"至"+gettt(endTime);
-
+      if(status){
+          time+=gettt(beginTime,status)+"至"+gettt(endTime,status);
+      }else{
+          time+=gettt(beginTime,status)+"--"+gettt(endTime,status);
+      }
         return  time;
     }
-  public String gettt(String s) throws ParseException {
+  public String gettt(String s,Boolean status) throws ParseException {
         String time="";
 
       Date date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
@@ -283,7 +283,12 @@ public class FzjctsServiceImpl implements FzjctsService {
       int year = now.get(Calendar.YEAR);
       int month = now.get(Calendar.MONTH) + 1; // 0-based!
       int day = now.get(Calendar.DAY_OF_MONTH);
-        return month+"月"+day+"日"+"6时";
+      if(status){
+          time=month+"月"+day+"日"+"6时";
+      }else{
+          time=month+"月"+day+"日";
+      }
+        return time;
   }
     @Override
     public List<Map<String, Object>> getHourList(Map<String, Object> map) {

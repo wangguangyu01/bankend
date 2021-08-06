@@ -27,7 +27,7 @@ function reLoad() {
             endDate:$('#endDate').val()+" "+" 06:00:00"
         },
         success: function (r) {
-            $('#time').html(r.time);
+            $('#time').html('('+r.time+')');
             $('#zd1').html(r.zd1);
             $('#zd2').html(r.zd2);
             $('#zd3').html(r.zd3);
