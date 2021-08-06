@@ -45,6 +45,7 @@ public class ZzdyDO implements Serializable {
 	private String	xfjyjgTywysbmname;
 	private List<String> xfccl;
 	private String xfclTywysbm;
+	private String xfzbTywysbm;
 
 	public String getXfclTywysbm() {
 		return xfclTywysbm;
@@ -185,5 +186,13 @@ public class ZzdyDO implements Serializable {
 	 */
 	public String getXfjyjgTywysbm() {
 		return xfjyjgTywysbm;
+	}
+
+	public String getXfzbTywysbm() {
+		return xfzbTywysbm;
+	}
+
+	public void setXfzbTywysbm(String xfzbTywysbm) {
+		this.xfzbTywysbm = xfzbTywysbm;
 	}
 }

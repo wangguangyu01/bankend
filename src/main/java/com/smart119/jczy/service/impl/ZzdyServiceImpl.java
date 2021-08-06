@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.smart119.common.domain.Distance;
 import com.smart119.common.service.BaiduMapService;
 import com.smart119.jczy.dao.ZzdyDao;
+import com.smart119.jczy.dao.ZzdyXfzbDao;
 import com.smart119.jczy.domain.ZzdyDO;
 import com.smart119.jczy.domain.ZzdyXfclDO;
+import com.smart119.jczy.domain.ZzdyXfzbDO;
 import com.smart119.jczy.service.ZzdyService;
 import com.smart119.jczy.service.ZzdyXfclService;
 import com.smart119.system.domain.DeptDO;
@@ -33,6 +35,8 @@ public class ZzdyServiceImpl implements ZzdyService {
 	private BaiduMapService baiduMapService;
 	@Autowired
 	private ZzdyXfclService zzdyXfclService;
+	@Autowired
+	private ZzdyXfzbDao zzdyXfzbDao;
 	@Override
 	public ZzdyDO get(String zzdyTywybs){
 		return zzdyDao.get(zzdyTywybs);
@@ -70,6 +74,17 @@ public class ZzdyServiceImpl implements ZzdyService {
 					}
 				}
 			}
+			String[] xfzbTywysbmArr = zzdy.getXfzbTywysbm().split(",");
+			if (xfzbTywysbmArr != null && xfzbTywysbmArr.length > 0) {
+				for(String xfzbTywysbm:xfzbTywysbmArr){
+					ZzdyXfzbDO zzdyXfzbDO = new ZzdyXfzbDO();
+					zzdyXfzbDO.setId(UUID.randomUUID().toString().replace("-", ""));
+					zzdyXfzbDO.setXfzbTywysbm(xfzbTywysbm);
+					zzdyXfzbDO.setZzdyTywybs(id);
+					zzdyXfzbDao.save(zzdyXfzbDO);
+				}
+			}
+
 		}
 		return res;
 	}
