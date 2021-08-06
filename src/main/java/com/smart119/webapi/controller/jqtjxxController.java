@@ -26,6 +26,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -61,7 +62,7 @@ public class jqtjxxController extends BaseController{
     //值班信息统计信息
     @GetMapping("/getZbFile")
     @ResponseBody
-    public Map<String,Object> getZbFile(String startDate,String endDate) throws IOException {
+    public Map<String,Object> getZbFile(String startDate,String endDate) throws IOException, ParseException {
         Map<String,Object>map=new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
@@ -71,11 +72,12 @@ public class jqtjxxController extends BaseController{
         map.put("zd5","");
         Map<String,Object>mapp=fzjctsService.getZBbaotit(map.get("startDate").toString(),map.get("endDate").toString(),map);
         map.put("zd1",mapp.get("xfjcj").toString());
+        map.put("time",mapp.get("time").toString());
         return  map;
     }
     @GetMapping("/getFile")
     @ResponseBody
-    public String getFile(String time,String startDate,String endDate) throws IOException {
+    public String getFile(String time,String startDate,String endDate) throws IOException, ParseException {
         Map<String,Object>map=new HashMap<>();
         //map.put("time",time);
         map.put("startDate",startDate);

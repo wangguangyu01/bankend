@@ -26,4 +26,6 @@ public interface JqtjDao extends BaseMapper<JbxxDO> {
 
 
     List<Map<String, Object>> getHourList(Map<String, Object> map);
+
+    Map<String, Object> getCdcout2(Map<String, Object> params);
 }

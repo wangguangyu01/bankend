@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public interface FzjctsService {
 
 	void uplodadRepFileExle(Map<String, Object> map, HttpServletResponse response, HttpServletRequest request) throws IOException;
 
-    Map<String, Object> getZBbaotit(String startDate, String endDate, Map<String, Object> map);
+    Map<String, Object> getZBbaotit(String startDate, String endDate, Map<String, Object> map) throws ParseException;
 
     List<Map<String, Object>> getHourList(Map<String, Object> map);
 

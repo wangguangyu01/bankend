@@ -101,7 +101,7 @@ function  setTime() {
    var t2= $('#endDate').val();
     if(t1 !="" &&t2 !="" && t1 !=null &&  t2 !=null){
         var startDate=getYMDHMS (t1)+"00时00分00秒";
-        var  endDate=getYMDHMS (t2)+"23时59分58秒";
+        var  endDate=getYMDHMS (t2)+"23时59分59秒";
         $('#time').html(startDate+"--"+endDate);
     }
 

@@ -1186,10 +1186,10 @@
 
 
         <if test="startDate != null and  startDate != '' ">
-            and jqxx_jbxx.cdate   &gt;= #{startDate}
+            and jqxx_jbxx.LASJ   &gt;= #{startDate}
         </if>
         <if test="endDate != null and  endDate != '' ">
-            and jqxx_jbxx.cdate   &lt;= #{endDate}
+            and jqxx_jbxx.LASJ   &lt;= #{endDate}
         </if>
 
             GROUP BY
@@ -1223,19 +1223,32 @@
     </select>
     <select id="getCdcout" resultType="java.util.HashMap">
       SELECT
-        sum( CASE WHEN cdxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ) count
-     FROM
+        ifnull(sum( CASE WHEN cdxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ),0) count
+        FROM
         jqxx_jbxx jbxx
          JOIN ( SELECT JQ_TYWYSBM FROM jqxx_xfclcdxx GROUP BY JQ_TYWYSBM ) cdxx ON jbxx.JQ_TYWYSBM = cdxx.JQ_TYWYSBM
         where 1=1
         <if test="startDate != null and  startDate != '' ">
-            and jbxx.cdate   &gt;= #{startDate}
+            and jbxx.LASJ   &gt;= DATE_FORMAT( DATE_SUB(#{startDate}, INTERVAL 1 DAY ), '%Y-%m-%d %H:%i:%S' )
         </if>
         <if test="endDate != null and  endDate != '' ">
-            and jbxx.cdate   &lt;= #{endDate}
+            and jbxx.LASJ   &lt;= DATE_FORMAT( DATE_SUB(#{endDate}, INTERVAL 1 DAY ), '%Y-%m-%d %H:%i:%S' )
         </if>
     </select>
-
+    <select id="getCdcout2" resultType="java.util.HashMap">
+        SELECT
+        ifnull(sum( CASE WHEN cdxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ),0) count
+        FROM
+        jqxx_jbxx jbxx
+        JOIN ( SELECT JQ_TYWYSBM FROM jqxx_xfclcdxx GROUP BY JQ_TYWYSBM ) cdxx ON jbxx.JQ_TYWYSBM = cdxx.JQ_TYWYSBM
+        where 1=1
+        <if test="startDate != null and  startDate != '' ">
+            and jbxx.LASJ   &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and  endDate != '' ">
+            and jbxx.LASJ   &lt;= #{endDate}
+        </if>
+    </select>
     <select id="hzpuList" resultType="java.util.HashMap">
         SELECT
         a.XZQHDM AS xzqhdm,
@@ -1248,14 +1261,17 @@
         JOIN ( SELECT JQ_TYWYSBM FROM jqxx_xfclcdxx WHERE JQ_TYWYSBM IS NOT NULL GROUP BY JQ_TYWYSBM ) cdxx ON a.JQ_TYWYSBM = cdxx.JQ_TYWYSBM
         where 1=1 and a.XZQHDM != '371300' and a.XZQHDM != '371301' and a.XZQHDM != ''
          and LEFT ( a.JQFLYDM, 1 )=1
-        <if test="startDate != null and startDate != '' and  endDate != null and  endDate != ''">
-            and ( a.LASJ BETWEEN #{startDate} and #{endDate} )
+        <if test="startDate != null and  startDate != '' ">
+            and a.LASJ   &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and  endDate != '' ">
+            and a.LASJ   &lt;= #{endDate}
         </if>
         group by a.XZQHDM order by a.XZQHDM ;
     </select>
     <select id="getHourList" resultType="java.util.HashMap">
       SELECT
-          CONVERT(substring(jbxx.cdate,11,3) , SIGNED) hour,
+          CONVERT(substring(jbxx.LASJ,11,3) , SIGNED) hour,
           sum( CASE WHEN jbxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ) jqcount ,
             sum( CASE WHEN cdxx.JQ_TYWYSBM IS NOT NULL THEN 1 ELSE 0 END ) count ,
             sum( CASE WHEN LEFT ( jbxx.JQFLYDM, 1 ) = 1 THEN 1 ELSE 0 END ) hzcount,
@@ -1269,12 +1285,12 @@
         WHERE
             1 =1
         <if test="startDate != null and  startDate != '' ">
-            and jbxx.cdate   &gt;= #{startDate}
+            and jbxx.LASJ   &gt;= #{startDate}
         </if>
         <if test="endDate != null and  endDate != '' ">
-            and jbxx.cdate   &lt;= #{endDate}
+            and jbxx.LASJ   &lt;= #{endDate}
         </if>
-	   GROUP BY  substring(jbxx.cdate,11,3)
-	   ORDER BY  CONVERT( substring(jbxx.cdate,11,3) , SIGNED)  ASC
+	   GROUP BY  substring(jbxx.LASJ,11,3)
+	   ORDER BY  CONVERT( substring(jbxx.LASJ,11,3) , SIGNED)  ASC
     </select>
 </mapper>

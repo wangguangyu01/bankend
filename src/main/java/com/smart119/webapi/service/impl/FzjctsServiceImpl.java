@@ -1,5 +1,6 @@
 package com.smart119.webapi.service.impl;
 
+import com.smart119.common.utils.StringUtils;
 import com.smart119.jczy.dao.JqtjDao;
 import com.smart119.jczy.dao.QyjqtjDao;
 import com.smart119.webapi.dao.FzjctsDao;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -191,10 +193,13 @@ public class FzjctsServiceImpl implements FzjctsService {
 
     }
 
-    public Map<String,Object> getZBbaotit(String beginTime,String endTime,Map<String,Object> params){
+    public Map<String,Object> getZBbaotit(String beginTime,String endTime,Map<String,Object> params) throws ParseException {
         Map<String,Object> returnList=new HashMap<>();
         StringBuffer time=new StringBuffer();
-        time.append(getTime(beginTime,endTime));
+        if(StringUtils.isNotEmpty(beginTime)&& StringUtils.isNotEmpty(endTime)){
+            time.append(getTime(beginTime,endTime));
+            returnList.put("time",getTime(beginTime,endTime));
+        }
         //获取接警电话数量
         Map<String,Object> jjCount=jqtjDao.getBJcout(params);
         if(jjCount.get("count") !=null){
@@ -231,34 +236,53 @@ public class FzjctsServiceImpl implements FzjctsService {
         //上一天接警数量与本次查询时间百分比
         Map<String,Object> jjCount2=jqtjDao.getBJcout2(params);
         String order="";
-        String order2="";
         String sum="";
-        String sum2="";
         int a=Integer.parseInt(jjCount.get("count").toString());
         int b=Integer.parseInt(jjCount2.get("count").toString());
         DecimalFormat df=new DecimalFormat("0.00");
         if(a>=b){
-            order="上升";order2="增加";
+            order="上升";
             sum=df.format((float)(a-b)/a*100)+"%";
-            sum2=String.valueOf(a-b);
         }else{
-            order="下降";order2="减少";
+            order="下降";
             sum=df.format((float)(b-a)/b*100)+"%";
-            sum2=String.valueOf(b-a);
         }
         time.append("环比24小时,接警话务量"+order+sum+",");
-        time.append("接警出动与昨日相比"+order2+sum2+"起");
+        //上一天出动次数对比
+        Map<String,Object> cdCount2=jqtjDao.getCdcout2(params);
+        int cd1=Integer.parseInt(cdCount.get("count").toString());
+        int cd2=Integer.parseInt(cdCount2.get("count").toString());
+        if(cd1>cd2){
+            time.append("接警出动与昨日相比"+"增加"+(cd1-cd2)+"起");
+        } else if(cd2>cd1){
+            time.append("接警出动与昨日相比"+"减少"+(cd2-cd1)+"起");
+        }else{
+            time.append("接警出动与昨日相同");
+        }
         returnList.put("xfjcj",time);
         return  returnList;
     }
 
-    public String getTime(String beginTime,String endTime){
+    public String getTime(String beginTime,String endTime) throws ParseException {
         String time="";
-        time+= Integer.parseInt(beginTime.substring(5,7))+"月"+Integer.parseInt(beginTime.substring(8,10))+"日 至 "
-                + Integer.parseInt( endTime.substring(5,7))+"月"+Integer.parseInt(endTime.substring(8,10))+"日,";
+//        time+= Integer.parseInt(beginTime.substring(5,7))+"月"+Integer.parseInt(beginTime.substring(8,10))+"日 至 "
+//                + Integer.parseInt( endTime.substring(5,7))+"月"+Integer.parseInt(endTime.substring(8,10))+"日,";
+
+      time+=gettt(beginTime)+"至"+gettt(endTime);
+
         return  time;
     }
+  public String gettt(String s) throws ParseException {
+        String time="";
 
+      Date date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
+      Calendar now = Calendar.getInstance();
+      now.setTime(date);
+      int year = now.get(Calendar.YEAR);
+      int month = now.get(Calendar.MONTH) + 1; // 0-based!
+      int day = now.get(Calendar.DAY_OF_MONTH);
+        return month+"月"+day+"日";
+  }
     @Override
     public List<Map<String, Object>> getHourList(Map<String, Object> map) {
         List<Map<String,Object>> retU=new ArrayList<>();

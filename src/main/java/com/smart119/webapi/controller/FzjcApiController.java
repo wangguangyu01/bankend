@@ -28,6 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -110,40 +111,8 @@ public class FzjcApiController extends BaseController{
         List<FzjctsDO> fzjctsDOList = fzjctsService.getFzjcTslistByJqTywysbm(jqTywysbm);
         return R.ok(fzjctsDOList);
     }
-    /////跳转页面
-    @GetMapping()
-    //@RequiresPermissions("webapi:fzjc:jqtjlist")
-    String hourlist(){
-        return "jczy/report/hourlist";
-    }
-    //值班信息统计信息
-    @GetMapping("/getZbFile")
-    public Map<String,Object> getZbFile(String startDate,String endDate) throws IOException {
-        Map<String,Object>map=new HashMap<>();
-        map.put("startDate",startDate);
-        map.put("endDate",endDate);
-        map.put("zd2","");
-        map.put("zd3","");
-        map.put("zd4","");
-        map.put("zd5","");
-        Map<String,Object>mapp=fzjctsService.getZBbaotit(map.get("startDate").toString(),map.get("endDate").toString(),map);
-        map.put("zd1",mapp.get("xfjcj").toString());
-        return  map;
-    }
-    @GetMapping("/getFile")
-    public String getFile(String time,String startDate,String endDate) throws IOException {
-        Map<String,Object>map=new HashMap<>();
-        map.put("time",time);
-        map.put("startDate",startDate);
-        map.put("endDate",endDate);
-        map.put("zd2","");
-        map.put("zd3","");
-        map.put("zd4","");
-        map.put("zd5","");
-        Map<String,Object>mapp=fzjctsService.getZBbaotit(map.get("startDate").toString(),map.get("endDate").toString(),map);
-        map.put("zd1",mapp.get("xfjcj").toString());
-        return  fzjctsService.uplodadRepFile(map,"report.ftl");
-    }
+
+
     @GetMapping("/getFileExle")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String"),
@@ -197,27 +166,4 @@ public class FzjcApiController extends BaseController{
           fzjctsService.uplodadRepFileExle(map, response, request);
     }
 
-    //警情时段分布
-    @GetMapping("/getHourList")
-    public List<Map<String,Object>> getHourList(String startDate,String endDate) throws IOException {
-        Map<String,Object>map=new HashMap<>();
-        map.put("startDate",startDate);
-        map.put("endDate",endDate);
-        return  fzjctsService.getHourList(map);
-    }
-    @GetMapping("/getHourFile")
-    public String getHourFile(String time,String startDate,String endDate,String org,String gettime) throws IOException {
-        Map<String,Object>map=new HashMap<>();
-        map.put("time",time);
-        map.put("gettime",gettime);
-        map.put("startDate",startDate);
-        map.put("endDate",endDate);
-        map.put("org",org);
-        map.put("list",fzjctsService.getHourList(map));
-        return  fzjctsService.uplodadRepFile(map,"report3.ftl");
-    }
-    @GetMapping("/getUpload")
-    public void downloadTemplate(HttpServletResponse response, HttpServletRequest request,String filename, String templeteName) throws IOException {
-         fzjctsService.downloadTemplate(response,request,filename,templeteName);
-    }
 }
