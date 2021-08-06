@@ -240,14 +240,16 @@ public class FzjctsServiceImpl implements FzjctsService {
         int a=Integer.parseInt(jjCount.get("count").toString());
         int b=Integer.parseInt(jjCount2.get("count").toString());
         DecimalFormat df=new DecimalFormat("0.00");
-        if(a>=b){
+        if(a>b){
             order="上升";
             sum=df.format((float)(a-b)/a*100)+"%";
-        }else{
+        }else if(b>a){
             order="下降";
             sum=df.format((float)(b-a)/b*100)+"%";
         }
-        time.append("环比24小时,接警话务量"+order+sum+",");
+        if(!sum.equals("")){
+            time.append("环比24小时,接警话务量"+order+sum+",");
+        }
         //上一天出动次数对比
         Map<String,Object> cdCount2=jqtjDao.getCdcout2(params);
         int cd1=Integer.parseInt(cdCount.get("count").toString());
@@ -281,7 +283,7 @@ public class FzjctsServiceImpl implements FzjctsService {
       int year = now.get(Calendar.YEAR);
       int month = now.get(Calendar.MONTH) + 1; // 0-based!
       int day = now.get(Calendar.DAY_OF_MONTH);
-        return month+"月"+day+"日";
+        return month+"月"+day+"日"+"6时";
   }
     @Override
     public List<Map<String, Object>> getHourList(Map<String, Object> map) {

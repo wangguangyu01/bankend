@@ -23,11 +23,10 @@ function reLoad() {
         url: prefix + "/getZbFile", // 服务器数据的加载地址
         type: "get",
         data: {
-            startDate:$('#startDate').val(),
-            endDate:$('#endDate').val()
+            startDate:$('#startDate').val()+" "+" 06:00:00",
+            endDate:$('#endDate').val()+" "+" 06:00:00"
         },
         success: function (r) {
-            console.log(r.time);
             $('#time').html(r.time);
             $('#zd1').html(r.zd1);
             $('#zd2').html(r.zd2);
@@ -46,8 +45,8 @@ function Excel() {
         url: prefix + "/getFile", // 服务器数据的加载地址
         type: "get",
         data: {
-            startDate:$('#startDate').val(),
-            endDate:$('#endDate').val()
+            startDate:$('#startDate').val()+" "+" 06:00:00",
+            endDate:$('#endDate').val()+" "+" 06:00:00"
         },
         success: function (r) {
             if(r !=null && r !=""){
