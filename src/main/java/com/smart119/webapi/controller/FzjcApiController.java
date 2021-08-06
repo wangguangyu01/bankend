@@ -1,29 +1,34 @@
 package com.smart119.webapi.controller;
 
-
 import com.alibaba.fastjson.JSON;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import com.smart119.jczy.domain.FzjcDO;
+import com.smart119.jczy.domain.JqzhtjDO;
 import com.smart119.jczy.service.FzjcService;
+import com.smart119.jczy.service.JqzhtjService;
+import com.smart119.system.domain.DeptDO;
 import com.smart119.system.mq.RabbitMQClient;
+import com.smart119.system.service.DeptService;
 import com.smart119.webapi.domain.FzjctsDO;
 import com.smart119.webapi.domain.JbxxDO;
 import com.smart119.webapi.service.FzjctsService;
 import com.smart119.webapi.service.JbxxService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
@@ -44,6 +49,12 @@ public class FzjcApiController extends BaseController{
     //推送
     @Autowired
     private JbxxService jbxxService;
+
+    @Autowired
+    private DeptService sysDeptService;
+
+    @Autowired
+    private JqzhtjService jqzhtjService;
 
     @GetMapping("/getFzjcList")
     @ApiOperation("查询辅助决策")
@@ -134,31 +145,55 @@ public class FzjcApiController extends BaseController{
         return  fzjctsService.uplodadRepFile(map,"report.ftl");
     }
     @GetMapping("/getFileExle")
-    public void  getFileExle(String time1,String time2,HttpServletResponse response, HttpServletRequest request) throws IOException {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String"),
+            @ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String"),
+            @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
+    })
+    @ResponseBody
+    public void  getFileExle(HttpServletResponse response, HttpServletRequest request,@ApiIgnore @RequestParam Map<String, Object> params) throws IOException {
+
+        String id = getUser().getXfjyjgTywysbm();
+        String deptName =  sysDeptService.findNameByTYWYSBM(id);
+
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+        String dateString = formatter.format(currentTime);
+
+        List<DeptDO> deptList = new ArrayList<>();
+        if(params.get("deptId")!=null && !params.get("deptId").equals("")&&!params.get("deptId").equals("undefined")){
+            deptList = sysDeptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+        }else{
+            deptList = sysDeptService.listChildren(getUser().getDeptId());
+        }
+        params.put("deptList",deptList);
+
+
+        JqzhtjDO  jqzhtjDO= jqzhtjService.getExcel(params);
+
         Map<String,Object>map=new HashMap<>();
-        map.put("time","2021-08-02--2021-08-03");
-        map.put("startDate","2021-06-02");
-        map.put("enDate","2021-08-03");
-        map.put("org","临沂消防支队");
+        map.put("time",dateString);
+        map.put("startDate",params.get("startDate"));
+        map.put("enDate",params.get("enDate"));
+        map.put("org",deptName);
         map.put("title","标题");
-        map.put("zd1","字段1");
-        map.put("zd2","字段2");
-        map.put("zd3","");
-        map.put("zd4","");
-        map.put("zd5","");
-        map.put("zd6","");
-        map.put("zd7","");
-        map.put("zd8","");
-        map.put("zd9","");
-        map.put("zd10","");
-        map.put("zd11","");
-        map.put("zd12","");
-        map.put("zd13","");
-        map.put("zd14","");
-        map.put("zd15","");
-        map.put("zd16","");
-        map.put("time1",time1);
-        map.put("time2",time2);
+        map.put("zd1",jqzhtjDO.getJqzs());
+        map.put("zd2",jqzhtjDO.getDpcl());
+        map.put("zd3",jqzhtjDO.getSszs());
+        map.put("zd4",jqzhtjDO.getSsrs());
+        map.put("zd5","0");
+        map.put("zd6","0");
+        map.put("zd7","0");
+        map.put("zd8","0");
+        map.put("zd9",jqzhtjDO.getCdcs());
+        map.put("zd10",jqzhtjDO.getDprs());
+        map.put("zd11",jqzhtjDO.getSwzs());
+        map.put("zd12",jqzhtjDO.getSwrs());
+        map.put("zd13",jqzhtjDO.getRsmj());
+        map.put("zd14",jqzhtjDO.getZjss());
+        map.put("zd15","0");
+        map.put("zd16","0");
+
           fzjctsService.uplodadRepFileExle(map, response, request);
     }
 
