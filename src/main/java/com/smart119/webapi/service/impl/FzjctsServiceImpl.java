@@ -263,26 +263,31 @@ public class FzjctsServiceImpl implements FzjctsService {
     public List<Map<String, Object>> getHourList(Map<String, Object> map) {
         List<Map<String,Object>> retU=new ArrayList<>();
         List<Map<String, Object>> list=jqtjDao.getHourList(map);
-        for (int i = 0; i <=24 ; i++) {
-            retU.add(getHourMap(i,list));
+        int sum=0;
+        for (int j= 0; j <list.size() ; j++) {
+            sum+=Integer.parseInt(list.get(j).get("jqcount").toString());
+        }
+        for (int i = 0; i <24 ; i++) {
+            retU.add(getHourMap(i,list,sum));
         }
         return retU;
     }
-    public Map<String,Object> getHourMap(int hour,List<Map<String, Object>> map){
+    public Map<String,Object> getHourMap(int hour,List<Map<String, Object>> map,int sum){
         boolean status=false;
         Map<String,Object> mapHour=new HashMap<>();
         DecimalFormat df=new DecimalFormat("0.00");
         for (int i = 0; i < map.size(); i++) {
             Map<String,Object> mappi=map.get(i);
             if(hour==Integer.parseInt(mappi.get("hour").toString())){
-                mapHour=mappi;
-                mapHour.put("bfb",df.format((float)(Integer.parseInt(mappi.get("jqcount").toString()))/map.size()*100)+"%");
+                mapHour.putAll(mappi);
+                mapHour.put("hour",mappi.get("hour").toString()+"时");
+                mapHour.put("bfb",df.format((float)(Integer.parseInt(mappi.get("jqcount").toString()))/sum*100)+"%");
                 status=true;
                 break;
             }
         }
         if(!status){
-            mapHour.put("hour",hour);
+            mapHour.put("hour",hour+"时");
             mapHour.put("jqcount","");
             mapHour.put("bfb","");
             mapHour.put("hzcount","");
@@ -307,12 +312,12 @@ public class FzjctsServiceImpl implements FzjctsService {
         try {
             //String ctxPath = request.getSession().getServletContext().getRealPath(File.separator) + File.separator + "template" + File.separator;
             String filedownload = getUrl+"/temp/" + templeteName;
-            String fileName = templeteName; //要下载的模板文件
-            if(templeteName!=null){
-                if(!templeteName.endsWith(".doc")){
-                    fileName = templeteName + ".doc";
-                }
-            }
+            String fileName = filename+".doc"; //要下载的模板文件
+//            if(templeteName!=null){
+//                if(!templeteName.endsWith(".doc")){
+//                    fileName = templeteName + ".doc";
+//                }
+//            }
             fileName = URLEncoder.encode(fileName, "UTF-8");
             // 要下载的模板所在的绝对路径
             response.reset();

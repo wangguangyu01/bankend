@@ -53,6 +53,11 @@ public class jqtjxxController extends BaseController{
     String hourlist(){
         return "jczy/report/hourlist";
     }
+    @GetMapping("hourtjlist")
+        //@RequiresPermissions("webapi:fzjc:jqtjlist")
+    String hourtjlist(){
+        return "jczy/report/hourtjlist";
+    }
     //值班信息统计信息
     @GetMapping("/getZbFile")
     @ResponseBody
@@ -117,11 +122,12 @@ public class jqtjxxController extends BaseController{
     //警情时段分布
     @GetMapping("/getHourList")
     @ResponseBody
-    public List<Map<String,Object>> getHourList(String startDate,String endDate) throws IOException {
+    public Map<String,Object> getHourList(String startDate,String endDate) throws IOException {
         Map<String,Object>map=new HashMap<>();
         map.put("startDate",startDate);
         map.put("endDate",endDate);
-        return  fzjctsService.getHourList(map);
+        map.put("rows",fzjctsService.getHourList(map));
+        return  map;
     }
     @GetMapping("/getHourFile")
     @ResponseBody

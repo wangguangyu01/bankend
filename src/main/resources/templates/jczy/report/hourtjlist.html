@@ -25,30 +25,23 @@
 					</div>
 
 				</div>
-                    <div style="margin-top:60px">
-                        <h2 class="text-center">全勤指挥部每日值班信息</h2>
-                        <h3 class="text-center">  <span id="time" class="content"></span> </h3>
-                        <div class="box">
-                            <h3 class="text">【消防接处警】</h3>
-                            <span id="zd1" class="content"></span>
-                        </div>
-                        <div>
-                            <h3 class="text">【火灾分级调查情况】</h3>
-                            <span id="zd2" class="content"></span>
-                        </div>
-                        <div>
-                            <h3 class="text">【视屏点名】</h3>
-                            <span id="zd3" class="content"></span>
-                        </div>
-                        <div>
-                            <h3 class="text">【视频调度】</h3>
-                            <span id="zd4" class="content"></span>
-                        </div>
-                        <div>
-                            <h3 class="text">【信息快报】</h3>
-                            <span id="zd5" class="content"></span>
-                        </div>
+                    <div style="margin-top:40px">
+                        <h2 class="text-center">警情时段分布统计图</h2>
+                        <h3 class="text-center">  <span id="time" class="content">11111111111111</span> </h3>
+                        <div  style="float:right;margin-right: 40px;font-size: 16px">
+                            <div  style="margin-right: 50px;height: 20px;">
+                                <span>制表时间：</span>
+                                <span id="gettime"></span>
+                            </div>
+                            <div style="margin-right: 50px;height: 20px">
+                                <span>单&emsp;&emsp;位：</span>
+                                <span id="org"> 临沂消防救援支队 </span>
+                            </div>
+                        </div>>
                     </div>
+                <table id="exampleTable" data-mobile-responsive="true">
+                </table>
+
 			</div>
 		</div>
 	</div>
@@ -56,7 +49,7 @@
 <!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
 </div>
 <div th:include="include :: footer"></div>
-<script type="text/javascript" src="/js/appjs/jczy/report/hourlist.js"></script>
+<script type="text/javascript" src="/js/appjs/jczy/report/hourtjlist.js"></script>
 </body>
 <style>
     .box{
@@ -67,6 +60,22 @@
     .content{
         margin-top: 5px;
         font-size: 16px;
+    }
+</style>
+<style>
+    /* 表格样式 */
+
+    .table>tbody>tr>td {
+        border: 0px;
+        text-align: center;
+    }
+
+    .bootstrap-table .table thead>tr>th {
+        text-align: center;
+    }
+
+    .table thead {
+        background: #ebeaea;
     }
 </style>
 </html>
