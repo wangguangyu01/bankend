@@ -91,6 +91,7 @@ public class FzjctsServiceImpl implements FzjctsService {
     }
     @Override
     public String uplodadRepFile(Map<String, Object> map,String ftlname) throws IOException {
+        this.delAllFile();
         Template t = null;
         try {
             // 获取模板文件
@@ -376,4 +377,30 @@ public class FzjctsServiceImpl implements FzjctsService {
             }
         }
     }
+
+    public  boolean delAllFile() {
+        String path=getUrl+"/temp";
+        boolean flag = false;
+        File file = new File(path);
+        if (!file.exists()) {
+            return false;
+        }
+        if (!file.isDirectory()) {
+            return false;
+        }
+        String[] tempList = file.list();
+        File temp = null;
+        for (int i = 0; i < tempList.length; i++) {
+            if (path.endsWith(File.separator)) {
+                temp = new File(path + tempList[i]);
+            } else {
+                temp = new File(path + File.separator + tempList[i]);
+            }
+            if (temp.isFile()) {
+                temp.delete();
+            }
+        }
+        return flag;
+    }
+
 }
