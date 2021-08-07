@@ -184,7 +184,7 @@ public class FzjctsServiceImpl implements FzjctsService {
                 if (out != null) {
                     out.close();
                 }
-
+                file.delete();
             }
         }catch (Exception e){
 
