@@ -31,12 +31,8 @@ import java.util.*;
 @Service
 public class FzjctsServiceImpl implements FzjctsService {
 
-    @Autowired
-    FreeMarkerConfigurer freeMarkerConfigurer;
-
     public Configuration configuration = null;
     public String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
-    public String getUrl1=System.getProperty("user.dir")+"/src/main/resources/templates/webapi/upload/";
     private static final String ENCODING ="UTF-8";
     public FzjctsServiceImpl() {
         try {
@@ -162,16 +158,15 @@ public class FzjctsServiceImpl implements FzjctsService {
     public void createExcel(Map<?, ?> dataMap, String valueName, String excelName, HttpServletResponse response, HttpServletRequest request) throws IOException {
         InputStream inputStream = null;
         ServletOutputStream out = null;
-        File file = new File(getUrl);
+
         try {
-            freeMarkerConfigurer.getConfiguration().setDirectoryForTemplateLoading(file);
-            Template template = freeMarkerConfigurer.getConfiguration().getTemplate("reportXlsl.ftl");
-            File file1 = new File( getUrl + UUID.randomUUID().toString() + ".xls");
+            Template template = configuration.getTemplate(valueName);
+            File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
             try {
-                Writer w = new OutputStreamWriter(new FileOutputStream(file1), ENCODING);
+                Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
                 template.process(dataMap, w);
                 w.close();
-                inputStream = new FileInputStream(file1);
+                inputStream = new FileInputStream(file);
                 request.setCharacterEncoding(ENCODING);
                 response.setCharacterEncoding(ENCODING);
                 response.setContentType("application/msexcel");
