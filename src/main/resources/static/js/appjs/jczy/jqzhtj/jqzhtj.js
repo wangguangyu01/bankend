@@ -164,5 +164,6 @@ function batchRemove() {
 }
 
 function Excel() {
+    alert("进入导出方法");
     window.location.href="/webapi/fzjc/getFileExle?startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val()+"&deptId="+zid;
 }
