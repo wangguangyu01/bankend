@@ -1,4 +1,3 @@
-var prefixdc ="/webapi/fzjc"
 var prefix = "/jczy/jqzhtj"
 var zid;
 $(function() {
@@ -164,20 +163,9 @@ function batchRemove() {
 }
 
 function Excel() {
-    $.ajax({
-        url: prefixdc + "/getFileExle", // 服务器数据的加载地址
-        type: "get",
-        data: {
-            startDate:$('#startDate').val(),
-            endDate:$('#endDate').val(),
-            deptId : zid
-        },
-        success: function (r) {
-            if(r !=null && r !=""){
-
-                window.location.href="/webapi/fzjc/getFileExle?startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val()+"&deptId="+zid;
-
-            }
-        }
-    });
+    // 通过创建a标签实现
+    const link = document.createElement("a");
+    link.href = "/webapi/fzjc/getFileExle?startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val()+"&deptId="+zid;
+    // 对下载的文件命名
+    link.click();
 }
