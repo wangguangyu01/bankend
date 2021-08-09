@@ -30,7 +30,7 @@ import java.util.*;
 @Service
 public class FzjctsServiceImpl implements FzjctsService {
     public Configuration configuration = null;
-    public String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload";
+    public String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
     private static final String ENCODING ="UTF-8";
     public FzjctsServiceImpl() {
         try {
@@ -177,7 +177,7 @@ public class FzjctsServiceImpl implements FzjctsService {
                 }
                 out.flush();
             } catch (Exception e) {
-
+                System.out.println(e.getMessage());
             } finally {
                 if (inputStream != null) {
                     inputStream.close();
@@ -188,7 +188,7 @@ public class FzjctsServiceImpl implements FzjctsService {
                 file.delete();
             }
         }catch (Exception e){
-
+            System.out.println(e.getMessage());
         }
 
 
@@ -402,5 +402,48 @@ public class FzjctsServiceImpl implements FzjctsService {
         }
         return flag;
     }
+    @Override
+    public void uplodadRepFileOther(Map<String, Object> map,String ftlname,HttpServletResponse response, HttpServletRequest request) throws IOException {
+        Template t = null;
+        InputStream inputStream = null;
+        try {
+            t = configuration.getTemplate(ftlname, ENCODING); // 获取模板文件
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        OutputStream out = null;
+        OutputStreamWriter writer = null;
+        File file=null;
+        String uuid=UUID.randomUUID().toString() + ".xls";
+        String url=getUrl +uuid;
 
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+
+        try {
+            file = new File(url);
+            out = new FileOutputStream(file);
+            writer = new OutputStreamWriter(out, ENCODING);
+            t.process(map, writer);
+            inputStream = new FileInputStream(file);
+            request.setCharacterEncoding(ENCODING);
+            response.setCharacterEncoding(ENCODING);
+            response.setContentType("application/msexcel");
+            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode("警情综合统计"+ dateString+".xls", ENCODING));
+            out = response.getOutputStream();
+            byte[] buffer = new byte[512]; // 缓冲区
+            int bytesToRead = -1;
+            // 通过循环将读入的Excel文件的内容输出到浏览器中
+            while ((bytesToRead = inputStream.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesToRead);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            out.close();
+            writer.close();
+        }
+
+    }
 }

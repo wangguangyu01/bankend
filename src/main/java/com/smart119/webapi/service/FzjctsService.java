@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
@@ -47,4 +48,6 @@ public interface FzjctsService {
     void downloadTemplate(HttpServletResponse response, HttpServletRequest request, String filename, String templeteName) throws IOException;
 
     String uplodadRepFile(Map<String, Object> map, String s) throws IOException;
+
+	void uplodadRepFileOther(Map<String, Object> map, String s,HttpServletResponse response, HttpServletRequest request) throws IOException;
 }

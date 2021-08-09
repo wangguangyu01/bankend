@@ -27,6 +27,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -120,7 +121,7 @@ public class FzjcApiController extends BaseController{
             @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
     })
     @ResponseBody
-    public void  getFileExle(HttpServletResponse response, HttpServletRequest request,@ApiIgnore @RequestParam Map<String, Object> params) throws IOException {
+    public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException {
 
         String id = getUser().getXfjyjgTywysbm();
         String deptName =  sysDeptService.findNameByTYWYSBM(id);
@@ -163,7 +164,7 @@ public class FzjcApiController extends BaseController{
         map.put("zd15","0");
         map.put("zd16","0");
 
-          fzjctsService.uplodadRepFileExle(map, response, request);
+            fzjctsService.uplodadRepFileOther(map,"reportXlsl.ftl",response,request);
     }
 
 }
