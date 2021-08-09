@@ -137,11 +137,11 @@ public class FzjctsServiceImpl implements FzjctsService {
     }
     @Override
     public void uplodadRepFileExle(Map<String, Object> map,HttpServletResponse response,HttpServletRequest request) throws IOException {
-        this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
-//        Date currentTime = new Date();
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//        String dateString = formatter.format(currentTime);
-//        this.createExcel(map ,"reportXlsl.ftl","警情综合统计"+ dateString,response,request);
+ //       this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = formatter.format(currentTime);
+        this.createExcel(map ,"reportXlsl.ftl","警情综合统计"+ dateString,response,request);
     }
     /**
      * 导出exce
@@ -156,12 +156,14 @@ public class FzjctsServiceImpl implements FzjctsService {
     public void createExcel(Map<?, ?> dataMap, String valueName, String excelName, HttpServletResponse response, HttpServletRequest request) throws IOException {
         InputStream inputStream = null;
         ServletOutputStream out = null;
+        Template t = null;
+
         try {
-            Template template = configuration.getTemplate(valueName);
+            t = configuration.getTemplate(valueName, ENCODING); // 获取模板文件
             File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
             try {
                 Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
-                template.process(dataMap, w);
+                t.process(dataMap, w);
                 w.close();
                 inputStream = new FileInputStream(file);
                 request.setCharacterEncoding(ENCODING);

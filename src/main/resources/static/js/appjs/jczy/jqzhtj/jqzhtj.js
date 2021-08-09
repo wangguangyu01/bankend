@@ -164,9 +164,8 @@ function batchRemove() {
 }
 
 function Excel() {
-    alert("进入导出方法");
-   // window.location.href="/webapi/fzjc/getFileExle?startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val()+"&deptId="+zid;
 
+   // window.location.href="/webapi/fzjc/getFileExle?startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val()+"&deptId="+zid;
     // 通过创建a标签实现
     const link = document.createElement("a");
     link.href = "/webapi/fzjc/getFileExle?startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val()+"&deptId="+zid;
