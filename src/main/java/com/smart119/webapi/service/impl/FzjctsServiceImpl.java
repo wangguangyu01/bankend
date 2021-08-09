@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,13 @@ import java.util.*;
 
 @Service
 public class FzjctsServiceImpl implements FzjctsService {
+
+    @Autowired
+    FreeMarkerConfigurer freeMarkerConfigurer;
+
     public Configuration configuration = null;
     public String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
+    public String getUrl1=System.getProperty("user.dir")+"/src/main/resources/templates/webapi/upload/";
     private static final String ENCODING ="UTF-8";
     public FzjctsServiceImpl() {
         try {
@@ -156,15 +162,16 @@ public class FzjctsServiceImpl implements FzjctsService {
     public void createExcel(Map<?, ?> dataMap, String valueName, String excelName, HttpServletResponse response, HttpServletRequest request) throws IOException {
         InputStream inputStream = null;
         ServletOutputStream out = null;
-
+        File file = new File(getUrl);
         try {
-            Template template = configuration.getTemplate("reportXlsl.ftl");
-            File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
+            freeMarkerConfigurer.getConfiguration().setDirectoryForTemplateLoading(file);
+            Template template = freeMarkerConfigurer.getConfiguration().getTemplate("reportXlsl.ftl");
+            File file1 = new File( getUrl + UUID.randomUUID().toString() + ".xls");
             try {
-                Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
+                Writer w = new OutputStreamWriter(new FileOutputStream(file1), ENCODING);
                 template.process(dataMap, w);
                 w.close();
-                inputStream = new FileInputStream(file);
+                inputStream = new FileInputStream(file1);
                 request.setCharacterEncoding(ENCODING);
                 response.setCharacterEncoding(ENCODING);
                 response.setContentType("application/msexcel");
