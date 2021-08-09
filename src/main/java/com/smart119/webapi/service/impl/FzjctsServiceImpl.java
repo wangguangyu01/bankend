@@ -157,9 +157,10 @@ public class FzjctsServiceImpl implements FzjctsService {
         InputStream inputStream = null;
         ServletOutputStream out = null;
         Template t = null;
-
+        Configuration cfg = new Configuration();
+        cfg.setDirectoryForTemplateLoading(new File(getUrl));
         try {
-            t = configuration.getTemplate(valueName, ENCODING); // 获取模板文件
+            t = cfg.getTemplate("reportXlsl.ftl");; // 获取模板文件
             File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
             try {
                 Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
