@@ -137,11 +137,11 @@ public class FzjctsServiceImpl implements FzjctsService {
     }
     @Override
     public void uplodadRepFileExle(Map<String, Object> map,HttpServletResponse response,HttpServletRequest request) throws IOException {
-      //  this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
-        Date currentTime = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = formatter.format(currentTime);
-        this.createExcel(map ,"reportXlsl.ftl","警情综合统计"+ dateString,response,request);
+        this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
+//        Date currentTime = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        String dateString = formatter.format(currentTime);
+//        this.createExcel(map ,"reportXlsl.ftl","警情综合统计"+ dateString,response,request);
     }
     /**
      * 导出exce

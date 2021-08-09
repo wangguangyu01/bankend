@@ -164,7 +164,7 @@ public class FzjcApiController extends BaseController{
         map.put("zd15","0");
         map.put("zd16","0");
 
-            fzjctsService.uplodadRepFileOther(map,"reportXlsl.ftl",response,request);
+            fzjctsService.uplodadRepFileExle(map, response,  request);
     }
 
 }
