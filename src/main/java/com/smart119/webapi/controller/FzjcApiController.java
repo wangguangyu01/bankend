@@ -124,58 +124,6 @@ public class FzjcApiController extends BaseController{
     }
 
 
-//    @GetMapping("/getFileExle")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String"),
-//            @ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String"),
-//            @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
-//    })
-//    @ResponseBody
-//    public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException {
-//
-//        String id = getUser().getXfjyjgTywysbm();
-//        String deptName =  sysDeptService.findNameByTYWYSBM(id);
-//
-//        Date currentTime = new Date();
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
-//        String dateString = formatter.format(currentTime);
-//
-//        List<DeptDO> deptList = new ArrayList<>();
-//        if(params.get("deptId")!=null && !params.get("deptId").equals("")&&!params.get("deptId").equals("undefined")){
-//            deptList = sysDeptService.listChildren(Long.valueOf(params.get("deptId").toString()));
-//        }else{
-//            deptList = sysDeptService.listChildren(getUser().getDeptId());
-//        }
-//        params.put("deptList",deptList);
-//
-//
-//        JqzhtjDO  jqzhtjDO= jqzhtjService.getExcel(params);
-//
-//        Map<String,Object>map=new HashMap<>();
-//        map.put("time",dateString);
-//        map.put("startDate",params.get("startDate"));
-//        map.put("enDate",params.get("enDate"));
-//        map.put("org",deptName);
-//        map.put("title","标题");
-//        map.put("zd1",jqzhtjDO.getJqzs());
-//        map.put("zd2",jqzhtjDO.getDpcl());
-//        map.put("zd3",jqzhtjDO.getSszs());
-//        map.put("zd4",jqzhtjDO.getSsrs());
-//        map.put("zd5","0");
-//        map.put("zd6","0");
-//        map.put("zd7","0");
-//        map.put("zd8","0");
-//        map.put("zd9",jqzhtjDO.getCdcs());
-//        map.put("zd10",jqzhtjDO.getDprs());
-//        map.put("zd11",jqzhtjDO.getSwzs());
-//        map.put("zd12",jqzhtjDO.getSwrs());
-//        map.put("zd13",jqzhtjDO.getRsmj());
-//        map.put("zd14",jqzhtjDO.getZjss());
-//        map.put("zd15","0");
-//        map.put("zd16","0");
-//
-//            fzjctsService.uplodadRepFileExle(map, response,  request);
-//    }
     @GetMapping("/getFileExle")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String"),
@@ -183,7 +131,7 @@ public class FzjcApiController extends BaseController{
             @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
     })
     @ResponseBody
-    public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException, TemplateException {
+    public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException {
 
         String id = getUser().getXfjyjgTywysbm();
         String deptName =  sysDeptService.findNameByTYWYSBM(id);
@@ -226,31 +174,83 @@ public class FzjcApiController extends BaseController{
         map.put("zd15","0");
         map.put("zd16","0");
 
-        //构造输出流
-        String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
-        configuration.setDirectoryForTemplateLoading(new File(getUrl));
-        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
-        Template template = configuration.getTemplate("reportXlsl.ftl", "UTF-8");
-
-        String fileName = getUrl+ "警情综合统计" + ".xlsx";
-        File file = new File(fileName);
-        FileWriter out = new FileWriter(fileName);
-        //变量替换
-        template.process(map, out);
-
-        //将文件输出到response,返回给客户端
-        FileInputStream in = new FileInputStream(file);
-        byte[] buffer = new byte[in.available()];
-
-        in.read(buffer);
-        in.close();
-        response.reset();
-        response.addHeader("Content-Disposition", "attachment;filename=警情综合统计.xlsx");
-        ServletOutputStream outputStream = response.getOutputStream();
-        response.setContentType("application/octet-stream");
-        outputStream.write(buffer);
-        outputStream.flush();
-        outputStream.close();
+            fzjctsService.uplodadRepFileExle(map, response,  request);
     }
+//    @GetMapping("/getFileExle")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String"),
+//            @ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String"),
+//            @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
+//    })
+//    @ResponseBody
+//    public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException, TemplateException {
+//
+//        String id = getUser().getXfjyjgTywysbm();
+//        String deptName =  sysDeptService.findNameByTYWYSBM(id);
+//
+//        Date currentTime = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+//        String dateString = formatter.format(currentTime);
+//
+//        List<DeptDO> deptList = new ArrayList<>();
+//        if(params.get("deptId")!=null && !params.get("deptId").equals("")&&!params.get("deptId").equals("undefined")){
+//            deptList = sysDeptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+//        }else{
+//            deptList = sysDeptService.listChildren(getUser().getDeptId());
+//        }
+//        params.put("deptList",deptList);
+//
+//
+//        JqzhtjDO  jqzhtjDO= jqzhtjService.getExcel(params);
+//
+//        Map<String,Object>map=new HashMap<>();
+//        map.put("time",dateString);
+//        map.put("startDate",params.get("startDate"));
+//        map.put("enDate",params.get("enDate"));
+//        map.put("org",deptName);
+//        map.put("title","标题");
+//        map.put("zd1",jqzhtjDO.getJqzs());
+//        map.put("zd2",jqzhtjDO.getDpcl());
+//        map.put("zd3",jqzhtjDO.getSszs());
+//        map.put("zd4",jqzhtjDO.getSsrs());
+//        map.put("zd5","0");
+//        map.put("zd6","0");
+//        map.put("zd7","0");
+//        map.put("zd8","0");
+//        map.put("zd9",jqzhtjDO.getCdcs());
+//        map.put("zd10",jqzhtjDO.getDprs());
+//        map.put("zd11",jqzhtjDO.getSwzs());
+//        map.put("zd12",jqzhtjDO.getSwrs());
+//        map.put("zd13",jqzhtjDO.getRsmj());
+//        map.put("zd14",jqzhtjDO.getZjss());
+//        map.put("zd15","0");
+//        map.put("zd16","0");
+//
+//        //构造输出流
+//        String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
+//        configuration.setDirectoryForTemplateLoading(new File(getUrl));
+//        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
+//        Template template = configuration.getTemplate("reportXlsl.ftl", "UTF-8");
+//
+//        String fileName = getUrl+ "警情综合统计" + ".xlsx";
+//        File file = new File(fileName);
+//        FileWriter out = new FileWriter(fileName);
+//        //变量替换
+//        template.process(map, out);
+//
+//        //将文件输出到response,返回给客户端
+//        FileInputStream in = new FileInputStream(file);
+//        byte[] buffer = new byte[in.available()];
+//
+//        in.read(buffer);
+//        in.close();
+//        response.reset();
+//        response.addHeader("Content-Disposition", "attachment;filename=警情综合统计.xlsx");
+//        ServletOutputStream outputStream = response.getOutputStream();
+//        response.setContentType("application/octet-stream");
+//        outputStream.write(buffer);
+//        outputStream.flush();
+//        outputStream.close();
+//    }
 
 }
