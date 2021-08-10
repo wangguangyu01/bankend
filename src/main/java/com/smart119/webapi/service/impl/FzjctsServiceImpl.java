@@ -159,13 +159,15 @@ public class FzjctsServiceImpl implements FzjctsService {
         ServletOutputStream out = null;
         Configuration config = new Configuration(Configuration.VERSION_2_3_0);
         //模板所在文件夹
-        config.setDirectoryForTemplateLoading(new File(getUrl));
+        File root = new File("");
+        File absoluteFile = root.getAbsoluteFile();
+        config.setDirectoryForTemplateLoading(new File(String.valueOf(absoluteFile)+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\"));
         config.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
         //加载模板
         try {
         Template template = config.getTemplate("reportXlsl.ftl");
 
-            File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
+            File file = new File( String.valueOf(absoluteFile)+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\" + UUID.randomUUID().toString() + ".xls");
             try {
                 Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
                 template.process(dataMap, w);
