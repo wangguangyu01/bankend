@@ -9,6 +9,7 @@ import com.smart119.webapi.service.FzjctsService;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
@@ -25,23 +26,26 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.ResourceUtils;
 
 
 @Service
+@Slf4j
 public class FzjctsServiceImpl implements FzjctsService {
 
-    public Configuration configuration = null;
-    public String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
-//    public String getUrl1="src\\main\\resources"+"\\templates\\webapi\\upload\\";
     private static final String ENCODING ="UTF-8";
+    private String getUrl;
+    private Configuration configuration;
+
     public FzjctsServiceImpl() {
         try {
-            configuration = new Configuration();
-            configuration.setDefaultEncoding(ENCODING);
-            File file = new File(getUrl);
-            configuration.setDirectoryForTemplateLoading(file);// 模板文件所在路径
+            File file = org.springframework.util.ResourceUtils.getFile("classpath:ftl");
+            getUrl=file.getAbsolutePath();
+            configuration=new Configuration(Configuration.VERSION_2_3_0);
+            log.info("file-->"+file.getAbsolutePath());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("读取模块文件异常");
         }
     }
     @Autowired
@@ -94,16 +98,10 @@ public class FzjctsServiceImpl implements FzjctsService {
     public String uplodadRepFile(Map<String, Object> map,String ftlname) throws IOException {
         this.delAllFile();
         Template t = null;
-        try {
-            // 获取模板文件
-            //configuration.setDefaultEncoding("ISO8859-1");
-            t = configuration.getTemplate(ftlname, ENCODING); // 获取模板文件
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // 获取模板文件
+        t = configuration.getTemplate(ftlname, ENCODING);
         // 组装word中数据
         //Map<String, Object> dataMap = new HashMap<String, Object>();
-
         OutputStream out = null;
         OutputStreamWriter writer = null;
         File file=null;
@@ -138,7 +136,6 @@ public class FzjctsServiceImpl implements FzjctsService {
     }
     @Override
     public void uplodadRepFileExle(Map<String, Object> map,HttpServletResponse response,HttpServletRequest request) throws IOException {
- //       this.createExcel(map ,"reportXlsl.ftl","exls",response,request);
         Date currentTime = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = formatter.format(currentTime);
@@ -157,13 +154,10 @@ public class FzjctsServiceImpl implements FzjctsService {
     public void createExcel(Map<?, ?> dataMap, String valueName, String excelName, HttpServletResponse response, HttpServletRequest request) throws IOException {
         InputStream inputStream = null;
         ServletOutputStream out = null;
-        Configuration config = new Configuration(Configuration.VERSION_2_3_0);
-        //模板所在文件夹
-        config.setDirectoryForTemplateLoading(new File(getUrl));
-        config.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
+        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
         //加载模板
         try {
-        Template template = config.getTemplate("reportXlsl.ftl");
+        Template template = configuration.getTemplate("reportXlsl.ftl");
 
             File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
             try {
@@ -345,6 +339,7 @@ public class FzjctsServiceImpl implements FzjctsService {
      * @throws IOException
      * @return
      */
+    @Override
     public void downloadTemplate(HttpServletResponse response, HttpServletRequest request, String filename,String templeteName) throws IOException {
         OutputStream outp = null;
         FileInputStream in = null;
