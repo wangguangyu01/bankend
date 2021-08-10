@@ -8,6 +8,7 @@ import com.smart119.webapi.domain.FzjctsDO;
 import com.smart119.webapi.domain.JbxxDO;
 import com.smart119.webapi.service.FzjctsService;
 import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -39,7 +40,6 @@ public class FzjctsServiceImpl implements FzjctsService {
         try {
             configuration = new Configuration();
             configuration.setDefaultEncoding(ENCODING);
-
             File file = new File(getUrl);
             configuration.setDirectoryForTemplateLoading(file);// 模板文件所在路径
         } catch (IOException e) {
@@ -159,9 +159,12 @@ public class FzjctsServiceImpl implements FzjctsService {
     public void createExcel(Map<?, ?> dataMap, String valueName, String excelName, HttpServletResponse response, HttpServletRequest request) throws IOException {
         InputStream inputStream = null;
         ServletOutputStream out = null;
-
+        Configuration config = new Configuration(Configuration.VERSION_2_3_0);
+        //模板所在文件夹
+        config.setDirectoryForTemplateLoading(new File(getUrl));
+        config.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
         //加载模板
-        Template template = configuration.getTemplate("reportXlsl.ftl");
+        Template template = config.getTemplate("reportXlsl.ftl");
         try {
             File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
             try {
@@ -182,7 +185,7 @@ public class FzjctsServiceImpl implements FzjctsService {
                 }
                 out.flush();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage()+"模板加载失败");
             } finally {
                 if (inputStream != null) {
                     inputStream.close();
