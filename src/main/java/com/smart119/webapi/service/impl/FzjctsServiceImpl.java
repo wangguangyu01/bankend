@@ -152,6 +152,7 @@ public class FzjctsServiceImpl implements FzjctsService {
     public void createExcel(Map<?, ?> dataMap, String valueName, String excelName, HttpServletResponse response, HttpServletRequest request) throws IOException {
         InputStream inputStream = null;
         ServletOutputStream out = null;
+        configuration.setDirectoryForTemplateLoading(new File(getUrl));
         configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
         //加载模板
         try {
