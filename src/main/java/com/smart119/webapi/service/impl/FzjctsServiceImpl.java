@@ -31,7 +31,7 @@ import java.util.*;
 public class FzjctsServiceImpl implements FzjctsService {
 
     public Configuration configuration = null;
-    public String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
+    public String getUrl="src\\main\\resources"+"\\templates\\webapi\\upload\\";
 //    public String getUrl1="src\\main\\resources"+"\\templates\\webapi\\upload\\";
     private static final String ENCODING ="UTF-8";
     public FzjctsServiceImpl() {
