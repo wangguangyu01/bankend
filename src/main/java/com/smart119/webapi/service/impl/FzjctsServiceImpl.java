@@ -164,8 +164,9 @@ public class FzjctsServiceImpl implements FzjctsService {
         config.setDirectoryForTemplateLoading(new File(getUrl));
         config.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
         //加载模板
-        Template template = config.getTemplate("reportXlsl.ftl");
         try {
+        Template template = config.getTemplate("reportXlsl.ftl");
+
             File file = new File( getUrl + UUID.randomUUID().toString() + ".xls");
             try {
                 Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
