@@ -120,7 +120,7 @@ public class FzjcApiController extends BaseController{
             @ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String"),
             @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
     })
-
+    @ResponseBody
     public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException {
 
         String id = getUser().getXfjyjgTywysbm();
