@@ -7,7 +7,6 @@ import com.smart119.webapi.dao.FzjctsDao;
 import com.smart119.webapi.domain.FzjctsDO;
 import com.smart119.webapi.service.FzjctsService;
 import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -31,14 +30,16 @@ import java.util.*;
 public class FzjctsServiceImpl implements FzjctsService {
 
     public Configuration configuration = null;
-    public String getUrl=System.getProperties().getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
-//    public String getUrl1="src\\main\\resources"+"\\templates\\webapi\\upload\\";
+    public String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
+    public String getUrl1= System.getProperty("user.dir") + File.separator
+                + "src" + File.separator + "main" + File.separator
+                + "resources" + File.separator+ "templates"+ File.separator+ "webapi"+ File.separator+ "upload";
     private static final String ENCODING ="UTF-8";
     public FzjctsServiceImpl() {
         try {
             configuration = new Configuration();
             configuration.setDefaultEncoding(ENCODING);
-            File file = new File(getUrl);
+            File file = new File(getUrl1);
             configuration.setDirectoryForTemplateLoading(file);// 模板文件所在路径
         } catch (IOException e) {
             e.printStackTrace();
@@ -157,17 +158,12 @@ public class FzjctsServiceImpl implements FzjctsService {
     public void createExcel(Map<?, ?> dataMap, String valueName, String excelName, HttpServletResponse response, HttpServletRequest request) throws IOException {
         InputStream inputStream = null;
         ServletOutputStream out = null;
-        Configuration config = new Configuration(Configuration.VERSION_2_3_0);
-        //模板所在文件夹
-        File root = new File("");
-        File absoluteFile = root.getAbsoluteFile();
-        config.setDirectoryForTemplateLoading(new File(String.valueOf(absoluteFile)+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\"));
-        config.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
+
         //加载模板
         try {
-        Template template = config.getTemplate("reportXlsl.ftl");
+        Template template = configuration.getTemplate("reportXlsl.ftl");
 
-            File file = new File( String.valueOf(absoluteFile)+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\" + UUID.randomUUID().toString() + ".xls");
+            File file = new File( getUrl1 + UUID.randomUUID().toString() + ".xls");
             try {
                 Writer w = new OutputStreamWriter(new FileOutputStream(file), ENCODING);
                 template.process(dataMap, w);
