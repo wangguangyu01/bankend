@@ -16,8 +16,16 @@ import java.util.Map;
 public interface JqtjDao extends BaseMapper<JbxxDO> {
 
     List<JbxxDO> list(Map<String, Object> params);
+    List<Map<String,Object>> getListType(Map<String, Object> params);
+    Map<String,Object> getBJcout(Map<String, Object> params);
+    Map<String,Object> getBJcout2(Map<String, Object> params);
+    Map<String,Object> getCdcout(Map<String, Object> params);
+    List<Map<String,Object>> hzpuList(Map<String, Object> params);
 
     List<JqtjDO> listExcel(Map<String, Object> params);
 
 
+    List<Map<String, Object>> getHourList(Map<String, Object> map);
+
+    Map<String, Object> getCdcout2(Map<String, Object> params);
 }

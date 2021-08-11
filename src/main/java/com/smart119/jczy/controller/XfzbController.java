@@ -73,6 +73,19 @@ public class XfzbController extends BaseController{
 		return pageUtils;
 	}
 
+	@ResponseBody
+	@GetMapping("/xfzbList")
+	public PageUtils xfzbList(@RequestParam Map<String, Object> params){
+		//查询列表数据
+		Query query = new Query(params);
+		List<DeptDO> deptList = new ArrayList<>();
+		query.put("deptList",deptList);
+		List<XfzbDO> xfzbList = xfzbService.list(query);
+		int total = xfzbService.count(query);
+		PageUtils pageUtils = new PageUtils(xfzbList, total);
+		return pageUtils;
+	}
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:xfzb:add")
 	String add(){

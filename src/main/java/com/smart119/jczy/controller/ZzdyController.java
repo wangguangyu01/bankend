@@ -9,8 +9,10 @@ import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import com.smart119.jczy.domain.ZzdyDO;
 import com.smart119.jczy.domain.ZzdyXfclDO;
+import com.smart119.jczy.domain.ZzdyXfzbDO;
 import com.smart119.jczy.service.ZzdyService;
 import com.smart119.jczy.service.ZzdyXfclService;
+import com.smart119.jczy.service.ZzdyXfzbService;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
 import io.swagger.annotations.*;
@@ -45,6 +47,9 @@ public class ZzdyController extends BaseController {
 	private DictService dictService;
 	@Autowired
 	private DeptService deptService;
+	@Autowired
+	private ZzdyXfzbService zzdyXfzbService;
+
 	@GetMapping()
 	@RequiresPermissions("webapi:zzdy:zzdy")
 	String Zzdy(Model model){
@@ -98,6 +103,16 @@ public class ZzdyController extends BaseController {
 		return "jczy/zzdy/addXfcl";
 	}
 
+    @GetMapping("/addzbqc")
+    String addzbqc(HttpServletRequest request, Model model){
+        String zzdyTywybs=request.getParameter("zzdyTywybs");
+        String xfjyjgTywysbm=request.getParameter("xfjyjgTywysbm");
+        List<ZzdyXfzbDO> xfzbnameList=zzdyXfzbService.getZzdyXfzb(zzdyTywybs);
+        model.addAttribute("xfzbnameList",xfzbnameList);
+        model.addAttribute("xfjyjgTywysbm",xfjyjgTywysbm);
+        return "jczy/zzdy/addZbqc";
+    }
+
 	@GetMapping("/edit/{zzdyTywybs}")
 	@RequiresPermissions("webapi:zzdy:edit")
 	String edit(@PathVariable("zzdyTywybs") String zzdyTywybs,Model model){
@@ -105,6 +120,8 @@ public class ZzdyController extends BaseController {
 		model.addAttribute("zzdy", zzdy);
 		List<ZzdyXfclDO> xfclnameList=zzdyXfclService.getZzdyxfcl(zzdyTywybs);
 		model.addAttribute("xfclnameList",xfclnameList);
+		List<ZzdyXfzbDO> xfzbnameList=zzdyXfzbService.getZzdyXfzb(zzdyTywybs);
+		model.addAttribute("xfzbnameList",xfzbnameList);
 	    return "jczy/zzdy/edit";
 	}
 
@@ -141,6 +158,18 @@ public class ZzdyController extends BaseController {
 				dao.setXfclTywysbm(xfccl[i]);
 				dao.setZzdyTywybs(zzdy.getZzdyTywybs());
 				zzdyXfclService.save(dao);
+			}
+		}
+		//删除绑定装备
+		zzdyXfzbService.removeZzdyXfzb(zzdy.getZzdyTywybs());
+		String[] xfzbTywysbmArr = zzdy.getXfzbTywysbm().split(",");
+		if (xfzbTywysbmArr != null && xfzbTywysbmArr.length > 0) {
+			for(String xfzbTywysbm:xfzbTywysbmArr){
+				ZzdyXfzbDO zzdyXfzbDO = new ZzdyXfzbDO();
+				zzdyXfzbDO.setId(UUID.randomUUID().toString().replace("-", ""));
+				zzdyXfzbDO.setXfzbTywysbm(xfzbTywysbm);
+				zzdyXfzbDO.setZzdyTywybs(zzdy.getZzdyTywybs());
+				zzdyXfzbService.save(zzdyXfzbDO);
 			}
 		}
 		zzdyService.update(zzdy);

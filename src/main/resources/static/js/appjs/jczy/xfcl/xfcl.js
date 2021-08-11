@@ -65,6 +65,11 @@ function load() {
                         title: '消防车辆作战功能'
                     },
                     {
+                        field: 'clmc',
+                        title: '车辆名称'
+                    },
+
+                    {
                         field: 'xfcldj',
                         title: '消防车辆等级'
                     },

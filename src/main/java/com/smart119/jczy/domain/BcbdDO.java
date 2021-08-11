@@ -26,7 +26,7 @@ public class BcbdDO implements Serializable {
 	//创建人
 	private String cpserson;
 	//状态
-	private Integer status;
+	private String status;
 	//编程编队描述
 	private String bcbdms;
 
@@ -151,13 +151,13 @@ public class BcbdDO implements Serializable {
 	/**
 	 * 设置：状态
 	 */
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 	/**
 	 * 获取：状态
 	 */
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 }

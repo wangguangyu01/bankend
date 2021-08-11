@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+	<div class="col-sm-12">
+		<div class="ibox">
+			<div class="ibox-body">
+				<div class="fixed-table-toolbar">
+                    <div class="columns pull-right">
+                        <button class="btn btn-success" style="margin-top: -20px"onclick="reLoad()">查询</button>
+                    </div>
+                    <button  type="button" class="btn  btn-primary" onclick="Excel()">
+                        <i class="fa fa-plus" aria-hidden="true"></i>导出
+                    </button>
+					<div class="pull-right col-md-3">
+						<input type="text" class="laydate-icon layer-date form-control" id="endDate" name="endDate"  placeholder="请选择结束日期"
+							   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;"  th:value="${endDate}==null?null:${#dates.format(endDate,'yyyy-MM-dd')}"/>
+					</div>
+					<div class="pull-right" style="line-height: 34px;">——</div>
+					<div class="pull-right col-md-3">
+						<input type="text" class="laydate-icon layer-date form-control" id="startDate" name="startDate"  placeholder="请选择开始日期"
+							   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;"  th:value="${startDate}==null?null:${#dates.format(startDate,'yyyy-MM-dd')}"/>
+					</div>
+
+				</div>
+                    <div style="margin-top:40px">
+                        <h2 class="text-center">警情时段分布统计图</h2>
+                        <h3 class="text-center">  <span id="time" class="content">11111111111111</span> </h3>
+                        <div  style="float:right;margin-right: 40px;font-size: 16px">
+                            <div  style="margin-right: 50px;height: 20px;">
+                                <span>制表时间：</span>
+                                <span id="gettime"></span>
+                            </div>
+                            <div style="margin-right: 50px;height: 20px">
+                                <span>单&emsp;&emsp;位：</span>
+                                <span id="org"> 临沂消防救援支队 </span>
+                            </div>
+                        </div>>
+                    </div>
+                <table id="exampleTable" data-mobile-responsive="true">
+                </table>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--shiro控制bootstraptable行内按钮看见性 来自bootdo的创新方案 -->
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/jczy/report/hourtjlist.js"></script>
+</body>
+<style>
+    .box{
+        /*display: flex;*/
+        /*flex-direction: row;*/
+    }
+    .text{text-indent: 24px;display: inline-block}
+    .content{
+        margin-top: 5px;
+        font-size: 16px;
+    }
+</style>
+<style>
+    /* 表格样式 */
+
+    .table>tbody>tr>td {
+        border: 0px;
+        text-align: center;
+    }
+
+    .bootstrap-table .table thead>tr>th {
+        text-align: center;
+    }
+
+    .table thead {
+        background: #ebeaea;
+    }
+</style>
+</html>

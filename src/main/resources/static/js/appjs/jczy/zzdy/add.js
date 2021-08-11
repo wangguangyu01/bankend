@@ -3,6 +3,7 @@ $().ready(function() {
 	//getSelectByType("ZZDYLXDM","zzdylxdm",null);
 	getSelectAll("ZZDYLXDM","ZZDYLXDM-DIV","zzdylxdm","zzdylxdm-title");  //消防岗位分类与代码
 	localStorage.setItem("remembermeDataList","")
+	localStorage.setItem("xfzbRemembermeDataList","")
 });
 
 $.validator.setDefaults({
@@ -94,6 +95,23 @@ function add() {
 			shadeClose : false, // 点击遮罩关闭层
 			area : [ '90%', '94%' ],
 			content : '/webapi/zzdy/addxfcl?zzdyTywybs=111&xfjyjgTywysbm='+map.xfjyjgTywysbm
+		});
+	}
+}
+
+function addZbqc() {
+	var zzjg=$('#xfjyjgTywysbm').val();
+	if(zzjg.length ==0){
+		parent.layer.alert("请选择消防救援机构")
+		return false;
+	}else{
+		layer.open({
+			type : 2,
+			title : '选择装备器材',
+			maxmin : true,
+			shadeClose : false, // 点击遮罩关闭层
+			area : [ '90%', '94%' ],
+			content : '/webapi/zzdy/addzbqc?zzdyTywybs=111&xfjyjgTywysbm='+map.xfjyjgTywysbm
 		});
 	}
 }

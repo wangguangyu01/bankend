@@ -1,6 +1,8 @@
-
-var prefix = "/jczy/qyjqtj"
+var prefixdc ="/webapi/fzjc"
+var prefix = "/jczy/jqzhtj"
+var zid;
 $(function() {
+    getTreeData();
     load();
 });
 
@@ -16,7 +18,6 @@ function load() {
 
     $('#startDate').val(s1);
     $('#endDate').val(s2);
-
     $('#exampleTable')
         .bootstrapTable(
             {
@@ -46,7 +47,8 @@ function load() {
                         limit: params.limit,
                         offset:params.offset,
                         startDate:$('#startDate').val(),
-                        endDate:$('#endDate').val()
+                        endDate:$('#endDate').val(),
+                        deptId : zid
                     };
                 },
                 // //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -57,21 +59,16 @@ function load() {
                 // 返回false将会终止请求
                 columns : [
                     {
-                        field : 'xzqhdm',
-                        title : '行政区划代码'
-                    },
-                    {
                         field : 'mc',
-                        title : '行政区域名称'
+                        title : '项目'
                     },
                     {
                         field : 'count',
-                        title : '数量'
+                        title : '次数'
                     }]
             });
 }
-function reLoad(){
-     setTime();
+function reLoad() {
     $('#exampleTable').bootstrapTable('refresh');
 }
 
@@ -98,34 +95,6 @@ $('#jstree').on("changed.jstree", function(e, data) {
     zid = data.selected[0],
         load();
 });
-
-function  setTime() {
-    var myDate = new Date();
-    myDate.getFullYear();    //获取完整的年份(4位,1970-????)
-    myDate.getMonth();       //获取当前月份(0-11,0代表1月)
-    myDate.getDate();        //获取当前日(1-31)
-    var gettime=myDate.getFullYear()+"年"+(myDate.getMonth()+1)+"月"+myDate.getDate()+"日";
-    $('#gettime').html(gettime);
-    var t1 = $('#startDate').val();
-    var t2= $('#endDate').val();
-    if(t1 !="" &&t2 !="" && t1 !=null &&  t2 !=null){
-        var startDate=getYMDHMS (t1)+"00时00分00秒";
-        var  endDate=getYMDHMS (t2)+"23时59分59秒";
-        $('#time').html(startDate+"--"+endDate);
-    }
-
-}
-function  getYMDHMS (timesrtamp) {
-    var time = new Date(timesrtamp)
-    var year = time.getFullYear()
-    var month = (time.getMonth() + 1).toString().padStart(2, '0')
-    var date = (time.getDate()).toString().padStart(2, '0')
-    var hours = (time.getHours()).toString().padStart(2, '0')
-    var minute = (time.getMinutes()).toString().padStart(2, '0')
-    var second = (time.getSeconds()).toString().padStart(2, '0')
-
-    return year + '年' + month + '月' + date + '日';
-}
 function add() {
     layer.open({
         type : 2,
@@ -204,35 +173,34 @@ function batchRemove() {
 
     });
 }
+
 function Excel() {
+    window.location.href="/webapi/fzjc/getFileExle?startDate="+$("#startDate").val()+"&endDate="+$("#endDate").val()+"&deptId="+zid;
+}
+function  setTime() {
+    var myDate = new Date();
+    myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+    myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+    myDate.getDate();        //获取当前日(1-31)
+    var gettime=myDate.getFullYear()+"年"+(myDate.getMonth()+1)+"月"+myDate.getDate()+"日";
+    $('#gettime').html(gettime);
+    var t1 = $('#startDate').val();
+    var t2= $('#endDate').val();
+    if(t1 !="" &&t2 !="" && t1 !=null &&  t2 !=null){
+        var startDate=getYMDHMS (t1)+"00时00分00秒";
+        var  endDate=getYMDHMS (t2)+"23时59分59秒";
+        $('#time').html(startDate+"--"+endDate);
+    }
 
-    $.ajax({
-        url: prefix + "/qyjqtjExcel", // 服务器数据的加载地址
-        type: "get",
-        data: {
-            startDate:$('#startDate').val(),
-            endDate:$('#endDate').val()
-        },
-        success: function (r) {
-            exportList = r.data
-            // 列标题，逗号隔开，每一个逗号就是隔开一个单元格
-            let str = `行政区域名称,数量\n`;
-            // 增加\t为了不让表格显示科学计数法或者其他格式
-            for(let i = 0 ; i < exportList.length ; i++ ){
-                for(const key in exportList[i]){
-                    str+=`${exportList[i][key] + '\t'},`;
-                }
-                str+='\n';
-            }
-            // encodeURIComponent解决中文乱码
-            const uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURIComponent(str);
-            // 通过创建a标签实现
-            const link = document.createElement("a");
-            link.href = uri;
-            // 对下载的文件命名
-            link.download =  "行政区域警情统计数据表.csv";
-            link.click();
-        }
+}
+function  getYMDHMS (timesrtamp) {
+    var time = new Date(timesrtamp)
+    var year = time.getFullYear()
+    var month = (time.getMonth() + 1).toString().padStart(2, '0')
+    var date = (time.getDate()).toString().padStart(2, '0')
+    var hours = (time.getHours()).toString().padStart(2, '0')
+    var minute = (time.getMinutes()).toString().padStart(2, '0')
+    var second = (time.getSeconds()).toString().padStart(2, '0')
 
-    });
+    return year + '年' + month + '月' + date + '日';
 }

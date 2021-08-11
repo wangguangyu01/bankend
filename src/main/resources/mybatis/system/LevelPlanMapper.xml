@@ -18,18 +18,26 @@
 		    a.level_plan_id,
 			s1.name as plan_type,
 			s2.name as plan_level,
-			s3.name as zhcs
+            s2.`value` as s2value,
+			s3.name as zhcs,
+            s3.`value` as zhcsvalue
 		FROM
 			jczy_policestaion_typelevel a
 			LEFT JOIN sys_dict s1 on s1.value = a.POLICESTAION_TYPE_TYWYSBM  and s1.type= 'JQFLYDM'
 			LEFT JOIN sys_dict s2 on s2.value = a.POLICESTAION_LEVEL_TYWYSBM and s2.type= 'JQDJDM'
-			LEFT JOIN sys_dict s3 on s3.value = a.zhcs and s3.type= 'ZHCS'
+			LEFT JOIN sys_dict s3 on s3.value = a.zhcs and s3.type= 'ZHCS' and s3.value !=''
 		GROUP BY
 	a.level_plan_id)  a on t.level_plan_id = a.level_plan_id
 	  <where>
 		   <if test="params.planName!=null and params.planName!=''">
 			  and  t.plan_name like concat('%',#{params.planName},'%')
 		   </if>
+          <if test="params.zhcs!=null and params.zhcs!=''">
+              and  a.zhcsvalue =#{params.zhcs}
+          </if>
+          <if test="params.jqdjdm!=null and params.jqdjdm!=''">
+              and  a.s2value=#{params.jqdjdm}
+          </if>
 	  </where>
 	</select>
 </mapper>

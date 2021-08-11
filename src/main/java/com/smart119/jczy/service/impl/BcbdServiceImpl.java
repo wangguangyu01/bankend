@@ -73,6 +73,7 @@ public class BcbdServiceImpl implements BcbdService {
 		int result = 0;
 		String bcbdId = UUID.randomUUID().toString().replace("-", "");
 		bcbd.setBcbdId(bcbdId);
+		bcbd.setStatus("0200");
 		if(bcbdDao.save(bcbd)>0){
 			//如果保存成功添加子表；
 			String zzdyids = bcbd.getZzdyid();
@@ -94,21 +95,20 @@ public class BcbdServiceImpl implements BcbdService {
 	
 	@Override
 	@Transactional
-	public int update(BcbdDO bcbd){
+	public int update(BcbdDO bcbd) {
 		int result = 0;
-		if(bcbdDao.update(bcbd) >0 ){
-			if(bcbdZzdyDao.removeByBcbdId(bcbd.getBcbdId()) > 0){
-				String zzdyids = bcbd.getZzdyid();
-				if(StringUtils.isNotEmpty(zzdyids)){
-					String zzdid [] = zzdyids.substring(0,zzdyids.length()-1).split(",");
-					for(String s :zzdid){
-						BcbdZzdyDO bcbdZzdyDO = new BcbdZzdyDO();
-						bcbdZzdyDO.setBcbdZzdyId(UUID.randomUUID().toString().replace("-", ""));
-						bcbdZzdyDO.setBcbdId(bcbd.getBcbdId());
-						bcbdZzdyDO.setZzdytywybs(s);
-						if(bcbdZzdyDao.save(bcbdZzdyDO) >0){
-							result = 1 ;
-						}
+		if (bcbdDao.update(bcbd) > 0) {
+			bcbdZzdyDao.removeByBcbdId(bcbd.getBcbdId());
+			String zzdyids = bcbd.getZzdyid();
+			if (StringUtils.isNotEmpty(zzdyids)) {
+				String zzdid[] = zzdyids.substring(0, zzdyids.length() - 1).split(",");
+				for (String s : zzdid) {
+					BcbdZzdyDO bcbdZzdyDO = new BcbdZzdyDO();
+					bcbdZzdyDO.setBcbdZzdyId(UUID.randomUUID().toString().replace("-", ""));
+					bcbdZzdyDO.setBcbdId(bcbd.getBcbdId());
+					bcbdZzdyDO.setZzdytywybs(s);
+					if (bcbdZzdyDao.save(bcbdZzdyDO) > 0) {
+						result = 1;
 					}
 				}
 			}

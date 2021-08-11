@@ -16,15 +16,12 @@
 		jczy_zzdy.`XFJYJG_TYWYSBM`,
 		  dic.`name`  as zzdylxdmname ,
 	      dept.`DWMC`  as xfjyjgTywysbmname,
-	      GROUP_CONCAT( xfcl.XFCL_TYWYSBM ) XFCL_TYWYSBM
+	      (select GROUP_CONCAT( xfcl.XFCL_TYWYSBM ) from jczy_zzdy_xfcl xfcl where xfcl.ZZDY_TYWYBS=jczy_zzdy.ZZDY_TYWYBS) XFCL_TYWYSBM,
+	      (select GROUP_CONCAT( xfzb.XFZB_TYWYSBM ) from jczy_zzdy_xfzb xfzb where xfzb.ZZDY_TYWYBS=jczy_zzdy.ZZDY_TYWYBS) XFZB_TYWYSBM
 		  from jczy_zzdy
 		  left join sys_dict dic on jczy_zzdy.ZZDYLXDM=dic.value and dic.type='ZZDYLXDM'
 		  left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
-		  LEFT JOIN jczy_zzdy_xfcl xfcl ON jczy_zzdy.ZZDY_TYWYBS = xfcl.ZZDY_TYWYBS
 		  where jczy_zzdy.ZZDY_TYWYBS = #{value}
-
-          GROUP BY  jczy_zzdy.ZZDY_TYWYBS
-
 	</select>
 
 	<select id="list" resultType="com.smart119.jczy.domain.ZzdyDO">

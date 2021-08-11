@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +37,17 @@ public interface FzjctsService {
 
 	List<FzjctsDO> getFzjcTslistByJqTywysbm(String jqTywysbm);
 
-	ResponseEntity<FileSystemResource> uplodadRepFile(Map<String,Object> map) throws IOException;
+
 
 	void uplodadRepFileExle(Map<String, Object> map, HttpServletResponse response, HttpServletRequest request) throws IOException;
+
+    Map<String, Object> getZBbaotit(String startDate, String endDate, Map<String, Object> map) throws ParseException;
+
+    List<Map<String, Object>> getHourList(Map<String, Object> map);
+
+    void downloadTemplate(HttpServletResponse response, HttpServletRequest request, String filename, String templeteName) throws IOException;
+
+    String uplodadRepFile(Map<String, Object> map, String s) throws IOException;
+
+	void uplodadRepFileOther(Map<String, Object> map, String s,HttpServletResponse response, HttpServletRequest request) throws IOException;
 }

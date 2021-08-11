@@ -1,37 +1,52 @@
 package com.smart119.webapi.controller;
 
-
 import com.alibaba.fastjson.JSON;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
 import com.smart119.jczy.domain.FzjcDO;
+import com.smart119.jczy.domain.JqzhtjDO;
 import com.smart119.jczy.service.FzjcService;
+import com.smart119.jczy.service.JqzhtjService;
+import com.smart119.system.domain.DeptDO;
 import com.smart119.system.mq.RabbitMQClient;
+import com.smart119.system.service.DeptService;
 import com.smart119.webapi.domain.FzjctsDO;
 import com.smart119.webapi.domain.JbxxDO;
 import com.smart119.webapi.service.FzjctsService;
 import com.smart119.webapi.service.JbxxService;
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
 @RequestMapping("/webapi/fzjc")
 @Api(value = "辅助决策API", description = "辅助决策API")
 public class FzjcApiController extends BaseController{
+    @Autowired
+    private Configuration configuration;
 
     @Resource
     private FzjcService fzjcService;
@@ -46,6 +61,12 @@ public class FzjcApiController extends BaseController{
     //推送
     @Autowired
     private JbxxService jbxxService;
+
+    @Autowired
+    private DeptService sysDeptService;
+
+    @Autowired
+    private JqzhtjService jqzhtjService;
 
     @GetMapping("/getFzjcList")
     @ApiOperation("查询辅助决策")
@@ -101,40 +122,135 @@ public class FzjcApiController extends BaseController{
         List<FzjctsDO> fzjctsDOList = fzjctsService.getFzjcTslistByJqTywysbm(jqTywysbm);
         return R.ok(fzjctsDOList);
     }
-    @GetMapping("/getFile")
-    public ResponseEntity<FileSystemResource> getFile() throws IOException {
-        Map<String,Object>map=new HashMap<>();
-        map.put("time","2021-08-02--2021-08-03");
-        map.put("zd1","222");
-        map.put("zd2","3333");
-        map.put("zd3","44444");
-        map.put("zd4","44444");
-        map.put("zd5","555555555");
-        return  fzjctsService.uplodadRepFile(map);
-    }
+
+
     @GetMapping("/getFileExle")
-    public void  getFileExle(HttpServletResponse response, HttpServletRequest request) throws IOException {
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String"),
+            @ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String"),
+            @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
+    })
+    @ResponseBody
+    public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException {
+
+        String id = getUser().getXfjyjgTywysbm();
+        String deptName =  sysDeptService.findNameByTYWYSBM(id);
+
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+        String dateString = formatter.format(currentTime);
+
+        List<DeptDO> deptList = new ArrayList<>();
+        if(params.get("deptId")!=null && !params.get("deptId").equals("")&&!params.get("deptId").equals("undefined")){
+            deptList = sysDeptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+        }else{
+            deptList = sysDeptService.listChildren(getUser().getDeptId());
+        }
+        params.put("deptList",deptList);
+
+
+        JqzhtjDO  jqzhtjDO= jqzhtjService.getExcel(params);
+
         Map<String,Object>map=new HashMap<>();
-        map.put("time","2021-08-02--2021-08-03");
-        map.put("org","临沂消防支队");
+        map.put("time",dateString);
+        map.put("startDate",params.get("startDate"));
+        map.put("enDate",params.get("enDate"));
+        map.put("org",deptName);
         map.put("title","标题");
-        map.put("zd1","11111");
-        map.put("zd2","2222");
-        map.put("zd3","3333");
-        map.put("zd4","44444");
-        map.put("zd5","555555555");
-        map.put("zd6","6666");
-        map.put("zd7","77777");
-        map.put("zd8","88888");
-        map.put("zd9","11111");
-        map.put("zd10","2222");
-        map.put("zd11","3333");
-        map.put("zd12","44444");
-        map.put("zd13","555555555");
-        map.put("zd14","6666");
-        map.put("zd15","77777");
-        map.put("zd16","88888");
-          fzjctsService.uplodadRepFileExle(map, response, request);
+        map.put("zd1",jqzhtjDO.getJqzs());
+        map.put("zd2",jqzhtjDO.getDpcl());
+        map.put("zd3",jqzhtjDO.getSszs());
+        map.put("zd4",jqzhtjDO.getSsrs());
+        map.put("zd5","0");
+        map.put("zd6","0");
+        map.put("zd7","0");
+        map.put("zd8","0");
+        map.put("zd9",jqzhtjDO.getCdcs());
+        map.put("zd10",jqzhtjDO.getDprs());
+        map.put("zd11",jqzhtjDO.getSwzs());
+        map.put("zd12",jqzhtjDO.getSwrs());
+        map.put("zd13",jqzhtjDO.getRsmj());
+        map.put("zd14",jqzhtjDO.getZjss());
+        map.put("zd15","0");
+        map.put("zd16","0");
+
+            fzjctsService.uplodadRepFileExle(map, response,  request);
     }
+//    @GetMapping("/getFileExle")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "startDate", value = "开始时间", required = true   ,  dataType = "String"),
+//            @ApiImplicitParam(name = "endDate", value = "结束时间", required = true    ,  dataType = "String"),
+//            @ApiImplicitParam(name = "deptId", value = "部门唯一标识", required = true    ,  dataType = "String")
+//    })
+//    @ResponseBody
+//    public void getFileExle(HttpServletResponse response, HttpServletRequest request, @ApiIgnore @RequestParam Map<String, Object> params) throws IOException, TemplateException {
+//
+//        String id = getUser().getXfjyjgTywysbm();
+//        String deptName =  sysDeptService.findNameByTYWYSBM(id);
+//
+//        Date currentTime = new Date();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+//        String dateString = formatter.format(currentTime);
+//
+//        List<DeptDO> deptList = new ArrayList<>();
+//        if(params.get("deptId")!=null && !params.get("deptId").equals("")&&!params.get("deptId").equals("undefined")){
+//            deptList = sysDeptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+//        }else{
+//            deptList = sysDeptService.listChildren(getUser().getDeptId());
+//        }
+//        params.put("deptList",deptList);
+//
+//
+//        JqzhtjDO  jqzhtjDO= jqzhtjService.getExcel(params);
+//
+//        Map<String,Object>map=new HashMap<>();
+//        map.put("time",dateString);
+//        map.put("startDate",params.get("startDate"));
+//        map.put("enDate",params.get("enDate"));
+//        map.put("org",deptName);
+//        map.put("title","标题");
+//        map.put("zd1",jqzhtjDO.getJqzs());
+//        map.put("zd2",jqzhtjDO.getDpcl());
+//        map.put("zd3",jqzhtjDO.getSszs());
+//        map.put("zd4",jqzhtjDO.getSsrs());
+//        map.put("zd5","0");
+//        map.put("zd6","0");
+//        map.put("zd7","0");
+//        map.put("zd8","0");
+//        map.put("zd9",jqzhtjDO.getCdcs());
+//        map.put("zd10",jqzhtjDO.getDprs());
+//        map.put("zd11",jqzhtjDO.getSwzs());
+//        map.put("zd12",jqzhtjDO.getSwrs());
+//        map.put("zd13",jqzhtjDO.getRsmj());
+//        map.put("zd14",jqzhtjDO.getZjss());
+//        map.put("zd15","0");
+//        map.put("zd16","0");
+//
+//        //构造输出流
+//        String getUrl=System.getProperty("user.dir")+"\\src\\main\\resources"+"\\templates\\webapi\\upload\\";
+//        configuration.setDirectoryForTemplateLoading(new File(getUrl));
+//        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
+//        Template template = configuration.getTemplate("reportXlsl.ftl", "UTF-8");
+//
+//        String fileName = getUrl+ "警情综合统计" + ".xlsx";
+//        File file = new File(fileName);
+//        FileWriter out = new FileWriter(fileName);
+//        //变量替换
+//        template.process(map, out);
+//
+//        //将文件输出到response,返回给客户端
+//        FileInputStream in = new FileInputStream(file);
+//        byte[] buffer = new byte[in.available()];
+//
+//        in.read(buffer);
+//        in.close();
+//        response.reset();
+//        response.addHeader("Content-Disposition", "attachment;filename=警情综合统计.xlsx");
+//        ServletOutputStream outputStream = response.getOutputStream();
+//        response.setContentType("application/octet-stream");
+//        outputStream.write(buffer);
+//        outputStream.flush();
+//        outputStream.close();
+//    }
 
 }
