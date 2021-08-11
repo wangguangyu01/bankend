@@ -7,6 +7,17 @@ $(function() {
 });
 
 function load() {
+
+    var day1 = new Date();
+    day1.setTime(day1.getTime()-48*60*60*1000);
+    var s1 = day1.getFullYear()+"-" + (day1.getMonth()+1) + "-" + day1.getDate();
+
+    var day2 = new Date();
+    day2.setTime(day2.getTime()-24*60*60*1000);
+    var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+
+    $('#startDate').val(s1);
+    $('#endDate').val(s2);
     $('#exampleTable')
         .bootstrapTable(
             {
@@ -62,6 +73,7 @@ function load() {
             });
 }
 function reLoad() {
+    setTime()
     $('#exampleTable').bootstrapTable('refresh');
 }
 
@@ -166,7 +178,33 @@ function batchRemove() {
 
     });
 }
+function  setTime() {
+    var myDate = new Date();
+    myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+    myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+    myDate.getDate();        //获取当前日(1-31)
+    var gettime=myDate.getFullYear()+"年"+(myDate.getMonth()+1)+"月"+myDate.getDate()+"日";
+    $('#gettime').html(gettime);
+    var t1 = $('#startDate').val();
+    var t2= $('#endDate').val();
+    if(t1 !="" &&t2 !="" && t1 !=null &&  t2 !=null){
+        var startDate=getYMDHMS (t1)+"00时00分00秒";
+        var  endDate=getYMDHMS (t2)+"23时59分59秒";
+        $('#time').html(startDate+"--"+endDate);
+    }
 
+}
+function  getYMDHMS (timesrtamp) {
+    var time = new Date(timesrtamp)
+    var year = time.getFullYear()
+    var month = (time.getMonth() + 1).toString().padStart(2, '0')
+    var date = (time.getDate()).toString().padStart(2, '0')
+    var hours = (time.getHours()).toString().padStart(2, '0')
+    var minute = (time.getMinutes()).toString().padStart(2, '0')
+    var second = (time.getSeconds()).toString().padStart(2, '0')
+
+    return year + '年' + month + '月' + date + '日';
+}
 function Excel() {
 
     $.ajax({
