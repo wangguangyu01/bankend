@@ -97,6 +97,8 @@ public class FzjctsServiceImpl implements FzjctsService {
         this.delAllFile();
         Template t = null;
         // 获取模板文件
+        configuration.setDirectoryForTemplateLoading(new File(getUrl));
+        configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_0));
         t = configuration.getTemplate(ftlname, ENCODING);
         // 组装word中数据
         //Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -398,7 +400,10 @@ public class FzjctsServiceImpl implements FzjctsService {
                 temp = new File(path + File.separator + tempList[i]);
             }
             if (temp.isFile()) {
-                temp.delete();
+                if(i !=tempList.length-1){
+                    temp.delete();
+                }
+
             }
         }
         return flag;
