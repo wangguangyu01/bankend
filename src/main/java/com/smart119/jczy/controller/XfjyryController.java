@@ -66,13 +66,23 @@ public class XfjyryController extends BaseController {
     public PageUtils list(@RequestParam Map<String, Object> params) {
         //查询列表数据
         Query query = new Query(params);
-        List<DeptDO> deptList = new ArrayList<>();
-        if (params.get("deptId") != null && !params.get("deptId").equals("")) {
-            deptList = deptService.listChildren(Long.valueOf(params.get("deptId").toString()));
-        } else {
-            deptList = deptService.listChildren(getUser().getDeptId());
+        if(params.get("flag").equals("0")){
+            List<DeptDO> deptList = new ArrayList<>();
+            if (params.get("deptId") != null && !params.get("deptId").equals("")) {
+                deptList = deptService.listChildren(Long.valueOf(params.get("deptId").toString()));
+            } else {
+                deptList = deptService.listChildren(getUser().getDeptId());
+            }
+            query.put("deptList", deptList);
+        }else{
+            DeptDO deptDO = new DeptDO();
+            if (params.get("deptId") != null && !params.get("deptId").equals("")) {
+                deptDO = deptService.get(Long.valueOf(params.get("deptId").toString()));
+            } else {
+                deptDO = deptService.get(getUser().getDeptId());
+            }
+            query.put("sjszjgTywysbm", deptDO.getXfjyjgTywysbm());
         }
-        query.put("deptList", deptList);
         List<XfjyryDO> xfjyryList = xfjyryService.list(query);
         int total = xfjyryService.count(query);
         PageUtils pageUtils = new PageUtils(xfjyryList, total);

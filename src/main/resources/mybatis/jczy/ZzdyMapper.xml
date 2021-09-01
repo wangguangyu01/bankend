@@ -54,6 +54,7 @@
                         </foreach>
                     </if>
 		  		  <if test="cperson != null and cperson != ''"> and jczy_zzdy.cperson = #{cperson} </if>
+			     <if test="dwmc != null and dwmc != ''"> and dept.DWMC  like '%${dwmc}%' </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -69,22 +70,22 @@
 	</select>
 	
  	<select id="count" resultType="int">
-		select count(*) from jczy_zzdy
-		 <where>  
-		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and ZZDY_TYWYBS = #{zzdyTywybs} </if>
-		  		  <if test="zzdymc != null and zzdymc != ''"> and ZZDYMC = #{zzdymc} </if>
-		  		  <if test="zzdylxdm != null and zzdylxdm != ''"> and ZZDYLXDM = #{zzdylxdm} </if>
-		  		  <if test="bzsl != null and bzsl != ''"> and BZSL = #{bzsl} </if>
-		  		  <if test="zzrw != null and zzrw != ''"> and ZZRW = #{zzrw} </if>
-		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
-		  		  <if test="status != null and status != ''"> and status = #{status} </if>
-		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
-		  		  <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''"> and XFJYJG_TYWYSBM = #{xfjyjgTywysbm} </if>
-				  <if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
-					 <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
-						 #{item.xfjyjgTywysbm}
-					 </foreach>
-			      </if>
+		select count(*) from jczy_zzdy left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
+		 <where>
+			 <if test="zzdyTywybs != null and zzdyTywybs != ''"> and jczy_zzdy.ZZDY_TYWYBS =${zzdyTywybs} </if>
+			 <if test="zzdymc != null and zzdymc != ''"> and jczy_zzdy.ZZDYMC like '%${zzdymc}%' </if>
+			 <if test="zzdylxdm != null and zzdylxdm != ''"> and jczy_zzdy.ZZDYLXDM = #{zzdylxdm} </if>
+			 <if test="bzsl != null and bzsl != ''"> and jczy_zzdy.BZSL = #{bzsl} </if>
+			 <if test="zzrw != null and zzrw != ''"> and jczy_zzdy.ZZRW = #{zzrw} </if>
+			 <if test="cdate != null and cdate != ''"> and jczy_zzdy.cdate = #{cdate} </if>
+			 <if test="status != null and status != ''"> and jczy_zzdy.status = #{status} </if>
+			 <if test="deptList != null and deptList.size() > 0">and jczy_zzdy.XFJYJG_TYWYSBM in
+				 <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
+					 #{item.xfjyjgTywysbm}
+				 </foreach>
+			 </if>
+			 <if test="cperson != null and cperson != ''"> and jczy_zzdy.cperson = #{cperson} </if>
+			 <if test="dwmc != null and dwmc != ''"> and dept.DWMC  like '%${dwmc}%' </if>
 		  		</where>
 	</select>
 	 

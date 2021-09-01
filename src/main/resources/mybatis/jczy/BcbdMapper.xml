@@ -9,9 +9,10 @@
 
     <select id="list" resultType="com.smart119.jczy.domain.BcbdDO">
         select bc.`BCBD_ID`,bc.`BCBD_MC`,d.name as `BCBDLXDM`,bc.`cdate`,bc.`cpserson`,bc.`status`,bc.`BCBD_MS`,bc.`XFJYJG_TYWYSBM`  from jczy_bcbd bc
-        LEFT JOIN  sys_dict d ON bc.BCBDLXDM = d.value
-        WHERE  d.type = 'BCBDLXDM'
+        LEFT JOIN  sys_dict d ON bc.BCBDLXDM = d.value and d.type = 'BCBDLXDM'
+        WHERE  1=1
         <if test="bcbdMc != null and bcbdMc != ''">and bc.BCBD_MC like '%${bcbdMc}%' </if>
+        <if test="bcbdLx != null and bcbdLx != ''">and d.name like '%${bcbdLx}%' </if>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -26,17 +27,11 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from jczy_bcbd
-        <where>
-            <if test="bcbdId != null and bcbdId != ''">and BCBD_ID = #{bcbdId}</if>
-            <if test="bcbdMc != null and bcbdMc != ''">and BCBD_MC = #{bcbdMc}</if>
-            <if test="bcbdlxdm != null and bcbdlxdm != ''">and BCBDLXDM = #{bcbdlxdm}</if>
-            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
-            <if test="cpserson != null and cpserson != ''">and cpserson = #{cpserson}</if>
-            <if test="status != null and status != ''">and status = #{status}</if>
-            <if test="xfjyjg_tywysbm != null and xfjyjg_tywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjg_tywysbm}</if>
-
-        </where>
+        select count(*) from jczy_bcbd bc
+        LEFT JOIN  sys_dict d ON bc.BCBDLXDM = d.value and d.type = 'BCBDLXDM'
+        WHERE  1=1
+        <if test="bcbdMc != null and bcbdMc != ''">and bc.BCBD_MC like '%${bcbdMc}%' </if>
+        <if test="bcbdLx != null and bcbdLx != ''">and d.name like '%${bcbdLx}%' </if>
     </select>
 
     <select id="checkExist" resultType="int">

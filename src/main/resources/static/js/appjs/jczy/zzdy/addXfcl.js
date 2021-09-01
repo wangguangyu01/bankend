@@ -76,6 +76,10 @@ function load() {
                         checkbox : true
                     },
                     {
+                        field: 'clmc',
+                        title: '车辆名称'
+                    },
+                    {
                         field: 'xfzblx',
                         title: '消防装备器材分类'
                     },

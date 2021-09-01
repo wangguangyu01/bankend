@@ -28,12 +28,23 @@
 									<i class="fa fa-trash" aria-hidden="true"></i>删除
 								</button>
 							</div>
+
 							<div class="columns pull-right">
 								<button class="btn btn-success" onclick="reLoad()">查询</button>
 							</div>
-							<div class="columns pull-right col-md-2 nopadding">
+							<div class="columns pull-right col-md-2">
 								<input id="searchName" type="text" class="form-control"
 									   placeholder="按人员姓名查询">
+							</div>
+							<div class="columns pull-right">
+								<div class="form-group">
+									<label class="radio-inline" style="display: inline-block">
+										<input type="radio" name="flag" value="0" checked onclick="reLoad()"/> 本机构及以下机构人员
+									</label>
+									<label class="radio-inline" style="display: inline-block">
+										<input type="radio" name="flag" value="1" onclick="reLoad()"/> 本机构人员
+									</label>
+								</div>
 							</div>
 						</div>
 						<table id="exampleTable" data-mobile-responsive="false">

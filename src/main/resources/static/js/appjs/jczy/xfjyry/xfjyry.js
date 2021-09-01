@@ -28,7 +28,7 @@ function load() {
                         limit: params.limit,
                         offset: params.offset,
                         xm: $('#searchName').val(),
-                        // username:$('#searchName').val()
+                        flag:$("input[name='flag']:checked").val()
                     };
                 },
 
