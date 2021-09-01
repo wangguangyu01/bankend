@@ -156,7 +156,7 @@ public class FzjcApiController extends BaseController{
         map.put("startDate",params.get("startDate"));
         map.put("enDate",params.get("endDate"));
         map.put("org",deptName);
-        map.put("title",params.get("startDate")+" 00:00:00" +"--"+params.get("endDate")+" 23:59:59 ");
+        map.put("title",params.get("startDate") +"--"+params.get("endDate"));
         map.put("zd1",jqzhtjDO.getJqzs());
         map.put("zd2",jqzhtjDO.getDpcl());
         map.put("zd3",jqzhtjDO.getSszs());
