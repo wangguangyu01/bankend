@@ -154,9 +154,9 @@ public class FzjcApiController extends BaseController{
         Map<String,Object>map=new HashMap<>();
         map.put("time",dateString);
         map.put("startDate",params.get("startDate"));
-        map.put("enDate",params.get("enDate"));
+        map.put("enDate",params.get("endDate"));
         map.put("org",deptName);
-        map.put("title","标题");
+        map.put("title",params.get("startDate")+" 00:00:00" +"--"+params.get("endDate")+" 23:59:59 ");
         map.put("zd1",jqzhtjDO.getJqzs());
         map.put("zd2",jqzhtjDO.getDpcl());
         map.put("zd3",jqzhtjDO.getSszs());
