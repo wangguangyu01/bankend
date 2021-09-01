@@ -28,12 +28,12 @@
 							</button>
 							<div class="pull-right col-md-3">
 								<input type="text" class="laydate-icon layer-date form-control" id="endDate" name="endDate"  placeholder="请选择结束日期"
-									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;"  th:value="${endDate}==null?null:${#dates.format(endDate,'yyyy-MM-dd')}"/>
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="background-color: #fff;max-width: 100%;"  th:value="${endDate}==null?null:${#dates.format(endDate,'yyyy-MM-dd HH:mm:ss')}"/>
 							</div>
 							<div class="pull-right" style="line-height: 34px;">——</div>
 							<div class="pull-right col-md-3">
 								<input type="text" class="laydate-icon layer-date form-control" id="startDate" name="startDate"  placeholder="请选择开始日期"
-									   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;"  th:value="${startDate}==null?null:${#dates.format(startDate,'yyyy-MM-dd')}"/>
+									   onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" style="background-color: #fff;max-width: 100%;"  th:value="${startDate}==null?null:${#dates.format(startDate,'yyyy-MM-dd HH:mm:ss')}"/>
 							</div>
 						</div>
 						<table id="exampleTable" data-mobile-responsive="true">

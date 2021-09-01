@@ -13,8 +13,13 @@ function load() {
     var s1 = day1.getFullYear()+"-" + (day1.getMonth()+1) + "-" + day1.getDate();
 
 
-    $('#startDate').val(s1);
-    $('#endDate').val(s1);
+    var day2 = new Date();
+    day2.setTime(day2.getTime()-24*60*60*1000);
+    var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
+
+    $('#startDate').val(s1+" 00:00:00");
+    $('#endDate').val(s2+" 23:59:59");
+
     $('#exampleTable')
         .bootstrapTable(
             {
@@ -184,8 +189,8 @@ function  setTime() {
     var t1 = $('#startDate').val();
     var t2= $('#endDate').val();
     if(t1 !="" &&t2 !="" && t1 !=null &&  t2 !=null){
-        var startDate=getYMDHMS (t1)+"00时00分00秒";
-        var  endDate=getYMDHMS (t2)+"23时59分59秒";
+        var startDate=getYMDHMS (t1);
+        var  endDate=getYMDHMS (t2);
         $('#time').html(startDate+"--"+endDate);
     }
 
