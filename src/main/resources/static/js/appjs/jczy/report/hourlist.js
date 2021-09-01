@@ -14,8 +14,8 @@ function load() {
     day2.setTime(day2.getTime()-24*60*60*1000);
     var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
 
-    $('#startDate').val(s1);
-    $('#endDate').val(s2);
+    $('#startDate').val(s1+" 06:00:00");
+    $('#endDate').val(s2+" 06:00:00");
     reLoad();
 }
 function reLoad() {
@@ -23,8 +23,8 @@ function reLoad() {
         url: prefix + "/getZbFile", // 服务器数据的加载地址
         type: "get",
         data: {
-            startDate:$('#startDate').val()+" "+" 06:00:00",
-            endDate:$('#endDate').val()+" "+" 06:00:00"
+            startDate:$('#startDate').val(),
+            endDate:$('#endDate').val()
         },
         success: function (r) {
             $('#time').html('('+r.time+')');
@@ -45,8 +45,8 @@ function Excel() {
         url: prefix + "/getFile", // 服务器数据的加载地址
         type: "get",
         data: {
-            startDate:$('#startDate').val()+" "+" 06:00:00",
-            endDate:$('#endDate').val()+" "+" 06:00:00"
+            startDate:$('#startDate').val(),
+            endDate:$('#endDate').val()
         },
         success: function (r) {
             if(r !=null && r !=""){

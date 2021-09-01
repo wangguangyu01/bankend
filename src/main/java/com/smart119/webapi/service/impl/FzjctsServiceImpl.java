@@ -280,14 +280,15 @@ public class FzjctsServiceImpl implements FzjctsService {
   public String gettt(String s,Boolean status) throws ParseException {
         String time="";
 
-      Date date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
+      Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(s);
       Calendar now = Calendar.getInstance();
       now.setTime(date);
       int year = now.get(Calendar.YEAR);
       int month = now.get(Calendar.MONTH) + 1; // 0-based!
       int day = now.get(Calendar.DAY_OF_MONTH);
+      int hour = now.get(Calendar.HOUR);
       if(status){
-          time=month+"月"+day+"日"+"6时";
+          time=month+"月"+day+"日"+hour+"时";
       }else{
           time=month+"月"+day+"日";
       }

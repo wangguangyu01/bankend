@@ -13,8 +13,8 @@ function load() {
     day2.setTime(day2.getTime()-24*60*60*1000);
     var s2 = day2.getFullYear()+"-" + (day2.getMonth()+1) + "-" + day2.getDate();
 
-     $('#startDate').val(s1);
-     $('#endDate').val(s2);
+     $('#startDate').val(s1+" 00:00:00");
+     $('#endDate').val(s2+" 23:59:59");
 
     setTime();
 
@@ -100,8 +100,8 @@ function  setTime() {
    var t1 = $('#startDate').val();
    var t2= $('#endDate').val();
     if(t1 !="" &&t2 !="" && t1 !=null &&  t2 !=null){
-        var startDate=getYMDHMS (t1)+"00时00分00秒";
-        var  endDate=getYMDHMS (t2)+"23时59分59秒";
+        var startDate=getYMDHMS (t1);
+        var  endDate=getYMDHMS (t2);
         $('#time').html(startDate+"--"+endDate);
     }
 
@@ -115,7 +115,7 @@ function  getYMDHMS (timesrtamp) {
     var minute = (time.getMinutes()).toString().padStart(2, '0')
     var second = (time.getSeconds()).toString().padStart(2, '0')
 
-    return year + '年' + month + '月' + date + '日';
+    return year + '年' + month + '月' + date + '日'+hours+"时"+minute+"分"+second+"秒";
 }
 function Excel() {
    var time=$('#time').html();
