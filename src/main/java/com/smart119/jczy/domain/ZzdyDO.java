@@ -47,6 +47,12 @@ public class ZzdyDO implements Serializable {
 	private String xfclTywysbm;
 	private String xfzbTywysbm;
 
+	//警情分类与代码
+	private String jqflydm;
+
+	//警情分类与代码名称
+	private String jqflydmname;
+
 	public String getXfclTywysbm() {
 		return xfclTywysbm;
 	}
@@ -194,5 +200,21 @@ public class ZzdyDO implements Serializable {
 
 	public void setXfzbTywysbm(String xfzbTywysbm) {
 		this.xfzbTywysbm = xfzbTywysbm;
+	}
+
+	public String getJqflydm() {
+		return jqflydm;
+	}
+
+	public void setJqflydm(String jqflydm) {
+		this.jqflydm = jqflydm;
+	}
+
+	public String getJqflydmname() {
+		return jqflydmname;
+	}
+
+	public void setJqflydmname(String jqflydmname) {
+		this.jqflydmname = jqflydmname;
 	}
 }

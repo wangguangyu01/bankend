@@ -74,17 +74,18 @@ public class ZzdyServiceImpl implements ZzdyService {
 					}
 				}
 			}
-			String[] xfzbTywysbmArr = zzdy.getXfzbTywysbm().split(",");
-			if (xfzbTywysbmArr != null && xfzbTywysbmArr.length > 0) {
-				for(String xfzbTywysbm:xfzbTywysbmArr){
-					ZzdyXfzbDO zzdyXfzbDO = new ZzdyXfzbDO();
-					zzdyXfzbDO.setId(UUID.randomUUID().toString().replace("-", ""));
-					zzdyXfzbDO.setXfzbTywysbm(xfzbTywysbm);
-					zzdyXfzbDO.setZzdyTywybs(id);
-					zzdyXfzbDao.save(zzdyXfzbDO);
+			if (zzdy.getXfzbTywysbm() != null && !zzdy.getXfzbTywysbm().equals("")) {
+				String[] xfzbTywysbmArr = zzdy.getXfzbTywysbm().split(",");
+				if (xfzbTywysbmArr != null && xfzbTywysbmArr.length > 0) {
+					for(String xfzbTywysbm:xfzbTywysbmArr){
+						ZzdyXfzbDO zzdyXfzbDO = new ZzdyXfzbDO();
+						zzdyXfzbDO.setId(UUID.randomUUID().toString().replace("-", ""));
+						zzdyXfzbDO.setXfzbTywysbm(xfzbTywysbm);
+						zzdyXfzbDO.setZzdyTywybs(id);
+						zzdyXfzbDao.save(zzdyXfzbDO);
+					}
 				}
 			}
-
 		}
 		return res;
 	}

@@ -14,12 +14,15 @@
 		jczy_zzdy.`status`,
 		jczy_zzdy.`cperson`,
 		jczy_zzdy.`XFJYJG_TYWYSBM`,
+		jczy_zzdy.`JQFLYDM`,
 		  dic.`name`  as zzdylxdmname ,
+		  dic1.`name`  as jqflydmname ,
 	      dept.`DWMC`  as xfjyjgTywysbmname,
 	      (select GROUP_CONCAT( xfcl.XFCL_TYWYSBM ) from jczy_zzdy_xfcl xfcl where xfcl.ZZDY_TYWYBS=jczy_zzdy.ZZDY_TYWYBS) XFCL_TYWYSBM,
 	      (select GROUP_CONCAT( xfzb.XFZB_TYWYSBM ) from jczy_zzdy_xfzb xfzb where xfzb.ZZDY_TYWYBS=jczy_zzdy.ZZDY_TYWYBS) XFZB_TYWYSBM
 		  from jczy_zzdy
 		  left join sys_dict dic on jczy_zzdy.ZZDYLXDM=dic.value and dic.type='ZZDYLXDM'
+		  left join sys_dict dic1 on jczy_zzdy.JQFLYDM=dic1.value and dic1.type='JQFLYDM'
 		  left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
 		  where jczy_zzdy.ZZDY_TYWYBS = #{value}
 	</select>
@@ -35,10 +38,13 @@
 		jczy_zzdy.`status`,
 		jczy_zzdy.`cperson`,
 		jczy_zzdy.`XFJYJG_TYWYSBM`,
+		jczy_zzdy.`JQFLYDM`,
 		  dic.`name`  as zzdylxdmname ,
+		  dic1.`name`  as jqflydmname ,
 	      dept.`DWMC`  as xfjyjgTywysbmname
 		  from jczy_zzdy
 		  left join sys_dict dic on jczy_zzdy.ZZDYLXDM=dic.value and dic.type='ZZDYLXDM'
+		  left join sys_dict dic1 on jczy_zzdy.JQFLYDM=dic1.value and dic1.type='JQFLYDM'
 		  left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
         <where>  
 		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and jczy_zzdy.ZZDY_TYWYBS =${zzdyTywybs} </if>
@@ -100,7 +106,8 @@
 			`cdate`, 
 			`status`, 
 			`cperson`, 
-			`XFJYJG_TYWYSBM`
+			`XFJYJG_TYWYSBM`,
+			`JQFLYDM`
 		)
 		values
 		(
@@ -112,7 +119,8 @@
 			#{cdate}, 
 			#{status}, 
 			#{cperson}, 
-			#{xfjyjgTywysbm}
+			#{xfjyjgTywysbm},
+			#{jqflydm}
 		)
 	</insert>
 	<insert id="saveCL" parameterType="java.util.HashMap">
@@ -141,7 +149,8 @@
 			<if test="cdate != null">`cdate` = #{cdate}, </if>
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="cperson != null">`cperson` = #{cperson}, </if>
-			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm}</if>
+			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm},</if>
+			<if test="jqflydm != null">`JQFLYDM` = #{jqflydm},</if>
 		</set>
 		where ZZDY_TYWYBS = #{zzdyTywybs}
 	</update>

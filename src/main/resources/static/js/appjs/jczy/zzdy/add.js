@@ -1,7 +1,8 @@
 $().ready(function() {
 	validateRule();
 	//getSelectByType("ZZDYLXDM","zzdylxdm",null);
-	getSelectAll("ZZDYLXDM","ZZDYLXDM-DIV","zzdylxdm","zzdylxdm-title");  //消防岗位分类与代码
+	getSelectAll("ZZDYLXDM","ZZDYLXDM-DIV","zzdylxdm","zzdylxdm-title");
+	getSelectAll("JQFLYDM","JQFLYDM-DIV","jqflydm","jqflydm-title");
 	localStorage.setItem("remembermeDataList","")
 	localStorage.setItem("xfzbRemembermeDataList","")
 });

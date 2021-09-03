@@ -162,14 +162,16 @@ public class ZzdyController extends BaseController {
 		}
 		//删除绑定装备
 		zzdyXfzbService.removeZzdyXfzb(zzdy.getZzdyTywybs());
-		String[] xfzbTywysbmArr = zzdy.getXfzbTywysbm().split(",");
-		if (xfzbTywysbmArr != null && xfzbTywysbmArr.length > 0) {
-			for(String xfzbTywysbm:xfzbTywysbmArr){
-				ZzdyXfzbDO zzdyXfzbDO = new ZzdyXfzbDO();
-				zzdyXfzbDO.setId(UUID.randomUUID().toString().replace("-", ""));
-				zzdyXfzbDO.setXfzbTywysbm(xfzbTywysbm);
-				zzdyXfzbDO.setZzdyTywybs(zzdy.getZzdyTywybs());
-				zzdyXfzbService.save(zzdyXfzbDO);
+		if (zzdy.getXfzbTywysbm() != null && !zzdy.getXfzbTywysbm().equals("")) {
+			String[] xfzbTywysbmArr = zzdy.getXfzbTywysbm().split(",");
+			if (xfzbTywysbmArr != null && xfzbTywysbmArr.length > 0) {
+				for (String xfzbTywysbm : xfzbTywysbmArr) {
+					ZzdyXfzbDO zzdyXfzbDO = new ZzdyXfzbDO();
+					zzdyXfzbDO.setId(UUID.randomUUID().toString().replace("-", ""));
+					zzdyXfzbDO.setXfzbTywysbm(xfzbTywysbm);
+					zzdyXfzbDO.setZzdyTywybs(zzdy.getZzdyTywybs());
+					zzdyXfzbService.save(zzdyXfzbDO);
+				}
 			}
 		}
 		zzdyService.update(zzdy);

@@ -1,6 +1,7 @@
 $().ready(function() {
 	/*getSelectByType("ZZDYLXDM","zzdylxdm",zzdylxdm);*/
 	  getSelectAll("ZZDYLXDM","ZZDYLXDM-DIV","zzdylxdm","zzdylxdm-title");
+	  getSelectAll("JQFLYDM","JQFLYDM-DIV","jqflydm","jqflydm-title");
 	  getzzdyxfcl();
 	  getzzdyzbqc();
 	validateRule();
