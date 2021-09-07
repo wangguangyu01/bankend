@@ -52,30 +52,84 @@ function save() {
         layer.msg("请选择警情分类");
         return;
     }
-    var len = $("[name='cllxdm']").length;
-    if(len == 0){
-        layer.msg("请添加车辆信息.");
-        return;
-    }
-    var flag = true;
-    $("[name='cllxdm']").each(function (i) {
-        if($(this).val()==''){
-            flag = false;
+    var yalx = $("input[name='YALX']:checked").val();
+    if (yalx == '0') {
+        var len = $("[name='cllxdm']").length;
+        if(len == 0){
+            layer.msg("请添加车辆信息.");
+            return;
         }
-    })
-    $("[name='num']").each(function (i) {
-        if($(this).val()==''){
-            flag = false;
+        var flag = true;
+        $("[name='cllxdm']").each(function (i) {
+            if($(this).val()==''){
+                flag = false;
+            }
+        })
+        $("[name='num']").each(function (i) {
+            if($(this).val()==''){
+                flag = false;
+            }
+        })
+        if(!flag){
+            layer.msg("请补全相关数据.");
+            return;
         }
-    })
-    if(!flag){
-        layer.msg("请补全相关数据.");
-        return;
+        var flag1=false;
+        $("[name='cllxdm']").each(function (i) {
+            var t1 = $(this).val();
+            $("[name='cllxdm']").each(function (j) {
+                var t2 = $(this).val();
+                if(i!=j && t1==t2){
+                    flag1=true;
+                }
+            })
+        })
+        if(flag1){
+            layer.msg("车辆类型重复！");
+            return;
+        }
+    }else{
+        var len = $("[name='zzdylxdm']").length;
+        if(len == 0){
+            layer.msg("请添加作战单元信息.");
+            return;
+        }
+        var flag = true;
+        $("[name='zzdylxdm']").each(function (i) {
+            if($(this).val()==''){
+                flag = false;
+            }
+        })
+        $("[name='zzdy_num']").each(function (i) {
+            if($(this).val()==''){
+                flag = false;
+            }
+        })
+        if(!flag){
+            layer.msg("请补全相关数据.");
+            return;
+        }
+        var flag1=false;
+        $("[name='zzdylxdm']").each(function (i) {
+            var t1 = $(this).val();
+            $("[name='zzdylxdm']").each(function (j) {
+                var t2 = $(this).val();
+                if(i!=j && t1==t2){
+                    flag1=true;
+                }
+            })
+        })
+        if(flag1){
+            layer.msg("单元类型重复！");
+            return;
+        }
     }
+
 
 
 	 var levelPlan = {};
 	 var policeTypeLevelList = [];
+     var zzdyTypeLevelList = [];
 	 $("[name='cllxdm']").each(function (i) {
          policeTypeLevelList.push({
              pOLICESTAIONTYPETYWYSBM:$("#jqlb").val(),
@@ -85,9 +139,20 @@ function save() {
              zhcs: $("#ZHCS").val()
 		 })
      })
+    $("[name='zzdylxdm']").each(function (i) {
+        zzdyTypeLevelList.push({
+            policestaionTypeTywysbm:$("#jqlb").val(),
+            policestaionLevelTywysbm:$("#JQDJDM").val(),
+            zzdylxdm:$(this).val(),
+            zzdyNum: $($("[name='zzdy_num']")[i]).val(),
+            zhcs: $("#ZHCS").val()
+        })
+    })
     levelPlan.planName = $("#planName").val();
     levelPlan.planContent = $("#planContent").val();
+    levelPlan.yalx = yalx;
     levelPlan.policeTypeLevelList = policeTypeLevelList;
+    levelPlan.zzdyTypeLevelList = zzdyTypeLevelList;
     console.log(levelPlan);
 	$.ajax({
 		cache : true,
@@ -138,4 +203,53 @@ function validateRule() {
             },
 		}
 	})
+}
+
+function yalxCheck() {
+    var yalx = $("input[name='YALX']:checked").val();
+    if(yalx=='0'){
+        $("#carDiv").show();
+        $("#zzdyDiv").hide();
+        $("#zzdylist").empty();
+    }else{
+        $("#zzdyDiv").show();
+        $("#carDiv").hide();
+        $("#carlist").empty();
+    }
+}
+
+var zzdyindex = 1;
+function addZzdy() {
+    var htmlStr = "";
+    htmlStr+='<div class="row">'
+    htmlStr+='<div class="col-md-6">'
+    htmlStr+='<div class="form-group">'
+    htmlStr+='<label class="col-sm-4 control-label">单元类型：</label>'
+    htmlStr+= '<div class="col-sm-8">'
+    htmlStr+='<div class="ZZDYLXDM-DIV'+zzdyindex+' dropdown">'
+    htmlStr+='<a  role="button" data-toggle="dropdown" class="btn btn-white"  style="width: 100%;text-align: left;">'
+    htmlStr+='<span id="zzdylxdm-title'+zzdyindex+'">--请选择--</span>'
+    htmlStr+='<span class="caret pull-right" style="position: relative;top: 10px;"></span>'
+    htmlStr+='</a>'
+    htmlStr+='</div>'
+    htmlStr+='<input type="hidden" name="zzdylxdm" id="zzdylxdm'+zzdyindex+'"  value=""  title="请选择作战单元类型" required/>'
+    htmlStr+='</div>'
+    htmlStr+='</div>'
+    htmlStr+='</div>'
+    htmlStr+='<div class="col-md-6">'
+    htmlStr+='<div class="form-group">'
+    htmlStr+= '<label class="col-sm-4 control-label">数量：</label>'
+    htmlStr+=' <div class="col-sm-8" style="position: relative">'
+    htmlStr+=' <input  name="zzdy_num" id="zzdy_num'+zzdyindex+'" class="form-control" type="text">'
+    htmlStr+='<button type="button" class="btn btn-danger" onclick="removeCar(this)" style="position: absolute;top:0;right: -80px;">删除</button>'
+    htmlStr+= '</div>'
+    htmlStr+='</div>'
+    htmlStr+='</div>'
+    htmlStr+='</div>'
+    $("#zzdylist").append(htmlStr);
+    // getSelectAll("ZZDYLXDM","ZZDYLXDM-DIV"+zzdyindex,"zzdylxdm"+zzdyindex,"zzdylxdm-title"+zzdyindex);
+    // zzdyindex++;
+    getSelectAllCallBack1("ZZDYLXDM","ZZDYLXDM-DIV"+zzdyindex,"zzdylxdm"+zzdyindex,"zzdylxdm-title"+zzdyindex,function () {
+        zzdyindex++;
+    });
 }

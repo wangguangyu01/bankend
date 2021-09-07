@@ -94,17 +94,48 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label"></label>
+							<label class="col-sm-3 control-label">等级预案类型：</label>
 							<div class="col-sm-8">
-								<button type="button" th:onclick="addCar()" class="btn btn-primary">
-									<i class="glyphicon glyphicon-plus"></i>添加车辆
-								</button>
+								<label class="radio-inline">
+									<input type="radio" name="YALX" value="0" th:checked="${levelPlan.yalx=='0'}" onclick="yalxCheck()"/> 车辆预案
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="YALX" value="1" th:checked="${levelPlan.yalx=='1'}" onclick="yalxCheck()"/> 作战单元预案
+								</label>
 							</div>
 						</div>
-						<label class="col-sm-2 control-label"></label>
-						<div class="col-sm-8">
+						<div id="carDiv" style="display: none">
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-8">
+									<button type="button" th:onclick="addCar()" class="btn btn-primary">
+										<i class="glyphicon glyphicon-plus"></i>添加车辆
+									</button>
+								</div>
+							</div>
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-8">
 								<span id="carlist">
+
 							  </span>
+							</div>
+						</div>
+
+						<div id="zzdyDiv" style="display: none">
+							<div class="form-group">
+								<label class="col-sm-2 control-label"></label>
+								<div class="col-sm-8">
+									<button type="button" th:onclick="addZzdy()" class="btn btn-primary">
+										<i class="glyphicon glyphicon-plus"></i>添加作战单元
+									</button>
+								</div>
+							</div>
+							<label class="col-sm-2 control-label"></label>
+							<div class="col-sm-8">
+								<span id="zzdylist">
+
+							  </span>
+							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-sm-8 col-sm-offset-3" style="text-align: right">

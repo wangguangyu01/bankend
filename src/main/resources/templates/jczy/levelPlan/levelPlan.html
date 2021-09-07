@@ -20,20 +20,27 @@
 						<div class="columns pull-right">
 							<button class="btn btn-success" onclick="reLoad()">查询</button>
 						</div>
-						<div class="columns pull-right col-md-2 nopadding">
+						<div class="columns pull-right col-md-2">
 							<input  id="searchName" type="text" class="form-control"
 								placeholder="按预案名称查询">
 						</div>
-                        <div class="columns pull-right col-md-2 nopadding">
+                        <div class="columns pull-right col-md-2">
                             <select class="form-control" id="JQDJDM" name="JQDJDM" title="请选择警情等级">
                                 <option value="">--请选择警情等级--</option>
                             </select>
                         </div>
-                        <div class="columns pull-right col-md-2 nopadding">
+                        <div class="columns pull-right col-md-2">
                             <select class="form-control" id="ZHCS" name="ZHCS" title="请选场所" >
                                 <option value="">--请选场所--</option>
                             </select>
                         </div>
+						<div class="columns pull-right col-md-2">
+							<select class="form-control" id="YALX" name="YALX" title="请选等级预案类型" >
+								<option value="">--请选等级预案类型--</option>
+								<option value="0">车辆预案</option>
+								<option value="1">作战单元预案</option>
+							</select>
+						</div>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>

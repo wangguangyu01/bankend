@@ -9,8 +9,10 @@ import com.smart119.common.domain.DictDO;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.system.dao.PolicestaionTypeLevelDao;
+import com.smart119.system.dao.ZzdyTypeLevelDao;
 import com.smart119.system.domain.LevelPlanDO;
 import com.smart119.system.domain.PolicestaionTypeLevelDO;
+import com.smart119.system.domain.ZzdyTypeLevelDO;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
@@ -43,6 +45,9 @@ public class LevelPlanController extends BaseController{
 
 	@Autowired
 	private PolicestaionTypeLevelDao policestaionTypeLevelDao;
+
+	@Autowired
+	private ZzdyTypeLevelDao zzdyTypeLevelDao;
 
 	@Autowired
 	private DictService dictService;
@@ -86,27 +91,53 @@ public class LevelPlanController extends BaseController{
 	@RequiresPermissions("system:levelPlan:edit")
 	public String edit(@PathVariable("levelPlanId") String levelPlanId,Model model){
 		LevelPlanDO levelPlan = levelPlanService.queryById(levelPlanId);
-		QueryWrapper<PolicestaionTypeLevelDO> queryWrapper = new QueryWrapper<>();
-		queryWrapper.eq("level_plan_id",levelPlan.getLevelPlanId());
-		List<PolicestaionTypeLevelDO> policestaionTypeLevelDOS = policestaionTypeLevelDao.selectList(queryWrapper);
-		if(policestaionTypeLevelDOS.size() > 0){
-			Map ma= new HashMap();
-			ma.put("type","JQFLYDM");
-			ma.put("value",policestaionTypeLevelDOS.get(0).getPOLICESTAIONTYPETYWYSBM());
-			List<DictDO> dictByTypeVal = dictService.findDictByTypeVal(ma);
-			levelPlan.setPlanTypeName(dictByTypeVal.get(0).getName());
-			levelPlan.setPlanType(policestaionTypeLevelDOS.get(0).getPOLICESTAIONTYPETYWYSBM());
-			levelPlan.setPlanLevel(policestaionTypeLevelDOS.get(0).getPOLICESTAIONLEVELTYWYSBM());
-			levelPlan.setZhcs(policestaionTypeLevelDOS.get(0).getZhcs());
-		}
-		for(PolicestaionTypeLevelDO aaa:policestaionTypeLevelDOS){
-			Map ma= new HashMap();
-			ma.put("type","XFZBLXDM");
-			ma.put("value",aaa.getXFCLTYWYSBM());
-			List<DictDO> dictByTypeVal = dictService.findDictByTypeVal(ma);
-			aaa.setXFCLTYWYSBMNAME(dictByTypeVal.get(0).getName());
-		}
-		levelPlan.setPoliceTypeLevelList(policestaionTypeLevelDOS);
+
+		if(levelPlan.getYalx().equals("0")){
+            QueryWrapper<PolicestaionTypeLevelDO> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("level_plan_id",levelPlan.getLevelPlanId());
+            List<PolicestaionTypeLevelDO> policestaionTypeLevelDOS = policestaionTypeLevelDao.selectList(queryWrapper);
+            if(policestaionTypeLevelDOS.size() > 0){
+                Map ma= new HashMap();
+                ma.put("type","JQFLYDM");
+                ma.put("value",policestaionTypeLevelDOS.get(0).getPOLICESTAIONTYPETYWYSBM());
+                List<DictDO> dictByTypeVal = dictService.findDictByTypeVal(ma);
+                levelPlan.setPlanTypeName(dictByTypeVal.get(0).getName());
+                levelPlan.setPlanType(policestaionTypeLevelDOS.get(0).getPOLICESTAIONTYPETYWYSBM());
+                levelPlan.setPlanLevel(policestaionTypeLevelDOS.get(0).getPOLICESTAIONLEVELTYWYSBM());
+                levelPlan.setZhcs(policestaionTypeLevelDOS.get(0).getZhcs());
+            }
+            for(PolicestaionTypeLevelDO aaa:policestaionTypeLevelDOS){
+                Map ma= new HashMap();
+                ma.put("type","XFZBLXDM");
+                ma.put("value",aaa.getXFCLTYWYSBM());
+                List<DictDO> dictByTypeVal = dictService.findDictByTypeVal(ma);
+                aaa.setXFCLTYWYSBMNAME(dictByTypeVal.get(0).getName());
+            }
+            levelPlan.setPoliceTypeLevelList(policestaionTypeLevelDOS);
+        }else{
+            QueryWrapper<ZzdyTypeLevelDO> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("level_plan_id",levelPlan.getLevelPlanId());
+            List<ZzdyTypeLevelDO> zzdyTypeLevelDOList = zzdyTypeLevelDao.selectList(queryWrapper);
+            if(zzdyTypeLevelDOList.size() > 0){
+                Map ma= new HashMap();
+                ma.put("type","JQFLYDM");
+                ma.put("value",zzdyTypeLevelDOList.get(0).getPolicestaionTypeTywysbm());
+                List<DictDO> dictByTypeVal = dictService.findDictByTypeVal(ma);
+                levelPlan.setPlanTypeName(dictByTypeVal.get(0).getName());
+                levelPlan.setPlanType(zzdyTypeLevelDOList.get(0).getPolicestaionTypeTywysbm());
+                levelPlan.setPlanLevel(zzdyTypeLevelDOList.get(0).getPolicestaionLevelTywysbm());
+                levelPlan.setZhcs(zzdyTypeLevelDOList.get(0).getZhcs());
+            }
+            for(ZzdyTypeLevelDO aaa:zzdyTypeLevelDOList){
+                Map ma= new HashMap();
+                ma.put("type","ZZDYLXDM");
+                ma.put("value",aaa.getZzdylxdm());
+                List<DictDO> dictByTypeVal = dictService.findDictByTypeVal(ma);
+                aaa.setZzdylxdmName(dictByTypeVal.get(0).getName());
+            }
+            levelPlan.setZzdyTypeLevelList(zzdyTypeLevelDOList);
+        }
+
 		model.addAttribute("levelPlan",levelPlan);
 		return "jczy/levelPlan/edit";
 	}
@@ -139,6 +170,24 @@ public class LevelPlanController extends BaseController{
 				policestaionTypeLevelDOS.add(policestaionTypeLevelDO);
 			}
 			levelPlanDO.setPoliceTypeLevelList(policestaionTypeLevelDOS);
+
+			List<LinkedHashMap> zzdyTypeLevel = (List<LinkedHashMap>)params.get("zzdyTypeLevelList");
+			List<ZzdyTypeLevelDO> zzdyTypeLevelDOList = new ArrayList<>();
+			for(LinkedHashMap linkedHashMap:zzdyTypeLevel){
+				ZzdyTypeLevelDO zzdyTypeLevelDO =new ZzdyTypeLevelDO();
+				zzdyTypeLevelDO.setZzdyLevelTypeTywysbm(UUID.randomUUID().toString().replace("-",""));
+				zzdyTypeLevelDO.setPolicestaionTypeTywysbm(linkedHashMap.get("policestaionTypeTywysbm").toString());
+				zzdyTypeLevelDO.setPolicestaionLevelTywysbm(linkedHashMap.get("policestaionLevelTywysbm").toString());
+				zzdyTypeLevelDO.setZhcs(linkedHashMap.get("zhcs").toString());
+				zzdyTypeLevelDO.setZzdylxdm(linkedHashMap.get("zzdylxdm").toString());
+				zzdyTypeLevelDO.setZzdyNum(linkedHashMap.get("zzdyNum").toString());
+				zzdyTypeLevelDO.setCdate(new Date());
+				zzdyTypeLevelDO.setCperson(this.getUser().getUserId()+"");
+				zzdyTypeLevelDO.setLevelPlanId(levelPlanDO.getLevelPlanId());
+				zzdyTypeLevelDOList.add(zzdyTypeLevelDO);
+			}
+			levelPlanDO.setZzdyTypeLevelList(zzdyTypeLevelDOList);
+
 			int flag = -1;
 			if(levelPlanDO.getLevelPlanId()==null){
 				levelPlanDO.setLevelPlanId(UUID.randomUUID().toString().replace("-",""));
@@ -157,6 +206,15 @@ public class LevelPlanController extends BaseController{
 				for(PolicestaionTypeLevelDO policestaionTypeLevelDO:policeTypeLevelList){
 					policestaionTypeLevelDO.setLevelPlanId(levelPlanDO.getLevelPlanId());
 					policestaionTypeLevelDao.insert(policestaionTypeLevelDO);
+				}
+
+				QueryWrapper<ZzdyTypeLevelDO> queryWrapper1 = new QueryWrapper<>();
+				queryWrapper1.eq("level_plan_id",levelPlanDO.getLevelPlanId());
+				zzdyTypeLevelDao.delete(queryWrapper1);
+				List<ZzdyTypeLevelDO> zzdyTypeLevelDOList1 = levelPlanDO.getZzdyTypeLevelList();
+				for(ZzdyTypeLevelDO zzdyTypeLevelDO:zzdyTypeLevelDOList1){
+					zzdyTypeLevelDO.setLevelPlanId(levelPlanDO.getLevelPlanId());
+					zzdyTypeLevelDao.insert(zzdyTypeLevelDO);
 				}
 			}
 		} catch (IllegalAccessException e) {
