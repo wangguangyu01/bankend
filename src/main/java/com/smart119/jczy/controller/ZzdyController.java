@@ -2,6 +2,7 @@ package com.smart119.jczy.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smart119.common.controller.BaseController;
+import com.smart119.common.domain.DictDO;
 import com.smart119.common.service.BaiduMapService;
 import com.smart119.common.service.DictService;
 import com.smart119.common.utils.PageUtils;
@@ -16,6 +17,7 @@ import com.smart119.jczy.service.ZzdyXfzbService;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
 import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -117,6 +119,16 @@ public class ZzdyController extends BaseController {
 	@RequiresPermissions("webapi:zzdy:edit")
 	String edit(@PathVariable("zzdyTywybs") String zzdyTywybs,Model model){
 		ZzdyDO zzdy = zzdyService.get(zzdyTywybs);
+		String jqflydms = zzdy.getJqflydm();
+		if (jqflydms != null && !jqflydms.equals("")) {
+			String[] jqflydmsArr = jqflydms.split(",");
+			List<String> jqflydmsList = Arrays.asList(jqflydmsArr);
+			List<DictDO> dictDOList = dictService.getDictByTypeAndValues(jqflydmsList,"JQFLYDM");
+			model.addAttribute("dictDOList",dictDOList);
+		}else{
+			List<DictDO> dictDOList = new ArrayList<>();
+			model.addAttribute("dictDOList",dictDOList);
+		}
 		model.addAttribute("zzdy", zzdy);
 		List<ZzdyXfclDO> xfclnameList=zzdyXfclService.getZzdyxfcl(zzdyTywybs);
 		model.addAttribute("xfclnameList",xfclnameList);
@@ -316,5 +328,34 @@ public class ZzdyController extends BaseController {
 		return R.ok(obj);
 	}
 
+	@GetMapping("/jqfl")
+	String jqfl(Model model,HttpServletRequest request){
+		String jqflydms = request.getParameter("jqflydms");
+		if(jqflydms!=null && !jqflydms.equals("")){
+			String[] jqflydmsArr = jqflydms.split(",");
+			List<String> jqflydmsList = Arrays.asList(jqflydmsArr);
+			List<DictDO> dictDOList = dictService.getDictByTypeAndValues(jqflydmsList,"JQFLYDM");
+			model.addAttribute("dictDOList",dictDOList);
+		}else{
+			List<DictDO> dictDOList = new ArrayList<>();
+			model.addAttribute("dictDOList",dictDOList);
+		}
+		return "jczy/zzdy/jqfl";
+	}
+
+	@GetMapping("/getJqflList")
+	@ResponseBody
+	public List<DictDO> getJqflList(){
+		DictDO dictDO = new DictDO();
+		dictDO.setId(2286L);
+		dictDO.setName("警情分类与代码");
+		dictDO.setParentId(0L);
+		dictDO.setValue("");
+		List<DictDO> result = new ArrayList<>();
+		result.add(dictDO);
+		List<DictDO> list = dictService.queryByDictType("JQFLYDM");
+		result.addAll(list);
+		return result;
+	}
 
 }

@@ -124,5 +124,6 @@ public interface DictService {
 
 	List<DictDO> querychildren(DictDO dictDO, List<DictDO> dictList);
 
+	List<DictDO> getDictByTypeAndValues(List<String> jqflydmsList,String jqflydm);
 
 }

@@ -4,6 +4,7 @@ $().ready(function() {
 	  getSelectAll("JQFLYDM","JQFLYDM-DIV","jqflydm","jqflydm-title");
 	  getzzdyxfcl();
 	  getzzdyzbqc();
+	getjqfldm();
 	validateRule();
 	localStorage.setItem("remembermeDataList",JSON.stringify(xfclnameList))
 	localStorage.setItem("xfzbRemembermeDataList",JSON.stringify(xfzbnameList))
@@ -132,5 +133,26 @@ function getzzdyzbqc(){
 		}else{
 			$('#addzbqc').append("<span style='line-height:30px;' id='zzdy"+i+"' name='zzdy"+i+"' class='label label-info'>"+row['xfzbMc']+"</span>&nbsp;")
 		}
+	});
+}
+
+function getjqfldm() {
+	$.each(dictDOList, function(i, row) {
+		if (i != 0 && (i + 1) % 4 == 0) {
+			$('#jqflydmnames').append("<span  style='line-height:30px;'  class='label label-info'>"+row['name']+"</span>&nbsp;</br>")
+		}else{
+			$('#jqflydmnames').append("<span style='line-height:30px;'  class='label label-info'>"+row['name']+"</span>&nbsp;")
+		}
+	});
+}
+
+function openJqfl(){
+	layer.open({
+		type : 2,
+		title : '选择警情分类',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '60%', '94%' ],
+		content : '/webapi/zzdy/jqfl?jqflydms='+$("#jqflydm").val()
 	});
 }

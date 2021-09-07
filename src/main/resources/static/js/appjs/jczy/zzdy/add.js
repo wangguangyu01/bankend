@@ -116,3 +116,14 @@ function addZbqc() {
 		});
 	}
 }
+
+function openJqfl(){
+	layer.open({
+		type : 2,
+		title : '选择警情分类',
+		maxmin : true,
+		shadeClose : false, // 点击遮罩关闭层
+		area : [ '60%', '94%' ],
+		content : '/webapi/zzdy/jqfl?jqflydms='+$("#jqflydm").val()
+	});
+}

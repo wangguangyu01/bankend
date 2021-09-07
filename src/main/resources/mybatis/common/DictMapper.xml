@@ -284,11 +284,12 @@
     </select>
 
     <select id="queryByDictType" resultType="com.smart119.common.domain.DictDO">
-        select `id`, `name`, `value`
+        select `id`,`parent_id`, `name`, `value`
         from sys_dict
         where type = #{type}
           and `value` != ''
           and `value` is not null
+          order by id
     </select>
 
     <select id="queryDictTypeList" resultType="java.lang.String">
@@ -332,6 +333,15 @@
     <select id="getSelectByXfjbType" resultType="com.smart119.common.domain.DictDO">
         select *
         from sys_dict as bb
+    </select>
+
+    <select id="getDictByTypeAndValues" resultType="com.smart119.common.domain.DictDO">
+        select * from sys_dict d where d.`value` in
+        <foreach item="id" collection="jqflydmsList" open="(" separator=","
+            close=")">
+            #{id}
+        </foreach>
+        and d.type =#{jqflydm} and d.`value` is not null order by d.id;
     </select>
 
 

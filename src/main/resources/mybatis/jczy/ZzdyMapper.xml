@@ -40,11 +40,9 @@
 		jczy_zzdy.`XFJYJG_TYWYSBM`,
 		jczy_zzdy.`JQFLYDM`,
 		  dic.`name`  as zzdylxdmname ,
-		  dic1.`name`  as jqflydmname ,
 	      dept.`DWMC`  as xfjyjgTywysbmname
 		  from jczy_zzdy
 		  left join sys_dict dic on jczy_zzdy.ZZDYLXDM=dic.value and dic.type='ZZDYLXDM'
-		  left join sys_dict dic1 on jczy_zzdy.JQFLYDM=dic1.value and dic1.type='JQFLYDM'
 		  left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
         <where>  
 		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and jczy_zzdy.ZZDY_TYWYBS =${zzdyTywybs} </if>

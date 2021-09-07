@@ -348,4 +348,9 @@ public class DictServiceImpl implements DictService {
         }
         return dictList;
     }
+
+    @Override
+    public List<DictDO> getDictByTypeAndValues(List<String> jqflydmsList, String jqflydm) {
+        return dictDao.getDictByTypeAndValues(jqflydmsList,jqflydm);
+    }
 }

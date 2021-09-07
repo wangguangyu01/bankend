@@ -59,10 +59,6 @@ function load() {
 									field : 'zzdylxdmname',
 									title : '作战单元类型'
 								},
-								{
-									field : 'jqflydmname',
-									title : '警情分类'
-								},
 																{
 									field : 'zzrw', 
 									title : '作战任务' 

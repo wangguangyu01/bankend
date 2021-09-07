@@ -36,18 +36,35 @@
                                    </a>
                                </div>
                            </div>
-                           <label class="col-sm-2 control-label">警情分类：</label>
+                           <!--<label class="col-sm-2 control-label">警情分类：</label>
                            <div class="col-sm-4">
                                <input type="hidden" name="jqflydm" id="jqflydm" value="" th:value="${zzdy.jqflydm}" />
                                <div class="JQFLYDM-DIV dropdown">
                                    <a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-                                       <span id="jqflydm-title" th:text="${zzdy.jqflydmname !=null?zzdy.jqflydmname:'--请选择--'}">选择分类</span>
+                                       <span id="jqflydm-title" th:text="${zzdy.jqflydmname !=null?zzdy.jqflydmname:'&#45;&#45;请选择&#45;&#45;'}">选择分类</span>
                                        <span class="caret pull-right" style="position: relative;top: 10px;"></span>
                                    </a>
                                </div>
-                           </div>
+                           </div>-->
                        </div>
-
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">警情分类：</label>
+                            <div class="col-sm-10">
+                                <div class="columns pull-left">
+                                    <button  type="button" class="btn  btn-primary" onclick="openJqfl()">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>选择
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-4">
+                                <input id="jqflydm" name="jqflydm" class="form-control" type="hidden" th:value="${zzdy.jqflydm}">
+                                <div class="columns pull-left" id="jqflydmnames">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">消防车辆：</label>
                             <div class="col-sm-4">
@@ -108,6 +125,8 @@
     var xfclnameList = [[${xfclnameList}]];
     var zzdyTywybs = [[${zzdy.zzdyTywybs}]];
     var xfzbnameList = [[${xfzbnameList}]];
+    var dictDOList = [[${dictDOList}]];
+
 </script>
 <script type="text/javascript" src="/js/appjs/jczy/zzdy/edit.js">
 </script>
