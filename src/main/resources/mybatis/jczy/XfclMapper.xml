@@ -588,10 +588,10 @@
 			<if test="fzrTywysbm != null">`FZR_TYWYSBM` = #{fzrTywysbm}, </if>
 			<if test="shfwDwmc != null">`SHFW_DWMC` = #{shfwDwmc}, </if>
 			<if test="dwsb != null">`DWSB` = #{dwsb}, </if>
-			<if test="status != null">`status` = #{status}</if>
+			<if test="status != null">`status` = #{status},</if>
 			<if test="zdypx != null">`ZDYPX` = #{zdypx},</if>
 			<if test="gpsVid != null">`GPS_VID` = #{gpsVid},</if>
-			<if test="gpsVkey != null">`GPS_VKEY` = #{gpsVkey}</if>
+			<if test="gpsVkey != null">`GPS_VKEY` = #{gpsVkey},</if>
 			<if test="pmlx != null">`PMLX` = #{pmlx}, </if>
 			<if test="cysl != null">`CYSL` = #{cysl}, </if>
 			<if test="jsgd != null">`JSGD` = #{jsgd}, </if>

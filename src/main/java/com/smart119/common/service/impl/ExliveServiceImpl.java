@@ -141,6 +141,9 @@ public class ExliveServiceImpl implements ExliveService {
         } else {
             String gpsLoginInfo = redisManager.get("resource:gps");
             gpsDto = JSON.parseObject(gpsLoginInfo, GpsDto.class);
+            if (ObjectUtils.isEmpty(gpsDto.getUid()) && ObjectUtils.isEmpty(gpsDto.getUKey())) {
+                gpsDto = this.clLoginSystem();
+            }
         }
         List<String> vehicleList = this.loadVehicles(gpsDto.getUid(), gpsDto.getUKey());
         return vehicleList;
@@ -181,16 +184,45 @@ public class ExliveServiceImpl implements ExliveService {
                         if (!locsArray.isEmpty()) {
                             List<Map> mapList = locsArray.toJavaList(Map.class);
                             for (Map map : mapList) {
-                                //经度
-                                String lng = String.valueOf(map.get("lng"));
+
                                 //纬度
                                 String lat = String.valueOf(map.get("lat"));
-                                xfclDO.setClwzDqjd(NumberUtils.toDouble(lng, -500));
-                                xfclDO.setClwzDqwd(NumberUtils.toDouble(lat, -500));
+                                double latDouble = NumberUtils.toDouble(lat);
+                                String lat_xz = String.valueOf(map.get("lat_xz"));
+                                double lat_xzDouble = NumberUtils.toDouble(lat_xz);
+
+                                //经度
+                                String lng = String.valueOf(map.get("lng"));
+                                double lngDouble = NumberUtils.toDouble(lng);
+                                String lng_xz = String.valueOf(map.get("lng_xz"));
+                                double lng_xzDouble = NumberUtils.toDouble(lng_xz);
+                                xfclDO.setClwzDqjd(lngDouble + lng_xzDouble);
+                                xfclDO.setClwzDqwd(latDouble + lat_xzDouble);
                                 xfclDO.setClwzWzcjsj(new Date());
                                 xfclDO.setGpsVid(String.valueOf(vehicleJson.get("id")));
                                 xfclDO.setGpsVkey((String) vehicleJson.get("vKey"));
-                                xfclDao.update(xfclDO);
+                                xfclDO.setGpsState(String.valueOf(map.get("state")));
+                                int direct = NumberUtils.toInt(String.valueOf(map.get("direct")), 0);
+                                String gpsDirect = "";
+                                if (direct == 0) {
+                                    gpsDirect = "正北方向";
+                                } else if (direct > 0 && direct < 90) {
+                                    gpsDirect = "偏东方向" + direct;
+                                } else if (direct == 90) {
+                                    gpsDirect = "正东方向";
+                                } else if (direct > 90 && direct < 180) {
+                                    gpsDirect = "偏南方向" + (direct % 90);
+                                } else if (direct == 180) {
+                                    gpsDirect = "正南方向";
+                                } else if (direct > 180 && direct < 270) {
+                                    gpsDirect = "偏西方向" + (direct % 180);
+                                } else if (direct == 270) {
+                                    gpsDirect = "正西方向";
+                                } else if (direct > 270 && direct < 360) {
+                                    gpsDirect = "偏北方向" + (direct % 270);
+                                }
+                                xfclDO.setGpsDirect(gpsDirect);
+                                xfclDao.updateById(xfclDO);
                             }
                         }
                     }

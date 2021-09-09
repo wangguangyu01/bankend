@@ -1,5 +1,8 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,6 +33,7 @@ public class XfclDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	//消防车辆_通用唯一识别码
+	@TableId(type = IdType.INPUT)
 	private String xfclTywysbm;
 	//消防装备器材分类与代码
 	private String xfzblxdm;
@@ -118,23 +122,32 @@ public class XfclDO implements Serializable {
 	//状态
 	private Integer status;
 
+	@TableField(exist = false)
 	private String xfjyjg;
 
+	@TableField(exist = false)
 	private String xfzblx;
 
+	@TableField(exist = false)
 	private String clqwztlb;
 
+	@TableField(exist = false)
 	private String xfclzzgn;
 
+	@TableField(exist = false)
 	private String xfcldj;
 
+	@TableField(exist = false)
 	private List<XfclSxzDO> xfclSxzDOList;
 
+	@TableField(exist = false)
 	private String sxStr;
 
+	@TableField(exist = false)
 	private List<Map<String,Object>> xfclSxxx;
 
 	//0 未调派 1已调派
+	@TableField(exist = false)
 	private int dpFlag;
 
 	@ApiModelProperty(value = "GPS定位的车辆id", name = "gpsVid")
@@ -232,6 +245,20 @@ public class XfclDO implements Serializable {
 	 */
 	@ApiModelProperty(value = "设备id", name = "deviceId")
 	private String deviceId;
+
+	/**
+	 * 实战平台车辆id
+	 */
+	@ApiModelProperty(value = "实战平台车辆id", name = "szClId")
+	private String szClId;
+
+
+	@ApiModelProperty(value = "gps设备在线状态", name = "gpsState")
+	private String gpsState;
+
+
+	@ApiModelProperty(value = "gps定位车辆方向", name = "gpsDirect")
+	private String gpsDirect;
 
 
 
