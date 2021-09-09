@@ -203,25 +203,7 @@ public class ExliveServiceImpl implements ExliveService {
                                 xfclDO.setGpsVkey((String) vehicleJson.get("vKey"));
                                 xfclDO.setGpsState(String.valueOf(map.get("state")));
                                 int direct = NumberUtils.toInt(String.valueOf(map.get("direct")), 0);
-                                String gpsDirect = "";
-                                if (direct == 0) {
-                                    gpsDirect = "正北方向";
-                                } else if (direct > 0 && direct < 90) {
-                                    gpsDirect = "偏东方向" + direct;
-                                } else if (direct == 90) {
-                                    gpsDirect = "正东方向";
-                                } else if (direct > 90 && direct < 180) {
-                                    gpsDirect = "偏南方向" + (direct % 90);
-                                } else if (direct == 180) {
-                                    gpsDirect = "正南方向";
-                                } else if (direct > 180 && direct < 270) {
-                                    gpsDirect = "偏西方向" + (direct % 180);
-                                } else if (direct == 270) {
-                                    gpsDirect = "正西方向";
-                                } else if (direct > 270 && direct < 360) {
-                                    gpsDirect = "偏北方向" + (direct % 270);
-                                }
-                                xfclDO.setGpsDirect(gpsDirect);
+                                xfclDO.setGpsDirect(String.valueOf(direct));
                                 xfclDao.updateById(xfclDO);
                             }
                         }
