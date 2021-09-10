@@ -190,7 +190,6 @@ public class ExliveServiceImpl implements ExliveService {
                                 double latDouble = NumberUtils.toDouble(lat);
                                 String lat_xz = String.valueOf(map.get("lat_xz"));
                                 double lat_xzDouble = NumberUtils.toDouble(lat_xz);
-
                                 //经度
                                 String lng = String.valueOf(map.get("lng"));
                                 double lngDouble = NumberUtils.toDouble(lng);

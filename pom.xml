@@ -359,9 +359,9 @@
         <profile>
             <!-- 测试环境 -->
             <id>test</id>
-            <!--<activation>-->
-                <!--<activeByDefault>true</activeByDefault>-->
-            <!--</activation>-->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <profiles.active>test</profiles.active>
             </properties>
