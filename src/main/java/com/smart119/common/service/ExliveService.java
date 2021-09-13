@@ -3,6 +3,7 @@ package com.smart119.common.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.smart119.common.dto.GpsDto;
+import com.smart119.jczy.domain.XfclDO;
 
 import java.util.List;
 

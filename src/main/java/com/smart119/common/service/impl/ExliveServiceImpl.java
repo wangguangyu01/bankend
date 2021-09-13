@@ -176,7 +176,7 @@ public class ExliveServiceImpl implements ExliveService {
         int count =  xfclDao.count(null);
         // 防止线程过多，引起oom，使用原生创建线程
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(xfclDOS.size(), xfclDOS.size(),
-                5, TimeUnit.SECONDS,  new ArrayBlockingQueue<Runnable>(count),
+                1, TimeUnit.SECONDS,  new ArrayBlockingQueue<Runnable>(count),
                 new ThreadPoolExecutor.CallerRunsPolicy());
         for (int i = 0; i < xfclDOS.size(); i++) {
             int finalI = i;
