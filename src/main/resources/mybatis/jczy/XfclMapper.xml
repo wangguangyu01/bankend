@@ -721,8 +721,8 @@
     </update>
 
 
-	<select id="queryGPSParams" resultType="java.util.Map">
-
+	<select id="queryGPSDeviceIds" resultType="com.smart119.jczy.domain.XfclDO">
+        select * from jczy_xfcl cl where cl.DEVICE_ID is not null  and cl.DEVICE_ID != ''
 	</select>
 
 </mapper>

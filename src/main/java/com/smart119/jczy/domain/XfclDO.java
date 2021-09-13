@@ -258,7 +258,10 @@ public class XfclDO implements Serializable {
 
 
 	@ApiModelProperty(value = "gps定位车辆方向", name = "gpsDirect")
-	private String gpsDirect;
+	private int gpsDirect;
+
+
+
 
 
 

@@ -81,11 +81,10 @@ public interface XfclDao extends BaseMapper<XfclDO> {
 
 
 	/**
-	 * 根据参数查询gps中车辆的GPS_VID、GPS_VKEY以及车辆名称以及车牌
-	 * @param map
+	 * 根据参数查询gps中车辆的GPS_VID
 	 * @return
 	 */
-	List<Map> queryGPSParams(Map<String,Object> map);
+	List<XfclDO> queryGPSDeviceIds();
 
 
 

@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -168,49 +172,60 @@ public class ExliveServiceImpl implements ExliveService {
         long startTimeMillis = System.currentTimeMillis();
         log.info("GPS接口更新车辆位置开始时间---》{}", startTimeMillis);
         List<String> vehicleList = queryXfclVidAndVkey();
-        List<XfclDO> xfclDOS = xfclDao.selectList(null);
-        for (XfclDO xfclDO: xfclDOS) {
-            for (String vehicleStr : vehicleList) {
-                JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
-                String gprs = String.valueOf(vehicleJson.get("gprs"));
-                if (StringUtils.equals(xfclDO.getDeviceId(), gprs)) {
-                    String url = exliveUrl + "?version=1&method=loadLocation&vid=" + String.valueOf(vehicleJson.get("id"))
-                            + "&vKey=" + String.valueOf(vehicleJson.get("vKey"));
-                    String res = restTemplate.postForObject(url, null, String.class);
-                    JSONObject jsonObject = JSONObject.parseObject(res);
-                    if (!jsonObject.isEmpty() && jsonObject.containsKey("locs")) {
-                        JSONArray locsArray = jsonObject.getJSONArray("locs");
-                        StringBuffer stringBuffer = new StringBuffer(10);
-                        if (!locsArray.isEmpty()) {
-                            List<Map> mapList = locsArray.toJavaList(Map.class);
-                            for (Map map : mapList) {
-
-                                //纬度
-                                String lat = String.valueOf(map.get("lat"));
-                                double latDouble = NumberUtils.toDouble(lat);
-                                String lat_xz = String.valueOf(map.get("lat_xz"));
-                                double lat_xzDouble = NumberUtils.toDouble(lat_xz);
-                                //经度
-                                String lng = String.valueOf(map.get("lng"));
-                                double lngDouble = NumberUtils.toDouble(lng);
-                                String lng_xz = String.valueOf(map.get("lng_xz"));
-                                double lng_xzDouble = NumberUtils.toDouble(lng_xz);
-                                xfclDO.setClwzDqjd(lngDouble + lng_xzDouble);
-                                xfclDO.setClwzDqwd(latDouble + lat_xzDouble);
-                                xfclDO.setClwzWzcjsj(new Date());
-                                xfclDO.setGpsVid(String.valueOf(vehicleJson.get("id")));
-                                xfclDO.setGpsVkey((String) vehicleJson.get("vKey"));
-                                xfclDO.setGpsState(String.valueOf(map.get("state")));
-                                int direct = NumberUtils.toInt(String.valueOf(map.get("direct")), 0);
-                                xfclDO.setGpsDirect(String.valueOf(direct));
-                                xfclDao.updateById(xfclDO);
+        List<XfclDO> xfclDOS = xfclDao.queryGPSDeviceIds();
+        int count =  xfclDao.count(null);
+        // 防止线程过多，引起oom，使用原生创建线程
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(xfclDOS.size(), xfclDOS.size(),
+                5, TimeUnit.SECONDS,  new ArrayBlockingQueue<Runnable>(count),
+                new ThreadPoolExecutor.CallerRunsPolicy());
+        for (int i = 0; i < xfclDOS.size(); i++) {
+            int finalI = i;
+            threadPoolExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    for (String vehicleStr : vehicleList) {
+                        JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
+                        String gprs = String.valueOf(vehicleJson.get("gprs"));
+                        if (StringUtils.equals(xfclDOS.get(finalI).getDeviceId(), gprs)) {
+                            String url = exliveUrl + "?version=1&method=loadLocation&vid="
+                                    + String.valueOf(vehicleJson.get("id"))
+                                    + "&vKey=" + String.valueOf(vehicleJson.get("vKey"));
+                            String res = restTemplate.postForObject(url, null, String.class);
+                            JSONObject jsonObject = JSONObject.parseObject(res);
+                            if (!jsonObject.isEmpty() && jsonObject.containsKey("locs")) {
+                                JSONArray locsArray = jsonObject.getJSONArray("locs");
+                                StringBuffer stringBuffer = new StringBuffer(10);
+                                if (!locsArray.isEmpty()) {
+                                    List<Map> mapList = locsArray.toJavaList(Map.class);
+                                    for (Map map : mapList) {
+                                        //纬度
+                                        String lat = String.valueOf(map.get("lat"));
+                                        double latDouble = NumberUtils.toDouble(lat);
+                                        String lat_xz = String.valueOf(map.get("lat_xz"));
+                                        double lat_xzDouble = NumberUtils.toDouble(lat_xz);
+                                        //经度
+                                        String lng = String.valueOf(map.get("lng"));
+                                        double lngDouble = NumberUtils.toDouble(lng);
+                                        String lng_xz = String.valueOf(map.get("lng_xz"));
+                                        double lng_xzDouble = NumberUtils.toDouble(lng_xz);
+                                        xfclDOS.get(finalI).setClwzDqjd(lngDouble + lng_xzDouble);
+                                        xfclDOS.get(finalI).setClwzDqwd(latDouble + lat_xzDouble);
+                                        xfclDOS.get(finalI).setClwzWzcjsj(new Date());
+                                        xfclDOS.get(finalI).setGpsVid(String.valueOf(vehicleJson.get("id")));
+                                        xfclDOS.get(finalI).setGpsVkey((String) vehicleJson.get("vKey"));
+                                        xfclDOS.get(finalI).setGpsState(String.valueOf(map.get("state")));
+                                        int direct = NumberUtils.toInt(String.valueOf(map.get("direct")), 0);
+                                        xfclDOS.get(finalI).setGpsDirect(direct);
+                                        xfclDao.updateById(xfclDOS.get(finalI));
+                                    }
+                                }
                             }
                         }
                     }
-
                 }
-            }
+            });
         }
+        threadPoolExecutor.shutdown();
         long endTimeMillis = System.currentTimeMillis();
         log.info("GPS接口更新车辆位置请求结束时间---》{}", endTimeMillis);
         long consumptionTimeMillis = endTimeMillis - startTimeMillis;
