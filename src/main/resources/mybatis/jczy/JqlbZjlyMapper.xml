@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart119.jczy.dao.JqlbZjlyDao">
+
+	<select id="get" resultType="com.smart119.jczy.domain.JqlbZjlyDO">
+		select `id`,`jqflydm`,`jqflmc`,`zjlylb_a`,`zjlylb_b`,`zjlylb_c`,`zjlylb_d`,`zjlylb_e`,`zjlylb_f`,`zjlylb_g`,`zjlylb_h`,`zjlylb_i`,`zjlylb_j`,`update_date`,`update_user` from jczy_jqlb_zjly where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.smart119.jczy.domain.JqlbZjlyDO">
+		select `id`,`jqflydm`,`jqflmc`,`zjlylb_a`,`zjlylb_b`,`zjlylb_c`,`zjlylb_d`,`zjlylb_e`,`zjlylb_f`,`zjlylb_g`,`zjlylb_h`,`zjlylb_i`,`zjlylb_j`,`update_date`,`update_user` from jczy_jqlb_zjly
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="jqflydm != null and jqflydm != ''"> and jqflydm = #{jqflydm} </if>
+		  		  <if test="jqflmc != null and jqflmc != ''"> and jqflmc = #{jqflmc} </if>
+		  		  <if test="zjlylbA != null and zjlylbA != ''"> and zjlylb_a = #{zjlylbA} </if>
+		  		  <if test="zjlylbB != null and zjlylbB != ''"> and zjlylb_b = #{zjlylbB} </if>
+		  		  <if test="zjlylbC != null and zjlylbC != ''"> and zjlylb_c = #{zjlylbC} </if>
+		  		  <if test="zjlylbD != null and zjlylbD != ''"> and zjlylb_d = #{zjlylbD} </if>
+		  		  <if test="zjlylbE != null and zjlylbE != ''"> and zjlylb_e = #{zjlylbE} </if>
+		  		  <if test="zjlylbF != null and zjlylbF != ''"> and zjlylb_f = #{zjlylbF} </if>
+		  		  <if test="zjlylbG != null and zjlylbG != ''"> and zjlylb_g = #{zjlylbG} </if>
+		  		  <if test="zjlylbH != null and zjlylbH != ''"> and zjlylb_h = #{zjlylbH} </if>
+		  		  <if test="zjlylbI != null and zjlylbI != ''"> and zjlylb_i = #{zjlylbI} </if>
+		  		  <if test="zjlylbJ != null and zjlylbJ != ''"> and zjlylb_j = #{zjlylbJ} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by jqflydm
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from jczy_jqlb_zjly
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="jqflydm != null and jqflydm != ''"> and jqflydm = #{jqflydm} </if>
+		  		  <if test="jqflmc != null and jqflmc != ''"> and jqflmc = #{jqflmc} </if>
+		  		  <if test="zjlylbA != null and zjlylbA != ''"> and zjlylb_a = #{zjlylbA} </if>
+		  		  <if test="zjlylbB != null and zjlylbB != ''"> and zjlylb_b = #{zjlylbB} </if>
+		  		  <if test="zjlylbC != null and zjlylbC != ''"> and zjlylb_c = #{zjlylbC} </if>
+		  		  <if test="zjlylbD != null and zjlylbD != ''"> and zjlylb_d = #{zjlylbD} </if>
+		  		  <if test="zjlylbE != null and zjlylbE != ''"> and zjlylb_e = #{zjlylbE} </if>
+		  		  <if test="zjlylbF != null and zjlylbF != ''"> and zjlylb_f = #{zjlylbF} </if>
+		  		  <if test="zjlylbG != null and zjlylbG != ''"> and zjlylb_g = #{zjlylbG} </if>
+		  		  <if test="zjlylbH != null and zjlylbH != ''"> and zjlylb_h = #{zjlylbH} </if>
+		  		  <if test="zjlylbI != null and zjlylbI != ''"> and zjlylb_i = #{zjlylbI} </if>
+		  		  <if test="zjlylbJ != null and zjlylbJ != ''"> and zjlylb_j = #{zjlylbJ} </if>
+		  		  <if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>
+		  		  <if test="updateUser != null and updateUser != ''"> and update_user = #{updateUser} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.smart119.jczy.domain.JqlbZjlyDO">
+		insert into jczy_jqlb_zjly
+		(
+			`id`, 
+			`jqflydm`, 
+			`jqflmc`, 
+			`zjlylb_a`, 
+			`zjlylb_b`, 
+			`zjlylb_c`, 
+			`zjlylb_d`, 
+			`zjlylb_e`, 
+			`zjlylb_f`, 
+			`zjlylb_g`, 
+			`zjlylb_h`, 
+			`zjlylb_i`, 
+			`zjlylb_j`, 
+			`update_date`, 
+			`update_user`
+		)
+		values
+		(
+			#{id}, 
+			#{jqflydm}, 
+			#{jqflmc}, 
+			#{zjlylbA}, 
+			#{zjlylbB}, 
+			#{zjlylbC}, 
+			#{zjlylbD}, 
+			#{zjlylbE}, 
+			#{zjlylbF}, 
+			#{zjlylbG}, 
+			#{zjlylbH}, 
+			#{zjlylbI}, 
+			#{zjlylbJ}, 
+			#{updateDate}, 
+			#{updateUser}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.smart119.jczy.domain.JqlbZjlyDO">
+		update jczy_jqlb_zjly 
+		<set>
+			<if test="jqflydm != null">`jqflydm` = #{jqflydm}, </if>
+			<if test="jqflmc != null">`jqflmc` = #{jqflmc}, </if>
+			<if test="zjlylbA != null">`zjlylb_a` = #{zjlylbA}, </if>
+			<if test="zjlylbB != null">`zjlylb_b` = #{zjlylbB}, </if>
+			<if test="zjlylbC != null">`zjlylb_c` = #{zjlylbC}, </if>
+			<if test="zjlylbD != null">`zjlylb_d` = #{zjlylbD}, </if>
+			<if test="zjlylbE != null">`zjlylb_e` = #{zjlylbE}, </if>
+			<if test="zjlylbF != null">`zjlylb_f` = #{zjlylbF}, </if>
+			<if test="zjlylbG != null">`zjlylb_g` = #{zjlylbG}, </if>
+			<if test="zjlylbH != null">`zjlylb_h` = #{zjlylbH}, </if>
+			<if test="zjlylbI != null">`zjlylb_i` = #{zjlylbI}, </if>
+			<if test="zjlylbJ != null">`zjlylb_j` = #{zjlylbJ}, </if>
+			<if test="updateDate != null">`update_date` = #{updateDate}, </if>
+			<if test="updateUser != null">`update_user` = #{updateUser}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from jczy_jqlb_zjly where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from jczy_jqlb_zjly where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="getZjlyType" resultType="java.util.HashMap">
+		SELECT id,`name`,`value`
+		from sys_dict
+		where type='XFZJLYLBDM'
+		and value !='' ORDER BY value
+	</select>
+
+</mapper>
