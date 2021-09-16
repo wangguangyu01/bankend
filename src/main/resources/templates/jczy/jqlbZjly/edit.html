@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${jqlbZjly.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-2 control-label">警情分类与代码：</label>
+								<div class="col-sm-4">
+									<input id="jqflydm" name="jqflydm" th:value="${jqlbZjly.jqflydm}" class="form-control" type="text" style="cursor: pointer;" readonly="readonly">
+								</div>
+
+								<label class="col-sm-2 control-label">警情分类名称：</label>
+								<div class="col-sm-4">
+									<input id="jqflmc" name="jqflmc" th:value="${jqlbZjly.jqflmc}" class="form-control" type="text" style="cursor: pointer;" readonly="readonly">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">专家领域1：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbA_val" th:value="${jqlbZjly.zjlylbA}"  />
+									<select data-placeholder="专家领域1" name="zjlylbA" id="zjlylbA" title="专家领域1"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">专家领域2：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbB_val" th:value="${jqlbZjly.zjlylbB}"  />
+									<select data-placeholder="专家领域2" name="zjlylbB" id="zjlylbB" title="专家领域2"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">专家领域3：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbC_val" th:value="${jqlbZjly.zjlylbC}"  />
+									<select data-placeholder="专家领域3" name="zjlylbC" id="zjlylbC" title="专家领域3"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">专家领域4：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbD_val" th:value="${jqlbZjly.zjlylbD}"  />
+									<select data-placeholder="专家领域4" name="zjlylbD" id="zjlylbD" title="专家领域4"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">专家领域5：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbE_val" th:value="${jqlbZjly.zjlylbE}"  />
+									<select data-placeholder="专家领域5" name="zjlylbE" id="zjlylbE" title="专家领域5"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">专家领域6：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbF_val" th:value="${jqlbZjly.zjlylbF}"  />
+									<select data-placeholder="专家领域6" name="zjlylbF" id="zjlylbF" title="专家领域6"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">专家领域7：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbG_val" th:value="${jqlbZjly.zjlylbG}"  />
+									<select data-placeholder="专家领域7" name="zjlylbG" id="zjlylbG" title="专家领域7"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">专家领域8：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbH_val" th:value="${jqlbZjly.zjlylbH}"  />
+									<select data-placeholder="专家领域8" name="zjlylbH" id="zjlylbH" title="专家领域8"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">专家领域9：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbI_val" th:value="${jqlbZjly.zjlylbI}"  />
+									<select data-placeholder="专家领域9" name="zjlylbI" id="zjlylbI" title="专家领域9"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">专家领域10：</label>
+								<div class="col-sm-4">
+									<input type="hidden" id="zjlylbJ_val" th:value="${jqlbZjly.zjlylbJ}"  />
+									<select data-placeholder="专家领域10" name="zjlylbJ" id="zjlylbJ" title="专家领域10"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/jqlbZjly/edit.js">
+	</script>
+</body>
+</html>
