@@ -34,7 +34,7 @@ function load() {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
                         offset: params.offset,
-                        name:$('#searchName').val(),
+                        name: $('#searchName').val(),
                         // username:$('#searchName').val()
                         deptId: zid
                     };
@@ -65,13 +65,13 @@ function load() {
                         field: 'channelType',
                         title: '通道类型',
                         formatter: function (value, row, index) {
-							if(value == "1"){
-								return " 营区监控";
-							}else  if(value == "2"){
-								return " 指挥中心";
-							}else{
-								return " 单兵布控球";
-							}
+                            if (value == "1") {
+                                return " 营区监控";
+                            } else if (value == "2") {
+                                return " 指挥中心";
+                            } else {
+                                return " 单兵布控球";
+                            }
                         }
 
                     },
@@ -109,45 +109,18 @@ function reLoad() {
 
 //判断当前选中的组织机构是否为消防救援站
 function judge_add(deptId) {
-    console.log(deptId);
-    $.ajax({
-        type: "POST",
-        url: "/system/sysDept/isXfjyz",
-        data: {
-            deptId: deptId
-        },// 你的formid
-        async: false,
-        error: function (request) {
-            parent.layer.alert("选择的消防救援机构不是“消防救援站“");
-        },
-        success: function (data) {
-            if (data.code == "0") {
-                layer.open({
-                    type: 2,
-                    title: '增加',
-                    maxmin: true,
-                    shadeClose: false, // 点击遮罩关闭层
-                    area: ['70%', '68%'],
-                    content: prefix + '/add?deptId=' + deptId // iframe的url
-                });
-            } else {
-                parent.layer.alert("选择的消防救援机构不是“消防救援站“");
-            }
+    var deptId = $("#jstree li[aria-selected='true']").attr("id");
 
-        }
+    layer.open({
+        type: 2,
+        title: '增加',
+        maxmin: true,
+        shadeClose: false, // 点击遮罩关闭层
+        area: ['70%', '68%'],
+        content: prefix + '/add?deptId=' + deptId // iframe的url
     });
 }
 
-function add() {
-    var deptId = $("#jstree li[aria-selected='true']").attr("id");
-    if (deptId != null && deptId != null && deptId != "") {
-        judge_add(deptId);
-    } else {
-        parent.layer.alert("请选择“消防救援站”后再操作！");
-    }
-    return;
-
-}
 
 function edit(id) {
     layer.open({
@@ -250,43 +223,14 @@ $('#jstree').on("changed.jstree", function (e, data) {
 
 
 //判断当前选中的组织机构是否为消防救援站
-function judge_batchAdd(deptId) {
-    console.log(deptId);
-    $.ajax({
-        type: "POST",
-        url: "/system/sysDept/isXfjyz",
-        data: {
-            deptId: deptId
-        },// 你的formid
-        async: false,
-        error: function (request) {
-            parent.layer.alert("选择的消防救援机构不是“消防救援站“");
-        },
-        success: function (data) {
-            if (data.code == "0") {
-                layer.open({
-                    type: 2,
-                    title: '增加',
-                    maxmin: true,
-                    shadeClose: false, // 点击遮罩关闭层
-                    area: ['70%', '68%'],
-                    content: prefix + '/batchAdd?deptId=' + deptId // iframe的url
-                });
-            } else {
-                parent.layer.alert("选择的消防救援机构不是“消防救援站“");
-            }
-
-        }
-    });
-}
-
-function batchAdd() {
+function judge_batchAdd() {
     var deptId = $("#jstree li[aria-selected='true']").attr("id");
-    if (deptId != null && deptId != null && deptId != "") {
-        judge_batchAdd(deptId);
-    } else {
-        parent.layer.alert("请选择“消防救援站”后再操作！");
-    }
-    return;
-
+    layer.open({
+        type: 2,
+        title: '增加',
+        maxmin: true,
+        shadeClose: false, // 点击遮罩关闭层
+        area: ['70%', '68%'],
+        content: prefix + '/batchAdd?deptId=' + deptId // iframe的url
+    });
 }
