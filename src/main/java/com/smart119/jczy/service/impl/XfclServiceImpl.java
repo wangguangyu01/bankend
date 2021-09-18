@@ -27,10 +27,10 @@ public class XfclServiceImpl implements XfclService {
 
 	@Autowired
 	private XfclSxService xfclSxService;
-	
+
 	@Override
 	public XfclDO get(String xfclTywysbm){
-		return xfclDao.get(xfclTywysbm);
+		return xfclDao.selectById(xfclTywysbm);
 	}
 
 	@Override
@@ -42,27 +42,27 @@ public class XfclServiceImpl implements XfclService {
 	public List<XfclDO> list(Map<String, Object> map){
 		return xfclDao.list(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
 		return xfclDao.count(map);
 	}
-	
+
 	@Override
 	public int save(XfclDO xfcl){
-		return xfclDao.save(xfcl);
+		return xfclDao.insert(xfcl);
 	}
-	
+
 	@Override
 	public int update(XfclDO xfcl){
-		return xfclDao.update(xfcl);
+		return xfclDao.updateById(xfcl);
 	}
-	
+
 	@Override
 	public int remove(String xfclTywysbm){
 		return xfclDao.remove(xfclTywysbm);
 	}
-	
+
 	@Override
 	public int batchRemove(String[] xfclTywysbms){
 		return xfclDao.batchRemove(xfclTywysbms);
