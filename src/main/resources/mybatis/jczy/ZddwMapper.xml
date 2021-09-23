@@ -7,7 +7,7 @@
 		select t.`ZDDW_TYWYSBM`,t.`DWMC`,t.`DWPYJC`,t.`JJSYZLXDM`,t.`CL_RQ`,t.`DWHZWHXFLYDM`,t.`DWZRXZDM`,t.`DZMC`,t.`LXDH`,t.`DZXX`,t.`XZQHDM`,t.`YZBM`,t.`RS`,t.`ZD_MJ`,t.`JZ_MJ`,
 		t.`XFJYJG_TYWYSBM`,t.`DQJD`,t.`DQWD`,t.`JZ_SL`,t.`DW_JYQK`,t.`SFTDHSSTD_JYQK`,t.`NBXFSS_JYQK`,t.`FHSS_JYQK`,t.`FRDB_XM`,t.`FRDB_GMSFZH`,t.`FRDB_LXDH`,t.`XFAQZRR_XM`,
 		t.`XFAQZRR_GMSFHM`,t.`XFAQZRR_LXDH`,t.`XFAQGLR_XM`,t.`XFAQGLR_GMSFHM`,t.`XFAQGLR_LXDH`,t.`ZJZXFGLR_XM`,t.`ZJZXFGLR_GMSFHM`,t.`ZJZXFGLR_LXDH`,t.`BZ`,dept.`dwmc` XFJYJG,
-		t.XFKZS_JYQK,t.WXHXP_MC,t.WXHXP_WXHXPFLYDM,t.WXHXP_HXPZTLBDM,t.WXHXP_HXPWXXLBDM,t.WXHXP_SL,t.WXHXP_JYQK,t.WXHXP_DZMC,t.DWJC,t.LXR
+		t.XFKZS_JYQK,t.WXHXP_MC,t.WXHXP_WXHXPFLYDM,t.WXHXP_HXPZTLBDM,t.WXHXP_HXPWXXLBDM,t.WXHXP_SL,t.WXHXP_JYQK,t.WXHXP_DZMC,t.DWJC,t.LXR,t.SWYA_URL,t.QJ_URL
 		from jczy_zddw  t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
 		where t.ZDDW_TYWYSBM = #{value}
@@ -17,7 +17,7 @@
         select t.`ZDDW_TYWYSBM`,t.`DWMC`,t.`DWPYJC`,t.`JJSYZLXDM`,t.`CL_RQ`,t.`DWHZWHXFLYDM`,t.`DWZRXZDM`,t.`DZMC`,t.`LXDH`,t.`DZXX`,t.`XZQHDM`,t.`YZBM`,t.`RS`,t.`ZD_MJ`,t.`JZ_MJ`,
         t.`XFJYJG_TYWYSBM`,t.`DQJD`,t.`DQWD`,t.`JZ_SL`,t.`DW_JYQK`,t.`SFTDHSSTD_JYQK`,t.`NBXFSS_JYQK`,t.`FHSS_JYQK`,t.`FRDB_XM`,t.`FRDB_GMSFZH`,t.`FRDB_LXDH`,t.`XFAQZRR_XM`,
         t.`XFAQZRR_GMSFHM`,t.`XFAQZRR_LXDH`,t.`XFAQGLR_XM`,t.`XFAQGLR_GMSFHM`,t.`XFAQGLR_LXDH`,t.`ZJZXFGLR_XM`,t.`ZJZXFGLR_GMSFHM`,t.`ZJZXFGLR_LXDH`,t.`BZ`,dept.`dwmc` XFJYJG,
-        t.XFKZS_JYQK,t.WXHXP_MC,t.WXHXP_WXHXPFLYDM,t.WXHXP_HXPZTLBDM,t.WXHXP_HXPWXXLBDM,t.WXHXP_SL,t.WXHXP_JYQK,t.WXHXP_DZMC,t.WXHXP_DZMC,t.DWJC,t.LXR
+        t.XFKZS_JYQK,t.WXHXP_MC,t.WXHXP_WXHXPFLYDM,t.WXHXP_HXPZTLBDM,t.WXHXP_HXPWXXLBDM,t.WXHXP_SL,t.WXHXP_JYQK,t.WXHXP_DZMC,t.WXHXP_DZMC,t.DWJC,t.SWYA_URL,t.QJ_URL
         from jczy_zddw t
         LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
         <where>
@@ -62,6 +62,8 @@
             <if test="zjzxfglrGmsfhm != null and zjzxfglrGmsfhm != ''">and t.ZJZXFGLR_GMSFHM = #{zjzxfglrGmsfhm}</if>
             <if test="zjzxfglrLxdh != null and zjzxfglrLxdh != ''">and t.ZJZXFGLR_LXDH = #{zjzxfglrLxdh}</if>
             <if test="bz != null and bz != ''">and t.BZ = #{bz}</if>
+            <if test="swyaUrl != null and swyaUrl != ''">and t.`SWYA_URL` = #{swyaUrl}</if>
+            <if test="qjUrl != null and qjUrl != ''">and t.`QJ_URL` = #{qjUrl}</if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -120,6 +122,8 @@
             <if test="zjzxfglrGmsfhm != null and zjzxfglrGmsfhm != ''">and ZJZXFGLR_GMSFHM = #{zjzxfglrGmsfhm}</if>
             <if test="zjzxfglrLxdh != null and zjzxfglrLxdh != ''">and ZJZXFGLR_LXDH = #{zjzxfglrLxdh}</if>
             <if test="bz != null and bz != ''">and BZ = #{bz}</if>
+            <if test="swyaUrl != null and swyaUrl != ''">and `SWYA_URL` = #{swyaUrl}</if>
+            <if test="qjUrl != null and qjUrl != ''">and `QJ_URL` = #{qjUrl}</if>
         </where>
     </select>
 
@@ -171,7 +175,9 @@
 			`WXHXP_JYQK`,
 			`WXHXP_DZMC`,
 			`DWJC`,
-			`LXR`
+			`LXR`,
+            `SWYA_URL`,
+            `QJ_URL`
 		)
 		values
 		(
@@ -220,7 +226,9 @@
 			#{wxhxpjyqk},
 			#{wxhxpdzmc},
 			#{dwjc},
-			#{lxr}
+			#{lxr},
+            #{swyaUrl},
+            #{qjUrl}
 		)
 	</insert>
 
@@ -272,6 +280,8 @@
             <if test="wxhxpdzmc != null">`WXHXP_DZMC` = #{wxhxpdzmc},</if>
             <if test="dwjc != null">`DWJC` = #{dwjc},</if>
             <if test="lxr != null">`LXR` = #{lxr},</if>
+            <if test="swyaUrl != null">`SWYA_URL` = #{swyaUrl},</if>
+            <if test="qjUrl != null">`QJ_URL` = #{qjUrl}</if>
         </set>
         where ZDDW_TYWYSBM = #{zddwTywysbm}
     </update>

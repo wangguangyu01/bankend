@@ -1,13 +1,11 @@
 package com.smart119.jczy.domain;
 
-import com.smart119.common.annotation.validator.PhoneValidator;
 import com.smart119.common.domain.AttachmentDO;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.Range;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.validator.constraints.URL;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -21,6 +19,7 @@ import java.util.List;
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:32:48
  */
+@Data
 public class ZddwDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -162,6 +161,14 @@ public class ZddwDO implements Serializable {
 	private Integer wxhxpsl;
 	//地址名称
 	private String wxhxpdzmc;
+
+	@ApiModelProperty(value="三维预案URL")
+	@URL(message = "三维预案URLL格式有误")
+	private String swyaUrl;
+
+	@ApiModelProperty(value="全景URL")
+	@URL(message = "全景URL格式有误")
+	private String qjUrl;
 
 
 	private List<AttachmentDO> attachmentDOList;
