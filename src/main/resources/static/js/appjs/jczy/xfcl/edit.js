@@ -207,7 +207,8 @@ function addChildAttrVal(id){
         url : "/jczy/xfclSx/cllxAttrVal",
         data : {
             cllx:input.val(),
-            clId:clId
+            clId:clId,
+            type:"cl"
         },// 你的formid
         async : false,
         error : function(request) {

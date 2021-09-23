@@ -35,6 +35,8 @@ public interface XfclSxDao {
 
 	List<Map<String, Object>> findAttrByCllxVal(String clid);
 
+	List<Map<String, Object>> findAttrByZbVal(String clid);
+
 	int removeByXfclId(String xfclId);
 
 	int removeBySxId(String sxId);

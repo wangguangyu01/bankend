@@ -128,6 +128,21 @@
 		order by sx.clsx
 	</select>
 
+	<!--根据消防装备id 查询出属性信息和具体的属性值  回显用-->
+	<select id="findAttrByZbVal" resultType="java.util.HashMap">
+		SELECT sx.id,sx.clsx,sx.dw,
+		(
+		SELECT sxz.sxz from jczy_xfcl_sxz sxz
+		where sxz.xfcl_sx_id = sx.id
+		and sxz.xfcl_id=#{value}
+		) as sxz
+		from jczy_xfcl_sx sx
+		LEFT JOIN jczy_xfzb xfcl
+		on xfcl.XFZBLXDM = sx.cllx
+		where xfcl.XFZB_TYWYSBM = #{value}
+		order by sx.clsx
+	</select>
+
 
 	<!--依据消防车辆id 删除所有的属性值-->
 	<delete id="removeByXfclId">

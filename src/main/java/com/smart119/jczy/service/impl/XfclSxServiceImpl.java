@@ -63,6 +63,11 @@ public class XfclSxServiceImpl implements XfclSxService {
 	}
 
 	@Override
+	public List<Map<String, Object>> findAttrByZbVal(String clid) {
+		return xfclSxDao.findAttrByZbVal(clid);
+	}
+
+	@Override
 	public int removeByXfclId(String xfclId) {
 		return xfclSxDao.removeByXfclId(xfclId);
 	}

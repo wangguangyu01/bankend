@@ -199,3 +199,14 @@ $('#jstree').on("changed.jstree", function(e, data) {
         load();
 });
 
+function sxList() {
+    layer.open({
+        type: 2,
+        title: '属性管理',
+        maxmin: true,
+        shadeClose: false, // 点击遮罩关闭层
+        area: ['90%', '90%'],
+        content:  "/jczy/xfcl/sxList" // iframe的url
+    });
+}
+
