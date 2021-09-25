@@ -188,8 +188,14 @@ public class XfclSxController extends BaseController {
 	@GetMapping("/cllxAttrVal")
 	//@RequiresPermissions("jczy:xfclSx:xfclSx")
 	public List<Map<String,Object>> cllxAttrVal(@RequestParam Map<String, Object> params){
+		String type = params.get("type")!=null?params.get("type").toString():"";
+		List<Map<String,Object>> list = new ArrayList<>();
+		if(type.equals("zb")){
+			list = xfclSxService.findAttrByZbVal(params.get("clId").toString());
+		}else if(type.equals("cl")){
+			list = xfclSxService.findAttrByCllxVal(params.get("clId").toString());
+		}
 
-		List<Map<String,Object>> list = xfclSxService.findAttrByCllxVal(params.get("clId").toString());
 		return list;
 	}
 

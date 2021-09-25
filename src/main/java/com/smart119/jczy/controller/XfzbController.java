@@ -145,7 +145,7 @@ public class XfzbController extends BaseController{
 			attachmentService.ftpUpload(files, id, "xfzb");
 		}
 		if(xfzbService.save(xfzb)>0){
-			return R.ok();
+			return R.ok(xfzb);
 		}
 		return R.error();
 	}
@@ -186,7 +186,7 @@ public class XfzbController extends BaseController{
 			attachmentService.ftpUpload(files, xfzb.getXfzbTywysbm(), "xfzb");
 		}
 		xfzbService.update(xfzb);
-		return R.ok();
+		return R.ok(xfzb);
 	}
 	/**
 	 * 删除

@@ -171,7 +171,8 @@ function edit(id) {
         content: prefix + '/edit/' + id // iframe的url
     });
 }
-function sxList() {
+
+function remove(id) {function sxList() {
     layer.open({
         type: 2,
         title: '属性管理',
@@ -181,7 +182,6 @@ function sxList() {
         content:  prefix + '/sxList' // iframe的url
     });
 }
-function remove(id) {
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
     }, function () {

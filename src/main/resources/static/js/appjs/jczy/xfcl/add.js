@@ -24,7 +24,7 @@ function save() {
                 parent.reLoad();
                 var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
                 parent.layer.close(index);
-                saveCllxSX(data.data.xfclTywysbm);
+                saveCllxSX(data.data.xfclTywysbm);  //保存车辆属性信息
             } else {
                 parent.layer.alert("操作失败，请联系管理人员！")
             }

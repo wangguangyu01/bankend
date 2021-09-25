@@ -76,7 +76,6 @@ function getSelectByValue(value,objId,selected){
 }
 
 function getSelectAll(type,divClass,inputId,spanId){
-    console.log(111);
     $.ajax({
         url : "/common/dict/getChildAll",
         type : "get",
@@ -97,14 +96,12 @@ function getSelectAll(type,divClass,inputId,spanId){
             });
             html += '</ul>';
             $("."+divClass).append(html);
-            console.log(123123);
             addOnclick(divClass,inputId,spanId);
         }
     });
 }
 
 function getSelectAllCallBack(type,divClass,inputId,spanId,callback){
-    console.log(111);
     $.ajax({
         url : "/common/dict/getChildAll",
         type : "get",
@@ -176,7 +173,7 @@ function decomposeChild(list){
 }
 
 function addOnclick(divClass,inputId,spanId){
-    console.log(456456);
+
     $('.'+divClass+' li a').click(function(){
         title = $(this).attr("data-title");
         id = $(this).attr("data-index");
