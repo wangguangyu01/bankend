@@ -160,11 +160,10 @@ public class ExliveServiceImpl implements ExliveService {
         for (String vehicleStr : vehicleList) {
             JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
             String xfclGpsName = String.valueOf(vehicleJson.get("name"));
-            redisManager.set("resource:gps:"+xfclGpsName, vehicleStr);
+            redisManager.set("resource:gps:" + xfclGpsName, vehicleStr);
         }
         return vehicleList;
     }
-
 
 
     @Override
@@ -173,20 +172,24 @@ public class ExliveServiceImpl implements ExliveService {
         log.info("GPS接口更新车辆位置开始时间---》{}", startTimeMillis);
         List<String> vehicleList = queryXfclVidAndVkey();
         List<XfclDO> xfclDOS = xfclDao.queryGPSDeviceIds();
-        int count =  xfclDao.count(null);
+        int count = xfclDao.count(null);
         // 防止线程过多，引起oom，使用原生创建线程
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(xfclDOS.size(), xfclDOS.size(),
-                1, TimeUnit.SECONDS,  new ArrayBlockingQueue<Runnable>(count),
+                1, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(count),
                 new ThreadPoolExecutor.CallerRunsPolicy());
         for (int i = 0; i < xfclDOS.size(); i++) {
             int finalI = i;
             threadPoolExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    for (String vehicleStr : vehicleList) {
-                        JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
-                        String gprs = String.valueOf(vehicleJson.get("gprs"));
-                        if (StringUtils.equals(xfclDOS.get(finalI).getDeviceId(), gprs)) {
+                    synchronized (this) {
+                        log.info("车辆唯一标识码：---》{}", xfclDOS.get(finalI).getXfclTywysbm());
+                        for (String vehicleStr : vehicleList) {
+                            JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
+                            String gprs = String.valueOf(vehicleJson.get("gprs"));
+                            if (!StringUtils.equals(xfclDOS.get(finalI).getDeviceId(), gprs)) {
+                                continue;
+                            }
                             String url = exliveUrl + "?version=1&method=loadLocation&vid="
                                     + String.valueOf(vehicleJson.get("id"))
                                     + "&vKey=" + String.valueOf(vehicleJson.get("vKey"));
@@ -194,7 +197,6 @@ public class ExliveServiceImpl implements ExliveService {
                             JSONObject jsonObject = JSONObject.parseObject(res);
                             if (!jsonObject.isEmpty() && jsonObject.containsKey("locs")) {
                                 JSONArray locsArray = jsonObject.getJSONArray("locs");
-                                StringBuffer stringBuffer = new StringBuffer(10);
                                 if (!locsArray.isEmpty()) {
                                     List<Map> mapList = locsArray.toJavaList(Map.class);
                                     for (Map map : mapList) {
@@ -219,6 +221,8 @@ public class ExliveServiceImpl implements ExliveService {
                                         xfclDao.updateById(xfclDOS.get(finalI));
                                     }
                                 }
+                                log.info("车辆唯一标识吗--》" + xfclDOS.get(finalI).getXfclTywysbm()
+                                        + ", gps设备---》" + xfclDOS.get(finalI).getDeviceId() + "更新完成");
                             }
                         }
                     }
@@ -231,21 +235,6 @@ public class ExliveServiceImpl implements ExliveService {
         long consumptionTimeMillis = endTimeMillis - startTimeMillis;
         log.info("GPS接口更新车辆位置请求消耗时间---》{}", consumptionTimeMillis);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
