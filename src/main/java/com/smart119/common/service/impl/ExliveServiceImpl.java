@@ -183,7 +183,6 @@ public class ExliveServiceImpl implements ExliveService {
                 @Override
                 public void run() {
                     synchronized (this) {
-                        log.info("车辆唯一标识码：---》{}", xfclDOS.get(finalI).getXfclTywysbm());
                         for (String vehicleStr : vehicleList) {
                             JSONObject vehicleJson = JSONObject.parseObject(vehicleStr);
                             String gprs = String.valueOf(vehicleJson.get("gprs"));
@@ -221,8 +220,6 @@ public class ExliveServiceImpl implements ExliveService {
                                         xfclDao.updateById(xfclDOS.get(finalI));
                                     }
                                 }
-                                log.info("车辆唯一标识吗--》" + xfclDOS.get(finalI).getXfclTywysbm()
-                                        + ", gps设备---》" + xfclDOS.get(finalI).getDeviceId() + "更新完成");
                             }
                         }
                     }
