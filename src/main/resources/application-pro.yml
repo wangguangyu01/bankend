@@ -18,7 +18,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.16.200.12:3306/smart119?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://172.16.200.13:3306/smart119?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
     username: root
     password: abc@123
     #password: ENC(q3rJHyQxFAfpLHxLp89cAw==)
