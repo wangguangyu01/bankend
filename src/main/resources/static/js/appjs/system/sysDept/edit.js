@@ -113,3 +113,8 @@ function saveRangeData(points) {
     $("#zbfw").val(pointsArr);
     console.log(pointsArr);
 }
+function getXzqhdm(obj,objId){
+	var id = $(obj).find("option:selected").attr("id");
+	console.log(id);
+	getSelectById(id,objId);
+}
