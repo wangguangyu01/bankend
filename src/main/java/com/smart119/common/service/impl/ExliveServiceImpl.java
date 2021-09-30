@@ -76,7 +76,6 @@ public class ExliveServiceImpl implements ExliveService {
         String url = exliveUrl + "?version=1&method=loginSystem&name=" + username + "&pwd=" + password;
         String res = restTemplate.postForObject(url, null, String.class);
         JSONObject jsonObject = JSONObject.parseObject(res);
-        log.info("GPS接口登录返回数据{}", String.valueOf(jsonObject));
         GpsDto gpsDto = new GpsDto();
         if (!ObjectUtils.isEmpty(jsonObject)) {
             if (!ObjectUtils.isEmpty(jsonObject.get("uid"))) {
@@ -87,7 +86,6 @@ public class ExliveServiceImpl implements ExliveService {
             gpsDto.setUKey(uKey);
             redisManager.setex("resource:gps", 24 * 60 * 60, JSONObject.toJSONString(gpsDto));
         }
-        System.out.println(gpsDto.toString());
         long endTimeMillis = System.currentTimeMillis();
         log.info("GPS接口登录请求结束时间---》{}", endTimeMillis);
         long consumptionTimeMillis = endTimeMillis - startTimeMillis;
