@@ -94,7 +94,7 @@ function initZzdy(zzdyTypeLeve) {
     htmlStr+='</div>'
     htmlStr+='</div>'
     $("#zzdylist").append(htmlStr);
-    getSelectAllCallBack1("XFZBLXDM","ZZDYLXDM-DIV"+zzdyindex,"zzdylxdm"+zzdyindex,"zzdylxdm-title"+zzdyindex,function () {
+    getSelectAllCallBack1("ZZDYLXDM","ZZDYLXDM-DIV"+zzdyindex,"zzdylxdm"+zzdyindex,"zzdylxdm-title"+zzdyindex,function () {
     });
 }
 
