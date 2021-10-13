@@ -109,6 +109,15 @@
 									style="cursor: pointer;" onclick="openDept()"
 									readonly="readonly" placeholder="请选择消防救援机构" title="请选择消防救援机构" required  th:value="${zddw.xfjyjg}">
 							</div>
+
+							<label class="col-sm-2 control-label">类型：</label>
+							<div class="col-sm-2">
+								<select data-placeholder="类型" name="type" title="类型" id="type" th:value="${zddw.type}"
+										class="form-control chosen-select" tabindex="2" required>
+									<option value="1" th:selected="${zddw.type == '1'}">重点单位</option>
+									<option value="2" th:selected="${zddw.type == '2'}">一般场所</option>
+								</select>
+							</div>
 						</div>
 
 						<div class="form-group">

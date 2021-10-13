@@ -170,6 +170,9 @@ public class ZddwDO implements Serializable {
 	@URL(message = "全景URL格式有误")
 	private String qjUrl;
 
+	//类型
+	private String type;
+
 
 	private List<AttachmentDO> attachmentDOList;
 
@@ -717,5 +720,29 @@ public class ZddwDO implements Serializable {
 
 	public void setLxr(String lxr) {
 		this.lxr = lxr;
+	}
+
+	public String getSwyaUrl() {
+		return swyaUrl;
+	}
+
+	public void setSwyaUrl(String swyaUrl) {
+		this.swyaUrl = swyaUrl;
+	}
+
+	public String getQjUrl() {
+		return qjUrl;
+	}
+
+	public void setQjUrl(String qjUrl) {
+		this.qjUrl = qjUrl;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
