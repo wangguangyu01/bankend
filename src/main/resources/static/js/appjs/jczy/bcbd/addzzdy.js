@@ -13,7 +13,7 @@ function load() {
 		checkCallBack:function (remembermeList) {
 		   var htmlStr = "";
 		   for(var i in remembermeList){
-               htmlStr+="<span class=\"label label-info\">"+remembermeList[i].zzdymc+"</span>&nbsp;"
+               htmlStr+="<span class=\"label label-info\" style=\"height:22px\">"+remembermeList[i].zzdymc+"</span>&nbsp;"
 		   }
             $("#checkInfo").html(htmlStr);
         },
@@ -28,7 +28,7 @@ function load() {
 					if(remembermelist.length > 0){
 						var htmlStr = "";
 						for(var i in remembermelist){
-							htmlStr+="<span class=\"label label-info\">"+remembermelist[i].zzdymc+"</span>&nbsp;"
+							htmlStr+="<span class=\"label label-info\"  style=\"height:22px\">"+remembermelist[i].zzdymc+"</span>&nbsp;"
 						}
 						$("#checkInfo").html(htmlStr);
 					}

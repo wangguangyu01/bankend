@@ -112,6 +112,7 @@
             url: ctx + "login",
             data: $('#signupForm').serialize(),
             success: function (r) {
+                console.log(r);
                 if (r.code == 0) {
                     window.sessionStorage.setItem("token",r.token);
                     var index = layer.load(1, {
@@ -120,6 +121,10 @@
                     parent.location.href = '/index';
                 } else {
                     layer.msg(r.msg);
+                    if(r.msg=="验证码校验失败"){
+                        $("#imgVerify").click();
+                    }
+
                 }
             },
         });
