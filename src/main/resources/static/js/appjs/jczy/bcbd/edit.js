@@ -1,6 +1,8 @@
 $().ready(function() {
 	validateRule();
 	getSelectByType("BCBDLXDM","bcbdlxdm",$("#bcbdlxdmVal").val());
+    getSelectByType("BCBDZQ","bcbdzq",$("#bcbdzqVal").val());
+    getSelectByType("BCBDGNLXDM","bcbdgnlxdm",$("#bcbdgnlxdmVal").val());
 	getZZDY("zzdy",null);
 	getzzdyid();
 

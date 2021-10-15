@@ -4,11 +4,11 @@
 <mapper namespace="com.smart119.jczy.dao.BcbdDao">
 
     <select id="get" resultType="com.smart119.jczy.domain.BcbdDO">
-		select `BCBD_ID`,`BCBD_MC`,`BCBDLXDM`,`cdate`,`cpserson`,`status`,`BCBD_MS` ,`XFJYJG_TYWYSBM`from jczy_bcbd where BCBD_ID = #{value}
+		select `BCBD_ID`,`BCBD_MC`,`BCBDLXDM`,`cdate`,`cpserson`,`status`,`BCBD_MS` ,`XFJYJG_TYWYSBM`,`BCBDZQ`,`BCBDGNLXDM` from jczy_bcbd where BCBD_ID = #{value}
 	</select>
 
     <select id="list" resultType="com.smart119.jczy.domain.BcbdDO">
-        select bc.`BCBD_ID`,bc.`BCBD_MC`,d.name as `BCBDLXDM`,bc.`cdate`,bc.`cpserson`,bc.`status`,bc.`BCBD_MS`,bc.`XFJYJG_TYWYSBM`  from jczy_bcbd bc
+        select bc.`BCBD_ID`,bc.`BCBD_MC`,d.name as `BCBDLXDM`,bc.`cdate`,bc.`cpserson`,bc.`status`,bc.`BCBD_MS`,bc.`XFJYJG_TYWYSBM`,`BCBDZQ`,`BCBDGNLXDM`   from jczy_bcbd bc
         LEFT JOIN  sys_dict d ON bc.BCBDLXDM = d.value and d.type = 'BCBDLXDM'
         WHERE  1=1
         <if test="bcbdMc != null and bcbdMc != ''">and bc.BCBD_MC like '%${bcbdMc}%' </if>
@@ -76,7 +76,9 @@
 			`cpserson`,
 			`BCBD_MS`,
 			`status`,
-			`XFJYJG_TYWYSBM`
+			`XFJYJG_TYWYSBM`,
+			`BCBDZQ`,
+			`BCBDGNLXDM`
 		)
 		values
 		(
@@ -87,7 +89,9 @@
 			#{cpserson},
 			#{bcbdms},
 			#{status},
-			#{xfjyjgtywysbm}
+			#{xfjyjgtywysbm},
+			#{bcbdzq},
+			#{bcbdgnlxdm},
 		)
 	</insert>
 
@@ -99,8 +103,10 @@
             <if test="cdate != null">`cdate` = #{cdate},</if>
             <if test="cpserson != null">`cpserson` = #{cpserson},</if>
             <if test="bcbdms != null">`BCBD_MS` = #{bcbdms},</if>
-            <if test="status != null">`status` = #{status}</if>
-            <if test="xfjyjgtywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgtywysbm}</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="xfjyjgtywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgtywysbm},</if>
+            <if test="bcbdzq != null">`BCBDZQ` = #{bcbdzq},</if>
+            <if test="bcbdgnlxdm != null">`BCBDGNLXDM` = #{bcbdgnlxdm}</if>
         </set>
         where BCBD_ID = #{bcbdId}
     </update>

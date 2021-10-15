@@ -9,8 +9,10 @@
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
 						<form class="form-horizontal m-t" id="signupForm">
-						<input id="bcbdId" name="bcbdId" th:value="${bcbd.bcbdId}"  type="hidden">
+							<input id="bcbdId" name="bcbdId" th:value="${bcbd.bcbdId}"  type="hidden">
 							<input id="bcbdlxdmVal" th:value="${bcbd.bcbdlxdm}" type="hidden">
+							<input id="bcbdzqVal" th:value="${bcbd.bcbdzq}" type="hidden">
+							<input id="bcbdgnlxdmVal" th:value="${bcbd.bcbdgnlxdm}" type="hidden">
 							<div class="form-group">
 								<label class="col-sm-2 control-label">编成编队名称：</label>
 								<div class="col-sm-4">
@@ -23,6 +25,23 @@
 									</select>
 								</div>
 							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">战区：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="bcbdzq" name="bcbdzq" title="请选择战区" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+
+								<label class="col-sm-2 control-label">编成编队类型：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="bcbdgnlxdm" name="bcbdgnlxdm" title="请选择编队功能类型" required>
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">作战单元：</label>
 								<div class="col-sm-10">

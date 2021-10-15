@@ -40,6 +40,10 @@ public class BcbdDO implements Serializable {
 
 	private String xfjyjgtywysbm;
 
+	private String bcbdzq;
+
+	private String bcbdgnlxdm;
+
 	public String getXfjyjgtywysbm() {
 		return xfjyjgtywysbm;
 	}
@@ -159,5 +163,22 @@ public class BcbdDO implements Serializable {
 	 */
 	public String getStatus() {
 		return status;
+	}
+
+
+	public String getBcbdzq() {
+		return bcbdzq;
+	}
+
+	public void setBcbdzq(String bcbdzq) {
+		this.bcbdzq = bcbdzq;
+	}
+
+	public String getBcbdgnlxdm() {
+		return bcbdgnlxdm;
+	}
+
+	public void setBcbdgnlxdm(String bcbdgnlxdm) {
+		this.bcbdgnlxdm = bcbdgnlxdm;
 	}
 }

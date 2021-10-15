@@ -1,6 +1,8 @@
 $().ready(function() {
 	validateRule();
 	getSelectByType("BCBDLXDM","bcbdlxdm",null);
+    getSelectByType("BCBDZQ","bcbdzq",null);
+    getSelectByType("BCBDGNLXDM","bcbdgnlxdm",null);
 	getZZDY("zzdy",null);
     localStorage.setItem("remembermeDataList","")
 });
