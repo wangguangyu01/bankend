@@ -141,16 +141,16 @@
     <select id="listType" resultType="com.smart119.common.domain.DictDO">
         select distinct `type`, name
         from sys_dict
-        where parent_id = '0'
+        where parent_id = '0'  and (del_flag = '0' or del_flag is null or del_flag = '')
     </select>
 
     <select id="listParentId" resultType="com.smart119.common.domain.DictDO">
         select
         `id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
-        from sys_dict
-        <where>
+        from sys_dict where  (del_flag = '0' or del_flag is null or del_flag = '')
+        <if test="value != null">
             and parent_id = #{value}
-        </where>
+        </if>
         order by id
     </select>
 
@@ -159,10 +159,10 @@
         select
         `id`,`name`,`value`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`
         ,(SELECT count(bb.id) from sys_dict as bb where bb.parent_id=aa.id) as `childNum`
-        from sys_dict as aa
-        <where>
+        from sys_dict as aa where (aa.del_flag = '0' or aa.del_flag is null or aa.del_flag = '')
+        <if test="parentId != null">
             and parent_id=#{parentId}
-        </where>
+        </if>
         order by id desc
     </select>
 
@@ -182,23 +182,23 @@
              , `del_flag`
              , (SELECT count(bb.id) from sys_dict as bb where bb.parent_id = sys_dict.id) as `childNum`
         FROM `sys_dict`
-        where parent_id = #{value}
+        where parent_id = #{value} and (del_flag = '0' or del_flag is null or del_flag = '')
     </select>
 
     <select id="listByParentType" resultType="com.smart119.common.domain.DictDO">
         SELECT `id`, `name`, `value`
         FROM `sys_dict`
         where parent_id = (SELECT `id` from `sys_dict` where type = #{value} and parent_id = '0')
+        and (del_flag = '0' or del_flag is null or del_flag = '')
         order by id asc
     </select>
 
     <select id="listByParentValue" resultType="com.smart119.common.domain.DictDO">
         SELECT `id`,`name`,`value` FROM `sys_dict`
-        <where>
-            <if test="value != null and value !=''">
-                parent_id=(SELECT `id` from `sys_dict` where value=#{value})
-            </if>
-        </where>
+        where (del_flag = '0' or del_flag is null or del_flag = '')
+          <if test="value != null and value !=''">
+              and  parent_id=(SELECT `id` from `sys_dict` where value=#{value})
+          </if>
 
     </select>
 
@@ -212,6 +212,7 @@
         select *
         from sys_dict t
         where t.description = (select d1.description from sys_dict d1 where d1.type = #{type} and d1.parent_id = '0')
+          and (t.del_flag = '0' or t.del_flag is null or t.del_flag = '')
         order by t.id asc
     </select>
 
@@ -221,13 +222,14 @@
         from sys_dict
         where `value` = #{value}
           and description = #{description}
+          and (del_flag = '0' or del_flag is null or del_flag = '')
     </select>
 
     <select id="findDictType" resultType="String">
         select `name`
         from sys_dict
         where `value` = #{value}
-          and type = #{type}
+          and type = #{type} and (del_flag = '0' or del_flag is null or del_flag = '')
     </select>
 
     <select id="getDictListClzByType" resultType="String">
@@ -237,6 +239,7 @@
                  from `sys_dict` i
                  where i.type = 'JQZTLBDM'
                    and i.parent_id != '0'
+                   and (i.del_flag = '0' or i.del_flag is null or i.del_flag = '')
                  ORDER BY i.sort ASC
                  LIMIT 1,11 -- 处理中
              ) y
@@ -249,6 +252,7 @@
                  from `sys_dict` i
                  where i.type = 'JQZTLBDM'
                    and i.parent_id != '0'
+                   and (i.del_flag = '0' or i.del_flag is null or i.del_flag = '')
                  ORDER BY i.sort ASC
                  LIMIT 0,1 -- 未处理
              ) y
@@ -260,6 +264,7 @@
                  from `sys_dict` i
                  where i.type = 'JQZTLBDM'
                    and i.parent_id != '0'
+                   and (i.del_flag = '0' or i.del_flag is null or i.del_flag = '')
                  ORDER BY i.sort ASC
                  LIMIT 12,12 -- 未处理
              ) y
@@ -273,6 +278,7 @@
         <where>
             and value = #{value}
             and type = #{type}
+            and (del_flag = '0' or del_flag is null or del_flag = '')
         </where>
     </select>
 
@@ -281,6 +287,7 @@
         FROM `sys_dict`
         where type = 'XFGWFLYDM'
           and parent_id != '0'
+          and (del_flag = '0' or del_flag is null or del_flag = '')
     </select>
 
     <select id="queryByDictType" resultType="com.smart119.common.domain.DictDO">
@@ -289,12 +296,13 @@
         where type = #{type}
           and `value` != ''
           and `value` is not null
+          and (del_flag = '0' or del_flag is null or del_flag = '')
           order by id
     </select>
 
     <select id="queryDictTypeList" resultType="java.lang.String">
         select d.type
-        from sys_dict d
+        from sys_dict d where  (d.del_flag = '0' or d.del_flag is null or d.del_flag = '')
         group by d.type
     </select>
 
@@ -302,7 +310,7 @@
     <select id="queryGroupConcat" resultType="java.lang.String">
         SELECT GROUP_CONCAT(d.id order by d.id) AS ids
         from sys_dict d
-        where d.parent_id = #{parentId}
+        where d.parent_id = #{parentId} and (d.del_flag = '0' or d.del_flag is null or d.del_flag = '')
     </select>
 
 
@@ -322,7 +330,7 @@
              , `del_flag`
              , (SELECT count(bb.id) from sys_dict as bb where bb.parent_id = aa.id) as `childNum`
         from sys_dict as aa
-        where aa.type = #{type}
+        where aa.type = #{type}  and (aa.del_flag = '0' or aa.del_flag is null or aa.del_flag = '')
     </select>
 
 
@@ -332,7 +340,7 @@
 
     <select id="getSelectByXfjbType" resultType="com.smart119.common.domain.DictDO">
         select *
-        from sys_dict as bb
+        from sys_dict as bb  where  (bb.del_flag = '0' or bb.del_flag is null or bb.del_flag = '')
     </select>
 
     <select id="getDictByTypeAndValues" resultType="com.smart119.common.domain.DictDO">
@@ -341,7 +349,8 @@
             close=")">
             #{id}
         </foreach>
-        and d.type =#{jqflydm} and d.`value` is not null order by d.id;
+        and d.type =#{jqflydm} and d.`value` is not null
+        and (d.del_flag = '0' or d.del_flag is null or d.del_flag = '')  order by d.id;
     </select>
 
 
