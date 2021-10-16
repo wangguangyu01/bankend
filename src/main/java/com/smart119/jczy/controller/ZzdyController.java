@@ -346,13 +346,13 @@ public class ZzdyController extends BaseController {
 	@GetMapping("/getJqflList")
 	@ResponseBody
 	public List<DictDO> getJqflList(){
-		DictDO dictDO = new DictDO();
-		dictDO.setId(2286L);
-		dictDO.setName("警情分类与代码");
-		dictDO.setParentId(0L);
-		dictDO.setValue("");
+//		DictDO dictDO = new DictDO();
+//		dictDO.setId(2286L);
+//		dictDO.setName("警情分类与代码");
+//		dictDO.setParentId(0L);
+//		dictDO.setValue("");
 		List<DictDO> result = new ArrayList<>();
-		result.add(dictDO);
+//		result.add(dictDO);
 		List<DictDO> list = dictService.queryByDictType("JQFLYDM");
 		result.addAll(list);
 		return result;

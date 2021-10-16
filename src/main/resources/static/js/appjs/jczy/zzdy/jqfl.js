@@ -1,8 +1,47 @@
 
 var prefix = "/webapi/zzdy"
+
+var zTreeObj;
+
+var setting = {
+	check: {
+		enable: true,   //true / false 分别表示 显示 / 不显示 复选框或单选框
+		autoCheckTrigger: true,   //true / false 分别表示 触发 / 不触发 事件回调函数
+		chkStyle: "checkbox",   //勾选框类型(checkbox 或 radio）
+		chkboxType: { "Y": "ps", "N": "ps" }   //勾选 checkbox 对于父子节点的关联关系
+	},
+	data: {
+		simpleData: {
+			enable: true,
+			idKey: "id",
+			pIdKey: "parentId"
+		}
+	}
+};
+
+var zNodes =[];
+
+
 $(function() {
-	load();
-	init();
+	// load();
+	// init();
+
+	$.ajax({
+		url : prefix + "/getJqflList",
+		type : "GET",
+		success : function(r) {
+			zNodes =r;
+			zTreeObj = $.fn.zTree.init($("#tree"), setting, zNodes);
+			$.each(dictDOList, function(i,item){
+				var node = zTreeObj.getNodeByParam("id", item.id.toString());//根据ID找到该节点
+				if(node != null){
+					zTreeObj.checkNode(node, true, false);//根据该节点选中
+					zTreeObj.expandNode(node, true, true, false);
+				}
+			});
+		}
+	});
+
 });
 
 function load() {
@@ -153,21 +192,40 @@ function selectFl(name,value) {
 	$("#selectDiv").append("<span class=\"label label-info\" id='"+value+"' onclick="+onclick+">"+name+"</span>&nbsp;")
 	$("#selectValues").val($("#selectValues").val()+value+",");
 }
+
 function qdjqfl() {
-	$('#jqflydm', window.parent.document).val($("#selectValues").val());
-	//$('#jqflydmnames', window.parent.document).html($("#selectDiv").html());
-
+	var treeObj = $.fn.zTree.getZTreeObj("tree");
+	var nodes = treeObj.getCheckedNodes(true);
+	var selectValues="";
 	$('#jqflydmnames', window.parent.document).empty();
-	$(".label").each(function(i){
+	for(var i=0;i<nodes.length;i++){
+		selectValues+=nodes[i].value+",";
+		var name = nodes[i].name;
 		if (i != 0 && (i + 1) % 4 == 0) {
-			$('#jqflydmnames', window.parent.document).append("<span style='line-height:30px;' class='label label-info'>"+$(this).text()+"</span>&nbsp;</br>")
+			$('#jqflydmnames', window.parent.document).append("<span style='line-height:30px;' class='label label-info'>"+name+"</span>&nbsp;</br>")
 		}else{
-			$('#jqflydmnames', window.parent.document).append("<span class='label label-info'>"+$(this).text()+"</span>&nbsp;")
+			$('#jqflydmnames', window.parent.document).append("<span class='label label-info'>"+name+"</span>&nbsp;")
 		}
-
-	});
+	}
+	$('#jqflydm', window.parent.document).val(selectValues.substring(0,selectValues.length-1));
+	console.log(selectValues);
 	var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
 	parent.layer.close(index);
+
+	// $('#jqflydm', window.parent.document).val($("#selectValues").val());
+	// //$('#jqflydmnames', window.parent.document).html($("#selectDiv").html());
+	//
+	// $('#jqflydmnames', window.parent.document).empty();
+	// $(".label").each(function(i){
+	// 	if (i != 0 && (i + 1) % 4 == 0) {
+	// 		$('#jqflydmnames', window.parent.document).append("<span style='line-height:30px;' class='label label-info'>"+$(this).text()+"</span>&nbsp;</br>")
+	// 	}else{
+	// 		$('#jqflydmnames', window.parent.document).append("<span class='label label-info'>"+$(this).text()+"</span>&nbsp;")
+	// 	}
+	//
+	// });
+	// var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+	// parent.layer.close(index);
 }
 function del(value) {
 	var selectValues = $("#selectValues").val();

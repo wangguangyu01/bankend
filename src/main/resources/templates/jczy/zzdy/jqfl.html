@@ -2,16 +2,18 @@
 <html>
 <meta charset="utf-8">
 <head th:include="include :: header"></head>
+<!--<link rel="stylesheet" href="/css/plugins/zTree/metroStyle/metroStyle.css" />-->
+<link rel="stylesheet" href="/css/plugins/zTree/awesome.css" />
 <body class="gray-bg">
 <div class="wrapper wrapper-content ">
     <div class="col-sm-12">
         <div class="ibox">
             <div class="ibox-body">
                 <div class="fixed-table-toolbar">
-                    <div class="columns pull-left">
-                        <div id="selectDiv">已选择：</div>
-                        <input type="hidden" id="selectValues">
-                    </div>
+<!--                    <div class="columns pull-left">-->
+<!--                        <div id="selectDiv">已选择：</div>-->
+<!--                        <input type="text" id="selectValues">-->
+<!--                    </div>-->
                     <!--前端树状表格不支持检索后的数据，暂时屏蔽检索-->
                     <!--<div class="columns pull-right">
                         <button class="btn btn-success" onclick="reLoad()">查询</button>
@@ -25,11 +27,13 @@
                 <div style="clear: both">
 
                 </div>
+<!--                <div style="height: 300px;overflow-y: scroll">-->
+<!--                    <table id="exampleTable" data-mobile-responsive="true">-->
+<!--                    </table>-->
+<!--                </div>-->
                 <div style="height: 300px;overflow-y: scroll">
-                    <table id="exampleTable" data-mobile-responsive="true">
-                    </table>
+                  <ul id="tree" class="ztree" style="width:100%; overflow:auto;"></ul>
                 </div>
-
                 <div class="columns pull-right">
                     <button  type="button" class="btn  btn-primary"
                              onclick="qdjqfl()">
@@ -46,5 +50,7 @@
     var dictDOList=[[${dictDOList}]];
 </script>
 <script type="text/javascript" src="/js/appjs/jczy/zzdy/jqfl.js"></script>
+<script src="/js/plugins/zTree/jquery.ztree.all.min.js"></script>
+<!--<script src="/js/plugins/zTree/jquery.ztree.excheck.min.js"></script>-->
 </body>
 </html>
