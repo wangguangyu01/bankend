@@ -12,26 +12,24 @@ import com.smart119.jczy.service.BcbdZzdyService;
 import com.smart119.jczy.service.ZzdyService;
 import com.smart119.system.service.DeptService;
 import io.swagger.annotations.*;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * 编程编队
- * 
+ *
  * @author Jiyu Yang
  * @email yangjiyu@sz000673.com
  * @date 2021-01-30 10:12:02
  */
- 
+
 @Controller
 @RequestMapping("/jczy/bcbd")
 public class BcbdController {
@@ -51,7 +49,7 @@ public class BcbdController {
 	String Bcbd(){
 	    return "jczy/bcbd/bcbd";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:bcbd:bcbd")
@@ -122,22 +120,27 @@ public class BcbdController {
 	String edit(@PathVariable("bcbdId") String bcbdId,Model model){
 		List<ZzdyDO> zzdyList = new ArrayList<>();
 		BcbdDO bcbd = bcbdService.get(bcbdId);
-		model.addAttribute("bcbd", bcbd);
+
 		Map<String,Object> params = new HashMap<>();
 		params.put("status","0");
 		params.put("bcbdId",bcbdId);
 		List<BcbdZzdyDO> list = bcbdZzdyService.list(params);
+		Set<String> zzdyTywysbmSet = new HashSet<>();
 		for(BcbdZzdyDO bcbdZzdyDO:list){
 			//单元id
 			String zzdytywybs = bcbdZzdyDO.getZzdytywybs();
 			ZzdyDO zzdyDO = zzdyService.get(zzdytywybs);
 			zzdyList.add(zzdyDO);
+			zzdyTywysbmSet.add(zzdytywybs);
 		}
 //		List<BcbdZzdyDO> bcbdZzdyList = bcbdService.getzzdyid(bcbdId);
+		String zzdyTywysbms = StringUtils.join(zzdyTywysbmSet, ",");
+		bcbd.setZzdyid(zzdyTywysbms);
+		model.addAttribute("bcbd", bcbd);
 		model.addAttribute("bcbdZzdyList", zzdyList);
 	    return "jczy/bcbd/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -160,7 +163,7 @@ public class BcbdController {
 		bcbdService.update(bcbd);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -173,7 +176,7 @@ public class BcbdController {
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -196,5 +199,5 @@ public class BcbdController {
 	String addzzdy(){
 		return "jczy/bcbd/addzzdy";
 	}
-	
+
 }
