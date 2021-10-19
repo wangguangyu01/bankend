@@ -103,13 +103,12 @@ public class LoginController extends BaseController {
 //        上线是打开下方，跳过验证码注解
         try {
             //从session中获取随机数
-            String random = (String) request.getSession()
-                .getAttribute(RandomValidateCodeUtil.RANDOMCODEKEY);
+            String random = redisManager.get(RandomValidateCodeUtil.RANDOMCODEKEYNEW
+                    + "::" + request.getRequestedSessionId());
             if (StringUtils.isBlank(verify)) {
                 return R.error("请输入验证码");
             }
-            if (random.equals(verify)) {
-            } else {
+            if (!random.equals(verify)) {
                 return R.error("请输入正确的验证码");
             }
         } catch (Exception e) {

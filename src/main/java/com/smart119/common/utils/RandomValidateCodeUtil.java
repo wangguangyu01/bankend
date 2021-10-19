@@ -1,5 +1,6 @@
 package com.smart119.common.utils;
 
+import com.smart119.common.redis.shiro.RedisManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @author smart119
@@ -19,6 +21,7 @@ public class RandomValidateCodeUtil {
 
     public static final String RANDOMCODEKEY = "RANDOMVALIDATECODEKEY";//放到session中的key
     private String randString = "0123456789";//随机产生只有数字的字符串 private String
+    public static final String RANDOMCODEKEYNEW = "captcha:code";
     //private String randString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";//随机产生只有字母的字符串
     //private String randString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";//随机产生数字与字母组合的字符串
     private int width = 95;// 图片宽
@@ -74,9 +77,11 @@ public class RandomValidateCodeUtil {
             randomString = drowString(g, randomString, i);
         }
         logger.info(randomString);
+        RedisManager redisManager = new RedisManager();
+        redisManager.set(RANDOMCODEKEYNEW + "::" + request.getRequestedSessionId(), randomString, 180);
         //将生成的随机字符串保存到session中
-        session.removeAttribute(RANDOMCODEKEY);
-        session.setAttribute(RANDOMCODEKEY, randomString);
+        /*session.removeAttribute(RANDOMCODEKEY);
+        session.setAttribute(RANDOMCODEKEY, randomString);*/
         g.dispose();
         try {
             // 将内存中的图片通过流动形式输出到客户端
