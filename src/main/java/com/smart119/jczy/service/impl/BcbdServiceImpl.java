@@ -5,19 +5,19 @@ import com.smart119.common.utils.StringUtils;
 import com.smart119.jczy.dao.BcbdZzdyDao;
 import com.smart119.jczy.domain.BcbdZzdyDO;
 import com.smart119.jczy.domain.XfclDO;
+import com.smart119.jczy.domain.ZzdyDO;
 import com.smart119.jczy.service.BcbdZzdyService;
+import com.smart119.jczy.service.ZzdyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import com.smart119.jczy.dao.BcbdDao;
 import com.smart119.jczy.domain.BcbdDO;
 import com.smart119.jczy.service.BcbdService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 
 @Service
@@ -27,7 +27,10 @@ public class BcbdServiceImpl implements BcbdService {
 
 	@Autowired
 	private BcbdZzdyDao bcbdZzdyDao;
-	
+
+	@Autowired
+	private ZzdyService zzdyService;
+
 	@Override
 	public BcbdDO get(String bcbdId){
 		return bcbdDao.get(bcbdId);
@@ -37,7 +40,7 @@ public class BcbdServiceImpl implements BcbdService {
 	public List<BcbdZzdyDO> getzzdyid(String bcbdId){
 		return bcbdZzdyDao.getzzdyid(bcbdId);
 	}
-	
+
 	@Override
 	public List<BcbdDO> list(Map<String, Object> map){
 		return bcbdDao.list(map);
@@ -75,47 +78,49 @@ public class BcbdServiceImpl implements BcbdService {
 		bcbd.setBcbdId(bcbdId);
 		bcbd.setStatus("0200");
 		if(bcbdDao.save(bcbd)>0){
+			Set<String> deptIds = new HashSet<>();
 			//如果保存成功添加子表；
-			String zzdyids = bcbd.getZzdyid();
-			if(StringUtils.isNotEmpty(zzdyids)){
-				String zzdid [] = zzdyids.substring(0,zzdyids.length()-1).split(",");
-				for(String s :zzdid){
-					BcbdZzdyDO bcbdZzdyDO = new BcbdZzdyDO();
-					bcbdZzdyDO.setBcbdZzdyId(UUID.randomUUID().toString().replace("-", ""));
-					bcbdZzdyDO.setBcbdId(bcbdId);
-					bcbdZzdyDO.setZzdytywybs(s);
-					if(bcbdZzdyDao.save(bcbdZzdyDO) >0){
-						result = 1 ;
-					}
-				}
-			}
+			result = getResult(bcbd, result, deptIds, bcbdId);
 		}
 		return result;
 	}
-	
+
 	@Override
 	@Transactional
 	public int update(BcbdDO bcbd) {
 		int result = 0;
 		if (bcbdDao.update(bcbd) > 0) {
+			Set<String> deptIds = new HashSet<>();
 			bcbdZzdyDao.removeByBcbdId(bcbd.getBcbdId());
-			String zzdyids = bcbd.getZzdyid();
-			if (StringUtils.isNotEmpty(zzdyids)) {
-				String zzdid[] = zzdyids.substring(0, zzdyids.length() - 1).split(",");
-				for (String s : zzdid) {
-					BcbdZzdyDO bcbdZzdyDO = new BcbdZzdyDO();
-					bcbdZzdyDO.setBcbdZzdyId(UUID.randomUUID().toString().replace("-", ""));
-					bcbdZzdyDO.setBcbdId(bcbd.getBcbdId());
-					bcbdZzdyDO.setZzdytywybs(s);
-					if (bcbdZzdyDao.save(bcbdZzdyDO) > 0) {
-						result = 1;
-					}
-				}
-			}
+			result = getResult(bcbd, result, deptIds, bcbd.getBcbdId());
 		}
 		return result;
 	}
-	
+
+	private int getResult(BcbdDO bcbd, int result, Set<String> deptIds, String bcbdId) {
+		String zzdyids = bcbd.getZzdyid();
+		if (StringUtils.isNotEmpty(zzdyids)) {
+			String zzdid[] = zzdyids.substring(0, zzdyids.length() - 1).split(",");
+			for (String s : zzdid) {
+				BcbdZzdyDO bcbdZzdyDO = new BcbdZzdyDO();
+				bcbdZzdyDO.setBcbdZzdyId(UUID.randomUUID().toString().replace("-", ""));
+				bcbdZzdyDO.setBcbdId(bcbdId);
+				bcbdZzdyDO.setZzdytywybs(s);
+				if (bcbdZzdyDao.save(bcbdZzdyDO) > 0) {
+					ZzdyDO zzdyDO = zzdyService.get(s);
+					deptIds.add(zzdyDO.getXfjyjgTywysbm());
+					result = 1;
+				}
+			}
+		}
+		if (!ObjectUtils.isEmpty(deptIds)) {
+			String xfjyjgTywysbms = StringUtils.join(deptIds, ",");
+			bcbd.setXfjyjgtywysbm(xfjyjgTywysbms);
+			bcbdDao.update(bcbd);
+		}
+		return result;
+	}
+
 	@Override
 	@Transactional
 	public int remove(String bcbdId){
@@ -128,7 +133,7 @@ public class BcbdServiceImpl implements BcbdService {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public int batchRemove(String[] bcbdIds){
 		return bcbdDao.batchRemove(bcbdIds);
