@@ -76,7 +76,7 @@ public class ExliveServiceImpl implements ExliveService {
         String url = exliveUrl + "?version=1&method=loginSystem&name=" + username + "&pwd=" + password;
         String res = restTemplate.postForObject(url, null, String.class);
         JSONObject jsonObject = JSONObject.parseObject(res);
-        log.info("GPS接口登录返回数据{}", String.valueOf(jsonObject));
+        log.info("GPS接口登录返回数据{}", res);
         GpsDto gpsDto = new GpsDto();
         if (!ObjectUtils.isEmpty(jsonObject)) {
             if (!ObjectUtils.isEmpty(jsonObject.get("uid"))) {
@@ -122,7 +122,7 @@ public class ExliveServiceImpl implements ExliveService {
                         List<Map> vehicleList = JSONArray.parseArray(vehicles, Map.class);
                         for (Map vehicleMap : vehicleList) {
                             String vehicleStr = JSONObject.toJSONString(vehicleMap);
-                            System.out.println(vehicleStr);
+                            log.info("车辆信息---》{}", vehicleStr);
                             vehiclesList.add(vehicleStr);
                         }
                     }
