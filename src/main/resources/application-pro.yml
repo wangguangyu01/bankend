@@ -121,4 +121,4 @@ mybatis-plus:
 exlive:
   url: http://218.201.137.206:89/gpsonline/GPSAPI
   username: linyizhidui
-  password: ENC(CMc+WyHblTbtKghS8TnCMQ==)
+  password: 123456
