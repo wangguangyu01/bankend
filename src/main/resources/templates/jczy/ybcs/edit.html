@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+							<input id="ybcsTywysbm" name="ybcsTywysbm" th:value="${ybcs.ybcsTywysbm}"  type="hidden">
+							<input type="hidden" id="cslbVal" th:value="${ybcs.cslb}"/>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">单位名称：</label>
+								<div class="col-sm-4">
+									<input id="dwmc" name="dwmc" class="form-control" type="text" th:value="${ybcs.dwmc}" required>
+								</div>
+
+								<label class="col-sm-2 control-label">联系电话：</label>
+								<div class="col-sm-4">
+									<input id="lxdh" name="lxdh" class="form-control" type="text" th:value="${ybcs.lxdh}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地址：</label>
+								<div class="col-sm-10">
+									<input id="dz" name="dz" class="form-control" type="text" th:value="${ybcs.dz}" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">地球经度：</label>
+								<div class="col-sm-4">
+									<input id="dqjd" name="dqjd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+										   readonly="readonly" placeholder="请选择" th:value="${ybcs.dqjd}" title="请在地图上选择重点单位位置" required>
+								</div>
+								<label class="col-sm-2 control-label">地球纬度：</label>
+								<div class="col-sm-4">
+									<input id="dqwd" name="dqwd" class="form-control" type="text" style="cursor: pointer;" onclick="openMap()"
+										   readonly="readonly" placeholder="请选择" th:value="${ybcs.dqwd}" title="请在地图上选择重点单位位置" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">楼层：</label>
+								<div class="col-sm-4">
+									<input id="lc" name="lc" class="form-control" th:value="${ybcs.lc}" type="text">
+								</div>
+								<label class="col-sm-2 control-label">建筑面积：</label>
+								<div class="col-sm-4">
+									<input id="jzmj" name="jzmj" class="form-control" th:value="${ybcs.jzmj}" type="text">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">是否居住：</label>
+								<div class="col-sm-4">
+									<select data-placeholder="是否居住" name="sfjz" id="sfjz" title="是否居住" th:value="${ybcs.sfjz}"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">场所类别：</label>
+								<div class="col-sm-4">
+									<select data-placeholder="场所类别" name="cslb" id="cslb" title="场所类别"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="">--请选择场所类别--</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">是否存在危险品</label>
+								<div class="col-sm-4">
+									<input id="sfcfwxp" name="sfcfwxp" class="form-control" th:value="${ybcs.sfcfwxp}" type="text">
+								</div>
+
+								<label class="col-sm-2 control-label">是否安装防盗窗：</label>
+								<div class="col-sm-4">
+									<select data-placeholder="是否安装防盗窗" name="sfazfdc" id="sfazfdc" title="是否安装防盗窗" th:value="${ybcs.sfazfdc}"
+											class="form-control chosen-select" tabindex="2" >
+										<option value="1">是</option>
+										<option value="0">否</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">楼梯位置-室内：</label>
+								<div class="col-sm-4">
+									<input id="ltwzSn" name="ltwzSn" class="form-control" type="text" th:value="${ybcs.ltwzSn}">
+								</div>
+								<label class="col-sm-2 control-label">楼梯位置-室外：</label>
+								<div class="col-sm-4">
+									<input id="ltwzSw" name="ltwzSw" class="form-control" type="text" th:value="${ybcs.ltwzSw}">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="col-sm-10 col-sm-offset-2">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/jczy/ybcs/edit.js">
+	</script>
+</body>
+</html>
