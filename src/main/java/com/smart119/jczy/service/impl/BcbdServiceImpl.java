@@ -136,6 +136,9 @@ public class BcbdServiceImpl implements BcbdService {
 
 	@Override
 	public int batchRemove(String[] bcbdIds){
+		for(String bcbdId:bcbdIds){
+			bcbdZzdyDao.removeByBcbdId(bcbdId);
+		}
 		return bcbdDao.batchRemove(bcbdIds);
 	}
 	@Override

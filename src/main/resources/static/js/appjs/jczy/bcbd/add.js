@@ -13,6 +13,11 @@ $.validator.setDefaults({
 	}
 });
 function save() {
+	if($("#zzdyid").val()==''){
+		parent.layer.alert('请添加作战单元！');
+		return;
+	}
+
 	$("#signupForm").ajaxSubmit({
 		type : "POST",
 		url : "/jczy/bcbd/save",
