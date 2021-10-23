@@ -41,17 +41,17 @@ public class ZzdyServiceImpl implements ZzdyService {
 	public ZzdyDO get(String zzdyTywybs){
 		return zzdyDao.get(zzdyTywybs);
 	}
-	
+
 	@Override
 	public List<ZzdyDO> list(Map<String, Object> map){
 		return zzdyDao.list(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
 		return zzdyDao.count(map);
 	}
-	
+
 	@Override
 	public int save(ZzdyDO zzdy){
 		int res=0;
@@ -89,17 +89,17 @@ public class ZzdyServiceImpl implements ZzdyService {
 		}
 		return res;
 	}
-	
+
 	@Override
 	public int update(ZzdyDO zzdy){
 		return zzdyDao.update(zzdy);
 	}
-	
+
 	@Override
 	public int remove(String zzdyTywybs){
 		return zzdyDao.remove(zzdyTywybs);
 	}
-	
+
 	@Override
 	public int batchRemove(String[] zzdyTywybss){
 		return zzdyDao.batchRemove(zzdyTywybss);
@@ -164,6 +164,8 @@ public class ZzdyServiceImpl implements ZzdyService {
 	}
 
 
-
-
+	@Override
+	public ZzdyDO queryByTywybs(String zzdyTywybs) {
+		return zzdyDao.queryByTywybsm(zzdyTywybs);
+	}
 }

@@ -44,7 +44,7 @@
 		  from jczy_zzdy
 		  left join sys_dict dic on jczy_zzdy.ZZDYLXDM=dic.value and dic.type='ZZDYLXDM'
 		  left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
-        <where>  
+        <where>
 		  		  <if test="zzdyTywybs != null and zzdyTywybs != ''"> and jczy_zzdy.ZZDY_TYWYBS =${zzdyTywybs} </if>
 		  		  <if test="zzdymc != null and zzdymc != ''"> and jczy_zzdy.ZZDYMC like '%${zzdymc}%' </if>
 		  		  <if test="zzdylxdm != null and zzdylxdm != ''"> and jczy_zzdy.ZZDYLXDM = #{zzdylxdm} </if>
@@ -72,7 +72,7 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
  	<select id="count" resultType="int">
 		select count(*) from jczy_zzdy left join sys_dept dept on jczy_zzdy.XFJYJG_TYWYSBM=dept.XFJYJG_TYWYSBM
 		 <where>
@@ -92,31 +92,31 @@
 			 <if test="dwmc != null and dwmc != ''"> and dept.DWMC  like '%${dwmc}%' </if>
 		  		</where>
 	</select>
-	 
+
 	<insert id="save" parameterType="com.smart119.jczy.domain.ZzdyDO">
 		insert into jczy_zzdy
 		(
-			`ZZDY_TYWYBS`, 
-			`ZZDYMC`, 
-			`ZZDYLXDM`, 
-			`BZSL`, 
-			`ZZRW`, 
-			`cdate`, 
-			`status`, 
-			`cperson`, 
+			`ZZDY_TYWYBS`,
+			`ZZDYMC`,
+			`ZZDYLXDM`,
+			`BZSL`,
+			`ZZRW`,
+			`cdate`,
+			`status`,
+			`cperson`,
 			`XFJYJG_TYWYSBM`,
 			`JQFLYDM`
 		)
 		values
 		(
-			#{zzdyTywybs}, 
-			#{zzdymc}, 
-			#{zzdylxdm}, 
-			#{bzsl}, 
-			#{zzrw}, 
-			#{cdate}, 
-			#{status}, 
-			#{cperson}, 
+			#{zzdyTywybs},
+			#{zzdymc},
+			#{zzdylxdm},
+			#{bzsl},
+			#{zzrw},
+			#{cdate},
+			#{status},
+			#{cperson},
 			#{xfjyjgTywysbm},
 			#{jqflydm}
 		)
@@ -138,7 +138,7 @@
 
 
 	<update id="update" parameterType="com.smart119.jczy.domain.ZzdyDO">
-		update jczy_zzdy 
+		update jczy_zzdy
 		<set>
 			<if test="zzdymc != null">`ZZDYMC` = #{zzdymc}, </if>
 			<if test="zzdylxdm != null">`ZZDYLXDM` = #{zzdylxdm}, </if>
@@ -152,13 +152,13 @@
 		</set>
 		where ZZDY_TYWYBS = #{zzdyTywybs}
 	</update>
-	
+
 	<delete id="remove">
 		delete from jczy_zzdy where ZZDY_TYWYBS = #{value}
 	</delete>
-	
+
 	<delete id="batchRemove">
-		delete from jczy_zzdy where ZZDY_TYWYBS in 
+		delete from jczy_zzdy where ZZDY_TYWYBS in
 		<foreach item="zzdyTywybs" collection="array" open="(" separator="," close=")">
 			#{zzdyTywybs}
 		</foreach>
@@ -241,6 +241,11 @@
 		SELECT dept.XFJYJG_TYWYSBM ,dept.DWMC ,dept.DQJD ,dept.DQWD
 		from sys_dept dept
 		where dept.XFJYJG_TYWYSBM = #{value}
+	</select>
+
+
+	<select id="queryByTywybsm" resultType="com.smart119.jczy.domain.ZzdyDO">
+		select  * from jczy_zzdy d where d.ZZDY_TYWYBS = #{zzdyTywybs}
 	</select>
 
 </mapper>

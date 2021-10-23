@@ -18,17 +18,17 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ZzdyDao {
 
 	ZzdyDO get(String zzdyTywybs);
-	
+
 	List<ZzdyDO> list(Map<String,Object> map);
-	
+
 	int count(Map<String,Object> map);
-	
+
 	int save(ZzdyDO zzdy);
-	
+
 	int update(ZzdyDO zzdy);
-	
+
 	int remove(String ZZDY_TYWYBS);
-	
+
 	int batchRemove(String[] zzdyTywybss);
 
 	List<DeptDO> deptList(Map<String,Object> map);
@@ -38,4 +38,7 @@ public interface ZzdyDao {
 	List<Map<String,Object>> xfclListByZzdy (String zzdyTywybs);
 
 	DeptDO deptByXfjyjgTywysbm(String xfjyjgTywysbm);
+
+
+	ZzdyDO queryByTywybsm(String zzdyTywybs);
 }

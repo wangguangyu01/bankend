@@ -100,14 +100,17 @@ public class BcbdServiceImpl implements BcbdService {
 	private int getResult(BcbdDO bcbd, int result, Set<String> deptIds, String bcbdId) {
 		String zzdyids = bcbd.getZzdyid();
 		if (StringUtils.isNotEmpty(zzdyids)) {
-			String zzdid[] = zzdyids.substring(0, zzdyids.length() - 1).split(",");
+			String zzdid[] = StringUtils.split(StringUtils.trim(zzdyids), ",");
+			if (ObjectUtils.isEmpty(zzdid)) {
+				return 0;
+			}
 			for (String s : zzdid) {
 				BcbdZzdyDO bcbdZzdyDO = new BcbdZzdyDO();
 				bcbdZzdyDO.setBcbdZzdyId(UUID.randomUUID().toString().replace("-", ""));
 				bcbdZzdyDO.setBcbdId(bcbdId);
 				bcbdZzdyDO.setZzdytywybs(s);
 				if (bcbdZzdyDao.save(bcbdZzdyDO) > 0) {
-					ZzdyDO zzdyDO = zzdyService.get(s);
+					ZzdyDO zzdyDO = zzdyService.queryByTywybs(s);
 					deptIds.add(zzdyDO.getXfjyjgTywysbm());
 					result = 1;
 				}
