@@ -53,6 +53,9 @@ public class ZzdyDO implements Serializable {
 	//警情分类与代码名称
 	private String jqflydmname;
 
+	//0 普通作战单元 1编队作战单元
+	private String type;
+
 	public String getXfclTywysbm() {
 		return xfclTywysbm;
 	}
@@ -216,5 +219,13 @@ public class ZzdyDO implements Serializable {
 
 	public void setJqflydmname(String jqflydmname) {
 		this.jqflydmname = jqflydmname;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }

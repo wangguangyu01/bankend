@@ -59,6 +59,7 @@
                     </if>
 		  		  <if test="cperson != null and cperson != ''"> and jczy_zzdy.cperson = #{cperson} </if>
 			     <if test="dwmc != null and dwmc != ''"> and dept.DWMC  like '%${dwmc}%' </if>
+				 <if test="type != null and type != ''"> and jczy_zzdy.TYPE  = #{type} </if>
 		  		</where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -90,6 +91,7 @@
 			 </if>
 			 <if test="cperson != null and cperson != ''"> and jczy_zzdy.cperson = #{cperson} </if>
 			 <if test="dwmc != null and dwmc != ''"> and dept.DWMC  like '%${dwmc}%' </if>
+			 <if test="type != null and type != ''"> and jczy_zzdy.TYPE  = #{type} </if>
 		  		</where>
 	</select>
 
@@ -105,7 +107,8 @@
 			`status`,
 			`cperson`,
 			`XFJYJG_TYWYSBM`,
-			`JQFLYDM`
+			`JQFLYDM`,
+			`TYPE`
 		)
 		values
 		(
@@ -118,7 +121,8 @@
 			#{status},
 			#{cperson},
 			#{xfjyjgTywysbm},
-			#{jqflydm}
+			#{jqflydm},
+			#{type}
 		)
 	</insert>
 	<insert id="saveCL" parameterType="java.util.HashMap">
@@ -149,6 +153,7 @@
 			<if test="cperson != null">`cperson` = #{cperson}, </if>
 			<if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm},</if>
 			<if test="jqflydm != null">`JQFLYDM` = #{jqflydm},</if>
+			<if test="type != null">`TYPE` = #{type}</if>
 		</set>
 		where ZZDY_TYWYBS = #{zzdyTywybs}
 	</update>

@@ -52,10 +52,11 @@ public class ZzdyController extends BaseController {
 	@Autowired
 	private ZzdyXfzbService zzdyXfzbService;
 
-	@GetMapping()
+	@GetMapping("/{type}")
 	@RequiresPermissions("webapi:zzdy:zzdy")
-	String Zzdy(Model model){
+	String Zzdy(@PathVariable("type") String type,Model model){
 		model.addAttribute("deptId", getUser().getDeptId());
+		model.addAttribute("type", type);
 		return "jczy/zzdy/zzdy";
 	}
 
@@ -82,9 +83,9 @@ public class ZzdyController extends BaseController {
 		return pageUtils;
 	}
 
-	@GetMapping("/add")
+	@GetMapping("/add/{type}")
 	@RequiresPermissions("webapi:zzdy:add")
-	String add(@RequestParam("deptId") Long deptId,Model model){
+	String add(@PathVariable("type") String type,@RequestParam("deptId") Long deptId,Model model){
 	    //Long deptId = Long.parseLong(deptIdStr);
 		DeptDO  name=deptService.get(deptId);
 		Map map=new HashMap();
@@ -92,6 +93,7 @@ public class ZzdyController extends BaseController {
 		map.put("xfjyjgTywysbm", name.getXfjyjgTywysbm());
 		map.put("deptId", deptId);
 		model.addAttribute("map",map);
+		model.addAttribute("type", type);
 		return "jczy/zzdy/add";
 	}
 

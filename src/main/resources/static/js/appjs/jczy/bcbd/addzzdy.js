@@ -65,6 +65,7 @@ function load() {
 						offset:params.offset,
 						zzdymc:$('#zzdymc').val(),
 						dwmc:$('#dwmc').val(),
+						type:'1',
 						// name:$('#searchName').val(),
 						// username:$('#searchName').val()
 					};

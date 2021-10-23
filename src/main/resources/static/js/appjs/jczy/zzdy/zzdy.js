@@ -36,7 +36,8 @@ function load() {
 								limit: params.limit,
 								offset:params.offset,
 								zzdymc:$('#searchName').val(),
-                                deptId: zid
+                                deptId: zid,
+								type:$('#type').val()
 					           // username:$('#searchName').val()
 							};
 						},
@@ -123,7 +124,7 @@ function judge_add(deptId){
 					maxmin : true,
 					shadeClose : false, // 点击遮罩关闭层
 					area : [ '70%', '68%' ],
-					content : prefix + '/add?deptId='+deptId // iframe的url
+					content : prefix + '/add/'+$('#type').val()+'?deptId='+deptId // iframe的url
 				});
 			}else{
                 parent.layer.alert("选择的消防救援机构不是“消防救援站“");
