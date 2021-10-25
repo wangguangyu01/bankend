@@ -150,7 +150,7 @@ public class XfjyryServiceImpl implements XfjyryService {
         userDO.setXfjyjgTywysbm(xfjyry.getSjszjgTywysbm());  //实际救援机构唯一识别码
         userDO.setEmail(xfjyry.getHlwDzxx());                //互联网
         userDO.setDeptId(deptService.getDeptId(xfjyry.getSjszjgTywysbm()).getDeptId() == null ? null : deptService.getDeptId(xfjyry.getSjszjgTywysbm()).getDeptId()); //dept主键ID
-
+        userDO.setMobile(xfjyry.getYdLxdh());
         //角色
         List<Long> roleIds = new ArrayList<>();
         if (Objects.nonNull(xfjyry.getRole())) {
