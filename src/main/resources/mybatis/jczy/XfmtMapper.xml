@@ -18,7 +18,7 @@
         left join sys_dict d on t.SYKYZTLBDM=d.`value` and d.description='水源可用状态类别代码'
         <where>
             <if test="qsmtTywysbm != null and qsmtTywysbm != ''">and QSMT_TYWYSBM = #{qsmtTywysbm}</if>
-            <if test="mc != null and mc != ''">and MC = #{mc}</if>
+            <if test="mc != null and mc != ''">and MC like '%${mc}%'</if>
             <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
             <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
             <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
