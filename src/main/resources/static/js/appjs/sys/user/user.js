@@ -61,8 +61,8 @@ function load() {
 						title : '用户名'
 					},
 					{
-						field : 'email',
-						title : '邮箱'
+						field : 'mobile',
+						title : '手机号'
 					},
 					{
 						field : 'status',
