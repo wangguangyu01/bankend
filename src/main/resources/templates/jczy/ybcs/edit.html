@@ -69,7 +69,7 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">是否存在危险品</label>
+								<label class="col-sm-2 control-label">危险品</label>
 								<div class="col-sm-4">
 									<input id="sfcfwxp" name="sfcfwxp" class="form-control" th:value="${ybcs.sfcfwxp}" type="text">
 								</div>
@@ -95,6 +95,28 @@
 							</div>
 
 							<div class="form-group">
+								<label class="col-sm-2 control-label">外景图：</label>
+								<div class="col-sm-4">
+									<input id='wjt' multiple type="file" name="wjt" data-show-caption="true"/>
+								</div>
+								<label class="col-sm-2 control-label">一楼室内：</label>
+								<div class="col-sm-4">
+									<input id='ylsn' multiple type="file" name="ylsn" data-show-caption="true"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">二楼室内：</label>
+								<div class="col-sm-4">
+									<input id='elsn' multiple type="file" name="sjFile" data-show-caption="true"/>
+								</div>
+								<label class="col-sm-2 control-label">三楼室内：</label>
+								<div class="col-sm-4">
+									<input id='slsn' multiple type="file" name="fwFile" data-show-caption="true"/>
+								</div>
+							</div>
+
+							<div class="form-group">
 								<div class="col-sm-10 col-sm-offset-2">
 									<button type="submit" class="btn btn-primary">提交</button>
 								</div>
@@ -106,7 +128,13 @@
 	</div>
 	</div>
 	<div th:include="include::footer"></div>
-	<script type="text/javascript" src="/js/appjs/jczy/ybcs/edit.js">
+	<script type="text/javascript" src="/js/appjs/jczy/ybcs/edit.js"></script>
+	<script th:inline="javascript">
+        var wjt = [[${wjt}]];
+        var ylsn = [[${ylsn}]];
+        var elsn = [[${elsn}]];
+        var slsn = [[${slsn}]];
+
 	</script>
 </body>
 </html>

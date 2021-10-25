@@ -114,6 +114,8 @@ public class XfclController extends BaseController{
 	@RequiresPermissions("jczy:xfcl:edit")
 	String edit(@PathVariable("xfclTywysbm") String xfclTywysbm,Model model){
 		XfclDO xfcl = xfclService.get(xfclTywysbm);
+		DeptDO dept = deptService.getDeptId(xfcl.getXfjyjgTywysbm());
+		xfcl.setXfjyjg(dept.getDwmc());
 		Map m = new HashMap();
 		m.put("fid",xfcl.getXfclTywysbm());
 		m.put("fType","xfcl");
