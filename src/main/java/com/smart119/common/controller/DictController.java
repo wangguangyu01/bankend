@@ -138,6 +138,7 @@ public class DictController extends BaseController {
 		setDictProperty(dictDOData);
 		// redis中删除元素
 		redisDelElement(dictDOData);
+		dict.setDelFlag("0");
 		dictService.update(dict);
 		DictDO dictUpdate = dictService.get(dict.getId());
 		setDictProperty(dictUpdate);
