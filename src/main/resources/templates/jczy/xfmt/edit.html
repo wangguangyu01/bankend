@@ -66,21 +66,9 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">消防码头可用状态：</label>
-								<div class="col-sm-4">
-									<select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择可用状态"  >
-										<option value="">--请选择--</option>
-									</select>
-								</div>
 								<label class="col-sm-2 control-label">水源标高差高度（米）：</label>
 								<div class="col-sm-4">
 									<input id="sybgcGd" name="sybgcGd" class="form-control" type="text" th:value="${#numbers.formatDecimal(xfmt.sybgcGd, 0, 2)}" min="0">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">停车位置地点名称：</label>
-								<div class="col-sm-4">
-									<input id="tcwzDdmc" name="tcwzDdmc" class="form-control" type="text" th:value="${xfmt.tcwzDdmc}">
 								</div>
 								<label class="col-sm-2 control-label">停车数量：</label>
 								<div class="col-sm-4">
@@ -88,9 +76,28 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-2 control-label">停车位置地点名称：</label>
+								<div class="col-sm-4">
+									<input id="tcwzDdmc" name="tcwzDdmc" class="form-control" type="text" th:value="${xfmt.tcwzDdmc}">
+								</div>
 								<label class="col-sm-2 control-label">管理单位名称：</label>
 								<div class="col-sm-4">
 									<input id="glDwmc" name="glDwmc" class="form-control" type="text" th:value="${xfmt.glDwmc}">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">消防码头可用状态：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="sykyztlbdm" name="sykyztlbdm" title="请选择可用状态"  >
+										<option value="">--请选择--</option>
+									</select>
+								</div>
+								<label class="col-sm-2 control-label">是否删除：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="status" name="status" title="是否删除" >
+										<option value="0" th:selected="${xfmt.status != 1 || xfmt.status != '1'}">否</option>
+										<option value="1" th:selected="${xfmt.status == 1 || xfmt.status == '1'}">是</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">

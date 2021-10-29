@@ -237,7 +237,7 @@
 
 
     <update id="updateStatus">
-        update jczy_xfsc set `status` = 1  where XFSC_TYWYSBM = #{xfscTywysbm}
+        update jczy_xfsc set `status` = '1'  where XFSC_TYWYSBM = #{xfscTywysbm}
     </update>
 
 

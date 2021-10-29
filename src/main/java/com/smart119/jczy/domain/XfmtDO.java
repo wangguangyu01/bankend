@@ -2,7 +2,7 @@ package com.smart119.jczy.domain;
 
 
 
-import com.alibaba.fastjson.annotation.JSONPOJOBuilder;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -26,6 +26,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@TableName("jczy_xfmt")
 public class XfmtDO implements Serializable {
 	private static final long serialVersionUID = 1L;
     // 构建部分参数的实例
@@ -365,25 +366,5 @@ public class XfmtDO implements Serializable {
 	}
 
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
 
-		XfmtDO xfmtDO = (XfmtDO) o;
-
-		if (qsmtTywysbm != null ? !qsmtTywysbm.equals(xfmtDO.qsmtTywysbm) : xfmtDO.qsmtTywysbm != null) return false;
-		return dzmc != null ? dzmc.equals(xfmtDO.dzmc) : xfmtDO.dzmc == null;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = qsmtTywysbm != null ? qsmtTywysbm.hashCode() : 0;
-		result = 31 * result + (dzmc != null ? dzmc.hashCode() : 0);
-		return result;
-	}
 }

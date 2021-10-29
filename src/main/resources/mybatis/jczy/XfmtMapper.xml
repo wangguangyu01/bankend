@@ -5,7 +5,7 @@
 
     <select id="get" resultType="com.smart119.jczy.domain.XfmtDO">
 		select t.`QSMT_TYWYSBM`,t.`MC`,t.`DZMC`,t.`DQJD`,t.`DQWD`,t.`SYKYZTLBDM`,t.`SZSY_MC`,t.`SSLD_MC`,t.`QSXS_JYQK`,t.`QS_GD`,t.`SYBGC_GD`,t.`TCWZ_DDMC`,t.`TC_SL`,t.`GL_DWMC`,
-		t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG
+		t.`XFJYJG_TYWYSBM`,t.STATUS,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG
 		from jczy_xfmt t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
 		where t.QSMT_TYWYSBM = #{value}
@@ -13,7 +13,7 @@
 
     <select id="list" resultType="com.smart119.jczy.domain.XfmtDO">
         select t.`QSMT_TYWYSBM`,t.`MC`,t.`DZMC`,t.`DQJD`,t.`DQWD`,t.`SYKYZTLBDM`,t.`SZSY_MC`,t.`SSLD_MC`,t.`QSXS_JYQK`,t.`QS_GD`,t.`SYBGC_GD`,t.`TCWZ_DDMC`,t.`TC_SL`,t.`GL_DWMC`,
-        t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,d.`name` SYKYZTLB
+        t.`XFJYJG_TYWYSBM`, t.STATUS ,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,d.`name` SYKYZTLB
         from jczy_xfmt t
         left join sys_dict d on t.SYKYZTLBDM=d.`value` and d.description='水源可用状态类别代码'
         <where>
@@ -40,6 +40,9 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
+            <if test="status !=null">
+                and status = #{status}
+            </if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -80,51 +83,56 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
+            <if test="status !=null">
+                and STATUS = #{status}
+            </if>
         </where>
     </select>
 
     <insert id="save" parameterType="com.smart119.jczy.domain.XfmtDO">
 		insert into jczy_xfmt
 		(
-			`QSMT_TYWYSBM`, 
-			`MC`, 
-			`DZMC`, 
-			`DQJD`, 
-			`DQWD`, 
-			`SYKYZTLBDM`, 
-			`SZSY_MC`, 
-			`SSLD_MC`, 
-			`QSXS_JYQK`, 
-			`QS_GD`, 
-			`SYBGC_GD`, 
-			`TCWZ_DDMC`, 
-			`TC_SL`, 
-			`GL_DWMC`, 
-			`XFJYJG_TYWYSBM`, 
-			`XZQHDM`, 
-			`JIZ_RQ`, 
-			`QY_RQ`
+			`QSMT_TYWYSBM`,
+			`MC`,
+			`DZMC`,
+			`DQJD`,
+			`DQWD`,
+			`SYKYZTLBDM`,
+			`SZSY_MC`,
+			`SSLD_MC`,
+			`QSXS_JYQK`,
+			`QS_GD`,
+			`SYBGC_GD`,
+			`TCWZ_DDMC`,
+			`TC_SL`,
+			`GL_DWMC`,
+			`XFJYJG_TYWYSBM`,
+			`XZQHDM`,
+			`JIZ_RQ`,
+			`QY_RQ`,
+		     `STATUS`
 		)
 		values
 		(
-			#{qsmtTywysbm}, 
-			#{mc}, 
-			#{dzmc}, 
-			#{dqjd}, 
-			#{dqwd}, 
-			#{sykyztlbdm}, 
-			#{szsyMc}, 
-			#{ssldMc}, 
-			#{qsxsJyqk}, 
-			#{qsGd}, 
-			#{sybgcGd}, 
-			#{tcwzDdmc}, 
-			#{tcSl}, 
-			#{glDwmc}, 
-			#{xfjyjgTywysbm}, 
-			#{xzqhdm}, 
-			#{jizRq}, 
-			#{qyRq}
+			#{qsmtTywysbm},
+			#{mc},
+			#{dzmc},
+			#{dqjd},
+			#{dqwd},
+			#{sykyztlbdm},
+			#{szsyMc},
+			#{ssldMc},
+			#{qsxsJyqk},
+			#{qsGd},
+			#{sybgcGd},
+			#{tcwzDdmc},
+			#{tcSl},
+			#{glDwmc},
+			#{xfjyjgTywysbm},
+			#{xzqhdm},
+			#{jizRq},
+			#{qyRq},
+		    #{status}
 		)
 	</insert>
 
@@ -147,7 +155,8 @@
             <if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm},</if>
             <if test="xzqhdm != null">`XZQHDM` = #{xzqhdm},</if>
             <if test="jizRq != null">`JIZ_RQ` = #{jizRq},</if>
-            <if test="qyRq != null">`QY_RQ` = #{qyRq}</if>
+            <if test="qyRq != null">`QY_RQ` = #{qyRq},</if>
+            <if test="status !=null"> STATUS = #{status} </if>
         </set>
         where QSMT_TYWYSBM = #{qsmtTywysbm}
     </update>
@@ -155,6 +164,10 @@
     <delete id="remove">
 		delete from jczy_xfmt where QSMT_TYWYSBM = #{value}
 	</delete>
+
+    <update id="updateStatus">
+        update  jczy_xfmt set status = '1' where QSMT_TYWYSBM = #{qsmtTywysbm}
+    </update>
 
     <delete id="batchRemove">
         delete from jczy_xfmt where QSMT_TYWYSBM in
@@ -170,6 +183,7 @@
         calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
 		from jczy_xfmt t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+		where (t.status = 0 or t.status = '' or t.status is null)
 		HAVING distance <![CDATA[ <= ]]> #{distance}
 	</select>
 

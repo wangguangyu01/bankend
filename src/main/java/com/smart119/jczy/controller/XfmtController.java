@@ -30,7 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:29:22
  */
- 
+
 @Controller
 @RequestMapping("/jczy/xfmt")
 public class XfmtController extends BaseController{
@@ -45,13 +45,13 @@ public class XfmtController extends BaseController{
 
 	@Autowired
 	private DeptService deptService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:xfmt:xfmt")
 	String Xfmt(){
 	    return "jczy/xfmt/xfmt";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:xfmt:xfmt")
@@ -70,7 +70,7 @@ public class XfmtController extends BaseController{
 		PageUtils pageUtils = new PageUtils(xfmtList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:xfmt:add")
 	String add(){
@@ -99,7 +99,7 @@ public class XfmtController extends BaseController{
 
 	    return "jczy/xfmt/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -122,6 +122,7 @@ public class XfmtController extends BaseController{
 		if(fwFiles!=null && fwFiles.length>0) {
 			attachmentService.ftpUpload(fwFiles, id, "xfmtfwt");
 		}
+		xfmt.setStatus(0);
 		if(xfmtService.save(xfmt)>0){
 			return R.ok();
 		}
@@ -150,7 +151,7 @@ public class XfmtController extends BaseController{
 		xfmtService.update(xfmt);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -163,7 +164,7 @@ public class XfmtController extends BaseController{
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -171,8 +172,13 @@ public class XfmtController extends BaseController{
 	@ResponseBody
 	@RequiresPermissions("jczy:xfmt:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] qsmtTywysbms){
-		xfmtService.batchRemove(qsmtTywysbms);
-		return R.ok();
+		boolean flag = xfmtService.batchRemove(qsmtTywysbms);
+		if (flag) {
+			return R.ok();
+		} else {
+			return R.error();
+		}
+
 	}
-	
+
 }
