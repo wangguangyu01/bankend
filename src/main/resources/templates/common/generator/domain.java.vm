@@ -21,6 +21,10 @@ import java.math.BigDecimal;
  * @date ${datetime}
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @TableName("${tableName}")
 @ApiModel(value="${comments}",description="${comments}对象")
 public class ${className}DO implements Serializable {

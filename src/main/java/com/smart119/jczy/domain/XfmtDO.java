@@ -1,5 +1,9 @@
 package com.smart119.jczy.domain;
 
+
+
+import com.alibaba.fastjson.annotation.JSONPOJOBuilder;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.DecimalMax;
@@ -11,15 +15,23 @@ import java.util.Date;
 
 
 /**
- * 
- * 
+ *
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:29:22
  */
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class XfmtDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+    // 构建部分参数的实例
+	// XfmtDO xfmtDO = XfmtDO.builder().city("fsfs").glDwmc("fewfew").build();
+
+
 	//取水码头_通用唯一识别码
 	private String qsmtTywysbm;
 	//名称
@@ -84,6 +96,24 @@ public class XfmtDO implements Serializable {
 	private String province;
 
 	private String sykyztlb;
+
+	/**
+	 * 是否删除
+	 * 0：不删除；
+	 * 1：删除
+	 */
+	private Integer status;
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+
 
 	public String getSykyztlb() {
 		return sykyztlb;
@@ -332,5 +362,28 @@ public class XfmtDO implements Serializable {
 	 */
 	public Date getQyRq() {
 		return qyRq;
+	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		XfmtDO xfmtDO = (XfmtDO) o;
+
+		if (qsmtTywysbm != null ? !qsmtTywysbm.equals(xfmtDO.qsmtTywysbm) : xfmtDO.qsmtTywysbm != null) return false;
+		return dzmc != null ? dzmc.equals(xfmtDO.dzmc) : xfmtDO.dzmc == null;
+	}
+
+	@Override
+	public int hashCode() {
+		int result = qsmtTywysbm != null ? qsmtTywysbm.hashCode() : 0;
+		result = 31 * result + (dzmc != null ? dzmc.hashCode() : 0);
+		return result;
 	}
 }
