@@ -274,7 +274,7 @@
         jczy_xfsc t
         left join sys_dict d on t.SYKYZTLBDM=d.`value` and d.description='水源可用状态类别代码'
         left join sys_dict d1 on t.XFJSGWXSLXDM=d1.`value` and d1.description='消防给水管网形式类型代码'
-        where t.status = 0
+        where (t.status = 0 or t.status = '' or t.status is null)
         HAVING distance <![CDATA[ <= ]]> #{distance}
     </select>
 
