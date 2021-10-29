@@ -28,12 +28,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 消防水池基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-21 15:07:01
  */
- 
+
 @Controller
 @RequestMapping("/jczy/xfsc")
 public class XfscController extends BaseController{
@@ -48,13 +48,13 @@ public class XfscController extends BaseController{
 
 	@Autowired
 	private DeptService deptService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:xfsc:xfsc")
 	String Xfsc(){
 	    return "jczy/xfsc/xfsc";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:xfsc:xfsc")
@@ -66,7 +66,7 @@ public class XfscController extends BaseController{
 		PageUtils pageUtils = new PageUtils(xfscList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:xfsc:add")
 	String add(){
@@ -89,7 +89,7 @@ public class XfscController extends BaseController{
 		model.addAttribute("xfscfwtList", xfscfwtList);
 	    return "jczy/xfsc/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -144,7 +144,7 @@ public class XfscController extends BaseController{
 		xfscService.update(xfsc);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -157,7 +157,7 @@ public class XfscController extends BaseController{
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -168,5 +168,5 @@ public class XfscController extends BaseController{
 		xfscService.batchRemove(xfscTywysbms);
 		return R.ok();
 	}
-	
+
 }

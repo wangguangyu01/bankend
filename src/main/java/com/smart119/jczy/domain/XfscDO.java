@@ -1,6 +1,8 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart119.common.annotation.validator.PhoneValidator;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -14,14 +16,16 @@ import java.util.Date;
 
 /**
  * 消防水池基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-21 15:07:01
  */
+@Data
+@TableName(value = "jczy_xfsc")
 public class XfscDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//消防水池_通用唯一识别码
 	private String xfscTywysbm;
 	//名称
@@ -98,7 +102,10 @@ public class XfscDO implements Serializable {
 	private Date cdate;
 	//创建人
 	private String cperson;
-	//状态
+
+	/**
+	 * 状态，0:未删除；1:删除
+	 */
 	private Integer status;
 
 	private String sykyztlb;

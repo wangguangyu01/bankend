@@ -70,32 +70,32 @@
         jczy_xfsc t
         left join sys_dict d on t.SYKYZTLBDM=d.`value` and d.description='水源可用状态类别代码'
         left join sys_dict d1 on t.XFJSGWXSLXDM=d1.`value` and d1.description='消防给水管网形式类型代码'
-        where t.status = 0
-
-        <if test="xfscTywysbm != null and xfscTywysbm != ''">and XFSC_TYWYSBM = #{xfscTywysbm}</if>
-        <if test="mc != null and mc != ''">and t.MC like '%${mc}%'</if>
-        <if test="dzmc != null and dzmc != ''">and t.DZMC like '%${dzmc}%'</if>
-        <if test="rj != null and rj != ''">and t.RJ = #{rj}</if>
-        <if test="cslRj != null and cslRj != ''">and t.CSL_RJ = #{cslRj}</if>
-        <if test="wbdwDwmc != null and wbdwDwmc != ''">and t.WBDW_DWMC = #{wbdwDwmc}</if>
-        <if test="lxrXm != null and lxrXm != ''">and t.LXR_XM = #{lxrXm}</if>
-        <if test="lxrLxdh != null and lxrLxdh != ''">and t.LXR_LXDH = #{lxrLxdh}</if>
-        <if test="dqjd != null and dqjd != ''">and t.DQJD = #{dqjd}</if>
-        <if test="dqwd != null and dqwd != ''">and t.DQWD = #{dqwd}</if>
-        <if test="sykyztlbdm != null and sykyztlbdm != ''">and t.SYKYZTLBDM = #{sykyztlbdm}</if>
-        <if test="ssldMc != null and ssldMc != ''">and t.SSLD_MC = #{ssldMc}</if>
-        <if test="qsxsJyqk != null and qsxsJyqk != ''">and t.QSXS_JYQK = #{qsxsJyqk}</if>
-        <if test="qsGd != null and qsGd != ''">and t.QS_GD = #{qsGd}</if>
-        <if test="sybgcGd != null and sybgcGd != ''">and t.SYBGC_GD = #{sybgcGd}</if>
-        <if test="tcwzDdmc != null and tcwzDdmc != ''">and t.TCWZ_DDMC = #{tcwzDdmc}</if>
-        <if test="tcSl != null and tcSl != ''">and t.TC_SL = #{tcSl}</if>
-        <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and t.XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
-        <if test="ll != null and ll != ''">and t.LL = #{ll}</if>
-        <if test="gsDwmc != null and gsDwmc != ''">and t.GS_DWMC = #{gsDwmc}</if>
-        <if test="glDwmc != null and glDwmc != ''">and t.GL_DWMC = #{glDwmc}</if>
-        <if test="cdate != null and cdate != ''">and t.cdate = #{cdate}</if>
-        <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
-        <if test="status != null and status != ''">and t.status = #{status}</if>
+        <where>
+            <if test="xfscTywysbm != null and xfscTywysbm != ''">and XFSC_TYWYSBM = #{xfscTywysbm}</if>
+            <if test="mc != null and mc != ''">and t.MC like '%${mc}%'</if>
+            <if test="dzmc != null and dzmc != ''">and t.DZMC like '%${dzmc}%'</if>
+            <if test="rj != null and rj != ''">and t.RJ = #{rj}</if>
+            <if test="cslRj != null and cslRj != ''">and t.CSL_RJ = #{cslRj}</if>
+            <if test="wbdwDwmc != null and wbdwDwmc != ''">and t.WBDW_DWMC = #{wbdwDwmc}</if>
+            <if test="lxrXm != null and lxrXm != ''">and t.LXR_XM = #{lxrXm}</if>
+            <if test="lxrLxdh != null and lxrLxdh != ''">and t.LXR_LXDH = #{lxrLxdh}</if>
+            <if test="dqjd != null and dqjd != ''">and t.DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and t.DQWD = #{dqwd}</if>
+            <if test="sykyztlbdm != null and sykyztlbdm != ''">and t.SYKYZTLBDM = #{sykyztlbdm}</if>
+            <if test="ssldMc != null and ssldMc != ''">and t.SSLD_MC = #{ssldMc}</if>
+            <if test="qsxsJyqk != null and qsxsJyqk != ''">and t.QSXS_JYQK = #{qsxsJyqk}</if>
+            <if test="qsGd != null and qsGd != ''">and t.QS_GD = #{qsGd}</if>
+            <if test="sybgcGd != null and sybgcGd != ''">and t.SYBGC_GD = #{sybgcGd}</if>
+            <if test="tcwzDdmc != null and tcwzDdmc != ''">and t.TCWZ_DDMC = #{tcwzDdmc}</if>
+            <if test="tcSl != null and tcSl != ''">and t.TC_SL = #{tcSl}</if>
+            <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and t.XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
+            <if test="ll != null and ll != ''">and t.LL = #{ll}</if>
+            <if test="gsDwmc != null and gsDwmc != ''">and t.GS_DWMC = #{gsDwmc}</if>
+            <if test="glDwmc != null and glDwmc != ''">and t.GL_DWMC = #{glDwmc}</if>
+            <if test="cdate != null and cdate != ''">and t.cdate = #{cdate}</if>
+            <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
+            <if test="status != null and status != ''">and t.status = #{status}</if>
+        </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
@@ -140,56 +140,56 @@
     <insert id="save" parameterType="com.smart119.jczy.domain.XfscDO">
 		insert into jczy_xfsc
 		(
-			`XFSC_TYWYSBM`, 
-			`MC`, 
-			`DZMC`, 
-			`RJ`, 
-			`CSL_RJ`, 
-			`WBDW_DWMC`, 
-			`LXR_XM`, 
-			`LXR_LXDH`, 
-			`DQJD`, 
-			`DQWD`, 
-			`SYKYZTLBDM`, 
-			`SSLD_MC`, 
-			`QSXS_JYQK`, 
-			`QS_GD`, 
-			`SYBGC_GD`, 
-			`TCWZ_DDMC`, 
-			`TC_SL`, 
-			`XFJSGWXSLXDM`, 
-			`LL`, 
-			`GS_DWMC`, 
-			`GL_DWMC`, 
-			`cdate`, 
-			`cperson`, 
+			`XFSC_TYWYSBM`,
+			`MC`,
+			`DZMC`,
+			`RJ`,
+			`CSL_RJ`,
+			`WBDW_DWMC`,
+			`LXR_XM`,
+			`LXR_LXDH`,
+			`DQJD`,
+			`DQWD`,
+			`SYKYZTLBDM`,
+			`SSLD_MC`,
+			`QSXS_JYQK`,
+			`QS_GD`,
+			`SYBGC_GD`,
+			`TCWZ_DDMC`,
+			`TC_SL`,
+			`XFJSGWXSLXDM`,
+			`LL`,
+			`GS_DWMC`,
+			`GL_DWMC`,
+			`cdate`,
+			`cperson`,
 			`status`
 		)
 		values
 		(
-			#{xfscTywysbm}, 
-			#{mc}, 
-			#{dzmc}, 
-			#{rj}, 
-			#{cslRj}, 
-			#{wbdwDwmc}, 
-			#{lxrXm}, 
-			#{lxrLxdh}, 
-			#{dqjd}, 
-			#{dqwd}, 
-			#{sykyztlbdm}, 
-			#{ssldMc}, 
-			#{qsxsJyqk}, 
-			#{qsGd}, 
-			#{sybgcGd}, 
-			#{tcwzDdmc}, 
-			#{tcSl}, 
-			#{xfjsgwxslxdm}, 
-			#{ll}, 
-			#{gsDwmc}, 
-			#{glDwmc}, 
-			#{cdate}, 
-			#{cperson}, 
+			#{xfscTywysbm},
+			#{mc},
+			#{dzmc},
+			#{rj},
+			#{cslRj},
+			#{wbdwDwmc},
+			#{lxrXm},
+			#{lxrLxdh},
+			#{dqjd},
+			#{dqwd},
+			#{sykyztlbdm},
+			#{ssldMc},
+			#{qsxsJyqk},
+			#{qsGd},
+			#{sybgcGd},
+			#{tcwzDdmc},
+			#{tcSl},
+			#{xfjsgwxslxdm},
+			#{ll},
+			#{gsDwmc},
+			#{glDwmc},
+			#{cdate},
+			#{cperson},
 			#{status}
 		)
 	</insert>
@@ -234,6 +234,12 @@
             #{xfscTywysbm}
         </foreach>
     </delete>
+
+
+    <update id="updateStatus">
+        update jczy_xfsc set `status` = 1  where XFSC_TYWYSBM = #{xfscTywysbm}
+    </update>
+
 
     <select id="getXfscByRange" resultType="com.smart119.jczy.domain.XfscDO">
         SELECT

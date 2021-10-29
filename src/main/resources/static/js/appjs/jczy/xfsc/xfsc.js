@@ -63,6 +63,17 @@ function load() {
                         title: '水源可用状态'
                     },
                     {
+                        field: 'status',
+                        title : '是否删除',
+                        formatter: function (value, row, index) {
+                            if (row.status == '0' || row.status == '' || row.status == null) {
+                                return "可用";
+                            } else if (row.status == '1') {
+                                return "删除";
+                            }
+                        }
+                    },
+                    {
                         title: '操作',
                         field: 'id',
                         align: 'center',
