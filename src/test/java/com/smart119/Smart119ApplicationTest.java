@@ -2,7 +2,6 @@ package com.smart119;
 
 
 import com.alibaba.fastjson.JSONArray;
-import com.smart119.common.annotation.Excel;
 import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.domain.DictDO;
 import com.smart119.common.redis.shiro.RedisManager;
@@ -10,46 +9,38 @@ import com.smart119.common.service.DictService;
 import com.smart119.common.utils.*;
 import com.smart119.jczy.dao.FzjcDao;
 import com.smart119.jczy.domain.FzjcDO;
+import com.smart119.jczy.domain.XfmtDO;
 import com.smart119.jczy.domain.XfzbDO;
 import com.smart119.jczy.service.FzjcService;
 import com.smart119.jqxx.utils.ExportExcel;
 import com.smart119.webapi.dao.XfzlDao;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import java.awt.*;
 import java.io.*;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 
 @RunWith(SpringRunner.class)
@@ -261,6 +252,15 @@ class Smart119ApplicationTest {
             System.out.println("dictDOList---->" + dictDOList1);
         }
 
+
+
+    }
+
+
+    @Test
+    public void xfmtDOCreateBean() {
+        XfmtDO xfmtDO = XfmtDO.builder().city("fsfs").glDwmc("fewfew").build();
+        System.out.println(xfmtDO);
     }
 
 
