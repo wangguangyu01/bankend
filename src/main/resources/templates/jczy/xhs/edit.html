@@ -154,6 +154,13 @@
                                     <option value="">--请选择--</option>
                                 </select>
                             </div>
+                            <label class="col-sm-2 control-label">是否删除：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="status" name="status" title="是否删除" >
+                                    <option value="0" th:selected="${xhs.status != 1 || xhs.status != '1'}">否</option>
+                                    <option value="1" th:selected="${xhs.status == 1 || xhs.status == '1'}">是</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">取水形式_简要情况：</label>

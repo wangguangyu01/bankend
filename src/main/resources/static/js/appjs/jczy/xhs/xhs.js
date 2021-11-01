@@ -3,7 +3,7 @@ var zid;
 $(function () {
     getTreeData();
     load();
-    getSelectByType("XHSLBDM","xhslbdm",null);
+    getSelectByType("XHSLBDM", "xhslbdm", null);
 });
 
 function load() {
@@ -77,8 +77,19 @@ function load() {
                         field: 'xzqhdm',
                         title: '行政区划',
                         formatter: function (value, row, index) {
-                            var e = row.province+row.city+row.area;
+                            var e = row.province + row.city + row.area;
                             return e;
+                        }
+                    },
+                    {
+                        field: 'status',
+                        title: '是否删除',
+                        formatter: function (value, row, index) {
+                            if (row.status == '0' || row.status == '' || row.status == null) {
+                                return "否";
+                            } else if (row.status == '1') {
+                                return "是";
+                            }
                         }
                     },
                     {
@@ -100,9 +111,11 @@ function load() {
                     }]
             });
 }
+
 function reLoad() {
     $('#exampleTable').bootstrapTable('refresh');
 }
+
 function add() {
     layer.open({
         type: 2,
@@ -113,6 +126,7 @@ function add() {
         content: prefix + '/add' // iframe的url
     });
 }
+
 function edit(id) {
     layer.open({
         type: 2,
@@ -123,6 +137,7 @@ function edit(id) {
         content: prefix + '/edit/' + id // iframe的url
     });
 }
+
 function remove(id) {
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
@@ -147,6 +162,7 @@ function remove(id) {
 
 function resetPwd(id) {
 }
+
 function batchRemove() {
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
     if (rows.length == 0) {
@@ -184,23 +200,25 @@ function batchRemove() {
 
 function getTreeData() {
     $.ajax({
-        type : "GET",
-        url : "/system/sysDept/tree",
-        success : function(tree) {
+        type: "GET",
+        url: "/system/sysDept/tree",
+        success: function (tree) {
             loadTree(tree);
         }
     });
 }
+
 function loadTree(tree) {
     $('#jstree').jstree({
-        'core' : {
-            'data' : tree
+        'core': {
+            'data': tree
         },
-        "plugins" : [ "search" ]
+        "plugins": ["search"]
     });
     $('#jstree').jstree().open_all();
 }
-$('#jstree').on("changed.jstree", function(e, data) {
+
+$('#jstree').on("changed.jstree", function (e, data) {
     $("#exampleTable").bootstrapTable('destroy');  // 销毁原表格
     zid = data.selected[0],
         load();

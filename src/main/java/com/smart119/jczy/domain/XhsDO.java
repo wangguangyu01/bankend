@@ -1,7 +1,9 @@
 package com.smart119.jczy.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart119.common.annotation.validator.PhoneValidator;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -20,6 +22,12 @@ import java.util.Date;
  * @email thrz@sz000673.com
  * @date 2021-01-19 14:57:59
  */
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@TableName("jczy_xhs")
 public class XhsDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -101,7 +109,11 @@ public class XhsDO implements Serializable {
 	private Date cdate;
 	//创建人
 	private String cperson;
-	//状态
+	/**
+	 * 是否删除
+	 * 0：不删除；
+	 * 1：删除
+	 */
 	private Integer status;
 
 	private String xfjyjg;

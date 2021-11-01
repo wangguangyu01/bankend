@@ -176,8 +176,10 @@ public class XhsController extends BaseController{
 	@ResponseBody
 	@RequiresPermissions("jczy:xhs:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] xhsTywysbms){
-		xhsService.batchRemove(xhsTywysbms);
-		return R.ok();
+		if (xhsService.batchRemove(xhsTywysbms) == xhsTywysbms.length) {
+			return R.ok();
+		}
+		return R.error();
 	}
 
 }

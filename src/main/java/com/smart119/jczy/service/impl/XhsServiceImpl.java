@@ -16,40 +16,46 @@ import com.smart119.jczy.service.XhsService;
 public class XhsServiceImpl implements XhsService {
 	@Autowired
 	private XhsDao xhsDao;
-	
+
 	@Override
 	public XhsDO get(String xhsTywysbm){
 		return xhsDao.get(xhsTywysbm);
 	}
-	
+
 	@Override
 	public List<XhsDO> list(Map<String, Object> map){
 		return xhsDao.list(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
 		return xhsDao.count(map);
 	}
-	
+
 	@Override
 	public int save(XhsDO xhs){
 		return xhsDao.save(xhs);
 	}
-	
+
 	@Override
 	public int update(XhsDO xhs){
 		return xhsDao.update(xhs);
 	}
-	
+
 	@Override
 	public int remove(String xhsTywysbm){
-		return xhsDao.remove(xhsTywysbm);
+		return xhsDao.updateStatus(xhsTywysbm);
 	}
-	
+
 	@Override
 	public int batchRemove(String[] xhsTywysbms){
-		return xhsDao.batchRemove(xhsTywysbms);
+		int count = 0;
+		for (String xhsTywysbm: xhsTywysbms) {
+			xhsDao.updateStatus(xhsTywysbm);
+			count++;
+		}
+
+		return count;
 	}
 
 	@Override
