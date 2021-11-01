@@ -158,6 +158,13 @@
                                 <input type="text" class="laydate-icon layer-date form-control" id="qyRq" name="qyRq" placeholder="请选择启用日期"
                                        onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;" readonly="readonly" title="请选择启用日期"  th:value="${xfsh.qyRq}==null?null:${#dates.format(xfsh.qyRq,'yyyy-MM-dd')}"/>
                             </div>
+                            <label class="col-sm-2 control-label">是否删除：</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" id="status" name="status" title="是否删除" >
+                                    <option value="0" th:selected="${xfsh.status != 1 || xfsh.status != '1'}">否</option>
+                                    <option value="1" th:selected="${xfsh.status == 1 || xfsh.status == '1'}">是</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">实景图：</label>

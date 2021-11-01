@@ -77,6 +77,17 @@ function load() {
                         }
                     },
                     {
+                        field: 'status',
+                        title: '是否删除',
+                        formatter: function (value, row, index) {
+                            if (row.status == '0' || row.status == '' || row.status == null) {
+                                return "否";
+                            } else if (row.status == '1') {
+                                return "是";
+                            }
+                        }
+                    },
+                    {
                         title: '操作',
                         field: 'id',
                         align: 'center',

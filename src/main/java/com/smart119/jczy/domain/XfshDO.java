@@ -1,6 +1,8 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart119.common.annotation.validator.PhoneValidator;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.DecimalMax;
@@ -13,14 +15,20 @@ import java.util.Date;
 
 /**
  * 消防水鹤基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 13:41:00
  */
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@TableName("jczy_xfsh")
 public class XfshDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//消防水鹤_通用唯一识别码
 	private String xfshTywysbm;
 	//消防水鹤名称
