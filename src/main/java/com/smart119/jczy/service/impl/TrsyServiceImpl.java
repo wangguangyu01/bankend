@@ -17,40 +17,45 @@ import com.smart119.jczy.service.TrsyService;
 public class TrsyServiceImpl implements TrsyService {
 	@Autowired
 	private TrsyDao trsyDao;
-	
+
 	@Override
 	public TrsyDO get(String trsyTywysbm){
 		return trsyDao.get(trsyTywysbm);
 	}
-	
+
 	@Override
 	public List<TrsyDO> list(Map<String, Object> map){
 		return trsyDao.list(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
 		return trsyDao.count(map);
 	}
-	
+
 	@Override
 	public int save(TrsyDO trsy){
 		return trsyDao.save(trsy);
 	}
-	
+
 	@Override
 	public int update(TrsyDO trsy){
 		return trsyDao.update(trsy);
 	}
-	
+
 	@Override
 	public int remove(String trsyTywysbm){
 		return trsyDao.remove(trsyTywysbm);
 	}
-	
+
 	@Override
 	public int batchRemove(String[] trsyTywysbms){
-		return trsyDao.batchRemove(trsyTywysbms);
+		int count = 0;
+		for (String trsyTywysbm: trsyTywysbms) {
+			this.updateStatus(trsyTywysbm);
+			count ++;
+		}
+		return count;
 	}
 
 	@Override
@@ -58,4 +63,9 @@ public class TrsyServiceImpl implements TrsyService {
 		return trsyDao.getTrsyByRange(jd,wd,distance);
 	}
 
+
+	@Override
+	public int updateStatus(String trsyTywysbm) {
+		return trsyDao.updateStatus(trsyTywysbm);
+	}
 }

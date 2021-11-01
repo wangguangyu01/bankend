@@ -5,7 +5,7 @@
 
     <select id="get" resultType="com.smart119.jczy.domain.TrsyDO">
 		select t.`TRSY_TYWYSBM`,t.`MC`,t.`GD`,t.`SYLXDM`,t.`DZMC`,t.`RJ`,t.`MJ`,t.`DQJD`,t.`DQWD`,t.`SZQK_JYQK`,t.`SJBH_JYQK`,t.`SYKYZTLBDM`,t.`YWKSQ_PDBZ`,t.`KSQKD_JYQK`,
-		t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG
+		t.`XFJYJG_TYWYSBM`,t.`XZQHDM`,t.`JIZ_RQ`,t.`QY_RQ`,dept.`dwmc` XFJYJG, t.status
 		from jczy_trsy t
 		LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
 		where t.TRSY_TYWYSBM = #{value}
@@ -13,7 +13,7 @@
 
     <select id="list" resultType="com.smart119.jczy.domain.TrsyDO">
         select
-        `TRSY_TYWYSBM`,`MC`,`GD`,`SYLXDM`,`DZMC`,`RJ`,`MJ`,`DQJD`,`DQWD`,`SZQK_JYQK`,`SJBH_JYQK`,`SYKYZTLBDM`,`YWKSQ_PDBZ`,`KSQKD_JYQK`,`XFJYJG_TYWYSBM`,`XZQHDM`,`JIZ_RQ`,`QY_RQ`
+        `TRSY_TYWYSBM`,`MC`,`GD`,`SYLXDM`,`DZMC`,`RJ`,`MJ`,`DQJD`,`DQWD`,`SZQK_JYQK`,`SJBH_JYQK`,`SYKYZTLBDM`,`YWKSQ_PDBZ`,`KSQKD_JYQK`,`XFJYJG_TYWYSBM`,`XZQHDM`,`JIZ_RQ`,`QY_RQ`, status
         from jczy_trsy
         <where>
             <if test="trsyTywysbm != null and trsyTywysbm != ''">and TRSY_TYWYSBM = #{trsyTywysbm}</if>
@@ -39,6 +39,7 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
+            <if test="status != null ">and status = #{status}</if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -79,51 +80,54 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
+            <if test="status != null ">and status = #{status}</if>
         </where>
     </select>
 
     <insert id="save" parameterType="com.smart119.jczy.domain.TrsyDO">
 		insert into jczy_trsy
 		(
-			`TRSY_TYWYSBM`, 
-			`MC`, 
-			`GD`, 
-			`SYLXDM`, 
-			`DZMC`, 
-			`RJ`, 
-			`MJ`, 
-			`DQJD`, 
-			`DQWD`, 
-			`SZQK_JYQK`, 
-			`SJBH_JYQK`, 
-			`SYKYZTLBDM`, 
-			`YWKSQ_PDBZ`, 
-			`KSQKD_JYQK`, 
-			`XFJYJG_TYWYSBM`, 
-			`XZQHDM`, 
-			`JIZ_RQ`, 
-			`QY_RQ`
+			`TRSY_TYWYSBM`,
+			`MC`,
+			`GD`,
+			`SYLXDM`,
+			`DZMC`,
+			`RJ`,
+			`MJ`,
+			`DQJD`,
+			`DQWD`,
+			`SZQK_JYQK`,
+			`SJBH_JYQK`,
+			`SYKYZTLBDM`,
+			`YWKSQ_PDBZ`,
+			`KSQKD_JYQK`,
+			`XFJYJG_TYWYSBM`,
+			`XZQHDM`,
+			`JIZ_RQ`,
+			`QY_RQ`,
+		    `status`
 		)
 		values
 		(
-			#{trsyTywysbm}, 
-			#{mc}, 
-			#{gd}, 
-			#{sylxdm}, 
-			#{dzmc}, 
-			#{rj}, 
-			#{mj}, 
-			#{dqjd}, 
-			#{dqwd}, 
-			#{szqkJyqk}, 
-			#{sjbhJyqk}, 
-			#{sykyztlbdm}, 
-			#{ywksqPdbz}, 
-			#{ksqkdJyqk}, 
-			#{xfjyjgTywysbm}, 
-			#{xzqhdm}, 
-			#{jizRq}, 
-			#{qyRq}
+			#{trsyTywysbm},
+			#{mc},
+			#{gd},
+			#{sylxdm},
+			#{dzmc},
+			#{rj},
+			#{mj},
+			#{dqjd},
+			#{dqwd},
+			#{szqkJyqk},
+			#{sjbhJyqk},
+			#{sykyztlbdm},
+			#{ywksqPdbz},
+			#{ksqkdJyqk},
+			#{xfjyjgTywysbm},
+			#{xzqhdm},
+			#{jizRq},
+			#{qyRq},
+		    #{status}
 		)
 	</insert>
 
@@ -146,7 +150,8 @@
             <if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm},</if>
             <if test="xzqhdm != null">`XZQHDM` = #{xzqhdm},</if>
             <if test="jizRq != null">`JIZ_RQ` = #{jizRq},</if>
-            <if test="qyRq != null">`QY_RQ` = #{qyRq}</if>
+            <if test="qyRq != null">`QY_RQ` = #{qyRq},</if>
+            <if test="status != null ">status = #{status}</if>
         </set>
         where TRSY_TYWYSBM = #{trsyTywysbm}
     </update>
@@ -154,6 +159,10 @@
     <delete id="remove">
 		delete from jczy_trsy where TRSY_TYWYSBM = #{value}
 	</delete>
+
+    <update id="updateStatus">
+        update jczy_trsy set status = '1' where TRSY_TYWYSBM = #{trsyTywysbm}
+    </update>
 
     <delete id="batchRemove">
         delete from jczy_trsy where TRSY_TYWYSBM in

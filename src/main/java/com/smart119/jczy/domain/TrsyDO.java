@@ -1,5 +1,7 @@
 package com.smart119.jczy.domain;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.DecimalMax;
@@ -11,15 +13,21 @@ import java.util.Date;
 
 
 /**
- * 
- * 
+ *
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 15:32:48
  */
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@TableName("jczy_trsy")
 public class TrsyDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//天然水源_通用唯一识别码
 	private String trsyTywysbm;
 	//名称
@@ -79,6 +87,15 @@ public class TrsyDO implements Serializable {
 	private String city;
 
 	private String province;
+
+
+
+	/**
+	 * 是否删除
+	 * 0：不删除；
+	 * 1：删除
+	 */
+	private Integer status;
 
 	public String getXfjyjg() {
 		return xfjyjg;
