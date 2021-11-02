@@ -21,35 +21,40 @@ public class WxxfzServiceImpl implements WxxfzService {
 	public WxxfzDO get(String wxxfzTywysbm){
 		return wxxfzDao.get(wxxfzTywysbm);
 	}
-	
+
 	@Override
 	public List<WxxfzDO> list(Map<String, Object> map){
 		return wxxfzDao.list(map);
 	}
-	
+
 	@Override
 	public int count(Map<String, Object> map){
 		return wxxfzDao.count(map);
 	}
-	
+
 	@Override
 	public int save(WxxfzDO wxxfz){
 		return wxxfzDao.save(wxxfz);
 	}
-	
+
 	@Override
 	public int update(WxxfzDO wxxfz){
 		return wxxfzDao.update(wxxfz);
 	}
-	
+
 	@Override
 	public int remove(String wxxfzTywysbm){
-		return wxxfzDao.remove(wxxfzTywysbm);
+		return this.updateStatus(wxxfzTywysbm);
 	}
-	
+
 	@Override
 	public int batchRemove(String[] wxxfzTywysbms){
-		return wxxfzDao.batchRemove(wxxfzTywysbms);
+		int count = 0;
+		for (String wxxfzTywysbm: wxxfzTywysbms) {
+			this.updateStatus(wxxfzTywysbm);
+			count++;
+		}
+		return count;
 	}
 
 	@Override
@@ -70,4 +75,9 @@ public class WxxfzServiceImpl implements WxxfzService {
 		return retList;
 	}
 
+
+	@Override
+	public int updateStatus(String wxxfzTywysbm) {
+		return wxxfzDao.updateStatus(wxxfzTywysbm);
+	}
 }

@@ -9,7 +9,7 @@
 
 	<select id="list" resultType="com.smart119.jczy.domain.WxxfzDO">
 		select `WXXFZ_TYWYSBM`,`MC`,`DZMC`,`XZQHDM`,`RS`,`ZB_JYQK`,`ZB_LXDH`,`FZR_XM`,`FZR_LXDH`,`DQJD`,`DQWD`,`cdate`,`status`,`cperson` from jczy_wxxfz
-        <where>  
+        <where>
 		  		  <if test="wxxfzTywysbm != null and wxxfzTywysbm != ''"> and WXXFZ_TYWYSBM = #{wxxfzTywysbm} </if>
 		  		  <if test="mc != null and mc != ''"> and MC like '%${mc}%' </if>
 		  		  <if test="dzmc != null and dzmc != ''"> and DZMC = #{dzmc} </if>
@@ -37,10 +37,10 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
  	<select id="count" resultType="int">
 		select count(*) from jczy_wxxfz
-		 <where>  
+		 <where>
 		  		  <if test="wxxfzTywysbm != null and wxxfzTywysbm != ''"> and WXXFZ_TYWYSBM = #{wxxfzTywysbm} </if>
 		  		  <if test="mc != null and mc != ''"> and MC = #{mc} </if>
 		  		  <if test="dzmc != null and dzmc != ''"> and DZMC = #{dzmc} </if>
@@ -57,46 +57,46 @@
 		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
 		  		</where>
 	</select>
-	 
+
 	<insert id="save" parameterType="com.smart119.jczy.domain.WxxfzDO">
 		insert into jczy_wxxfz
 		(
-			`WXXFZ_TYWYSBM`, 
-			`MC`, 
-			`DZMC`, 
-			`XZQHDM`, 
-			`RS`, 
-			`ZB_JYQK`, 
-			`ZB_LXDH`, 
-			`FZR_XM`, 
-			`FZR_LXDH`, 
-			`DQJD`, 
-			`DQWD`, 
-			`cdate`, 
-			`status`, 
+			`WXXFZ_TYWYSBM`,
+			`MC`,
+			`DZMC`,
+			`XZQHDM`,
+			`RS`,
+			`ZB_JYQK`,
+			`ZB_LXDH`,
+			`FZR_XM`,
+			`FZR_LXDH`,
+			`DQJD`,
+			`DQWD`,
+			`cdate`,
+			`status`,
 			`cperson`
 		)
 		values
 		(
 			#{wxxfzTywysbm},
-			#{mc}, 
-			#{dzmc}, 
-			#{xzqhdm}, 
-			#{rs}, 
-			#{zbJyqk}, 
-			#{zbLxdh}, 
-			#{fzrXm}, 
-			#{fzrLxdh}, 
-			#{dqjd}, 
-			#{dqwd}, 
-			#{cdate}, 
-			#{status}, 
+			#{mc},
+			#{dzmc},
+			#{xzqhdm},
+			#{rs},
+			#{zbJyqk},
+			#{zbLxdh},
+			#{fzrXm},
+			#{fzrLxdh},
+			#{dqjd},
+			#{dqwd},
+			#{cdate},
+			#{status},
 			#{cperson}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.smart119.jczy.domain.WxxfzDO">
-		update jczy_wxxfz 
+		update jczy_wxxfz
 		<set>
 			<if test="mc != null">`MC` = #{mc}, </if>
 			<if test="dzmc != null">`DZMC` = #{dzmc}, </if>
@@ -114,13 +114,17 @@
 		</set>
 		where WXXFZ_TYWYSBM = #{wxxfzTywysbm}
 	</update>
-	
+
 	<delete id="remove">
 		delete from jczy_wxxfz where WXXFZ_TYWYSBM = #{value}
 	</delete>
-	
+
+	<update id="updateStatus">
+		update  jczy_wxxfz set status = '1' where WXXFZ_TYWYSBM = #{wxxfzTywysbm}
+	</update>
+
 	<delete id="batchRemove">
-		delete from jczy_wxxfz where WXXFZ_TYWYSBM in 
+		delete from jczy_wxxfz where WXXFZ_TYWYSBM in
 		<foreach item="wxxfzTywysbm" collection="array" open="(" separator="," close=")">
 			#{wxxfzTywysbm}
 		</foreach>
@@ -129,6 +133,7 @@
 	<select id="getWxxfzByRange" resultType="com.smart119.jczy.domain.WxxfzDO">
 		select t.*, calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
 		 from jczy_wxxfz t
+		 where (t.status = 0 or t.status = '' or t.status is null)
 		 HAVING distance <![CDATA[ <= ]]> #{distance}
 	</select>
 
@@ -138,8 +143,9 @@
 		LEFT JOIN sys_dict dict
 		on dict.value=wxxfz.XZQHDM and dict.type='XZQHDM'
 		<where>
-			<if test="wxxfzMc != null and wxxfzMc != ''"> and MC like '${wxxfzMc}' </if>
-			<if test="XZQHDM != null and XZQHDM != ''"> and XZQHDM = #{XZQHDM} </if>
+			 (wxxfz.status = 0 or wxxfz.status = '' or wxxfz.status is null)
+			<if test="wxxfzMc != null and wxxfzMc != ''"> and wxxfz.MC like '${wxxfzMc}' </if>
+			<if test="XZQHDM != null and XZQHDM != ''"> and wxxfz.XZQHDM = #{XZQHDM} </if>
 		</where>
 		GROUP BY XZQHDM
 	</select>
@@ -148,6 +154,7 @@
 	<select id="wxxfzByXzqh" resultType="java.util.HashMap">
 		SELECT WXXFZ_TYWYSBM as wxxfzTywysbm,MC as mc,FZR_XM as fzrXm,FZR_LXDH as fzrLxdh from jczy_wxxfz
 		<where>
+			and (status = 0 or status = '' or status is null)
 			<if test="wxxfzMc != null and wxxfzMc != ''"> and MC like '${wxxfzMc}' </if>
 			and XZQHDM = #{xzqhdm}
 		</where>

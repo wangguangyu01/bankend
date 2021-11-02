@@ -91,6 +91,13 @@
 								<div class="col-sm-4">
 									<input id="zbLxdh" name="zbLxdh" class="form-control" type="text" th:value="${wxxfz.zbLxdh}">
 								</div>
+								<label class="col-sm-2 control-label">是否删除：</label>
+								<div class="col-sm-4">
+									<select class="form-control" id="status" name="status" title="是否删除" >
+										<option value="0" th:selected="${wxxfz.status != 1 || wxxfz.status != '1'}">否</option>
+										<option value="1" th:selected="${wxxfz.status == 1 || wxxfz.status == '1'}">是</option>
+									</select>
+								</div>
 							</div>
 
 

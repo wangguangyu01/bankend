@@ -31,7 +31,7 @@ import com.smart119.common.utils.R;
 
 /**
  * 微型消防站
- * 
+ *
  * @author chglee
  * @email 1992lcg@163.com
  * @date 2021-01-19 13:52:11
@@ -47,13 +47,13 @@ public class WxxfzController extends BaseController {
 
 	@Autowired
 	private DeptService deptService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:wxxfz:wxxfz")
 	String Wxxfz(){
 	    return "jczy/wxxfz/wxxfz";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:wxxfz:wxxfz")
@@ -65,7 +65,7 @@ public class WxxfzController extends BaseController {
 		PageUtils pageUtils = new PageUtils(wxxfzList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:wxxfz:add")
 	String add(){
@@ -84,7 +84,7 @@ public class WxxfzController extends BaseController {
 		model.addAttribute("city", city);  //区划代码-市
 	    return "jczy/wxxfz/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -127,7 +127,7 @@ public class WxxfzController extends BaseController {
 		wxxfzService.update(wxxfz);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -140,7 +140,7 @@ public class WxxfzController extends BaseController {
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -148,8 +148,10 @@ public class WxxfzController extends BaseController {
 	@ResponseBody
 	@RequiresPermissions("jczy:wxxfz:batchRemove")
 	public R remove(@RequestParam("ids[]") String[] wxxfzTywysbms){
-		wxxfzService.batchRemove(wxxfzTywysbms);
-		return R.ok();
+		if (wxxfzService.batchRemove(wxxfzTywysbms) == wxxfzTywysbms.length) {
+			return R.ok();
+		}
+		return R.error();
 	}
 
 
@@ -173,5 +175,5 @@ public class WxxfzController extends BaseController {
 		PageUtils pageUtils = new PageUtils(qylddwList, total);
 		return pageUtils;
 	}
-	
+
 }

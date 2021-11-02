@@ -19,17 +19,17 @@ import org.apache.ibatis.annotations.Param;
 public interface WxxfzDao {
 
 	WxxfzDO get(String wxxfzTywysbm);
-	
+
 	List<WxxfzDO> list(Map<String,Object> map);
-	
+
 	int count(Map<String,Object> map);
-	
+
 	int save(WxxfzDO wxxfz);
-	
+
 	int update(WxxfzDO wxxfz);
-	
+
 	int remove(String WXXFZ_TYWYSBM);
-	
+
 	int batchRemove(String[] wxxfzTywysbms);
 
 	List<WxxfzDO> getWxxfzByRange(@Param("jd")Double jd, @Param("wd")Double wd, @Param("distance")Double distance);
@@ -38,5 +38,11 @@ public interface WxxfzDao {
 
 	List<Map<String,Object>> wxxfzByXzqh(Map<String,Object> map);
 
+	/**
+	 * 删除
+	 * @param wxxfzTywysbm
+	 * @return
+	 */
+	int updateStatus(@Param("wxxfzTywysbm")String wxxfzTywysbm);
 
 }
