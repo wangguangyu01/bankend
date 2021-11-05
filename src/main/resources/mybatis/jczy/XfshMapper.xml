@@ -95,39 +95,46 @@
         LEFT JOIN sys_dict d6 ON d6.id = d5.parent_id
         LEFT JOIN sys_dict d7 ON d7.id = d6.parent_id
         <where>
-            <if test="xfshTywysbm != null and xfshTywysbm != ''">and XFSH_TYWYSBM = #{xfshTywysbm}</if>
-            <if test="mc != null and mc != ''">and MC like '%${mc}%'</if>
-            <if test="dzmc != null and dzmc != ''">and DZMC like '%${dzmc}%'</if>
-            <if test="gd != null and gd != ''">and GD = #{gd}</if>
-            <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
-            <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
-            <if test="sykyztlbdm != null and sykyztlbdm != ''">and SYKYZTLBDM = #{sykyztlbdm}</if>
-            <if test="ssldMc != null and ssldMc != ''">and SSLD_MC = #{ssldMc}</if>
-            <if test="ssgwMc != null and ssgwMc != ''">and SSGW_MC = #{ssgwMc}</if>
-            <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
-            <if test="gwzjKd != null and gwzjKd != ''">and GWZJ_KD = #{gwzjKd}</if>
-            <if test="gwYl != null and gwYl != ''">and GW_YL = #{gwYl}</if>
-            <if test="ll != null and ll != ''">and LL = #{ll}</if>
-            <if test="jsgzjKd != null and jsgzjKd != ''">and JSGZJ_KD = #{jsgzjKd}</if>
-            <if test="csgzjKd != null and csgzjKd != ''">and CSGZJ_KD = #{csgzjKd}</if>
-            <if test="jscdsSl != null and jscdsSl != ''">and JSCDS_SL = #{jscdsSl}</if>
-            <if test="gsDwmc != null and gsDwmc != ''">and GS_DWMC = #{gsDwmc}</if>
-            <if test="glDwmc != null and glDwmc != ''">and GL_DWMC = #{glDwmc}</if>
-            <if test="wbDwmc != null and wbDwmc != ''">and WB_DWMC = #{wbDwmc}</if>
-            <if test="lxrXm != null and lxrXm != ''">and LXR_XM = #{lxrXm}</if>
-            <if test="lxrLxdh != null and lxrLxdh != ''">and LXR_LXDH = #{lxrLxdh}</if>
+            <if test="xfshTywysbm != null and xfshTywysbm != ''">and t.XFSH_TYWYSBM = #{xfshTywysbm}</if>
+            <if test="mc != null and mc != ''">and t.MC like '%${mc}%'</if>
+            <if test="dzmc != null and dzmc != ''">and t.DZMC like '%${dzmc}%'</if>
+            <if test="gd != null and gd != ''">and t.GD = #{gd}</if>
+            <if test="dqjd != null and dqjd != ''">and t.DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and t.DQWD = #{dqwd}</if>
+            <if test="sykyztlbdm != null and sykyztlbdm != ''">and t.SYKYZTLBDM = #{sykyztlbdm}</if>
+            <if test="ssldMc != null and ssldMc != ''">and t.SSLD_MC = #{ssldMc}</if>
+            <if test="ssgwMc != null and ssgwMc != ''">and t.SSGW_MC = #{ssgwMc}</if>
+            <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and t.XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
+            <if test="gwzjKd != null and gwzjKd != ''">and t.GWZJ_KD = #{gwzjKd}</if>
+            <if test="gwYl != null and gwYl != ''">and t.GW_YL = #{gwYl}</if>
+            <if test="ll != null and ll != ''">and t.LL = #{ll}</if>
+            <if test="jsgzjKd != null and jsgzjKd != ''">and t.JSGZJ_KD = #{jsgzjKd}</if>
+            <if test="csgzjKd != null and csgzjKd != ''">and t.CSGZJ_KD = #{csgzjKd}</if>
+            <if test="jscdsSl != null and jscdsSl != ''">and t.JSCDS_SL = #{jscdsSl}</if>
+            <if test="gsDwmc != null and gsDwmc != ''">and t.GS_DWMC = #{gsDwmc}</if>
+            <if test="glDwmc != null and glDwmc != ''">and t.GL_DWMC = #{glDwmc}</if>
+            <if test="wbDwmc != null and wbDwmc != ''">and t.WB_DWMC = #{wbDwmc}</if>
+            <if test="lxrXm != null and lxrXm != ''">and t.LXR_XM = #{lxrXm}</if>
+            <if test="lxrLxdh != null and lxrLxdh != ''">and t.LXR_LXDH = #{lxrLxdh}</if>
             <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and t.XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
             <if test="deptList != null and deptList.size() > 0">and t.XFJYJG_TYWYSBM in
                 <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
                     #{item.xfjyjgTywysbm}
                 </foreach>
             </if>
-            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
-            <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
-            <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
-            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
-            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
-            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="xzqhdm != null and xzqhdm != ''">and t.XZQHDM = #{xzqhdm}</if>
+            <if test="jizRq != null and jizRq != ''">and t.JIZ_RQ = #{jizRq}</if>
+            <if test="qyRq != null and qyRq != ''">and t.QY_RQ = #{qyRq}</if>
+            <if test="cdate != null and cdate != ''">and t.cdate = #{cdate}</if>
+            <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
+            <if test="status != null and status != ''">
+                <if test="status == '1' or status == 1">
+                    and t.status = '1'
+                </if>
+                <if test="status != '1' and status != 1">
+                    and (t.STATUS = '0' or t.STATUS ='' or t.STATUS is null)
+                </if>
+            </if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -143,41 +150,54 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from jczy_xfsh
+        select count(t.XFSH_TYWYSBM) from jczy_xfsh t
+        LEFT JOIN sys_dept dept ON t.XFJYJG_TYWYSBM = dept.XFJYJG_TYWYSBM
+        left join sys_dict d on t.SYKYZTLBDM=d.`value` and d.description='水源可用状态类别代码'
+        left join sys_dict d1 on t.XFJSGWXSLXDM=d1.`value` and d1.description='消防给水管网形式类型代码'
+        LEFT JOIN sys_dict d5 ON t.XZQHDM = d5.`value`
+        LEFT JOIN sys_dict d6 ON d6.id = d5.parent_id
+        LEFT JOIN sys_dict d7 ON d7.id = d6.parent_id
         <where>
-            <if test="xfshTywysbm != null and xfshTywysbm != ''">and XFSH_TYWYSBM = #{xfshTywysbm}</if>
-            <if test="mc != null and mc != ''">and MC like '%${mc}%'</if>
-            <if test="dzmc != null and dzmc != ''">and DZMC like '%${dzmc}%'</if>
-            <if test="gd != null and gd != ''">and GD = #{gd}</if>
-            <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
-            <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
-            <if test="sykyztlbdm != null and sykyztlbdm != ''">and SYKYZTLBDM = #{sykyztlbdm}</if>
-            <if test="ssldMc != null and ssldMc != ''">and SSLD_MC = #{ssldMc}</if>
-            <if test="ssgwMc != null and ssgwMc != ''">and SSGW_MC = #{ssgwMc}</if>
-            <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
-            <if test="gwzjKd != null and gwzjKd != ''">and GWZJ_KD = #{gwzjKd}</if>
-            <if test="gwYl != null and gwYl != ''">and GW_YL = #{gwYl}</if>
-            <if test="ll != null and ll != ''">and LL = #{ll}</if>
-            <if test="jsgzjKd != null and jsgzjKd != ''">and JSGZJ_KD = #{jsgzjKd}</if>
-            <if test="csgzjKd != null and csgzjKd != ''">and CSGZJ_KD = #{csgzjKd}</if>
-            <if test="jscdsSl != null and jscdsSl != ''">and JSCDS_SL = #{jscdsSl}</if>
-            <if test="gsDwmc != null and gsDwmc != ''">and GS_DWMC = #{gsDwmc}</if>
-            <if test="glDwmc != null and glDwmc != ''">and GL_DWMC = #{glDwmc}</if>
-            <if test="wbDwmc != null and wbDwmc != ''">and WB_DWMC = #{wbDwmc}</if>
-            <if test="lxrXm != null and lxrXm != ''">and LXR_XM = #{lxrXm}</if>
-            <if test="lxrLxdh != null and lxrLxdh != ''">and LXR_LXDH = #{lxrLxdh}</if>
-            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
-            <if test="deptList != null and deptList.size() > 0">and XFJYJG_TYWYSBM in
+            <if test="xfshTywysbm != null and xfshTywysbm != ''">and t.XFSH_TYWYSBM = #{xfshTywysbm}</if>
+            <if test="mc != null and mc != ''">and t.MC like '%${mc}%'</if>
+            <if test="dzmc != null and dzmc != ''">and t.DZMC like '%${dzmc}%'</if>
+            <if test="gd != null and gd != ''">and t.GD = #{gd}</if>
+            <if test="dqjd != null and dqjd != ''">and t.DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and t.DQWD = #{dqwd}</if>
+            <if test="sykyztlbdm != null and sykyztlbdm != ''">and t.SYKYZTLBDM = #{sykyztlbdm}</if>
+            <if test="ssldMc != null and ssldMc != ''">and t.SSLD_MC = #{ssldMc}</if>
+            <if test="ssgwMc != null and ssgwMc != ''">and t.SSGW_MC = #{ssgwMc}</if>
+            <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and t.XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
+            <if test="gwzjKd != null and gwzjKd != ''">and t.GWZJ_KD = #{gwzjKd}</if>
+            <if test="gwYl != null and gwYl != ''">and t.GW_YL = #{gwYl}</if>
+            <if test="ll != null and ll != ''">and t.LL = #{ll}</if>
+            <if test="jsgzjKd != null and jsgzjKd != ''">and t.JSGZJ_KD = #{jsgzjKd}</if>
+            <if test="csgzjKd != null and csgzjKd != ''">and t.CSGZJ_KD = #{csgzjKd}</if>
+            <if test="jscdsSl != null and jscdsSl != ''">and t.JSCDS_SL = #{jscdsSl}</if>
+            <if test="gsDwmc != null and gsDwmc != ''">and t.GS_DWMC = #{gsDwmc}</if>
+            <if test="glDwmc != null and glDwmc != ''">and t.GL_DWMC = #{glDwmc}</if>
+            <if test="wbDwmc != null and wbDwmc != ''">and t.WB_DWMC = #{wbDwmc}</if>
+            <if test="lxrXm != null and lxrXm != ''">and t.LXR_XM = #{lxrXm}</if>
+            <if test="lxrLxdh != null and lxrLxdh != ''">and t.LXR_LXDH = #{lxrLxdh}</if>
+            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and t.XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
+            <if test="deptList != null and deptList.size() > 0">and t.XFJYJG_TYWYSBM in
                 <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
                     #{item.xfjyjgTywysbm}
                 </foreach>
             </if>
-            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
-            <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
-            <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
-            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
-            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
-            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="xzqhdm != null and xzqhdm != ''">and t.XZQHDM = #{xzqhdm}</if>
+            <if test="jizRq != null and jizRq != ''">and t.JIZ_RQ = #{jizRq}</if>
+            <if test="qyRq != null and qyRq != ''">and t.QY_RQ = #{qyRq}</if>
+            <if test="cdate != null and cdate != ''">and t.cdate = #{cdate}</if>
+            <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
+            <if test="status != null and status != ''">
+                <if test="status == '1' or status == 1">
+                    and t.status = '1'
+                </if>
+                <if test="status != '1' and status != 1">
+                    and (t.STATUS = '0' or t.STATUS ='' or t.STATUS is null)
+                </if>
+            </if>
         </where>
     </select>
 

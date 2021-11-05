@@ -36,7 +36,8 @@ function load() {
                         limit: params.limit,
                         offset: params.offset,
                         sykyztlbdm: $('#sykyztlbdm').val(),
-                        mc: $("#mc").val(),
+                        mc: $.trim($("#mc").val()),
+                        status: $.trim($('#status').val()),
                         deptId: zid
                         // name:$('#searchName').val(),
                         // username:$('#searchName').val()

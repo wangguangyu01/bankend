@@ -24,12 +24,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 消防水鹤基本信息
- * 
+ *
  * @author thrz
  * @email thrz@sz000673.com
  * @date 2021-01-20 13:41:00
  */
- 
+
 @Controller
 @RequestMapping("/jczy/xfsh")
 public class XfshController extends BaseController{
@@ -44,13 +44,13 @@ public class XfshController extends BaseController{
 
 	@Autowired
 	private DeptService deptService;
-	
+
 	@GetMapping()
 	@RequiresPermissions("jczy:xfsh:xfsh")
 	String Xfsh(){
 	    return "jczy/xfsh/xfsh";
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/list")
 	@RequiresPermissions("jczy:xfsh:xfsh")
@@ -69,7 +69,7 @@ public class XfshController extends BaseController{
 		PageUtils pageUtils = new PageUtils(xfshList, total);
 		return pageUtils;
 	}
-	
+
 	@GetMapping("/add")
 	@RequiresPermissions("jczy:xfsh:add")
 	String add(){
@@ -99,7 +99,7 @@ public class XfshController extends BaseController{
 
 	    return "jczy/xfsh/edit";
 	}
-	
+
 	/**
 	 * 保存
 	 */
@@ -139,7 +139,7 @@ public class XfshController extends BaseController{
 		xfshService.update(xfsh);
 		return R.ok();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -152,7 +152,7 @@ public class XfshController extends BaseController{
 		}
 		return R.error();
 	}
-	
+
 	/**
 	 * 删除
 	 */
@@ -163,5 +163,5 @@ public class XfshController extends BaseController{
 		xfshService.batchRemove(xfshTywysbms);
 		return R.ok();
 	}
-	
+
 }

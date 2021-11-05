@@ -94,7 +94,14 @@
             <if test="glDwmc != null and glDwmc != ''">and t.GL_DWMC = #{glDwmc}</if>
             <if test="cdate != null and cdate != ''">and t.cdate = #{cdate}</if>
             <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
-            <if test="status != null and status != ''">and t.status = #{status}</if>
+            <if test="status != null and status != ''">
+                <if test="status == '1' or status == 1">
+                    and t.status = '1'
+                </if>
+                <if test="status != '1' and status != 1">
+                    and (t.STATUS = '0' or t.STATUS ='' or t.STATUS is null)
+                </if>
+            </if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -110,31 +117,42 @@
     </select>
 
     <select id="count" resultType="int">
-        select count(*) from jczy_xfsc where status=0
-        <if test="xfscTywysbm != null and xfscTywysbm != ''">and XFSC_TYWYSBM = #{xfscTywysbm}</if>
-        <if test="mc != null and mc != ''">and MC like '%${mc}%'</if>
-        <if test="dzmc != null and dzmc != ''">and DZMC like '%${dzmc}%'</if>
-        <if test="rj != null and rj != ''">and RJ = #{rj}</if>
-        <if test="cslRj != null and cslRj != ''">and CSL_RJ = #{cslRj}</if>
-        <if test="wbdwDwmc != null and wbdwDwmc != ''">and WBDW_DWMC = #{wbdwDwmc}</if>
-        <if test="lxrXm != null and lxrXm != ''">and LXR_XM = #{lxrXm}</if>
-        <if test="lxrLxdh != null and lxrLxdh != ''">and LXR_LXDH = #{lxrLxdh}</if>
-        <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
-        <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
-        <if test="sykyztlbdm != null and sykyztlbdm != ''">and SYKYZTLBDM = #{sykyztlbdm}</if>
-        <if test="ssldMc != null and ssldMc != ''">and SSLD_MC = #{ssldMc}</if>
-        <if test="qsxsJyqk != null and qsxsJyqk != ''">and QSXS_JYQK = #{qsxsJyqk}</if>
-        <if test="qsGd != null and qsGd != ''">and QS_GD = #{qsGd}</if>
-        <if test="sybgcGd != null and sybgcGd != ''">and SYBGC_GD = #{sybgcGd}</if>
-        <if test="tcwzDdmc != null and tcwzDdmc != ''">and TCWZ_DDMC = #{tcwzDdmc}</if>
-        <if test="tcSl != null and tcSl != ''">and TC_SL = #{tcSl}</if>
-        <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
-        <if test="ll != null and ll != ''">and LL = #{ll}</if>
-        <if test="gsDwmc != null and gsDwmc != ''">and GS_DWMC = #{gsDwmc}</if>
-        <if test="glDwmc != null and glDwmc != ''">and GL_DWMC = #{glDwmc}</if>
-        <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
-        <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
-        <if test="status != null and status != ''">and status = #{status}</if>
+        select count(t.XFSC_TYWYSBM) from jczy_xfsc t
+        left join sys_dict d on t.SYKYZTLBDM=d.`value` and d.description='水源可用状态类别代码'
+        left join sys_dict d1 on t.XFJSGWXSLXDM=d1.`value` and d1.description='消防给水管网形式类型代码'
+        <where>
+            <if test="xfscTywysbm != null and xfscTywysbm != ''">and t.XFSC_TYWYSBM = #{xfscTywysbm}</if>
+            <if test="mc != null and mc != ''">and t.MC like '%${mc}%'</if>
+            <if test="dzmc != null and dzmc != ''">and t.DZMC like '%${dzmc}%'</if>
+            <if test="rj != null and rj != ''">and t.RJ = #{rj}</if>
+            <if test="cslRj != null and cslRj != ''">and t.CSL_RJ = #{cslRj}</if>
+            <if test="wbdwDwmc != null and wbdwDwmc != ''">and t.WBDW_DWMC = #{wbdwDwmc}</if>
+            <if test="lxrXm != null and lxrXm != ''">and t.LXR_XM = #{lxrXm}</if>
+            <if test="lxrLxdh != null and lxrLxdh != ''">and t.LXR_LXDH = #{lxrLxdh}</if>
+            <if test="dqjd != null and dqjd != ''">and t.DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and t.DQWD = #{dqwd}</if>
+            <if test="sykyztlbdm != null and sykyztlbdm != ''">and t.SYKYZTLBDM = #{sykyztlbdm}</if>
+            <if test="ssldMc != null and ssldMc != ''">and t.SSLD_MC = #{ssldMc}</if>
+            <if test="qsxsJyqk != null and qsxsJyqk != ''">and t.QSXS_JYQK = #{qsxsJyqk}</if>
+            <if test="qsGd != null and qsGd != ''">and t.QS_GD = #{qsGd}</if>
+            <if test="sybgcGd != null and sybgcGd != ''">and t.SYBGC_GD = #{sybgcGd}</if>
+            <if test="tcwzDdmc != null and tcwzDdmc != ''">and t.TCWZ_DDMC = #{tcwzDdmc}</if>
+            <if test="tcSl != null and tcSl != ''">and t.TC_SL = #{tcSl}</if>
+            <if test="xfjsgwxslxdm != null and xfjsgwxslxdm != ''">and t.XFJSGWXSLXDM = #{xfjsgwxslxdm}</if>
+            <if test="ll != null and ll != ''">and t.LL = #{ll}</if>
+            <if test="gsDwmc != null and gsDwmc != ''">and t.GS_DWMC = #{gsDwmc}</if>
+            <if test="glDwmc != null and glDwmc != ''">and t.GL_DWMC = #{glDwmc}</if>
+            <if test="cdate != null and cdate != ''">and t.cdate = #{cdate}</if>
+            <if test="cperson != null and cperson != ''">and t.cperson = #{cperson}</if>
+            <if test="status != null and status != ''">
+                <if test="status == '1' or status == 1">
+                    and t.status = '1'
+                </if>
+                <if test="status != '1' and status != 1">
+                    and (t.STATUS = '0' or t.STATUS ='' or t.STATUS is null)
+                </if>
+            </if>
+        </where>
     </select>
 
     <insert id="save" parameterType="com.smart119.jczy.domain.XfscDO">

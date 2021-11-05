@@ -39,7 +39,14 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
-            <if test="status != null and status !='' ">and status = #{status}</if>
+            <if test="status != null and status !='' ">
+                  <if test="status == '1' or status == 1">
+                      and status = '1'
+                  </if>
+                   <if test="status != '1' and status != 1">
+                      and (STATUS = '0' or STATUS ='' or STATUS is null)
+                   </if>
+            </if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -80,7 +87,14 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
-            <if test="status != null and status !=''">and status = #{status}</if>
+            <if test="status != null and status !='' ">
+                <if test="status == '1' or status == 1">
+                    and status = '1'
+                </if>
+                <if test="status != '1' and status != 1">
+                    and (STATUS = '0' or STATUS ='' or STATUS is null)
+                </if>
+            </if>
         </where>
     </select>
 

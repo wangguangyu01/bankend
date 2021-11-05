@@ -3,162 +3,192 @@
 
 <mapper namespace="com.smart119.jczy.dao.WxxfzDao">
 
-	<select id="get" resultType="com.smart119.jczy.domain.WxxfzDO">
-		select `WXXFZ_TYWYSBM`,`MC`,`DZMC`,`XZQHDM`,`RS`,`ZB_JYQK`,`ZB_LXDH`,`FZR_XM`,`FZR_LXDH`,`DQJD`,`DQWD`,`cdate`,`status`,`cperson` from jczy_wxxfz where WXXFZ_TYWYSBM = #{value}
-	</select>
+    <select id="get" resultType="com.smart119.jczy.domain.WxxfzDO">
+        select `WXXFZ_TYWYSBM`,
+               `MC`,
+               `DZMC`,
+               `XZQHDM`,
+               `RS`,
+               `ZB_JYQK`,
+               `ZB_LXDH`,
+               `FZR_XM`,
+               `FZR_LXDH`,
+               `DQJD`,
+               `DQWD`,
+               `cdate`,
+               `status`,
+               `cperson`
+        from jczy_wxxfz
+        where WXXFZ_TYWYSBM = #{value}
+    </select>
 
-	<select id="list" resultType="com.smart119.jczy.domain.WxxfzDO">
-		select `WXXFZ_TYWYSBM`,`MC`,`DZMC`,`XZQHDM`,`RS`,`ZB_JYQK`,`ZB_LXDH`,`FZR_XM`,`FZR_LXDH`,`DQJD`,`DQWD`,`cdate`,`status`,`cperson` from jczy_wxxfz
+    <select id="list" resultType="com.smart119.jczy.domain.WxxfzDO">
+        select
+        `WXXFZ_TYWYSBM`,`MC`,`DZMC`,`XZQHDM`,`RS`,`ZB_JYQK`,`ZB_LXDH`,`FZR_XM`,`FZR_LXDH`,`DQJD`,`DQWD`,`cdate`,`status`,`cperson`
+        from jczy_wxxfz
         <where>
-		  		  <if test="wxxfzTywysbm != null and wxxfzTywysbm != ''"> and WXXFZ_TYWYSBM = #{wxxfzTywysbm} </if>
-		  		  <if test="mc != null and mc != ''"> and MC like '%${mc}%' </if>
-		  		  <if test="dzmc != null and dzmc != ''"> and DZMC = #{dzmc} </if>
-		  		  <if test="xzqhdm != null and xzqhdm != ''"> and XZQHDM = #{xzqhdm} </if>
-		  		  <if test="rs != null and rs != ''"> and RS = #{rs} </if>
-		  		  <if test="zbJyqk != null and zbJyqk != ''"> and ZB_JYQK = #{zbJyqk} </if>
-		  		  <if test="zbLxdh != null and zbLxdh != ''"> and ZB_LXDH = #{zbLxdh} </if>
-		  		  <if test="fzrXm != null and fzrXm != ''"> and FZR_XM = #{fzrXm} </if>
-		  		  <if test="fzrLxdh != null and fzrLxdh != ''"> and FZR_LXDH = #{fzrLxdh} </if>
-		  		  <if test="dqjd != null and dqjd != ''"> and DQJD = #{dqjd} </if>
-		  		  <if test="dqwd != null and dqwd != ''"> and DQWD = #{dqwd} </if>
-		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
-		  		  <if test="status != null and status != ''"> and status = #{status} </if>
-		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
-		  		</where>
+            <if test="wxxfzTywysbm != null and wxxfzTywysbm != ''">and WXXFZ_TYWYSBM = #{wxxfzTywysbm}</if>
+            <if test="mc != null and mc != ''">and MC like '%${mc}%'</if>
+            <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
+            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
+            <if test="rs != null and rs != ''">and RS = #{rs}</if>
+            <if test="zbJyqk != null and zbJyqk != ''">and ZB_JYQK = #{zbJyqk}</if>
+            <if test="zbLxdh != null and zbLxdh != ''">and ZB_LXDH = #{zbLxdh}</if>
+            <if test="fzrXm != null and fzrXm != ''">and FZR_XM = #{fzrXm}</if>
+            <if test="fzrLxdh != null and fzrLxdh != ''">and FZR_LXDH = #{fzrLxdh}</if>
+            <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">
+                <if test="status == '1' or status == 1">
+                    and status = '1'
+                </if>
+                <if test="status != '1' and status != 1">
+                    and (STATUS = '0' or STATUS ='' or STATUS is null)
+                </if>
+            </if>
+            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
+        </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
                 order by ${sort} ${order}
             </when>
-			<otherwise>
+            <otherwise>
                 order by cdate desc
-			</otherwise>
+            </otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
-	</select>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
 
- 	<select id="count" resultType="int">
-		select count(*) from jczy_wxxfz
-		 <where>
-		  		  <if test="wxxfzTywysbm != null and wxxfzTywysbm != ''"> and WXXFZ_TYWYSBM = #{wxxfzTywysbm} </if>
-		  		  <if test="mc != null and mc != ''"> and MC = #{mc} </if>
-		  		  <if test="dzmc != null and dzmc != ''"> and DZMC = #{dzmc} </if>
-		  		  <if test="xzqhdm != null and xzqhdm != ''"> and XZQHDM = #{xzqhdm} </if>
-		  		  <if test="rs != null and rs != ''"> and RS = #{rs} </if>
-		  		  <if test="zbJyqk != null and zbJyqk != ''"> and ZB_JYQK = #{zbJyqk} </if>
-		  		  <if test="zbLxdh != null and zbLxdh != ''"> and ZB_LXDH = #{zbLxdh} </if>
-		  		  <if test="fzrXm != null and fzrXm != ''"> and FZR_XM = #{fzrXm} </if>
-		  		  <if test="fzrLxdh != null and fzrLxdh != ''"> and FZR_LXDH = #{fzrLxdh} </if>
-		  		  <if test="dqjd != null and dqjd != ''"> and DQJD = #{dqjd} </if>
-		  		  <if test="dqwd != null and dqwd != ''"> and DQWD = #{dqwd} </if>
-		  		  <if test="cdate != null and cdate != ''"> and cdate = #{cdate} </if>
-		  		  <if test="status != null and status != ''"> and status = #{status} </if>
-		  		  <if test="cperson != null and cperson != ''"> and cperson = #{cperson} </if>
-		  		</where>
-	</select>
+    <select id="count" resultType="int">
+        select count(*) from jczy_wxxfz
+        <where>
+            <if test="wxxfzTywysbm != null and wxxfzTywysbm != ''">and WXXFZ_TYWYSBM = #{wxxfzTywysbm}</if>
+            <if test="mc != null and mc != ''">and MC = #{mc}</if>
+            <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
+            <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
+            <if test="rs != null and rs != ''">and RS = #{rs}</if>
+            <if test="zbJyqk != null and zbJyqk != ''">and ZB_JYQK = #{zbJyqk}</if>
+            <if test="zbLxdh != null and zbLxdh != ''">and ZB_LXDH = #{zbLxdh}</if>
+            <if test="fzrXm != null and fzrXm != ''">and FZR_XM = #{fzrXm}</if>
+            <if test="fzrLxdh != null and fzrLxdh != ''">and FZR_LXDH = #{fzrLxdh}</if>
+            <if test="dqjd != null and dqjd != ''">and DQJD = #{dqjd}</if>
+            <if test="dqwd != null and dqwd != ''">and DQWD = #{dqwd}</if>
+            <if test="cdate != null and cdate != ''">and cdate = #{cdate}</if>
+            <if test="status != null and status != ''">
+                <if test="status == '1' or status == 1">
+                    and status = '1'
+                </if>
+                <if test="status != '1' and status != 1">
+                    and (STATUS = '0' or STATUS ='' or STATUS is null)
+                </if>
+            </if>
+            <if test="cperson != null and cperson != ''">and cperson = #{cperson}</if>
+        </where>
+    </select>
 
-	<insert id="save" parameterType="com.smart119.jczy.domain.WxxfzDO">
-		insert into jczy_wxxfz
-		(
-			`WXXFZ_TYWYSBM`,
-			`MC`,
-			`DZMC`,
-			`XZQHDM`,
-			`RS`,
-			`ZB_JYQK`,
-			`ZB_LXDH`,
-			`FZR_XM`,
-			`FZR_LXDH`,
-			`DQJD`,
-			`DQWD`,
-			`cdate`,
-			`status`,
-			`cperson`
-		)
-		values
-		(
-			#{wxxfzTywysbm},
-			#{mc},
-			#{dzmc},
-			#{xzqhdm},
-			#{rs},
-			#{zbJyqk},
-			#{zbLxdh},
-			#{fzrXm},
-			#{fzrLxdh},
-			#{dqjd},
-			#{dqwd},
-			#{cdate},
-			#{status},
-			#{cperson}
-		)
-	</insert>
+    <insert id="save" parameterType="com.smart119.jczy.domain.WxxfzDO">
+        insert into jczy_wxxfz
+        (`WXXFZ_TYWYSBM`,
+         `MC`,
+         `DZMC`,
+         `XZQHDM`,
+         `RS`,
+         `ZB_JYQK`,
+         `ZB_LXDH`,
+         `FZR_XM`,
+         `FZR_LXDH`,
+         `DQJD`,
+         `DQWD`,
+         `cdate`,
+         `status`,
+         `cperson`)
+        values (#{wxxfzTywysbm},
+                #{mc},
+                #{dzmc},
+                #{xzqhdm},
+                #{rs},
+                #{zbJyqk},
+                #{zbLxdh},
+                #{fzrXm},
+                #{fzrLxdh},
+                #{dqjd},
+                #{dqwd},
+                #{cdate},
+                #{status},
+                #{cperson})
+    </insert>
 
-	<update id="update" parameterType="com.smart119.jczy.domain.WxxfzDO">
-		update jczy_wxxfz
-		<set>
-			<if test="mc != null">`MC` = #{mc}, </if>
-			<if test="dzmc != null">`DZMC` = #{dzmc}, </if>
-			<if test="xzqhdm != null">`XZQHDM` = #{xzqhdm}, </if>
-			<if test="rs != null">`RS` = #{rs}, </if>
-			<if test="zbJyqk != null">`ZB_JYQK` = #{zbJyqk}, </if>
-			<if test="zbLxdh != null">`ZB_LXDH` = #{zbLxdh}, </if>
-			<if test="fzrXm != null">`FZR_XM` = #{fzrXm}, </if>
-			<if test="fzrLxdh != null">`FZR_LXDH` = #{fzrLxdh}, </if>
-			<if test="dqjd != null">`DQJD` = #{dqjd}, </if>
-			<if test="dqwd != null">`DQWD` = #{dqwd}, </if>
-			<if test="cdate != null">`cdate` = #{cdate}, </if>
-			<if test="status != null">`status` = #{status}, </if>
-			<if test="cperson != null">`cperson` = #{cperson}</if>
-		</set>
-		where WXXFZ_TYWYSBM = #{wxxfzTywysbm}
-	</update>
+    <update id="update" parameterType="com.smart119.jczy.domain.WxxfzDO">
+        update jczy_wxxfz
+        <set>
+            <if test="mc != null">`MC` = #{mc},</if>
+            <if test="dzmc != null">`DZMC` = #{dzmc},</if>
+            <if test="xzqhdm != null">`XZQHDM` = #{xzqhdm},</if>
+            <if test="rs != null">`RS` = #{rs},</if>
+            <if test="zbJyqk != null">`ZB_JYQK` = #{zbJyqk},</if>
+            <if test="zbLxdh != null">`ZB_LXDH` = #{zbLxdh},</if>
+            <if test="fzrXm != null">`FZR_XM` = #{fzrXm},</if>
+            <if test="fzrLxdh != null">`FZR_LXDH` = #{fzrLxdh},</if>
+            <if test="dqjd != null">`DQJD` = #{dqjd},</if>
+            <if test="dqwd != null">`DQWD` = #{dqwd},</if>
+            <if test="cdate != null">`cdate` = #{cdate},</if>
+            <if test="status != null">`status` = #{status},</if>
+            <if test="cperson != null">`cperson` = #{cperson}</if>
+        </set>
+        where WXXFZ_TYWYSBM = #{wxxfzTywysbm}
+    </update>
 
-	<delete id="remove">
-		delete from jczy_wxxfz where WXXFZ_TYWYSBM = #{value}
-	</delete>
+    <delete id="remove">
+        delete
+        from jczy_wxxfz
+        where WXXFZ_TYWYSBM = #{value}
+    </delete>
 
-	<update id="updateStatus">
-		update  jczy_wxxfz set status = '1' where WXXFZ_TYWYSBM = #{wxxfzTywysbm}
-	</update>
+    <update id="updateStatus">
+        update jczy_wxxfz
+        set status = '1'
+        where WXXFZ_TYWYSBM = #{wxxfzTywysbm}
+    </update>
 
-	<delete id="batchRemove">
-		delete from jczy_wxxfz where WXXFZ_TYWYSBM in
-		<foreach item="wxxfzTywysbm" collection="array" open="(" separator="," close=")">
-			#{wxxfzTywysbm}
-		</foreach>
-	</delete>
+    <delete id="batchRemove">
+        delete from jczy_wxxfz where WXXFZ_TYWYSBM in
+        <foreach item="wxxfzTywysbm" collection="array" open="(" separator="," close=")">
+            #{wxxfzTywysbm}
+        </foreach>
+    </delete>
 
-	<select id="getWxxfzByRange" resultType="com.smart119.jczy.domain.WxxfzDO">
-		select t.*, calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
-		 from jczy_wxxfz t
-		 where (t.status = 0 or t.status = '' or t.status is null)
-		 HAVING distance <![CDATA[ <= ]]> #{distance}
-	</select>
-
-
-	<select id="wxxfzGroupXzqh" resultType="java.util.HashMap">
-		SELECT XZQHDM as xzqhdm,dict.name from jczy_wxxfz wxxfz
-		LEFT JOIN sys_dict dict
-		on dict.value=wxxfz.XZQHDM and dict.type='XZQHDM'
-		<where>
-			 (wxxfz.status = 0 or wxxfz.status = '' or wxxfz.status is null)
-			<if test="wxxfzMc != null and wxxfzMc != ''"> and wxxfz.MC like '${wxxfzMc}' </if>
-			<if test="XZQHDM != null and XZQHDM != ''"> and wxxfz.XZQHDM = #{XZQHDM} </if>
-		</where>
-		GROUP BY XZQHDM
-	</select>
+    <select id="getWxxfzByRange" resultType="com.smart119.jczy.domain.WxxfzDO">
+        select t.*, calculateLineDistance(t.DQJD, t.DQWD, #{jd}, #{wd}) AS distance
+        from jczy_wxxfz t
+        where (t.status = 0 or t.status = '' or t.status is null)
+        HAVING distance <![CDATA[ <= ]]> #{distance}
+    </select>
 
 
-	<select id="wxxfzByXzqh" resultType="java.util.HashMap">
-		SELECT WXXFZ_TYWYSBM as wxxfzTywysbm,MC as mc,FZR_XM as fzrXm,FZR_LXDH as fzrLxdh from jczy_wxxfz
-		<where>
-			and (status = 0 or status = '' or status is null)
-			<if test="wxxfzMc != null and wxxfzMc != ''"> and MC like '${wxxfzMc}' </if>
-			and XZQHDM = #{xzqhdm}
-		</where>
-	</select>
+    <select id="wxxfzGroupXzqh" resultType="java.util.HashMap">
+        SELECT XZQHDM as xzqhdm,dict.name from jczy_wxxfz wxxfz
+        LEFT JOIN sys_dict dict
+        on dict.value=wxxfz.XZQHDM and dict.type='XZQHDM'
+        <where>
+            (wxxfz.status = 0 or wxxfz.status = '' or wxxfz.status is null)
+            <if test="wxxfzMc != null and wxxfzMc != ''">and wxxfz.MC like '${wxxfzMc}'</if>
+            <if test="XZQHDM != null and XZQHDM != ''">and wxxfz.XZQHDM = #{XZQHDM}</if>
+        </where>
+        GROUP BY XZQHDM
+    </select>
+
+
+    <select id="wxxfzByXzqh" resultType="java.util.HashMap">
+        SELECT WXXFZ_TYWYSBM as wxxfzTywysbm,MC as mc,FZR_XM as fzrXm,FZR_LXDH as fzrLxdh from jczy_wxxfz
+        <where>
+            and (status = 0 or status = '' or status is null)
+            <if test="wxxfzMc != null and wxxfzMc != ''">and MC like '${wxxfzMc}'</if>
+            and XZQHDM = #{xzqhdm}
+        </where>
+    </select>
 
 
 </mapper>
