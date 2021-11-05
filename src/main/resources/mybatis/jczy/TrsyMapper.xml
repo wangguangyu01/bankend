@@ -17,7 +17,7 @@
         from jczy_trsy
         <where>
             <if test="trsyTywysbm != null and trsyTywysbm != ''">and TRSY_TYWYSBM = #{trsyTywysbm}</if>
-            <if test="mc != null and mc != ''">and MC = #{mc}</if>
+            <if test="mc != null and mc != ''">and MC like CONCAT ('%',#{mc},'%') </if>
             <if test="gd != null and gd != ''">and GD = #{gd}</if>
             <if test="sylxdm != null and sylxdm != ''">and SYLXDM = #{sylxdm}</if>
             <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
@@ -39,7 +39,7 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
-            <if test="status != null ">and status = #{status}</if>
+            <if test="status != null and status !='' ">and status = #{status}</if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -58,7 +58,7 @@
         select count(*) from jczy_trsy
         <where>
             <if test="trsyTywysbm != null and trsyTywysbm != ''">and TRSY_TYWYSBM = #{trsyTywysbm}</if>
-            <if test="mc != null and mc != ''">and MC = #{mc}</if>
+            <if test="mc != null and mc != ''">and MC like CONCAT ('%',#{mc},'%')</if>
             <if test="gd != null and gd != ''">and GD = #{gd}</if>
             <if test="sylxdm != null and sylxdm != ''">and SYLXDM = #{sylxdm}</if>
             <if test="dzmc != null and dzmc != ''">and DZMC = #{dzmc}</if>
@@ -80,7 +80,7 @@
             <if test="xzqhdm != null and xzqhdm != ''">and XZQHDM = #{xzqhdm}</if>
             <if test="jizRq != null and jizRq != ''">and JIZ_RQ = #{jizRq}</if>
             <if test="qyRq != null and qyRq != ''">and QY_RQ = #{qyRq}</if>
-            <if test="status != null ">and status = #{status}</if>
+            <if test="status != null and status !=''">and status = #{status}</if>
         </where>
     </select>
 
