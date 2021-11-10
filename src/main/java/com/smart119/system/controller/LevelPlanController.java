@@ -250,6 +250,10 @@ public class LevelPlanController extends BaseController{
 			QueryWrapper<PolicestaionTypeLevelDO> queryWrapper = new QueryWrapper<>();
 			queryWrapper.eq("level_plan_id",levelPlanId);
 			policestaionTypeLevelDao.delete(queryWrapper);
+
+			QueryWrapper<ZzdyTypeLevelDO> queryWrapper1 = new QueryWrapper<>();
+			queryWrapper1.eq("level_plan_id",levelPlanId);
+			zzdyTypeLevelDao.delete(queryWrapper1);
 			return R.ok();
 		}
 		return R.error();
