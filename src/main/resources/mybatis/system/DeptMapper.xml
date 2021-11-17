@@ -162,6 +162,15 @@
 		</foreach>
 	</delete>
 
+
+	<update id="batchUpate">
+		update sys_dept set del_flag = '-1' where dept_id in
+		<foreach item="deptId" collection="array" open="(" separator=","
+				 close=")">
+			#{deptId}
+		</foreach>
+	</update>
+
 	<select id="listParentDept" resultType="long">
 		select DISTINCT parent_id from sys_dept
 	</select>

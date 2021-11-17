@@ -11,6 +11,7 @@ import com.smart119.common.utils.R;
 import com.smart119.system.dao.DeptDao;
 import com.smart119.system.domain.DeptDO;
 import com.smart119.system.service.DeptService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanMap;
 import org.springframework.scheduling.annotation.Async;
@@ -135,7 +136,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
 
     @Override
     public int batchRemove(Long[] deptIds) {
-        return sysDeptMapper.batchRemove(deptIds);
+        return sysDeptMapper.batchUpate(deptIds);
     }
 
     @Override
@@ -171,6 +172,9 @@ public class DeptServiceImpl extends ServiceImpl<DeptDao, DeptDO>implements Dept
         }
 
         for (DeptDO sysDept : sysDepts) {
+            if (StringUtils.equals("-1", String.valueOf(sysDept.getDelFlag()))) {
+                continue;
+            }
             Tree<DeptDO> tree = new Tree<DeptDO>();
             tree.setId(sysDept.getDeptId().toString());
             if(sysDept.getDeptId().equals(deptId)){

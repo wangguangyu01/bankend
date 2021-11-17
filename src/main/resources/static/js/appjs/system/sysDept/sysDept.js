@@ -56,6 +56,20 @@ function load() {
                         align : 'center',
                         valign : 'center',
                     },
+					{
+						field : 'delFlag',
+						title : '是否删除',
+						align : 'center',
+						valign : 'center',
+						formatter : function(item, index) {
+							if (item.delFlag === '-1' || item.delFlag === -1) {
+								return  '已删除';
+							}
+							if (item.delFlag !== '-1' && item.delFlag !== -1) {
+								return  '未删除';
+							}
+						}
+					},
 					// {
 					// 	field : 'delFlag',
 					// 	title : '状态',

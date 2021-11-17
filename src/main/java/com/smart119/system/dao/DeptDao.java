@@ -48,4 +48,8 @@ public interface DeptDao extends BaseMapper<DeptDO> {
 
 	Map<String,Object> findJyjgxzdmById(String deptId);
 
+
+	int batchUpate(Long[] deptIds);
+
+
 }

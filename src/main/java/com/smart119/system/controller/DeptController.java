@@ -149,6 +149,7 @@ public class DeptController extends BaseController {
 		sysDept.setCdate(new Date());
 		sysDept.setCperson(getUser().getUserId().toString());
 		sysDept.setStatus("0");
+		sysDept.setDelFlag(0);
 		sysDept.setXfjyjgTywysbm(UUID.randomUUID().toString().trim().replaceAll("-", ""));
 		DeptDO parent = sysDeptService.get(sysDept.getParentId());
 //		sysDept.setXfjyjgTywysbmAll(parent.getXfjyjgTywysbmAll()+"-"+sysDept.getXfjyjgTywysbm());
@@ -206,7 +207,8 @@ public class DeptController extends BaseController {
 			return R.error(1, "包含下级部门,不允许删除");
 		}
 		if(sysDeptService.checkDeptHasUser(deptDO.getXfjyjgTywysbm())) {
-			if (sysDeptService.removeById(deptId)) {
+			deptDO.setDelFlag(-1);
+			if (sysDeptService.updateById(deptDO)) {
 				//删除redis
 				sysDeptService.removeRedisDept(deptDO);
 				return R.ok();
