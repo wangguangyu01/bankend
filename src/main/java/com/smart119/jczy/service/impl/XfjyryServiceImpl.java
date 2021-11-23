@@ -134,10 +134,8 @@ public class XfjyryServiceImpl implements XfjyryService {
     private int saveUser(XfjyryDO xfjyry) {
         //验证用户名是否重复
         String username = xfjyry.getUsername();
-        Map<String, Object> params = new HashMap<>();
-        params.put("username", username);
-        boolean isHave = userService.exit(params);
-        if (isHave) {
+        UserDO user=userService.getUserByUsername(username);
+        if (Objects.nonNull(user)) {
             return -1;
         }
 

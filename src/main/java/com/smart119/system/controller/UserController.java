@@ -214,7 +214,12 @@ public class UserController extends BaseController {
 	@ResponseBody
 	boolean exit(@RequestParam Map<String, Object> params) {
 		// 存在，不通过，false
-		return !userService.exit(params);
+		String username= (String) params.get("username");
+		UserDO userDO=userService.getUserByUsername(username);
+		if(Objects.nonNull(userDO)){
+      return false;
+		}
+		return true;
 	}
 
 	@RequiresPermissions("sys:user:resetPwd")
