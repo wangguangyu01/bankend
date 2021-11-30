@@ -122,3 +122,19 @@ exlive:
   url: http://218.201.137.206:89/gpsonline/GPSAPI
   username: linyizhidui
   password: 123456
+# 实战平台
+szplatform:
+  updateXfclCoordinatesUrl: http://10.48.55.146:8081/carLocation/saveCarLocation
+
+map:
+  gaode:
+    #高德地图url
+    url: https://restapi.amap.com/
+    #路线推荐_高德api
+    routeRecommendationGaode: https://restapi.amap.com/v4/direction/truck?origin={origin}&destination={destination}&avoidpolygons={avoidpolygons}&key={key}&size=4
+    #路线推荐_高德api的post请求
+    routePostRecommendationGaode: https://restapi.amap.com/v4/direction/truck
+    baiduZbToGaodeZb: http://restapi.amap.com/v3/assistant/coordinate/convert?key={key}&locations={locations}&coordsys=baidu
+    #将GPS转化为高德坐标
+    gpsToGaodeZb: http://restapi.amap.com/v3/assistant/coordinate/convert?key={key}&locations={locations}&coordsys=gps
+

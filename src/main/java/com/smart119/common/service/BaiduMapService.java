@@ -20,6 +20,9 @@ public interface BaiduMapService {
 
     String gaodeZbToBaiduZb(String locations);
 
+
+    JSONObject gpsToGaodeZb(String locations);
+
     Object routeRecommendationGaodeJc(String fromZb, String toZb);
 
 

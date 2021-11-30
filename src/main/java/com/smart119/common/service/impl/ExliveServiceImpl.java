@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.smart119.common.dto.GpsDto;
 import com.smart119.common.redis.shiro.RedisManager;
+import com.smart119.common.service.BaiduMapService;
 import com.smart119.common.service.ExliveService;
 import com.smart119.jczy.dao.XfclDao;
 import com.smart119.jczy.domain.XfclDO;
@@ -19,6 +20,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,8 +61,18 @@ public class ExliveServiceImpl implements ExliveService {
     private RedisManager redisManager;
 
 
+    @Value("${szplatform.updateXfclCoordinatesUrl}")
+    private String pushSzplatformCoordinatesUrl;
+
+
+
     @Autowired
     private RestTemplate restTemplate;
+
+
+    @Resource
+    private BaiduMapService baiduMapService;
+
 
     /**
      * 用户登录
@@ -202,15 +214,29 @@ public class ExliveServiceImpl implements ExliveService {
                                         //纬度
                                         String lat = String.valueOf(map.get("lat"));
                                         double latDouble = NumberUtils.toDouble(lat);
-                                        String lat_xz = String.valueOf(map.get("lat_xz"));
-                                        double lat_xzDouble = NumberUtils.toDouble(lat_xz);
                                         //经度
                                         String lng = String.valueOf(map.get("lng"));
                                         double lngDouble = NumberUtils.toDouble(lng);
-                                        String lng_xz = String.valueOf(map.get("lng_xz"));
-                                        double lng_xzDouble = NumberUtils.toDouble(lng_xz);
-                                        xfclDOS.get(finalI).setClwzDqjd(lngDouble + lng_xzDouble);
-                                        xfclDOS.get(finalI).setClwzDqwd(latDouble + lat_xzDouble);
+
+                                        String locations = lngDouble + "," + latDouble;
+                                        JSONObject jsonObjectLocation = baiduMapService.gpsToGaodeZb(locations);
+                                        if (!ObjectUtils.isEmpty(jsonObjectLocation)) {
+                                            if (StringUtils.equals("1", jsonObjectLocation.getString("status"))) {
+                                                locations = jsonObjectLocation.getString("locations");
+                                                String[] locationsArr = StringUtils.split(locations, ",");
+                                                if (!ObjectUtils.isEmpty(locationsArr) && locationsArr.length == 2) {
+                                                    lngDouble = NumberUtils.toDouble(locationsArr[0], lngDouble);
+                                                    BigDecimal lngBig = new BigDecimal(lngDouble);
+                                                    lngDouble = lngBig.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                                    xfclDOS.get(finalI).setClwzDqjd(lngDouble );
+
+                                                    latDouble = NumberUtils.toDouble(locationsArr[1], lngDouble);
+                                                    BigDecimal latBig = new BigDecimal(latDouble);
+                                                    latDouble = latBig.setScale(6, BigDecimal.ROUND_HALF_UP).doubleValue();
+                                                    xfclDOS.get(finalI).setClwzDqwd(latDouble);
+                                                }
+                                            }
+                                        }
                                         xfclDOS.get(finalI).setClwzWzcjsj(new Date());
                                         xfclDOS.get(finalI).setGpsVid(String.valueOf(vehicleJson.get("id")));
                                         xfclDOS.get(finalI).setGpsVkey((String) vehicleJson.get("vKey"));
@@ -218,6 +244,7 @@ public class ExliveServiceImpl implements ExliveService {
                                         int direct = NumberUtils.toInt(String.valueOf(map.get("direct")), 0);
                                         xfclDOS.get(finalI).setGpsDirect(direct);
                                         xfclDao.updateById(xfclDOS.get(finalI));
+
                                     }
                                 }
                             }

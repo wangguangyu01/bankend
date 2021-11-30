@@ -45,6 +45,10 @@ public class BaiduMapServiceImpl implements BaiduMapService{
     @Value("${map.gao.url:https://restapi.amap.com/}")
     private String routeRecommendationGaodePrefix;
 
+
+    @Value("${map.gaode.gpsToGaodeZb}")
+    private String gpsToGaodeZb;
+
     /**
      *
      * @param fromZb 格式 40.45,116.34|40.54,116.35
@@ -396,6 +400,34 @@ public class BaiduMapServiceImpl implements BaiduMapService{
         return stringSet;
     }
 
+
+
+    /**
+     * 将GPS坐标转化为高德坐标
+     * @param locations  格式 经度,纬度|经度,纬度  116.481499,39.990475|116.481499,39.99037
+     * @return
+     */
+    @Override
+    public JSONObject gpsToGaodeZb(String locations){
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String,Object> map = new HashMap<>();
+        map.put("locations",locations);
+        Set<String> gaodeKeys = getGaodeKeyStrings();
+        Iterator<String> it = gaodeKeys.iterator();
+        JSONObject jsonObject = null;
+        while (it.hasNext()) {
+            String gaodeKey = it.next();
+            map.put("key", gaodeKey);
+            //String res = restTemplate.getForObject("http://restapi.amap.com/v3/assistant/coordinate/convert?key={key}&locations={locations}&coordsys=gps",String.class,map);
+            String res = restTemplate.getForObject(gpsToGaodeZb,String.class,map);
+            jsonObject =JSONObject.parseObject(res);
+            if (!ObjectUtils.isEmpty(jsonObject)) {
+                break;
+            }
+        }
+
+        return jsonObject;
+    }
 
 
 
