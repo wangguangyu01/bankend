@@ -168,8 +168,6 @@
 
     <delete id="remove">
 		delete from sys_user where user_id = #{value}
-
-       update sys_user set status =
 	</delete>
 
     <delete id="batchRemove">
