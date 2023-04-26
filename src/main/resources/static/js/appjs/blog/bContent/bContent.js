@@ -11,7 +11,6 @@ function load() {
 						url : prefix + "/list", // 服务器数据的加载地址
 						// showRefresh : true,
 						// showToggle : true,
-						showColumns : true,
 						iconSize : 'outline',
 						toolbar : '#exampleToolbar',
 						striped : true, // 设置为true会有隔行变色效果
@@ -62,15 +61,6 @@ function load() {
                                     }
                                 },
 								{
-									field : 'author',
-									title : '作者'
-								},
-								{
-									visible : false,
-									field : 'slug',
-									title : 'slug'
-								},
-								{
 									visible : false,
 									field : 'created',
 									title : '创建人id'
@@ -90,31 +80,10 @@ function load() {
 									field : 'content',
 									title : '内容'
 								},
-								
-								{
-									visible : false,
-									field : 'type',
-									title : '类型'
-								},
-								{
-									visible : false,
-									field : 'tags',
-									title : '标签'
-								},
 								{
 									visible : false,
 									field : 'categories',
 									title : '分类'
-								},
-								{
-									visible : false,
-									field : 'hits',
-									title : ''
-								},
-								{
-									field : 'commentsNum',
-									title : '评论数量',
-									width :40
 								},
 								{
 									field : 'status',
@@ -125,43 +94,6 @@ function load() {
 											return '<span class="label label-danger">草稿</span>';
 										} else if (value == '1') {
 											return '<span class="label label-primary">发布</span>';
-										}
-									}
-								},
-								{
-									field : 'allowComment',
-									title : '开启评论',
-									align : 'center',
-									formatter : function(value, row, index) {
-										if (value == '0') {
-											return '<span class="label label-danger">否</span>';
-										} else if (value == '1') {
-											return '<span class="label label-primary">是</span>';
-										}
-									}
-								},
-								{
-									visible : false,
-									field : 'allowPing',
-									title : '允许ping',
-									align : 'center',
-									formatter : function(value, row, index) {
-										if (value == '0') {
-											return '<span class="label label-danger">否</span>';
-										} else if (value == '1') {
-											return '<span class="label label-primary">是</span>';
-										}
-									}
-								},
-								{
-									field : 'allowFeed',
-									title : '允许订阅',
-									align : 'center',
-									formatter : function(value, row, index) {
-										if (value == '0') {
-											return '<span class="label label-danger">否</span>';
-										} else if (value == '1') {
-											return '<span class="label label-primary">是</span>';
 										}
 									}
 								},
@@ -232,7 +164,7 @@ function remove(id) {
 }
 
 function preview(id) {
-	window.open("/blog/open/post/"+id);   
+	window.open("/blog/open/post/"+id);
 	//window.location.href="/blog/open/post/"+id;
 }
 function batchRemove() {

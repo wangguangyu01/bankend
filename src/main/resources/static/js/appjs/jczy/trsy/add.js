@@ -117,7 +117,7 @@ function initFileInput(ctrlName) {
 	control.fileinput({
 		language: 'zh', //设置语言
 		//uploadUrl: "upload/insert", //上传的地址
-		allowedFileExtensions: ['jpg', 'gif', 'png','exe'],//接收的文件后缀
+		allowedFileExtensions: ['jpg', 'gif', 'png','mp4', '3gp'],//接收的文件后缀
 		//uploadExtraData:{"id": 1, "fileName":'123.jpg'},
 		uploadAsync: true, //默认异步上传
 		showUpload: false, //是否显示上传按钮

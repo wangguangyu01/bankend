@@ -1,49 +1,6 @@
-var inpId = "";
-
 $().ready(function() {
-	validateRule();
-    getSelectByType("CYZJLXDM","cyzjlxdm",null);  //常用证件类型
-    getSelectByType("XBDM","xbdm",null);  //性别代码
-    getSelectByType("MZDM","mzdm",null);  //民族代码
-    getSelectByType("ZZMMDM","zzmmdm",null);  //政治面貌代码
-    getSelectByType("XZQHDM","province",null);  //区划代码（省）级联
-    getSelectAll("XLDM","XLDM-DIV","xldm","xldm-title");  //学历代码
-    getSelectAll("XWDM","XWDM-DIV","xwdm","xwdm-title");  //学位代码
-    getSelectAll("XFZJLYLBDM","XFZJLYLBDM-DIV","xfzjlylbdm","xfzjlylbdm-title");  //消防专家领域类别
-    getSelectByType("HYZKDM","hyzkdm",null);  //婚姻状态
-    getSelectAll("XFJYRYLBDM","XFJYRYLBDM-DIV","xfjyrylbdm","xfjyrylbdm-title");  //消防救援人员类别
-    getSelectByType("XFJYRYZTDM","xfjyryztdm",null);  //消防救援人员状态代码
-    getSelectByType("XFJYRYZWQKDM","xfjyryzwqkdm",null);  //消防救援人员在位情况代码
-    getSelectAll("XFGWFLYDM","XFGWFLYDM-DIV","xfgwflydm","xfgwflydm-title");  //消防岗位分类与代码
-    getSelectAll("ZYJSZWLBDM","ZYJSZWLBDM-DIV","zyjszwlbdm","zyjszwlbdm-title");  //专业技术职务类别
-    getSelectAll("XFJYXJBDM","XFJYXJBDM-DIV","xfjyxjbdm","xfjyxjbdm-title");  //消防救援衔级别
-    getSelectByType("rygwlb_jh","rylbJh",null);  //人员岗位简类
+    validateRule();
     initFileInput("input-id");
-
-
-    $("input[name='isCreateUser']").click(function(){
-        if("1" == $('input:radio[name="isCreateUser"]:checked').val()){
-            $('#accountDiv').show();
-            $('#roleDiv').show();
-            $('#username').rules('add',{
-                required: true,
-                remote:{
-                    url : "/sys/user/exit", // 后台处理程序
-                    type : "post", // 数据发送方式
-                    dataType : "json", // 接受数据格式
-                    data : { // 要传递的数据
-                        username : function() {
-                            return $("#username").val();
-                        }
-                    }
-                }
-            });
-        }else{
-            $('#accountDiv').hide();
-            $('#roleDiv').hide();
-            $('#username').rules('remove','remote');
-        }
-    })
 
 });
 
@@ -101,114 +58,11 @@ function save() {
 function validateRule() {
     var icon = "<i class='fa fa-times-circle'></i> ";
     $("#signupForm").validate({
-        rules : {
-            name : {
-                required : true
-            },
-            zjhm : {
-                isIdentity : true,
-                maxlength:30
-            },
-            bgLxdh : {
-                mobile : true,
-                maxlength:18
-            },
-            ydLxdh : {
-                required : true,
-                mobile : true,
-                maxlength:18
-            },
-            nwDzxx : {
-                email:true
-            },
-            hlwDzxx : {
-                email:true
-            },
-            isCreateUser : {
-                required : true
-            },
-            txdz : {
-                required : false,
-                maxlength:100
-            },
-            bz : {
-                required : false,
-                maxlength:500
-            }
-        },
-        messages : {
-            name : {
-                required : icon + "请输入名字"
-            },
-            ydLxdh : {
-                required : icon + "请输入移动_联系电话",
-                remote : icon + "移动_联系电话已经存在"
-            },
-            nwDzxx : {
-                email: "请输入正确的邮箱格式"
-            },
-            hlwDzxx : {
-                email: "请输入正确的邮箱格式"
-            },
-            isCreateUser : {
-                required : icon + "请选择是否创建用户"
-            },
-            username:{
-                required: icon + "请输入登录名",
-                remote:"登录名已存在"
-            }
-        }
-    })
-}
-
-//校验身份证
-jQuery.validator.addMethod("isIdentity",function(value,element){
-    if($("#cyzjlxdm").val()=="111"){
-        var id= /^(\d{15}$|^\d{18}$|^\d{17}(\d|X))$/;
-        if(id.test(value)){
-            return true;
-        }else{
-            return false;
-        }
-    }else{
-        return true
-    }
-},"请输入正确身份证号");
-
-
-jQuery.validator.addMethod("mobile", function(value, element) {
-    if(value){
-        if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    return true;
-}, "联系电话格式错误");
-
-var openDept = function(objId){
-    inpId = objId;
-    layer.open({
-        type:2,
-        title:"选择消防救援机构",
-        area : [ '300px', '450px' ],
-        content:"/system/sysDept/treeView"
     })
 }
 
 
-function loadDept( deptId,deptName,xfjyjgTywysbm){
-    //$("#deptId").val(deptId);
-    $("#"+inpId).val(xfjyjgTywysbm);
-    $("#"+inpId+"Name").val(deptName);
-}
 
-function getXzqhdm(obj,objId){
-    var id = $(obj).find("option:selected").attr("id");
-    console.log(id);
-    getSelectById(id,objId);
-}
 
 function initFileInput(ctrlName) {
     var control = $('#' + ctrlName);

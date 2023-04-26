@@ -1,7 +1,7 @@
-var prefix = "/jczy/xfjyry"
-var zid;
+var prefix = "/wxUser";
+
 $(function () {
-    getTreeData();
+   // getTreeData();
     load();
 });
 
@@ -10,7 +10,7 @@ function load() {
         .bootstrapTable(
             {
                 method: 'get', // 服务器数据的请求方式 get or post
-                url: prefix + "/list", // 服务器数据的加载地址
+                url: prefix + "/list?=t="+Math.random(), // 服务器数据的加载地址
                 iconSize: 'outline',
                 toolbar: '#exampleToolbar',
                 striped: true, // 设置为true会有隔行变色效果
@@ -24,11 +24,9 @@ function load() {
                 queryParams: function (params) {
                     return {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
-                        deptId: zid,
                         limit: params.limit,
                         offset: params.offset,
-                        xm: $('#searchName').val(),
-                        flag:$("input[name='flag']:checked").val()
+                        phone: $('#searchName').val()
                     };
                 },
 
@@ -42,64 +40,63 @@ function load() {
                     {
                         checkbox : true
                     },
+                    // {
+                    //     field: 'xh',
+                    //     title: '序号',
+                    //     formatter: function (value, row, index) {
+                    //         //获取每页显示的数量
+                    //         var pageSize = $('#exampleTable').bootstrapTable('getOptions').pageSize;
+                    //         //获取当前是第几页
+                    //         var pageNumber = $('#exampleTable').bootstrapTable('getOptions').pageNumber;
+                    //         //返回序号，注意index是从0开始的，所以要加上1
+                    //         return pageSize * (pageNumber - 1) + index + 1;
+                    //     }
+                    // },
                     {
-                        field: 'xh',
-                        title: '序号',
-                        formatter: function (value, row, index) {
-                            //获取每页显示的数量
-                            var pageSize = $('#exampleTable').bootstrapTable('getOptions').pageSize;
-                            //获取当前是第几页
-                            var pageNumber = $('#exampleTable').bootstrapTable('getOptions').pageNumber;
-                            //返回序号，注意index是从0开始的，所以要加上1
-                            return pageSize * (pageNumber - 1) + index + 1;
-                        }
+                        field: 'serialNumber',
+                        title: '编号'
                     },
                     {
-                        field: 'xm',
-                        title: '姓名'
+                        field: 'phone',
+                        title: '手机号'
                     },
                     {
-                        field: 'xbdm',
-                        title: '性别',
-                        formatter: function (value, row, index) {
-                            if (value == 1) {
-                                return '男';
-                            } else if (value == 2) {
-                                return '女';
-                            }
-                        }
+                        field: 'wxNumber',
+                        title: '微信号'
                     },
                     {
-                        field: 'ydLxdh',
-                        title: '移动电话'
+                        field: 'sex',
+                        title: '性别'
                     },
                     {
-                        field: 'xfgwflmc',
-                        title: '消防岗位分类名称'
+                        field: 'birthday',
+                        title: '出生日期'
                     },
                     {
-                        field: 'xfjyxjb',
-                        title: '消防救援衔级别'
+                        field: 'province',
+                        title: '所在省'
                     },
                     {
-                        field: 'sjszjg',
-                        title: '实际所在机构'
+                        field: 'city',
+                        title: '所在市'
+                    },
+                    {
+                        field: 'region',
+                        title: '所在地区具体地址'
+                    },
+                    {
+                        field: 'approve',
+                        title: '是否审核通过'
                     },
                     {
                         title: '操作',
                         field: 'id',
                         align: 'center',
                         formatter: function (value, row, index) {
-                            var e = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="编辑" onclick="edit(\''
-                                + row.xfjyryTywysbm
+                            var e = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="审核" onclick="edit(\''
+                                + row.serialNumber
                                 + '\')"><i class="fa fa-edit"></i></a> ';
-                            var d = '<a class="btn btn-warning btn-sm" href="#" title="删除"  mce_href="#" onclick="remove(\''
-                                + row.xfjyryTywysbm
-                                + '\')"><i class="fa fa-remove"></i></a> ';
-                            var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-                                + row.xfjyryTywysbm
-                                + '\')"><i class="fa fa-key"></i></a> ';
-                            return e + d;
+                            return e;
                         }
                     }]
             });
@@ -126,7 +123,7 @@ function edit(id) {
         maxmin: true,
         shadeClose: false, // 点击遮罩关闭层
         area: ['90%', '90%'],
-        content: prefix + '/edit/' + id // iframe的url
+        content: prefix + '/editUser/' + id // iframe的url
     });
 }
 
@@ -190,29 +187,3 @@ function batchRemove() {
     });
 }
 
-function getTreeData() {
-
-    $.ajax({
-        type: "GET",
-        url: "/system/sysDept/tree",
-        success: function (tree) {
-            loadTree(tree);
-        }
-    });
-}
-
-function loadTree(tree) {
-    $('#jstree').jstree({
-        'core': {
-            'data': tree
-        },
-        "plugins": ["search"]
-    });
-    $('#jstree').jstree().open_all();
-}
-
-$('#jstree').on("changed.jstree", function (e, data) {
-    $("#exampleTable").bootstrapTable('destroy');  // 销毁原表格
-    zid = data.selected[0],
-    load();
-});

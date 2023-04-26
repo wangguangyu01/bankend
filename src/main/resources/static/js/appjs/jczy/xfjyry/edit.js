@@ -1,87 +1,22 @@
 $().ready(function() {
-	validateRule();
-    getSelectByType("CYZJLXDM","cyzjlxdm",$("#cyzjlxdm_val").val());  //常用证件类型
-    getSelectByType("XBDM","xbdm",$("#xbdm_val").val());  //性别代码
-    getSelectByType("MZDM","mzdm",$("#mzdm_val").val());  //民族代码
-    getSelectByType("ZZMMDM","zzmmdm",$("#zzmmdm_val").val());  //政治面貌代码
-
-    getSelectByType("HYZKDM","hyzkdm",$("#hyzkdm_val").val());  //婚姻状态
-    getSelectByType("XFJYRYZTDM","xfjyryztdm",$("#xfjyryztdm_val").val());  //消防救援人员状态代码
-    getSelectByType("XFJYRYZWQKDM","xfjyryzwqkdm",$("#xfjyryzwqkdm_val").val());  //消防救援人员在位情况代码
-
-    getSelectAll("XLDM","XLDM-DIV","xldm","xldm-title");  //学历代码
-    getSelectAll("XWDM","XWDM-DIV","xwdm","xwdm-title");  //学位代码
-    getSelectAll("XFZJLYLBDM","XFZJLYLBDM-DIV","xfzjlylbdm","xfzjlylbdm-title");  //消防专家领域类别
-    getSelectAll("XFJYRYLBDM","XFJYRYLBDM-DIV","xfjyrylbdm","xfjyrylbdm-title");  //消防救援人员类别
-    getSelectAll("XFGWFLYDM","XFGWFLYDM-DIV","xfgwflydm","xfgwflydm-title");  //消防岗位分类与代码
-    getSelectAll("ZYJSZWLBDM","ZYJSZWLBDM-DIV","zyjszwlbdm","zyjszwlbdm-title");  //专业技术职务类别
-    getSelectAll("XFJYXJBDM","XFJYXJBDM-DIV","xfjyxjbdm","xfjyxjbdm-title");  //消防救援衔级别
-
-    getSelectByType("XZQHDM","province",$("#provinceVal").val());  //区划代码（省）级联
-    if($("#cityVal").val()!=null && $("#cityVal").val()!=""){
-        getSelectByValue($("#provinceVal").val(),"city",$("#cityVal").val());  //区划代码（市）级联
-    }
-    if($("#jgdmVal").val()!=null && $("#jgdmVal").val()!=""){
-        getSelectByValue($("#cityVal").val(),"jgdm",$("#jgdmVal").val());  //区划代码（区/县）级联
-    }
+    validateRule();
 
 
-    getSelectByType("rygwlb_jh","rylbJh",$("#rylbJh_val").val());  //人员岗位简类
-
-    $("#sfzjPdbz option[value='"+$("#sfzjPdbz_val").val()+"']").attr("selected","selected");  //是否专家
     initFileInput("input-id");
 
-    var userid = $('#userid').val();
-    if(userid != ""){
-        //用户不为空，验证ydLxdh是否存在其他用户重名
-        $('#ydLxdh').rules('add',{
-            remote:{
-                url : "/sys/user/exit", // 后台处理程序
-                type : "post", // 数据发送方式
-                dataType : "json", // 接受数据格式
-                data : { // 要传递的数据
-                    username : function() {
-                        return $("#ydLxdh").val();
-                    },
-                    notThisUserId : userid
-                }
-            }
-        });
-    }
-
-    $("input[name='isCreateUser']").click(function(){
-        if("1" == $('input:radio[name="isCreateUser"]:checked').val()){
-            $('#accountDiv').show();
-            $('#roleDiv').show();
-            $('#username').rules('add',{
-                remote:{
-                    url : "/sys/user/exit", // 后台处理程序
-                    type : "post", // 数据发送方式
-                    dataType : "json", // 接受数据格式
-                    data : { // 要传递的数据
-                        username : function() {
-                            return $("#username").val();
-                        }
-                    }
-                }
-            });
-        }else{
-            $('#accountDiv').hide();
-            $('#roleDiv').hide();
-            $('#ydLxdh').rules('remove','remote');
-        }
-    })
 });
 
 $.validator.setDefaults({
-	submitHandler : function() {
-		update();
-	}
+    submitHandler : function() {
+        update();
+    }
 });
+
+
 function update() {
     $("#signupForm").ajaxSubmit({
         type : "POST",
-        url : "/jczy/xfjyry/update",
+        url : "/wxUser/updateWxUser",
         success : function(data) {
             if (data.code == 0) {
                 parent.layer.msg("操作成功");
@@ -100,117 +35,22 @@ function update() {
 
 
 function validateRule() {
-	var icon = "<i class='fa fa-times-circle'></i> ";
-	$("#signupForm").validate({
-		rules : {
-			name : {
-				required : true
-			},
-            zjhm : {
-                isIdentity : true,
-                maxlength:30
-            },
-            bgLxdh : {
-                mobile : true,
-                maxlength:18
-            },
-            ydLxdh : {
-                required : true,
-                mobile : true,
-                maxlength:18
-            },
-            nwDzxx : {
-                email:true
-            },
-            hlwDzxx : {
-                email:true
-            },
-            isCreateUser : {
-                required : true
-            },
-            txdz : {
-                required : false,
-                maxlength:100
-            },
-            bz : {
-                required : false,
-                maxlength:500
-            }
-		},
-		messages : {
-			name : {
-				required : icon + "请输入名字"
-			},
-            ydLxdh : {
-                required : icon + "请输入移动_联系电话",
-            },
-            nwDzxx : {
-                email: "请输入正确的邮箱格式"
-            },
-            hlwDzxx : {
-                email: "请输入正确的邮箱格式"
-            },
-            isCreateUser : {
-                required : icon + "请选择是否创建用户"
-            },
-            username:{
-                required: icon + "请输入登录名",
-                remote:"登录名已存在"
-            }
-		}
-	})
-}
-
-//校验身份证
-jQuery.validator.addMethod("isIdentity",function(value,element){
-    if($("#cyzjlxdm").val()=="111"){
-        var id= /^(\d{15}$|^\d{18}$|^\d{17}(\d|X))$/;
-        if(id.test(value)){
-            return true;
-        }else{
-            return false;
-        }
-    }else{
-        return true
-    }
-},"请输入正确身份证号");
-
-
-jQuery.validator.addMethod("mobile", function(value, element) {
-    if(value){
-        if(/[0-9-()（）]{7,18}/.test(value) || /^1[34578][0-9]\d{8}$/.test(value)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    return true;
-}, "联系电话格式错误");
-
-
-var openDept = function(objId){
-    inpId = objId;
-    layer.open({
-        type:2,
-        title:"选择消防救援机构",
-        area : [ '300px', '450px' ],
-        content:"/system/sysDept/treeView"
+    var icon = "<i class='fa fa-times-circle'></i> ";
+    $("#signupForm").validate({
     })
 }
 
 
-function loadDept( deptId,deptName,xfjyjgTywysbm){
-    //$("#deptId").val(deptId);
-    $("#"+inpId).val(xfjyjgTywysbm);
-    $("#"+inpId+"Name").val(deptName);
-}
+
+
+
 function initFileInput(ctrlName) {
 
     var imgArry=[];
     var removeArry = [];
     $.each(attachmentDOList, function(i,item){
-        imgArry.push('<img src="/attach/ftpDownload?id='+item.attachmentId+'" alt="'+item.name+'" class="file-preview-image" title="'+item.name+'" style="width:100%">')
-        var obj = {"caption":item.name,"url":"/attach/ftpDelete?id="+item.attachmentId};
+        imgArry.push('<img src="'+ item.url +'" alt="个人照片" class="file-preview-image" title="个人照片" style="width:100%">')
+        var obj = {"caption":"个人照片","url":item.url};
         removeArry.push(obj);
     });
 
@@ -249,11 +89,9 @@ function initFileInput(ctrlName) {
         initialPreviewConfig: removeArry,
         overwriteInitial: false
     })
+    $('button[title="删除文件"]').hide();
+    $('#input-id').attr('disabled', 'disabled');
+
 
 }
 
-function getXzqhdm(obj,objId){
-    var id = $(obj).find("option:selected").attr("id");
-    console.log(id);
-    getSelectById(id,objId);
-}
