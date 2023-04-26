@@ -2,6 +2,7 @@ package com.smart119.common.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
 
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -191,6 +192,27 @@ public class DateUtils {
         calendar.setTime(date);
         calendar.add(timeUnit,  amount);
         return calendar.getTime();
+    }
+
+
+    /**
+     * 时间比较
+     *
+     * @param dateBefore
+     * @param dateAfter
+     * @return 如果时间一样,返回值是0;
+     *         如果dateBefore在dateAfter之后，返回值是大于0；
+     *         如果dateBefore在dateAfter之前，返回值是小于0；
+     * @throws Exception
+     */
+    public static int dateCompareTo(Date dateBefore, Date dateAfter) throws Exception {
+        if (ObjectUtils.isEmpty(dateBefore)) {
+            throw new Exception("比较中的dateBefore不能为空");
+        }
+        if (ObjectUtils.isEmpty(dateAfter)) {
+            throw new Exception("比较中的dateAfter不能为空");
+        }
+        return dateBefore.compareTo(dateAfter);
     }
 
 }

@@ -7,16 +7,17 @@ import java.util.Date;
 
 /**
  * 文章内容
- * 
+ *
  * @author chglee
  * @email 1992lcg@163.com
  * @date 2017-09-22 13:16:10
  */
 public class ContentDO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	//
 	private Long cid;
+	private String uuid;
 	//标题
 	private String title;
 	//
@@ -51,6 +52,9 @@ public class ContentDO implements Serializable {
 	private Date gtmCreate;
 	//修改时间
 	private Date gtmModified;
+
+
+
 
 	/**
 	 * 设置：
@@ -291,5 +295,13 @@ public class ContentDO implements Serializable {
 				", gtmCreate=" + gtmCreate +
 				", gtmModified=" + gtmModified +
 				'}';
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 }

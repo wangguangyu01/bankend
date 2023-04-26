@@ -1,6 +1,5 @@
 package com.smart119.system.domain;
 
-import com.smart119.jczy.domain.XfjyryDO;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -79,7 +78,6 @@ public class UserDO implements Serializable {
      * 密码加密加盐的值
      */
     private String salt;
-    private XfjyryDO xfjyryDO;
     @Override
     public String toString() {
         return "UserDO{" +

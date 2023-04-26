@@ -127,20 +127,6 @@ public class RoleServiceImpl implements RoleService {
             roleMenuMapper.batchSave(rms);
         }
 
-        List<RoleAppDO> apps = new ArrayList<>();
-        QueryWrapper delQuery=new QueryWrapper();
-        delQuery.eq("role_id",role.getRoleId());
-        roleAppService.remove(delQuery);
-        for (Integer appId : appIds) {
-            RoleAppDO appDO = new RoleAppDO();
-            appDO.setRoleId(roleId);
-            appDO.setAppId(appId);
-            apps.add(appDO);
-        }
-        if (CollectionUtils.isNotEmpty(apps)) {
-            roleAppService.saveBatch(apps);
-        }
-
         return r;
     }
 

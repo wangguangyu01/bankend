@@ -8,9 +8,6 @@ import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.domain.FileDO;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
-import com.smart119.jczy.dao.XfjyryDao;
-import com.smart119.jczy.domain.XfjyryDO;
-import com.smart119.system.service.DeptService;
 import com.smart119.system.vo.UserVO;
 import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
@@ -20,10 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.smart119.common.domain.Tree;
-import com.smart119.system.dao.DeptDao;
 import com.smart119.system.dao.UserDao;
 import com.smart119.system.dao.UserRoleDao;
-import com.smart119.system.domain.DeptDO;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.domain.UserRoleDO;
 import com.smart119.system.service.UserService;
@@ -38,16 +33,12 @@ public class UserServiceImpl implements UserService {
     UserDao userMapper;
     @Autowired
     UserRoleDao userRoleMapper;
-    @Autowired
-    DeptDao deptMapper;
+
     @Autowired
     private FileService sysFileService;
     @Autowired
     private BootdoConfig bootdoConfig;
-    @Autowired
-    DeptService deptService;
-    @Autowired
-    private XfjyryDao xfjyryMapper;
+
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Override
@@ -55,30 +46,12 @@ public class UserServiceImpl implements UserService {
     public UserDO get(Long id) {
         List<Long> roleIds = userRoleMapper.listRoleId(id);
         UserDO user = userMapper.get(id);
-        user.setDeptName(deptMapper.get(user.getDeptId()).getDwmc());
-        user.setRoleIds(roleIds);
         return user;
     }
 
     @Override
     public List<UserDO> list(Map<String, Object> map,Long userDeptId) {
-        String deptId = map.get("deptId").toString();
-        if (StringUtils.isNotBlank(deptId)) {
 
-            Long deptIdl = Long.valueOf(deptId);
-            List<DeptDO> deptList =  deptService.listChildren(deptIdl);
-
-            if(!deptId.equals(userDeptId.toString())){
-                //如果查询部门ID与用户所在部门ID不一致，数据安全考虑，取两集合的交集。
-                List<DeptDO> deptFatherList =  deptService.listChildren(userDeptId);
-                deptList.retainAll(deptFatherList);
-            }
-
-            //List<Long> childIds = deptService.listChildrenIds(deptIdl);
-            //childIds.add(deptIdl);
-            map.put("deptId", null);
-            map.put("deptList",deptList);
-        }
         return userMapper.list(map);
     }
 
@@ -125,14 +98,7 @@ public class UserServiceImpl implements UserService {
         if (list.size() > 0) {
             userRoleMapper.batchSave(list);
         }
-        XfjyryDO xfjyryDO = xfjyryMapper.queryXfjyryByUserId(String.valueOf(user.getUserId()));
-        if (Objects.nonNull(xfjyryDO)) {
-            xfjyryDO.setXm(user.getName());
-            DeptDO deptDO = deptMapper.selectById(user.getDeptId());
-            xfjyryDO.setSjszjgTywysbm(deptDO.getXfjyjgTywysbm());
-            xfjyryDO.setHlwDzxx(user.getEmail());
-            xfjyryMapper.update(xfjyryDO);
-        }
+
         return r;
     }
 
@@ -143,7 +109,6 @@ public class UserServiceImpl implements UserService {
         userRoleMapper.removeByUserId(userId);
         List<String> list = new ArrayList<>();
         list.add(userId.toString());
-        xfjyryMapper.updateUserIdForNull(list);
         return userMapper.remove(userId);
     }
 
@@ -197,47 +162,11 @@ public class UserServiceImpl implements UserService {
         for(Long u : userIds){
             list.add(u.toString());
         }
-        xfjyryMapper.updateUserIdForNull(list);
+
         return count;
     }
 
-    @Override
-    public Tree<DeptDO> getTree() {
-        List<Tree<DeptDO>> trees = new ArrayList<Tree<DeptDO>>();
-        List<DeptDO> depts = deptMapper.list(new HashMap<String, Object>(16));
-        Long[] pDepts = deptMapper.listParentDept();
-        Long[] uDepts = userMapper.listAllDept();
-        Long[] allDepts = (Long[]) ArrayUtils.addAll(pDepts, uDepts);
-        for (DeptDO dept : depts) {
-            if (!ArrayUtils.contains(allDepts, dept.getDeptId())) {
-                continue;
-            }
-            Tree<DeptDO> tree = new Tree<DeptDO>();
-            tree.setId(dept.getDeptId().toString());
-            tree.setParentId(dept.getParentId().toString());
-            tree.setText(dept.getName());
-            Map<String, Object> state = new HashMap<>(16);
-            state.put("opened", true);
-            state.put("mType", "dept");
-            tree.setState(state);
-            trees.add(tree);
-        }
-        List<UserDO> users = userMapper.list(new HashMap<String, Object>(16));
-        for (UserDO user : users) {
-            Tree<DeptDO> tree = new Tree<DeptDO>();
-            tree.setId(user.getUserId().toString());
-            tree.setParentId(user.getDeptId().toString());
-            tree.setText(user.getName());
-            Map<String, Object> state = new HashMap<>(16);
-            state.put("opened", true);
-            state.put("mType", "user");
-            tree.setState(state);
-            trees.add(tree);
-        }
-        // 默认顶级菜单为０，根据数据库实际情况调整
-        Tree<DeptDO> t = BuildTree.build(trees);
-        return t;
-    }
+
 
     @Override
     public int updatePersonal(UserDO userDO) {

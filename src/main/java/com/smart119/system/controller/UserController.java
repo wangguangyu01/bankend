@@ -5,19 +5,13 @@ import com.smart119.common.annotation.Log;
 import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.Tree;
-import com.smart119.common.service.DictService;
 import com.smart119.common.utils.*;
-import com.smart119.jczy.domain.XfjyryDO;
-import com.smart119.jczy.service.XfjyryService;
-import com.smart119.system.domain.DeptDO;
 import com.smart119.system.domain.RoleDO;
 import com.smart119.system.domain.UserConfigDO;
 import com.smart119.system.domain.UserDO;
-import com.smart119.system.service.DeptService;
 import com.smart119.system.service.RoleService;
 import com.smart119.system.service.UserConfigService;
 import com.smart119.system.service.UserService;
-import com.smart119.system.service.impl.UserServiceImpl;
 import com.smart119.system.vo.UserVO;
 import java.util.Objects;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -44,15 +38,10 @@ public class UserController extends BaseController {
 	UserService userService;
 	@Autowired
 	RoleService roleService;
-	@Autowired
-	DictService dictService;
-
-	@Autowired
-	private DeptService deptService;
 
 
-	@Autowired
-	private XfjyryService xfjyryService;
+
+
 
 	@Autowired
 	private UserConfigService userConfigService;
@@ -103,21 +92,7 @@ public class UserController extends BaseController {
 	}
 
 
-	@Log("查询用户")
-	@GetMapping("/queryUserById")
-	@ResponseBody
-	R queryUserById(@RequestParam Long userId) {
-		UserDO userDO = userService.get(userId);
-		Map params = new HashMap();
-		params.put("userid",userDO.getUserId());
-		List<XfjyryDO> list = xfjyryService.list(params);
-		if(list!=null && list.size() > 0){
-			userDO.setXfjyryDO(list.get(0));
-		}
-		DeptDO deptDO = deptService.get(userDO.getDeptId());
-		userDO.setDeptName(deptDO.getDwmc());
-		return R.ok(userDO);
-	}
+
 
 	@RequiresPermissions("sys:user:edit")
 	@Log("编辑用户")
@@ -328,27 +303,15 @@ public class UserController extends BaseController {
 		}
 
 	}
-	@GetMapping("/tree")
-	@ResponseBody
-	public Tree<DeptDO> tree() {
-		Tree<DeptDO> tree = new Tree<DeptDO>();
-		tree = userService.getTree();
-		return tree;
-	}
+
 
 	@GetMapping("/treeView")
 	String treeView() {
 		return  prefix + "/userTree";
 	}
 
-	@GetMapping("/personal")
-	String personal(Model model) {
-		UserDO userDO  = userService.get(getUserId());
-		model.addAttribute("user",userDO);
-		model.addAttribute("hobbyList",dictService.getHobbyList(userDO));
-		model.addAttribute("sexList",dictService.getSexList());
-		return prefix + "/personal";
-	}
+
+
 	@ResponseBody
 	@PostMapping("/uploadImg")
 	R uploadImg(@RequestParam("avatar_file") MultipartFile file, String avatar_data, HttpServletRequest request) {
@@ -368,18 +331,6 @@ public class UserController extends BaseController {
 		}
 	}
 
-
-	@Log("修改个人信息")
-	@PostMapping("/updatePeronalApp")
-	@ResponseBody
-	R updatePeronalApp(@RequestBody UserDO user) {
-		if (userService.updatePersonal(user) > 0) {
-			user.setGmtModified(new Date());
-			xfjyryService.update(user.getXfjyryDO());
-			return R.ok();
-		}
-		return R.error();
-	}
 
 
 	@PostMapping("/addPaddword")

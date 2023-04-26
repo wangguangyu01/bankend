@@ -2,8 +2,6 @@ package com.smart119.oa.controller;
 
 import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
-import com.smart119.common.domain.DictDO;
-import com.smart119.common.service.DictService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
@@ -37,8 +35,7 @@ public class NotifyController extends BaseController {
 	private NotifyService notifyService;
 	@Autowired
 	private NotifyRecordService notifyRecordService;
-	@Autowired
-	private DictService dictService;
+
 
 	@GetMapping()
 	@RequiresPermissions("oa:notify:notify")
@@ -68,14 +65,6 @@ public class NotifyController extends BaseController {
 	@RequiresPermissions("oa:notify:edit")
 	String edit(@PathVariable("id") Long id, Model model) {
 		NotifyDO notify = notifyService.get(id);
-		List<DictDO> dictDOS = dictService.listByType("oa_notify_type");
-		String type = notify.getType();
-		for (DictDO dictDO:dictDOS){
-			if(type.equals(dictDO.getValue())){
-				dictDO.setRemarks("checked");
-			}
-		}
-		model.addAttribute("oaNotifyTypes",dictDOS);
 		model.addAttribute("notify", notify);
 		return "oa/notify/edit";
 	}

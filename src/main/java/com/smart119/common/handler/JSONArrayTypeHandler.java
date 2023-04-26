@@ -1,4 +1,4 @@
-package com.huiyou.common.handler;
+package com.smart119.common.handler;
 
 import com.alibaba.fastjson.JSONArray;
 import org.apache.ibatis.type.BaseTypeHandler;

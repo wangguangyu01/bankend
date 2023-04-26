@@ -1,7 +1,8 @@
-package com.tencent.wxcloudrun.dao;
+package com.smart119.wxuser.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.tencent.wxcloudrun.model.WxUser;
+import com.smart119.wxuser.domain.WxUser;
 
-public interface WxUserMapper extends BaseMapper<WxUser> {
+
+public interface WxUserDao extends BaseMapper<WxUser> {
 }

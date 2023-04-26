@@ -1,14 +1,17 @@
-package com.tencent.wxcloudrun.model;
+package com.smart119.wxuser.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
+import com.smart119.common.domain.SysFile;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -27,6 +30,10 @@ public class WxUser {
      */
     @TableField(value = "appid")
     private String appid;
+
+
+    @TableField(value = "serial_number")
+    private String serialNumber;
 
     /**
      * 微信号
@@ -89,6 +96,15 @@ public class WxUser {
     @TableField(value = "unionid")
     private String unionid;
 
+
+    @TableField(value = "height")
+    private String height;
+
+
+
+    @TableField(value = "weight")
+    private String weight;
+
     /**
      * 个人介绍
      */
@@ -112,4 +128,50 @@ public class WxUser {
 
     @TableField(value = "update_time")
     private Date updateTime;
+
+
+    /**
+     * 学历
+     */
+    @TableField(value = "education")
+    private String education;
+
+
+    /**
+     * 职业
+     */
+    @TableField(value = "occupation")
+    private String occupation;
+
+
+
+    /**
+     * 月收入
+     */
+    @TableField(value = "remuneration")
+    private String remuneration;
+
+
+    /**
+     * 审批是否通过
+     */
+    @TableField(value = "approve")
+    private String approve;
+
+    @TableField(value = "marriage_seeking_flag")
+    private Integer marriageSeekingFlag;
+
+
+    /**
+     * 是否征婚
+     */
+    @TableField(exist = false)
+    private String marriageSeekingFlagStr;
+
+
+
+    @TableField(exist = false)
+    private List<SysFile> imagePaths;
+
+
 }

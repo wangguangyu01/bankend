@@ -48,7 +48,7 @@ public class BuildTree {
 			root.setChecked(true);
 			root.setChildren(topNodes);
 //			root.setText("顶级节点");
-			root.setText("山东省消防总队");
+			root.setText("所有菜单");
 			Map<String, Object> state = new HashMap<>(16);
 			state.put("opened", true);
 			root.setState(state);

@@ -1,6 +1,5 @@
 package com.smart119.common.utils;
 
-import com.smart119.common.redis.shiro.RedisManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
-import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author smart119
@@ -77,11 +76,6 @@ public class RandomValidateCodeUtil {
             randomString = drowString(g, randomString, i);
         }
         logger.info(randomString);
-        RedisManager redisManager = new RedisManager();
-        redisManager.set(RANDOMCODEKEYNEW + "::" + request.getRequestedSessionId(), randomString, 180);
-        //将生成的随机字符串保存到session中
-        /*session.removeAttribute(RANDOMCODEKEY);
-        session.setAttribute(RANDOMCODEKEY, randomString);*/
         g.dispose();
         try {
             // 将内存中的图片通过流动形式输出到客户端
@@ -89,7 +83,38 @@ public class RandomValidateCodeUtil {
         } catch (Exception e) {
             logger.error("将内存中的图片通过流动形式输出到客户端失败>>>> ", e);
         }
+    }
 
+
+    /**
+     * 生成随机图片
+     */
+    public void getRandcode(ConcurrentHashMap concurrentHashMap, HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        // BufferedImage类是具有缓冲区的Image类,Image类是用于描述图像信息的类
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
+        Graphics g = image.getGraphics();// 产生Image对象的Graphics对象,改对象可以在图像上进行各种绘制操作
+        g.fillRect(0, 0, width, height);//图片大小
+        g.setFont(new Font("Default", Font.ROMAN_BASELINE, 18));//字体大小
+        g.setColor(getRandColor(110, 133));//字体颜色
+        // 绘制干扰线
+        for (int i = 0; i <= lineSize; i++) {
+            drowLine(g);
+        }
+        // 绘制随机字符
+        String randomString = "";
+        for (int i = 1; i <= stringNum; i++) {
+            randomString = drowString(g, randomString, i);
+        }
+        logger.info(randomString);
+        concurrentHashMap.put("captcha_code_" + request.getRequestedSessionId(), randomString);
+        g.dispose();
+        try {
+            // 将内存中的图片通过流动形式输出到客户端
+            ImageIO.write(image, "JPEG", response.getOutputStream());
+        } catch (Exception e) {
+            logger.error("将内存中的图片通过流动形式输出到客户端失败>>>> ", e);
+        }
     }
 
     /**

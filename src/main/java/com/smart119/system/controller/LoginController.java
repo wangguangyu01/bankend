@@ -3,17 +3,11 @@ package com.smart119.system.controller;
 import com.smart119.common.annotation.Log;
 import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.controller.BaseController;
-import com.smart119.common.domain.DictDO;
 import com.smart119.common.domain.FileDO;
 import com.smart119.common.domain.Tree;
 import com.smart119.common.enums.ResponseStatusEnum;
-import com.smart119.common.exception.BDException;
-import com.smart119.common.redis.shiro.RedisManager;
-import com.smart119.common.service.DictService;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
-import com.smart119.jczy.domain.XfjyryDO;
-import com.smart119.jczy.service.XfjyryService;
 import com.smart119.system.domain.MenuDO;
 import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.MenuService;
@@ -38,6 +32,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Controller
 public class LoginController extends BaseController {
@@ -51,16 +46,11 @@ public class LoginController extends BaseController {
     BootdoConfig bootdoConfig;
 
 
-    @Autowired
-    XfjyryService xfjyryService;
 
-    @Autowired
-    private DictService dictService;
-
-    @Autowired
-    private RedisManager redisManager;
     @Autowired
     private UserService userService;
+
+    private ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap(10);
 
     @GetMapping({"/", ""})
     String welcome(Model model) {
@@ -103,25 +93,17 @@ public class LoginController extends BaseController {
 //        上线是打开下方，跳过验证码注解
         try {
             //从session中获取随机数
-            String random = redisManager.get(RandomValidateCodeUtil.RANDOMCODEKEYNEW
-                    + "::" + request.getRequestedSessionId());
+            String random = (String)concurrentHashMap.get( "captcha_code_" + request.getRequestedSessionId());
             if (StringUtils.isBlank(verify)) {
                 return R.error("请输入验证码");
             }
-            if (!random.equals(verify)) {
+            if (!verify.equals(random)) {
                 return R.error("请输入正确的验证码");
             }
         } catch (Exception e) {
             logger.error("验证码校验失败", e);
             return R.error("验证码校验失败");
         }
-        //使用用户ID作
-        String lockKey = "user:lock:" + username;
-        String errorCountKey = "user:login:error:" + username;
-        if (redisManager.exist(lockKey)) {
-            return R.error(ResponseStatusEnum.RESCODE_10005.getCode(),"登录尝试次数过多，用户已被限制登录，请稍后尝试");
-        }
-
         //按照用户名查询用户
         UserDO userDO = userService.getUserByUsername(username);
         if (Objects.isNull(userDO)) {
@@ -135,23 +117,15 @@ public class LoginController extends BaseController {
             UserDO user = (UserDO) subject.getPrincipals().getPrimaryPrincipal();
             Map params = new HashMap();
             params.put("userid",user.getUserId());
-            List<XfjyryDO> list = xfjyryService.list(params);
-            if(list!=null && list.size() > 0){
-                user.setXfjyryDO(list.get(0));
-            }
             String serssionId = subject.getSession().getId().toString();
             Map map = new HashMap();
             map.put("user",user);
             map.put("token",serssionId);
-            //登录成功，清除对应的key值
-            if (redisManager.exist(errorCountKey)) {
-                redisManager.del(errorCountKey);
-            }
+            concurrentHashMap.remove( "captcha_code__" + request.getRequestedSessionId());
             return R.ok(map);
         } catch (AuthenticationException e) {
       // 判断是否超过登录次数了，如果超过登录次数，则锁定该用户
             logger.error("登录失败",e);
-            checkLoginError(username);
             return R.error(ResponseStatusEnum.RESCODE_10003.getCode(),"用户或密码错误");
         }
     }
@@ -185,38 +159,13 @@ public class LoginController extends BaseController {
             response.setHeader("Cache-Control", "no-cache");
             response.setDateHeader("Expire", 0);
             RandomValidateCodeUtil randomValidateCode = new RandomValidateCodeUtil();
-            randomValidateCode.getRandcode(request, response);//输出验证码图片方法
+            randomValidateCode.getRandcode(concurrentHashMap, request, response);//输出验证码图片方法
+
         } catch (Exception e) {
             logger.error("获取验证码失败>>>> ", e);
         }
     }
 
-    /**
-     * 判断是否超过登录次数了，如果超过登录次数，则锁定该用户
-     */
-    private void checkLoginError(String userCode) {
-        if (!StringUtils.isEmpty(userCode)) {
 
-            String errorCountKey = "user:login:error:" + userCode;
-            String lockKey = "user:lock:" + userCode;
-            if (redisManager.exist(errorCountKey)) {
-                String result = redisManager.get(errorCountKey);
-                if (!StringUtils.isEmpty(result)) {
-                    List<DictDO> frequencyList = dictService.listByType("login_failed_frequency");
-                    Integer error = Integer.parseInt(result) + 1;
-                    if (error >= Integer.parseInt(frequencyList.get(0).getValue())) {
-                        List<DictDO> lockList = dictService.listByType("login_failed_lock");
-                        redisManager.setex(lockKey, Integer.parseInt(lockList.get(0).getValue()), DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
-                        redisManager.del(errorCountKey);
-                    } else {
-                        redisManager.incr(errorCountKey);
-                    }
-                }
-            } else {
-                List<DictDO> rangeList = dictService.listByType("login_failed_range");
-                redisManager.set(errorCountKey, "1", Integer.parseInt(rangeList.get(0).getValue()));
-            }
-        }
-    }
 
 }

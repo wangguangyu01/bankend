@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.smart119.system.domain.UserRoleDO;
 import com.smart119.system.vo.UserVO;
 import org.springframework.stereotype.Service;
 
 import com.smart119.common.domain.Tree;
-import com.smart119.system.domain.DeptDO;
 import com.smart119.system.domain.UserDO;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +38,6 @@ public interface UserService {
 
 	int resetPwd(UserVO userVO,UserDO userDO) throws Exception;
 	int adminResetPwd(UserVO userVO) throws Exception;
-	Tree<DeptDO> getTree();
 
 	/**
 	 * 更新个人信息
