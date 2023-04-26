@@ -57,341 +57,119 @@
 			<div class="col-sm-12">
 				<div class="ibox float-e-margins">
 					<div class="ibox-content">
-						<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
-							<input type="hidden" id="xfjyryTywysbm" name="xfjyryTywysbm" th:value="${xfjyry.xfjyryTywysbm}" />
-							<input type="hidden" id="userid" name="userid" th:value="${xfjyry.userid}" />
+						<form class="form-horizontal m-t" id="signupForm">
+							<input type="hidden" id="serialNumber" name="serialNumber" th:value="${wxUser.serialNumber}" />
+							<div class="form-group">
+								<label class="col-sm-2 control-label">序号：</label>
+								<div class="col-sm-4">
+									<input name="serialNumber" type="text" class="form-control" th:value="${wxUser.serialNumber}" readonly/>
+								</div>
+								<label class="col-sm-2 control-label">是否征婚：</label>
+								<div class="col-sm-4">
+									<input name="marriageSeekingFlagStr" type="text" class="form-control" th:value="${wxUser.marriageSeekingFlagStr}" readonly/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label">微信号：</label>
+								<div class="col-sm-4">
+									<input name="wxNumber" type="text" class="form-control" th:value="${wxUser.wxNumber}" readonly/>
+								</div>
+								<label class="col-sm-2 control-label">手机：</label>
+								<div class="col-sm-4">
+									<input id="phone" name="phone" class="form-control" type="text" th:value="${wxUser.phone}"  readonly>
+								</div>
+							</div>
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">姓名：</label>
+								<label class="col-sm-2 control-label">昵称：</label>
 								<div class="col-sm-4">
-									<input id="xm" name="xm" class="form-control" type="text" th:value="${xfjyry.xm}"  required>
+									<input id="nickname" name="nickname" class="form-control" type="text" th:value="${wxUser.nickname}"  readonly>
 								</div>
-
 
 								<label class="col-sm-2 control-label">性别：</label>
 								<div class="col-sm-4">
-									<input type="hidden" id="xbdm_val" th:value="${xfjyry.xbdm}" />
-									<select data-placeholder="性别" name="xbdm" id="xbdm" title="性别"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--请选择--</option>
-									</select>
-									<!--<input id="xbdm" name="xbdm" class="form-control" type="text">-->
+									<input name="sex" type="text" class="form-control" th:value="${wxUser.sex}" readonly/>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<label class="col-sm-2 control-label">常用证件类型：</label>
+								<label class="col-sm-2 control-label">身高：</label>
 								<div class="col-sm-4">
-									<input type="hidden" id="cyzjlxdm_val" th:value="${xfjyry.cyzjlxdm}"  required/>
-									<select data-placeholder="常用证件类型" name="cyzjlxdm" id="cyzjlxdm" title="常用证件类型"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">&#45;&#45;请选择&#45;&#45;</option>
-									</select>
-									<!--<input id="cyzjlxdm" name="cyzjlxdm" class="form-control" type="text">-->
+									<input id="height" name="height" class="form-control" type="text" th:value="${wxUser.height}"  readonly>
 								</div>
 
-								<label class="col-sm-2 control-label">证件号码：</label>
+								<label class="col-sm-2 control-label">体重：</label>
 								<div class="col-sm-4">
-									<input id="zjhm" name="zjhm" class="form-control" type="text" th:value="${xfjyry.zjhm}" required>
+									<input name="weight" type="weight" class="form-control" th:value="${wxUser.weight}" readonly/>
 								</div>
+							</div>
 
-
-							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">编制所在机构：</label>
-								<div class="col-sm-4">
-									<!--<input id="bzszjgTywysbm" name="bzszjgTywysbm" class="form-control" type="text">-->
-									<input id="bzszjgTywysbm" name="bzszjgTywysbm" class="hidden" th:value="${xfjyry.bzszjgTywysbm}"> <input
-										id="bzszjgTywysbmName" name="bzszjgTywysbmName" class="form-control" type="text"
-										style="cursor: pointer;" onclick="openDept('bzszjgTywysbm')" th:value="${bzszjgTywysbm_name}"
-										readonly="readonly" placeholder="请选择编制所在机构" title="请选择编制所在机构" required>
-								</div>
-								<label class="col-sm-2 control-label">实际所在机构：</label>
-								<div class="col-sm-4">
-									<!--<input id="sjszjgTywysbm" name="sjszjgTywysbm" class="form-control" type="text">-->
-									<input id="sjszjgTywysbm" name="sjszjgTywysbm" class="hidden" th:value="${xfjyry.sjszjgTywysbm}"> <input
-										id="sjszjgTywysbmName" name="sjszjgTywysbmName" class="form-control" type="text"
-										style="cursor: pointer;" onclick="openDept('sjszjgTywysbm')" th:value="${sjszjgTywysbm_name}"
-										readonly="readonly" placeholder="请选择实际所在机构" title="请选择实际所在机构" required>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">民族：</label>
-								<div class="col-sm-4">
-									<input type="hidden" id="mzdm_val" th:value="${xfjyry.mzdm}" />
-									<select data-placeholder="民族" name="mzdm" id="mzdm" title="民族"
-											class="form-control chosen-select" tabindex="2">
-										<option value="">--请选择--</option>
-									</select>
-								</div>
-								<label class="col-sm-2 control-label">政治面貌：</label>
-								<div class="col-sm-4">
-									<input type="hidden" id="zzmmdm_val" th:value="${xfjyry.zzmmdm}" />
-									<select data-placeholder="政治面貌" name="zzmmdm" id="zzmmdm" title="政治面貌"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--请选择--</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">籍贯：</label>
-								<!--<div class="col-sm-10">-->
-								<!--<input id="jgdm" name="jgdm" class="form-control" type="text">-->
-								<!--</div>-->
+								<label class="col-sm-2 control-label">所在地区：</label>
 								<div class="col-sm-3">
-									<input type="hidden" id="provinceVal" th:value="${province}"/>
-									<select data-placeholder="省/直辖市" name="province" id="province" title="省/直辖市" onchange="getXzqhdm(this,'city')"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--选择类别--</option>
-									</select>
+									<input type="text" name="province" class="form-control" th:value="${wxUser.province}" readonly/>
 								</div>
 								<div class="col-sm-3" >
-									<input type="hidden" id="cityVal" th:value="${city}"/>
-									<select data-placeholder="市/直辖县" name="city" title="市/直辖县" id="city" onchange="getXzqhdm(this,'jgdm')"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--选择类别--</option>
-									</select>
+									<input type="text" name="city" class="form-control" th:value="${wxUser.city}" readonly/>
 								</div>
 								<div class="col-sm-3" >
-									<input type="hidden" id="jgdmVal" th:value="${xfjyry.jgdm}"/>
-									<select data-placeholder="区/县" name="jgdm" title="区/县" id="jgdm"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--选择类别--</option>
-									</select>
+									<input type="text" name="region" class="form-control" th:value="${wxUser.region}" readonly/>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">入党日期：</label>
-								<div class="col-sm-4">
-									<!--<input id="rdrq" name="rdrq" class="form-control" type="text">-->
-									<input type="text" class="laydate-icon layer-date form-control" id="rdrq" name="rdrq"  placeholder="请选择入党日期"
-										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width:100%;" readonly="readonly" th:value="${xfjyry.rdrq}==null?null:${#dates.format(xfjyry.rdrq,'yyyy-MM-dd')}"/>
-								</div>
-								<label class="col-sm-2 control-label">参加工作时间：</label>
-								<div class="col-sm-4">
-									<!--<input id="csrq" name="csrq" class="form-control" type="text">-->
-									<input type="text" class="laydate-icon layer-date form-control" id="workrq" name="workrq"  placeholder="请选择参加工作时间"
-										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width: 100%;" readonly="readonly"  th:value="${xfjyry.rdrq}==null?null:${#dates.format(xfjyry.workrq,'yyyy-MM-dd')}"/>
-								</div>
-							</div>
+
 							<div class="form-group">
 								<label class="col-sm-2 control-label">出生日期：</label>
 								<div class="col-sm-4">
 									<!--<input id="csrq" name="csrq" class="form-control" type="text">-->
-									<input type="text" class="laydate-icon layer-date form-control" id="csrq" name="csrq"  placeholder="请选择入党日期"
-										   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;max-width:100%;" readonly="readonly" th:value="${xfjyry.csrq}==null?null:${#dates.format(xfjyry.csrq,'yyyy-MM-dd')}"/>
+									<input type="text" class="form-control" name="birthday" th:value="${wxUser.birthday}" readonly/>
 								</div>
-								<label class="col-sm-2 control-label">互联网_电子信箱：</label>
-								<div class="col-sm-4">
-									<input id="hlwDzxx" name="hlwDzxx" class="form-control" type="text" th:value="${xfjyry.hlwDzxx}">
-								</div>
-							</div>
-							<div class="form-group">
 								<label class="col-sm-2 control-label">学历：</label>
 								<div class="col-sm-4">
-									<!--<input id="xldm" name="xldm" class="form-control" type="text">-->
-									<input type="hidden" name="xldm" id="xldm" value="" th:value="${xfjyry.xldm}"/>
-									<div class="XLDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xldm-title" th:text="${xldm_name}">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
-								</div>
-
-								<label class="col-sm-2 control-label">学位：</label>
-								<div class="col-sm-4">
-									<!--<input id="xwdm" name="xwdm" class="form-control" type="text">-->
-									<input type="hidden" name="xwdm" id="xwdm" value="" th:value="${xfjyry.xwdm}"/>
-									<div class="XWDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xwdm-title" th:text="${xwdm_name}">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
+									<input type="text" class="form-control" name="education" id="education" th:value="${wxUser.education}" readonly/>
 								</div>
 							</div>
+
+
 							<div class="form-group">
-								<label class="col-sm-2 control-label">办公_联系电话：</label>
+								<label class="col-sm-2 control-label">职业：</label>
 								<div class="col-sm-4">
-									<input id="bgLxdh" name="bgLxdh" class="form-control" type="text" th:value="${xfjyry.bgLxdh}" oninput = "value=value.replace(/[^\d]/g,'')">
+									<input id="occupation" name="occupation" class="form-control" type="text" th:value="${wxUser.occupation}" readonly>
 								</div>
-								<label class="col-sm-2 control-label">移动_联系电话：</label>
+								<label class="col-sm-2 control-label">月薪：</label>
 								<div class="col-sm-4">
-									<input id="ydLxdh" name="ydLxdh" class="form-control" type="text" th:value="${xfjyry.ydLxdh}" required oninput = "value=value.replace(/[^\d]/g,'')" pattern="(\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$">
+									<input id="remuneration" name="remuneration" class="form-control" type="text" th:value="${wxUser.remuneration}" readonly>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<label class="col-sm-2 control-label">消防岗位分类：</label>
+								<label class="col-sm-2 control-label">个人介绍：</label>
 								<div class="col-sm-4">
-									<!--<input id="xfgwflydm" name="xfgwflydm" class="form-control" type="text">-->
-									<input type="hidden" name="xfgwflydm" id="xfgwflydm" value="" th:value="${xfjyry.xfgwflydm}" />
-									<div class="XFGWFLYDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xfgwflydm-title" th:text="${xfgwflydm_name}==null?'选择分类':${xfgwflydm_name}">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
+								<textarea rows="5" cols="90" readonly th:utext="${wxUser.personProfile}"></textarea>
 								</div>
-								<label class="col-sm-2 control-label">消防救援人员类别：</label>
-								<div class="col-sm-4">
-									<!--<input id="xfjyrylbdm" name="xfjyrylbdm" class="form-control" type="text">-->
-									<input type="hidden" name="xfjyrylbdm" id="xfjyrylbdm" value="" th:value="${xfjyry.xfjyrylbdm}" />
-									<div class="XFJYRYLBDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xfjyrylbdm-title" th:text="${xfjyrylbdm_name}">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
-								</div>
-
 							</div>
+
 							<div class="form-group">
-								<label class="col-sm-2 control-label">人员岗位简类：</label>
+								<label class="col-sm-2 control-label">择偶要求：</label>
 								<div class="col-sm-4">
-									<input type="hidden" id="rylbJh_val" th:value="${xfjyry.rylbJh}" />
-									<select data-placeholder="人员岗位简类" name="rylbJh" id="rylbJh" title="人员岗位简类"
-											class="form-control chosen-select" tabindex="2" required>
-										<option value="">--选择类别--</option>
-									</select>
-								</div>
-
-								<label class="col-sm-2 control-label">消防救援衔级别：</label>
-								<div class="col-sm-4">
-									<!--<input id="xfjyxjbdm" name="xfjyxjbdm" class="form-control" type="text">-->
-									<input type="hidden" name="xfjyxjbdm" id="xfjyxjbdm" value="" th:value="${xfjyry.xfjyxjbdm}"/>
-									<div class="XFJYXJBDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xfjyxjbdm-title" th:text="${xfjyxjbdm_name}">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">内网_电子信箱：</label>
-								<div class="col-sm-4">
-									<input id="nwDzxx" name="nwDzxx" class="form-control" type="text" th:value="${xfjyry.nwDzxx}">
-								</div>
-								<label class="col-sm-2 control-label">通信地址：</label>
-								<div class="col-sm-4">
-									<input id="txdz" name="txdz" class="form-control" type="text" th:value="${xfjyry.txdz}">
+								<textarea rows="5" cols="90" readonly th:utext="${wxUser.matingRequirement}"></textarea>
 								</div>
 							</div>
 
 
-							<div class="form-group" th:if="${#strings.isEmpty(xfjyry.userid)}" >
-								<label class="col-sm-2 control-label">是否添加用户:</label>
-								<div class="col-sm-4">
-									<label class="radio-inline"> <input type="radio" name="isCreateUser" value="1"/> 是</label>
-									<label class="radio-inline"> <input type="radio" name="isCreateUser" checked="checked" value="0"/> 否</label>
-								</div>
-							</div>
-							<div class="form-group" id="accountDiv" style="display: none;" >
-								<label class="col-sm-2 control-label">登录名:</label>
-								<div class="col-sm-4">
-									<input id="username" name="username" class="form-control" type="text" required >
-								</div>
-								<label class="col-sm-2 control-label">密码:</label>
-								<div class="col-sm-4">
-									<input id="password" name="password" class="form-control" type="text" required >
-								</div>
-							</div>
-							<div class="form-group" id="roleDiv" style="display: none;" >
-								<label class="col-sm-2 control-label">角色</label>
-								<div class="col-sm-8" style="width: 81%">
-									<label th:each="role:${roles}" class="checkbox-inline">
-										<input name="role" type="checkbox" th:value="${role.roleId}" th:text="${role.roleName}">
-									</label>
-								</div>
-
-
-							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">照片：</label>
 								<div class="col-sm-10">
-									<input id='input-id' multiple type="file" name="file" data-show-caption="true"/>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">展示排列顺序：</label>
-								<div class="col-sm-4">
-									<input id="zdypx" name="zdypx"  type="text"class="form-control" th:value="${xfjyry.zdypx}">
-								</div>
-								<label class="col-sm-2 control-label">专业技术职务类别：</label>
-								<div class="col-sm-4">
-									<!--<input id="zyjszwlbdm" name="zyjszwlbdm" class="form-control" type="text">-->
-									<input type="hidden" name="zyjszwlbdm" id="zyjszwlbdm" value="" th:value="${xfjyry.zyjszwlbdm}"/>
-									<div class="ZYJSZWLBDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="zyjszwlbdm-title" th:text="${zyjszwlbdm_name}==null?'选择分类':${zyjszwlbdm_name}">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">是否专家：</label>
-								<div class="col-sm-4">
-									<input type="hidden" id="sfzjPdbz_val" th:value="${xfjyry.sfzjPdbz}" />
-									<select data-placeholder="消防救援人员状态" name="sfzjPdbz" id="sfzjPdbz" title="是否专家"
-											class="form-control chosen-select" tabindex="2" >
-										<option value="">--请选择--</option>
-										<option value="1">是</option>
-										<option value="0">否</option>
-									</select>
-								</div>
-								<label class="col-sm-2 control-label">消防专家领域类别：</label>
-								<div class="col-sm-4">
-									<!--<input id="xfzjlylbdm" name="xfzjlylbdm" class="form-control" type="text">-->
-									<input type="hidden" name="xfzjlylbdm" id="xfzjlylbdm" value="" th:value="${xfjyry.xfzjlylbdm}" />
-									<div class="XFZJLYLBDM-DIV dropdown">
-										<a role="button" data-toggle="dropdown" class="btn btn-white" style="width: 100%;text-align: left;">
-											<span id="xfzjlylbdm-title" th:text="${xfzjlylbdm_name}">选择分类</span>
-											<span class="caret pull-right" style="position: relative;top: 10px;"></span>
-										</a>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">邮政编码：</label>
-								<div class="col-sm-4">
-									<input id="yzbm" name="yzbm" class="form-control" type="text" th:value="${xfjyry.yzbm}">
-								</div>
-								<label class="col-sm-2 control-label">婚姻状况：</label>
-								<div class="col-sm-4">
-									<input type="hidden" id="hyzkdm_val" th:value="${xfjyry.hyzkdm}" />
-									<select data-placeholder="婚姻状况" name="hyzkdm" id="hyzkdm" title="婚姻状况"
-											class="form-control chosen-select" tabindex="2">
-
-									</select>
-								</div>
-
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">消防救援人员状态：</label>
-								<div class="col-sm-4">
-									<input type="hidden" id="xfjyryztdm_val" th:value="${xfjyry.xfjyryztdm}" />
-									<select data-placeholder="消防救援人员状态" name="xfjyryztdm" id="xfjyryztdm" title="消防救援人员状态"
-											class="form-control chosen-select" tabindex="2" required>
-
-									</select>
-								</div>
-								<label class="col-sm-2 control-label">救援人员在位情况：</label>
-								<div class="col-sm-4">
-									<input type="hidden" id="xfjyryzwqkdm_val" th:value="${xfjyry.xfjyryzwqkdm}" />
-									<select data-placeholder="消防救援人员状态" name="xfjyryzwqkdm" id="xfjyryzwqkdm" title="消防救援人员在位状态"
-											class="form-control chosen-select" tabindex="2" required>
-
-									</select>
+									<input id='input-id' multiple type="file" name="file" data-show-remove="false"   data-show-caption="true"/>
 								</div>
 							</div>
 
 
 							<div class="form-group">
-								<label class="col-sm-2 control-label">备注：</label>
-								<div class="col-sm-10">
-									<!--<input id="bz" name="bz" class="form-control" type="text">-->
-									<textarea id="bz" name="bz" class="form-control" aria-required="true" th:text="${xfjyry.bz}"></textarea>
+								<label class="col-sm-2 control-label">审核是否通过：</label>
+								<div class="col-sm-4">
+									<input type="radio" name="approve" value="通过" th:checked="${wxUser.approve=='通过' || wxUser.approve == null  || wxUser.approve=='' }">通过</input>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="radio" name="approve"  value="不通过" th:checked="${wxUser.approve=='不通过'}">不通过</input>
 								</div>
 							</div>
 
@@ -411,7 +189,8 @@
 	<script type="text/javascript" src="/js/appjs/jczy/xfjyry/edit.js">
 	</script>
 	<script th:inline="javascript">
-        var attachmentDOList = [[${attachmentDOList}]];
+		var attachmentDOList = [[${attachmentDOList}]];
 	</script>
+
 </body>
 </html>

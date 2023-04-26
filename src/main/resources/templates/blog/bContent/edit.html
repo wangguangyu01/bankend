@@ -11,19 +11,28 @@
 						<div class="col-sm-12">
 							<h4>发布文章</h4>
 						</div>
-						<form class="form-horizontal m-t" id="signupForm">
+						<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
 							<input id="cid" name="cid" type="hidden"
 								th:value="${bContent.cid}">
+							<input id="uuid" name="uuid" type="hidden"
+								   th:value="${bContent.uuid}">
+							<input id="status" name="status" type="hidden" th:value="${bContent.status}">
 							<div class="form-group">
 								<label class="col-sm-1 control-label">标题：</label>
 								<div class="col-sm-4">
 									<input id="title" name="title" class="form-control" type="text"
 										th:value="${bContent.title}">
 								</div>
-								<label class="col-sm-1 control-label">作者：</label>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-1 control-label">内容分类：</label>
 								<div class="col-sm-4">
-									<input id="author" name="author" class="form-control"
-										type="text" th:value="${bContent.author}">
+									<select data-placeholder="内容分类" name="categories" title="内容分类" id="categories"
+											class="form-control chosen-select" tabindex="1" required>
+										<option value="">--请选择--</option>
+										<option value="1" th:selected="${bContent.categories == '1'}">精彩时刻</option>
+										<option value="2" th:selected="${bContent.categories == '2'}">最新活动</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -36,44 +45,33 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<label class="col-sm-1 control-label">类型：</label>
-								<div class="col-sm-11">
-									<input th:value="${bContent.categories}" id="categories"
-										name="categories" class="form-control" type="text">
+								<label class="col-sm-2 control-label">附件：</label>
+								<div class="col-sm-4">
+									<input id='input-id' multiple type="file" name="file" data-show-caption="true"  />
+								</div>
+								<div class="col-sm-4">
+									<input id='input-id1' multiple type="file" name="file" data-show-caption="true"  />
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-2 control-label">附件：</label>
+								<div class="col-sm-4">
+									<input id='input-id2' multiple type="file" name="file" data-show-caption="true"   />
+								</div>
+								<div class="col-sm-4">
+									<input id='input-id3' multiple type="file" name="file" data-show-caption="true"   />
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-2 control-label">开启评论：</label>
-								<div class="switch onoffswitch col-sm-1">
-									<div class="onoffswitch">
-										<input id="allowComment" name="allowComment" checked=""
-											type="checkbox" value="1" class="onoffswitch-checkbox"
-											th:checked=${bContent.allowComment==1}> <label
-											class="onoffswitch-label" for="allowComment"> <span
-											class="onoffswitch-inner"></span> <span
-											class="onoffswitch-switch"></span>
-										</label>
-									</div>
+								<label class="col-sm-2 control-label">收款二维码：</label>
+								<div class="col-sm-4">
+									<input id='moneyQRCode' multiple type="file" name="moneyQRCode" data-show-caption="true" required />
 								</div>
-
-								<label class="col-sm-2 control-label">允许订阅：</label>
-								<div class="switch onoffswitch col-sm-2">
-									<div class="onoffswitch">
-										<input id="allowFeed" name="allowFeed" type="checkbox"
-											checked="" value="1" class="onoffswitch-checkbox"
-											th:checked=${bContent.allowFeed==1}> <label
-											class="onoffswitch-label" for="allowFeed"> <span
-											class="onoffswitch-inner"></span> <span
-											class="onoffswitch-switch"></span>
-										</label>
-									</div>
-								</div>
-								<input id="status" name="status" type="hidden">
 							</div>
 							<div class="text-right form-group">
-								<a class="btn btn-default waves-effect waves-light"
-									onclick="returnList()">返回列表</a>
 								<button type="button"
 									class="btn btn-primary waves-effect waves-light"
 									onclick="save(1)">保存文章</button>
@@ -88,8 +86,11 @@
 		</div>
 	</div>
 	<div th:include="include::footer"></div>
+	<script th:inline="javascript">
+		var fileList = [[${fileList}]];
+		var moneyQRCode =[[${moneyQRCode}]]
+	</script>
 	<script type="text/javascript" src="/js/appjs/blog/bContent/edit.js">
-		
 	</script>
 </body>
 </html>
