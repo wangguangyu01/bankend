@@ -4,12 +4,12 @@
 <mapper namespace="com.smart119.common.dao.FileDao">
 
 	<select id="get" resultType="com.smart119.common.domain.FileDO">
-		select `id`,`type`,`url`,`create_date` from sys_file where id = #{value}
+		select * from sys_file where id = #{value}
 	</select>
 
 	<select id="list" resultType="com.smart119.common.domain.FileDO">
-		select `id`,`type`,`url`,`create_date` from sys_file
-        <where>  
+		select * from sys_file
+        <where>
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="type != null and type != ''"> and type = #{type} </if>
 		  		  <if test="url != null and url != ''"> and url = #{url} </if>
@@ -27,34 +27,34 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
+
  	<select id="count" resultType="int">
 		select count(*) from sys_file
-		 <where>  
+		 <where>
 		  		  <if test="id != null and id != ''"> and id = #{id} </if>
 		  		  <if test="type != null and type != ''"> and type = #{type} </if>
 		  		  <if test="url != null and url != ''"> and url = #{url} </if>
 		  		  <if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>
 		  		</where>
 	</select>
-	 
+
 	<insert id="save" parameterType="com.smart119.common.domain.FileDO" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_file
 		(
-			`type`, 
-			`url`, 
+			`type`,
+			`url`,
 			`create_date`
 		)
 		values
 		(
-			#{type}, 
-			#{url}, 
+			#{type},
+			#{url},
 			#{createDate}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.smart119.common.domain.FileDO">
-		update sys_file 
+		update sys_file
 		<set>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="url != null">`url` = #{url}, </if>
@@ -62,13 +62,13 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="remove">
 		delete from sys_file where id = #{value}
 	</delete>
-	
+
 	<delete id="batchRemove">
-		delete from sys_file where id in 
+		delete from sys_file where id in
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>

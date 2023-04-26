@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tencent.wxcloudrun.dao.WxUserMapper">
-  <resultMap id="BaseResultMap" type="com.tencent.wxcloudrun.model.WxUser">
+<mapper namespace="com.smart119.wxuser.dao.WxUserDao">
+  <resultMap id="BaseResultMap" type="com.smart119.wxuser.domain.WxUser">
     <!--@mbg.generated-->
     <!--@Table wx_user-->
     <id column="openid" jdbcType="VARCHAR" property="openId" />
     <result column="appid" jdbcType="CHAR" property="appid" />
     <result column="wx_number" jdbcType="VARCHAR" property="wxNumber" />
+    <result column="serial_number" jdbcType="VARCHAR" property="serialNumber"/>
     <result column="phone" jdbcType="CHAR" property="phone" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="sex" jdbcType="TINYINT" property="sex" />
@@ -21,10 +22,15 @@
     <result column="qr_scene_str" jdbcType="VARCHAR" property="qrSceneStr" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="education" jdbcType="VARCHAR" property="education"/>
+    <result column="occupation" jdbcType="VARCHAR" property="occupation"/>
+    <result column="remuneration" jdbcType="VARCHAR" property="remuneration"/>
+    <result column="approve" jdbcType="VARCHAR" property="approve"/>
+    <result column="marriage_seeking_flag" jdbcType="TINYINT" property="marriageSeekingFlag"/>
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    openid, appid, wx_number, phone, nickname, sex, birthday, city, province, region, headimgurl,
-    unionid, personProfile, mating_requirement, qr_scene_str, create_time, update_time
+    openid, serial_number, appid, wx_number, phone, nickname, sex, birthday, city, province, region, headimgurl,
+    unionid, personProfile, mating_requirement, qr_scene_str, create_time, update_time,marriage_seeking_flag
   </sql>
 </mapper>

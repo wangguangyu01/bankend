@@ -4,12 +4,12 @@
 <mapper namespace="com.smart119.system.dao.UserDao">
 
     <select id="get" resultType="com.smart119.system.domain.UserDO">
-		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM,salt from sys_user where user_id = #{value}
+		select * from sys_user where user_id = #{value}
 	</select>
 
     <select id="list" resultType="com.smart119.system.domain.UserDO">
         select
-        `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM
+            *
         from sys_user
         <where>
             <if test="userId != null and userId != ''">and user_id = #{userId}</if>
@@ -17,12 +17,6 @@
             <if test="username != null and username != ''">and username like CONCAT ('%',#{username},'%')</if>
             <if test="name != null and name != ''">and name like CONCAT ('%', #{name},'%')</if>
             <if test="password != null and password != ''">and password = #{password}</if>
-            <if test="deptId != null and deptId != ''">and dept_id = #{deptId}</if>
-            <if test="deptList != null and deptList.size() > 0">and dept_id in
-                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
-                    #{item.deptId}
-                </foreach>
-            </if>
             <if test="email != null and email != ''">and email = #{email}</if>
             <if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
             <if test="status != null and status != ''">and status = #{status}</if>
@@ -37,7 +31,6 @@
             <if test="province != null and province != ''">and province = #{province}</if>
             <if test="city != null and city != ''">and city = #{city}</if>
             <if test="district != null and district != ''">and district = #{district}</if>
-            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
         </where>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -59,12 +52,6 @@
             <if test="username != null and username != ''">and username = #{username}</if>
             <if test="name != null and name != ''">and name like CONCAT ('%', #{name},'%')</if>
             <if test="password != null and password != ''">and password = #{password}</if>
-            <if test="deptId != null and deptId != ''">and dept_id = #{deptId}</if>
-            <if test="deptList != null and deptList.size() > 0">and dept_id in
-                <foreach collection="deptList" item="item" index="index" separator="," open="(" close=")">
-                    #{item.deptId}
-                </foreach>
-            </if>
             <if test="email != null and email != ''">and email = #{email}</if>
             <if test="mobile != null and mobile != ''">and mobile = #{mobile}</if>
             <if test="status != null and status != ''">and status = #{status}</if>
@@ -79,7 +66,6 @@
             <if test="province != null and province != ''">and province = #{province}</if>
             <if test="city != null and city != ''">and city = #{city}</if>
             <if test="district != null and district != ''">and district = #{district}</if>
-            <if test="xfjyjgTywysbm != null and xfjyjgTywysbm != ''">and XFJYJG_TYWYSBM = #{xfjyjgTywysbm}</if>
         </where>
     </select>
 
@@ -97,7 +83,6 @@
 			`username`,
 			`name`,
 			`password`,
-			`dept_id`,
 			`email`,
 			`mobile`,
 			`status`,
@@ -112,15 +97,13 @@
 			`province`,
 			`city`,
 			`district`,
-      XFJYJG_TYWYSBM,
-      salt
+            salt
 		)
 		values
 		(
 			#{username},
 			#{name},
 			#{password},
-			#{deptId},
 			#{email},
 			#{mobile},
 			#{status},
@@ -135,8 +118,7 @@
 			#{province},
 			#{city},
 			#{district},
-      #{xfjyjgTywysbm},
-      #{username}
+           #{username}
 		)
 	</insert>
 
@@ -146,7 +128,6 @@
             <if test="username != null">`username` = #{username},</if>
             <if test="name != null">`name` = #{name},</if>
             <if test="password != null">`password` = #{password},</if>
-            <if test="deptId != null">`dept_id` = #{deptId},</if>
             <if test="email != null">`email` = #{email},</if>
             <if test="mobile != null">`mobile` = #{mobile},</if>
             <if test="status != null">`status` = #{status},</if>
@@ -160,8 +141,7 @@
             <if test="hobby != null">`hobby` = #{hobby},</if>
             <if test="province != null">`province` = #{province},</if>
             <if test="city != null">`city` = #{city},</if>
-            <if test="district != null">`district` = #{district},</if>
-            <if test="xfjyjgTywysbm != null">`XFJYJG_TYWYSBM` = #{xfjyjgTywysbm}</if>
+            <if test="district != null">`district` = #{district}</if>
         </set>
         where user_id = #{userId}
     </update>
@@ -177,9 +157,6 @@
         </foreach>
     </delete>
 
-    <select id="listAllDept" resultType="long">
-				select DISTINCT dept_id from sys_user
-	</select>
 
     <select id="findByRoleId" resultType="com.smart119.system.domain.UserDO">
 
@@ -189,12 +166,10 @@
             a.`name`,
             a.`email`,
             a.`mobile`,
-            a.`status`,
-            c.DWMC AS 'deptName'
+            a.`status`
         FROM
             sys_user a
             INNER JOIN sys_user_role b ON a.user_id = b.user_id
-            LEFT JOIN sys_dept c ON a.dept_id = c.dept_id
         WHERE
             b.role_id = #{roleId}
 
@@ -205,6 +180,6 @@
         SELECT * from sys_user where gmt_create='2021-05-06'
     </select>
   <select id="getByUserName" resultType="com.smart119.system.domain.UserDO">
-		select `user_id`,`username`,`name`,`password`,`dept_id`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,XFJYJG_TYWYSBM,salt from sys_user where username = #{value}
+		select `user_id`,`username`,`name`,`password`,`email`,`mobile`,`status`,`user_id_create`,`gmt_create`,`gmt_modified`,`sex`,`birth`,`pic_id`,`live_address`,`hobby`,`province`,`city`,`district`,salt from sys_user where username = #{value}
 	</select>
 </mapper>

@@ -1,7 +1,7 @@
 server:
   port: 8001
 smart119:
-  uploadPath: c:/var/uploaded_files/
+  uploadPath: /uploadFile/
   username: admin
   password: 111111
   baiduMapApiKey: vU6GCDwes9ROs5r84QCBvCQEMRcCNOgn
@@ -11,10 +11,6 @@ logging:
     root: info
     com.bootdo: debug
 spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 10.50.1.31:8848
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
