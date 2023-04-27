@@ -2,7 +2,9 @@ package com.smart119.common.service;
 
 import com.smart119.common.domain.FileDO;
 import com.smart119.common.domain.SysFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -67,6 +69,7 @@ public interface FileService {
 	public SysFile updateFileUrl(SysFile file) throws Exception;
 
 
+	void uploadFile(MultipartFile file, Integer type, String bContentUUID) throws IOException;
 
 
 }

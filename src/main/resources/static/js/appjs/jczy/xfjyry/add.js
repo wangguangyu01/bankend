@@ -34,7 +34,7 @@ function save() {
     // });
     $("#signupForm").ajaxSubmit({
         type : "POST",
-        url : "/jczy/xfjyry/save",
+        url : "/wxUser/saveWxUser",
         success : function(data) {
             if (data.code == 0) {
                 parent.layer.msg("操作成功");

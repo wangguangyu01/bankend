@@ -12,12 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import com.smart119.common.dao.FileDao;
 import com.smart119.common.domain.FileDO;
 import com.smart119.common.service.FileService;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Service
@@ -131,5 +134,31 @@ public class FileServiceImpl implements FileService {
             }
         }
         return file;
+    }
+
+
+    @Override
+    public void uploadFile(MultipartFile file, Integer type, String bContentUUID) throws IOException {
+        if (!ObjectUtils.isEmpty(file)) {
+            List<FileRequestDto> list = new ArrayList<>();
+            String fileId = attachmentService.weixinUpload(file);
+            FileRequestDto fileRequestDto = new FileRequestDto(fileId);
+            list.add(fileRequestDto);
+            List<FileResponseDto> responseDtos = attachmentService.batchDownloadFile(list);
+            Date date = new Date();
+            for (FileResponseDto fileResponseDto : responseDtos) {
+                Date expireTime  = DateUtils.calculateDate(date, Calendar.SECOND, fileResponseDto.getMax_age());
+                SysFile sysFile = SysFile.builder()
+                        .fileId(fileResponseDto.getFileid())
+                        .createDate(new Date())
+                        .requestTime(new Date())
+                        .expireTime(expireTime)
+                        .url(fileResponseDto.getDownload_url())
+                        .contentId(bContentUUID)
+                        .type(type)
+                        .build();
+                this.saveFile(sysFile);
+            }
+        }
     }
 }

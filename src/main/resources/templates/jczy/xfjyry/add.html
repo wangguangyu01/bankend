@@ -57,7 +57,7 @@
 		<div class="col-sm-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-content">
-					<form class="form-horizontal m-t" id="signupForm">
+					<form class="form-horizontal m-t" id="signupForm" enctype="multipart/form-data">
 						<div class="form-group">
 							<label class="col-sm-2 control-label">微信号：</label>
 							<div class="col-sm-4">
@@ -99,10 +99,10 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">所在地区：</label>
 							<div class="col-sm-3">
-								<input type="text" name="province" class="form-control"  placeholder="请输入所在省"  required/>
+								<input type="text" name="province" class="form-control"  placeholder="请输入所在省/直辖市"  required/>
 							</div>
 							<div class="col-sm-3" >
-								<input type="text" name="city" class="form-control"  placeholder="请输入所在市"  required/>
+								<input type="text" name="city" class="form-control"  placeholder="请输入所在市/直辖市"  required/>
 							</div>
 							<div class="col-sm-3" >
 								<input type="text" name="region" class="form-control"  placeholder="请输入所在市的区或县"  required/>
@@ -152,7 +152,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">照片：</label>
 							<div class="col-sm-10">
-								<input id='input-id' multiple type="file" name="file" data-show-remove="false"   data-show-caption="true"/>
+								<input id='input-id' multiple type="file" name="file"  data-show-caption="true"/>
 							</div>
 						</div>
 						<div class="form-group">

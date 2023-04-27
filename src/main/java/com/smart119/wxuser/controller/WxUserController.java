@@ -33,6 +33,7 @@ public class WxUserController {
     @Autowired
     private WxUserService wxUserService;
 
+
     @GetMapping()
         //@RequiresPermissions("blog:bContent:bContent")
     String wxUserPage() {
@@ -112,12 +113,12 @@ public class WxUserController {
             if (ObjectUtils.isEmpty(wxUser)) {
                 return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "参数不能为空");
             }
-            WxUser wxUserData  = wxUserService.queryByOpenId(wxUser.getOpenId());
-            if (ObjectUtils.isEmpty(wxUserData)) {
+            WxUser wxUserData  = wxUserService.queryByPhone(wxUser.getPhone());
+            if (!ObjectUtils.isEmpty(wxUserData)) {
                 return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "用户已经不存在");
             }
-            wxUserData.setApprove(wxUser.getApprove());
-            int count  = wxUserService.updateWxUser(wxUserData);
+
+            int count  = wxUserService.saveWxUser(files, wxUser);
             return  R.ok();
         } catch (Exception e) {
             e.printStackTrace();

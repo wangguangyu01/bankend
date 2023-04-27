@@ -8,6 +8,7 @@ import com.smart119.system.dao.TSerialNumberDao;
 import com.smart119.system.domain.TSerialNumber;
 import com.smart119.system.service.TSerialNumberService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.support.atomic.RedisAtomicLong;
@@ -70,6 +71,8 @@ public class TSerialNumberServiceImpl extends ServiceImpl<TSerialNumberDao, TSer
             tSerialNumberMapper.updateById(tSerialNumber);
         }
         String incrementStr = String.format("%03d", incrementAndGet);
-        return dateStr + incrementStr;
+        String serialNumberStr = dateStr + incrementStr;
+        serialNumberStr = StringUtils.replace(serialNumberStr, "-", "");
+        return serialNumberStr;
     }
 }
