@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart119.common.dao.SysFileDao">
+  <resultMap id="BaseResultMap" type="com.smart119.common.domain.SysFile">
+    <!--@mbg.generated-->
+    <!--@Table sys_file-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="file_id" jdbcType="VARCHAR" property="fileId" />
+    <result column="request_time" jdbcType="TIMESTAMP" property="requestTime" />
+    <result column="expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="content_id" jdbcType="BIGINT" property="contentId"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `type`, url, file_id, request_time, expire_time, create_date,content_id
+  </sql>
+</mapper>
