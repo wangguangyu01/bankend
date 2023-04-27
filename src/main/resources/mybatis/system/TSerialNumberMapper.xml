@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart119.system.dao.TSerialNumberDao">
+  <resultMap id="BaseResultMap" type="com.smart119.system.domain.TSerialNumber">
+    <!--@mbg.generated-->
+    <!--@Table t_serial_number-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="serial_number" jdbcType="VARCHAR" property="serialNumber" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, serial_number, update_date
+  </sql>
+</mapper>

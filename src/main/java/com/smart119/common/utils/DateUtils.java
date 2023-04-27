@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
 
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -89,6 +86,35 @@ public class DateUtils {
             ZoneId zoneId = ZoneId.systemDefault();
             ZonedDateTime zdt = localDateTime.atZone(zoneId);
             Date date = Date.from(zdt.toInstant());
+            return date;
+        }
+        return null;
+    }
+
+
+    /**
+     * 根据pattern格式，解析时间
+     *
+     * @param dateStr 时间
+     * @param pattern 格式
+     * @return
+     */
+    public static Date parseDateNoWithTime(String dateStr, String pattern) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(dateStr)) {
+            return null;
+        }
+        boolean flag = validDateTime(dateStr);
+        if (flag) {
+            LocalDate localDate = null;
+            if (pattern.equals(DateUtils.DATE_TIME_PATTERN)) {
+                localDate = LocalDate.parse(dateStr, df);
+            } else {
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(pattern);
+                localDate = LocalDate.parse(dateStr, dateTimeFormatter);
+            }
+            ZoneId zoneId = ZoneId.systemDefault();
+            Instant instant = localDate.atStartOfDay().atZone(zoneId).toInstant();
+            Date date = Date.from(instant);
             return date;
         }
         return null;
