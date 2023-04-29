@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,10 +22,11 @@ import org.springframework.web.client.RestTemplate;
 @MapperScan("com.smart119.*.dao")
 @SpringBootApplication
 @EnableCaching
+@EnableScheduling
 public class Smart119ApplicationBackend {
     @Bean
     public RestTemplate restTemplate(){
-        
+
         return new RestTemplate();
     }
 

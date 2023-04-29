@@ -34,7 +34,7 @@ public class WxSysFileTaskJob  {
     private AttachmentService attachmentService;
 
 
-    @Scheduled(cron = "0 */1 * * * ?")
+    @Scheduled(cron = "0 */5 * * * ?")
     public void updateSysFile() {
         log.info("定时任务开始时间{}", System.currentTimeMillis());
         List<SysFile> sysFiles = sysFileDao.selectList(null);
