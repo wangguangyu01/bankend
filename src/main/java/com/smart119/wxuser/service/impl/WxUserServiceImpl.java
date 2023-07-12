@@ -71,6 +71,7 @@ public class WxUserServiceImpl implements WxUserService {
         if (StringUtils.isNotBlank(phone)) {
             wxUserLambdaQueryWrapper.eq(WxUser::getPhone, (String)params.get("phone"));
         }
+        wxUserLambdaQueryWrapper.orderByDesc(WxUser::getUpdateTime);
         IPage<WxUser> wxUserPage = wxUserMapper.selectPage(page, wxUserLambdaQueryWrapper);
 
         return wxUserPage;
