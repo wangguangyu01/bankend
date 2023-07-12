@@ -116,18 +116,45 @@ public class WxUserServiceImpl implements WxUserService {
 
 
     @Override
-    public int saveWxUser(MultipartFile[] files, WxUser wxUser) throws IOException {
+    public int saveWxUser(MultipartFile[] files,
+                          MultipartFile[] identityCardtFile,
+                          MultipartFile[] salarytFile,
+                          MultipartFile[] academicCertificatetFile,
+                          MultipartFile[] vehicleLicensetFile,
+                          MultipartFile[] premisesPermitFile,
+                          MultipartFile[] credittFile,
+                          WxUser wxUser) throws IOException {
         String serialNumber = tSerialNumberService.createSerialNumber();
         wxUser.setSerialNumber(serialNumber);
         String openId = UUIDGenerator.getUUID();
         wxUser.setOpenId(openId);
         int count = wxUserMapper.insert(wxUser);
         if (count > 0) {
-            for (MultipartFile file: files) {
-                fileService.uploadFile(file, 4, openId);
-            }
+            uploadFiles(files, 4, openId);
+
+            // 身份证
+            uploadFiles(identityCardtFile, 5, openId);
+            // 收入证明
+            uploadFiles(salarytFile, 6, openId);
+            // 学历证明
+            uploadFiles(academicCertificatetFile, 7, openId);
+            // 行驶证
+            uploadFiles(vehicleLicensetFile, 8, openId);
+            // 征信
+            uploadFiles(credittFile, 9, openId);
+            // 房本
+            uploadFiles(premisesPermitFile, 10, openId);
+
         }
         return count;
+    }
+
+    private void uploadFiles(MultipartFile[] files, Integer type, String openId) throws IOException {
+        for (MultipartFile file: files) {
+            // 个人生活照片
+            fileService.uploadFile(file, type, openId);
+
+        }
     }
 }
 

@@ -50,7 +50,14 @@ public interface WxUserService {
      */
     int updateWxUser(WxUser wxUser);
 
-    int saveWxUser(MultipartFile[] files, WxUser wxUser) throws IOException;
+    int saveWxUser(MultipartFile[] files,
+                   MultipartFile[] identityCardtFile,
+                   MultipartFile[] salarytFile,
+                   MultipartFile[] academicCertificatetFile,
+                   MultipartFile[] vehicleLicensetFile,
+                   MultipartFile[] premisesPermitFile,
+                   MultipartFile[] credittFile,
+                   WxUser wxUser) throws IOException;
 
 
 

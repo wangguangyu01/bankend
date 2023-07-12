@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.smart119.blog.domain.ContentDO;
 import com.smart119.common.domain.SysFile;
 import com.smart119.common.enums.ResponseStatusEnum;
+import com.smart119.common.service.AttachmentService;
+import com.smart119.common.service.FileService;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
@@ -33,6 +35,10 @@ public class WxUserController {
     @Autowired
     private WxUserService wxUserService;
 
+    @Autowired
+    AttachmentService attachmentService;
+    @Autowired
+    private FileService fileService;
 
     @GetMapping()
         //@RequiresPermissions("blog:bContent:bContent")
@@ -66,8 +72,38 @@ public class WxUserController {
         } else {
             wxUser.setMarriageSeekingFlagStr("不征婚");
         }
+        // 生活照片
+        List<SysFile> imagePaths = fileService.queryFile(wxUser.getOpenId(), 4);
+        // 身份证
+        List<SysFile> identityCard = fileService.queryFile(wxUser.getOpenId(), 5);
+        // 收入证明
+        List<SysFile> salary = fileService.queryFile(wxUser.getOpenId(), 6);
+        // 学历证明
+        List<SysFile> academicCertificate = fileService.queryFile(wxUser.getOpenId(), 7);
+
+        // 行驶证
+        List<SysFile> vehicleLicense = fileService.queryFile(wxUser.getOpenId(), 8);
+
+        // 房本
+        List<SysFile> premisesPermit = fileService.queryFile(wxUser.getOpenId(), 10);
+
+        // 征信
+        List<SysFile> credit = fileService.queryFile(wxUser.getOpenId(), 9);
+        wxUser.setImagePaths(imagePaths);
+        wxUser.setIdentityCard(identityCard);
+        wxUser.setSalary(salary);
+        wxUser.setAcademicCertificate(academicCertificate);
+        wxUser.setVehicleLicense(vehicleLicense);
+        wxUser.setPremisesPermit(premisesPermit);
+        wxUser.setCredit(credit);
         model.addAttribute("wxUser", wxUser);
         model.addAttribute("attachmentDOList", wxUser.getImagePaths());
+        model.addAttribute("identityCard", wxUser.getIdentityCard());
+        model.addAttribute("salary", wxUser.getSalary());
+        model.addAttribute("academicCertificate", wxUser.getAcademicCertificate());
+        model.addAttribute("vehicleLicense", wxUser.getVehicleLicense());
+        model.addAttribute("premisesPermit", wxUser.getPremisesPermit());
+        model.addAttribute("credit", wxUser.getCredit());
         return "jczy/xfjyry/edit";
     }
 
@@ -108,7 +144,15 @@ public class WxUserController {
      */
     @ResponseBody
     @RequestMapping("/saveWxUser")
-    R save(@RequestPart(value = "file", required = false) MultipartFile[] files, WxUser wxUser)  {
+    R save(
+            @RequestPart(value = "file", required = false) MultipartFile[] files,
+            @RequestPart(value = "identityCardtFile", required = false) MultipartFile[] identityCardtFile,
+            @RequestPart(value = "salarytFile", required = false) MultipartFile[] salarytFile,
+            @RequestPart(value = "academicCertificatetFile", required = false)  MultipartFile[] academicCertificatetFile,
+            @RequestPart(value = "vehicleLicensetFile", required = false) MultipartFile[] vehicleLicensetFile,
+            @RequestPart(value = "premisesPermitFile", required = false) MultipartFile[] premisesPermitFile,
+            @RequestPart(value = "premisesPermitFile", required = false)MultipartFile[] credittFile,
+            WxUser wxUser)  {
         try {
             if (ObjectUtils.isEmpty(wxUser)) {
                 return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "参数不能为空");
@@ -118,7 +162,14 @@ public class WxUserController {
                 return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "用户已经不存在");
             }
 
-            int count  = wxUserService.saveWxUser(files, wxUser);
+            int count  = wxUserService.saveWxUser(files,
+                    identityCardtFile,
+                    salarytFile,
+                    academicCertificatetFile,
+                    vehicleLicensetFile,
+                    premisesPermitFile,
+                    credittFile,
+                    wxUser);
             return  R.ok();
         } catch (Exception e) {
             e.printStackTrace();

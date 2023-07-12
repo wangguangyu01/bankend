@@ -1,6 +1,12 @@
 $().ready(function() {
     validateRule();
-    initFileInput("input-id");
+    initFileInput("input-id", 1, 5);
+    initFileInput("identityCard", 1, 2);
+    initFileInput("salary", 1, 5);
+    initFileInput("academicCertificate", 1, 20);
+    initFileInput("vehicleLicense", 0, 1);
+    initFileInput("premisesPermit", 0, 5);
+    initFileInput("credit", 0, 1);
 
 });
 
@@ -64,7 +70,7 @@ function validateRule() {
 
 
 
-function initFileInput(ctrlName) {
+function initFileInput(ctrlName, minCount, maxCount) {
     var control = $('#' + ctrlName);
     control.fileinput({
         language: 'zh', //设置语言
@@ -83,8 +89,8 @@ function initFileInput(ctrlName) {
         //maxImageWidth: 1000,//图片的最大宽度
         //maxImageHeight: 1000,//图片的最大高度
         //maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
-        //minFileCount: 0,
-        //maxFileCount: 10, //表示允许同时上传的最大文件个数
+        minFileCount: minCount,
+        maxFileCount: maxCount, //表示允许同时上传的最大文件个数
         enctype: 'multipart/form-data',
         validateInitialCount:true,
         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",

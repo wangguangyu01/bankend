@@ -1,8 +1,12 @@
 $().ready(function() {
     validateRule();
-
-
-    initFileInput("input-id");
+    initFileInput(attachmentDOList,"input-id");
+    initFileInput(identityCard,"identityCard");
+    initFileInput(salary,"salary");
+    initFileInput(academicCertificate,"academicCertificate");
+    initFileInput(vehicleLicense,"vehicleLicense");
+    initFileInput(premisesPermit,"premisesPermit");
+    initFileInput(credit,"credit");
 
 });
 
@@ -44,11 +48,11 @@ function validateRule() {
 
 
 
-function initFileInput(ctrlName) {
+function initFileInput(fileList,ctrlName) {
 
     var imgArry=[];
     var removeArry = [];
-    $.each(attachmentDOList, function(i,item){
+    $.each(fileList, function(i,item){
         imgArry.push('<img src="'+ item.url +'" alt="个人照片" class="file-preview-image" title="个人照片" style="width:100%">')
         var obj = {"caption":"个人照片","url":item.url};
         removeArry.push(obj);
