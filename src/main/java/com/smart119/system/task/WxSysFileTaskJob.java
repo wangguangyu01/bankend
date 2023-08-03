@@ -46,6 +46,9 @@ public class WxSysFileTaskJob  {
         }
         List<FileResponseDto> fileResponseDtos =  attachmentService.batchDownloadFile(fileIdList);
         log.info("后台更新的图片数量:{}", CollectionUtils.size(fileResponseDtos));
+        if (CollectionUtils.isEmpty(fileResponseDtos)) {
+            return;
+        }
         for (SysFile sysFile: sysFiles) {
             for (FileResponseDto fileResponseDto: fileResponseDtos) {
                 if (StringUtils.equals(sysFile.getFileId(), fileResponseDto.getFileid())) {
