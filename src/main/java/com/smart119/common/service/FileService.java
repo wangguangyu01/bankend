@@ -66,10 +66,23 @@ public interface FileService {
 
 
 
+
+
+
+
 	public SysFile updateFileUrl(SysFile file) throws Exception;
 
 
 	void uploadFile(MultipartFile file, Integer type, String bContentUUID) throws IOException;
+
+
+	/**
+	 * 根据主键更新文件
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public SysFile updateFileUrlById(Long id) throws Exception;
 
 
 }

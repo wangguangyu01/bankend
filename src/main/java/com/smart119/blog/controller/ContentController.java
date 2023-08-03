@@ -59,7 +59,9 @@ public class ContentController extends BaseController {
 
     @GetMapping("/add")
     @RequiresPermissions("blog:bContent:add")
-    String add() {
+    String add(Model model) {
+        String uuid = UUIDGenerator.getUUID();
+        model.addAttribute("uuid", uuid);
         return "blog/bContent/add";
     }
 
@@ -128,9 +130,8 @@ public class ContentController extends BaseController {
         bContent.setGtmCreate(new Date());
         bContent.setGtmModified(new Date());
         int count;
-        if (bContent.getCid() == null || "".equals(bContent.getCid())) {
-            String uuid = UUIDGenerator.getUUID();
-            bContent.setUuid(uuid);
+        ContentDO contentDO = bContentService.queryUuid(bContent.getUuid());
+        if (Objects.isNull(contentDO)) {
             count = bContentService.save(bContent);
         } else {
             count = bContentService.update(bContent);

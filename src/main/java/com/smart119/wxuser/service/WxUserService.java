@@ -50,6 +50,8 @@ public interface WxUserService {
      */
     int updateWxUser(WxUser wxUser);
 
+
+
     int saveWxUser(MultipartFile[] files,
                    MultipartFile[] identityCardtFile,
                    MultipartFile[] salarytFile,
@@ -58,6 +60,12 @@ public interface WxUserService {
                    MultipartFile[] premisesPermitFile,
                    MultipartFile[] credittFile,
                    WxUser wxUser) throws IOException;
+
+
+
+
+    void batchRemove(String[] openIds);
+
 
 
 

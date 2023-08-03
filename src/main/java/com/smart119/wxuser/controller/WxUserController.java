@@ -3,6 +3,8 @@ package com.smart119.wxuser.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.smart119.blog.domain.ContentDO;
+import com.smart119.common.config.Constant;
+import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.SysFile;
 import com.smart119.common.enums.ResponseStatusEnum;
 import com.smart119.common.service.AttachmentService;
@@ -30,7 +32,7 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/wxUser")
 @Slf4j
-public class WxUserController {
+public class WxUserController  extends BaseController {
 
     @Autowired
     private WxUserService wxUserService;
@@ -52,7 +54,7 @@ public class WxUserController {
     public PageUtils list(@RequestParam Map<String, Object> params) {
         IPage<WxUser> bContentList = wxUserService.queryListPage(params);
         PageUtils pageUtils = new PageUtils(bContentList.getRecords(),
-                NumberUtils.toInt(String.valueOf(bContentList), 0));
+                NumberUtils.toInt(String.valueOf(bContentList.getTotal()), 0));
         return pageUtils;
     }
 
@@ -140,7 +142,7 @@ public class WxUserController {
 
 
     /**
-     * 修改
+     * 保存
      */
     @ResponseBody
     @RequestMapping("/saveWxUser")
@@ -171,6 +173,28 @@ public class WxUserController {
                     credittFile,
                     wxUser);
             return  R.ok();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return R.error();
+    }
+
+
+    /**
+     * 删除
+     */
+    @PostMapping("/batchRemove")
+    @ResponseBody
+    public R remove(@RequestParam("ids[]") String[] openIds) {
+        if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
+            return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+        }
+        if (ObjectUtils.isEmpty(openIds)) {
+            return R.error(1, "请选择一条记录删除");
+        }
+        try {
+            wxUserService.batchRemove(openIds);
+            return R.ok();
         } catch (Exception e) {
             e.printStackTrace();
         }

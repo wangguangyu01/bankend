@@ -3,13 +3,17 @@ package com.smart119.common.controller;
 import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.domain.FileDO;
 import com.smart119.common.domain.SysFile;
+import com.smart119.common.dto.FileRequestDto;
+import com.smart119.common.dto.FileResponseDto;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +37,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/common/sysFile")
+@Slf4j
 public class FileController extends BaseController {
 
     @Autowired
@@ -44,6 +49,9 @@ public class FileController extends BaseController {
 
     @Autowired
     private AttachmentService attachmentService;
+
+
+    private
 
 
     @GetMapping()
@@ -184,6 +192,58 @@ public class FileController extends BaseController {
     }
 
 
+
+    @ResponseBody
+    @PostMapping("/uploadNew")
+    R uploadNew(@RequestParam("file") MultipartFile file,
+                @RequestPart("uuid")String uud,
+                HttpServletRequest request) throws IOException {
+        try {
+            log.info("request getScheme {}", request.getScheme());
+            log.info("request getServerName {}", request.getServerName());
+            log.info("request getServerName {}", request.getServerPort());
+            String url = "";
+            if (request.getServerPort() != 0 && StringUtils.isNotBlank(request.getServerPort() + "") ) {
+                url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            } else {
+                url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            }
+
+            if (!ObjectUtils.isEmpty(file)) {
+                List<FileRequestDto> list = new ArrayList<>();
+                String fileId = attachmentService.weixinUpload(file);
+                FileRequestDto fileRequestDto = new FileRequestDto(fileId);
+                list.add(fileRequestDto);
+                List<FileResponseDto> responseDtos = attachmentService.batchDownloadFile(list);
+                Date date = new Date();
+                for (FileResponseDto fileResponseDto : responseDtos) {
+                    Date expireTime  = DateUtils.calculateDate(date, Calendar.SECOND, fileResponseDto.getMax_age());
+                    SysFile sysFile = SysFile.builder()
+                            .fileId(fileResponseDto.getFileid())
+                            .createDate(new Date())
+                            .requestTime(new Date())
+                            .expireTime(expireTime)
+                            .url(fileResponseDto.getDownload_url())
+                            .contentId(uud)
+                            .type(5)
+                            .build();
+                    int count  = sysFileService.saveFile(sysFile);
+                    if (count > 0) {
+                        SysFile sysFileData = sysFileService.queryFileOneByFileId(sysFile.getFileId());
+                        return R.ok().put("fileName", url + "/common/sysFile/ftpUploadNew?id=" + sysFileData.getId());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error();
+        }
+        return R.error();
+    }
+
+
+
+
     @ResponseBody
     @PostMapping("/ftpUpload")
     R ftpUpload(@RequestPart(value = "file", required = false) MultipartFile[] file, HttpServletRequest request) {
@@ -209,6 +269,23 @@ public class FileController extends BaseController {
         return R.error();
     }
 
+
+
+    @ResponseBody
+    @GetMapping("/ftpUploadNew")
+    R ftpUploadNew(@RequestParam("id") Long id, HttpServletRequest request) {
+        try {
+            SysFile sysFile =  sysFileService.updateFileUrlById(id);
+            if (Objects.nonNull(sysFile)) {
+                return R.ok().put("fileName", sysFile.getUrl());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error();
+        }
+
+        return R.error();
+    }
 
     @ResponseBody
     @PostMapping("/fileDelete")

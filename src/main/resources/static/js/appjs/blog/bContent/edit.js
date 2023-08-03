@@ -1,11 +1,23 @@
 $().ready(function () {
     $('.summernote').summernote({
-        height: '220px',
-        lang: 'zh-CN',
+        height : '220px',
+        lang : 'zh-CN',
+        toolbar: [
+            [ 'style', [ 'style' ] ],
+            [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+            [ 'fontname', [ 'fontname' ] ],
+            [ 'fontsize', [ 'fontsize' ] ],
+            [ 'color', [ 'color' ] ],
+            [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+            [ 'table', [ 'table' ] ],
+            [ 'insert', [ 'link', 'video', 'picture'] ],
+            [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ]]
+        ],
         callbacks: {
             onImageUpload: function (files, editor, $editable) {
-                console.log("onImageUpload");
-                sendFile(files);
+                var uuid = $("#uuid").val();
+                console.log(uuid);
+                sendFileNew(files, uuid, editor, $editable);
             }
         }
     });

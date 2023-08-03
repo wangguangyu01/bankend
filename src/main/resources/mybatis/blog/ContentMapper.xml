@@ -26,6 +26,31 @@
         where cid = #{value}
     </select>
 
+
+      <select id="queryUuid" resultType="com.smart119.blog.domain.ContentDO">
+        select `cid`,
+               `uuid`,
+               `title`,
+               `slug`,
+               `created`,
+               `modified`,
+               `content`,
+               `type`,
+               `tags`,
+               `categories`,
+               `hits`,
+               `comments_num`,
+               `allow_comment`,
+               `allow_ping`,
+               `allow_feed`,
+               `status`,
+               `author`,
+               `gtm_create`,
+               `gtm_modified`
+        from blog_content
+        where uuid = #{uuid}
+    </select>
+
     <select id="list" resultType="com.smart119.blog.domain.ContentDO">
         select `cid`,
                `uuid`,

@@ -138,6 +138,13 @@ public class FileServiceImpl implements FileService {
 
 
     @Override
+    public SysFile updateFileUrlById(Long id) throws Exception {
+        SysFile sysFile = sysFileDao.selectById(id);
+        this.updateFileUrl(sysFile);
+        return sysFile;
+    }
+
+    @Override
     public void uploadFile(MultipartFile file, Integer type, String bContentUUID) throws IOException {
         if (!ObjectUtils.isEmpty(file)) {
             List<FileRequestDto> list = new ArrayList<>();

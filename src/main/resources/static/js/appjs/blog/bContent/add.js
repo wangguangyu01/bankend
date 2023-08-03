@@ -11,12 +11,14 @@ $().ready(function() {
 			[ 'color', [ 'color' ] ],
 			[ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
 			[ 'table', [ 'table' ] ],
-			[ 'insert', [ 'link'] ],
-			[ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+			[ 'insert', [ 'link', 'video', 'picture'] ],
+			[ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ]]
 		],
 		callbacks: {
             onImageUpload: function(files, editor, $editable) {
-                sendFile(files);
+				var uuid = $("#uuid").val();
+				console.log(uuid);
+				sendFileNew(files, uuid, editor, $editable);
             }
         }
 	});

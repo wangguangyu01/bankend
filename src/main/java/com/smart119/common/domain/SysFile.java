@@ -30,7 +30,7 @@ public class SysFile {
      * 文件类型
      */
     @TableField(value = "type")
-    @ApiModelProperty(value="文件类型, 1:内容附件;2:收款二维码；3：微信二维码; 4:微信会员图片")
+    @ApiModelProperty(value="文件类型, 1:内容附件;2:收款二维码；3：微信二维码; 4:微信会员图片, 5:内容中的图片")
     private Integer type;
 
     /**

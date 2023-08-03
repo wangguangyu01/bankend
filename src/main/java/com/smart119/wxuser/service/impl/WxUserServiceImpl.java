@@ -6,7 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smart119.blog.domain.ContentDO;
+import com.smart119.common.dao.SysFileDao;
 import com.smart119.common.domain.SysFile;
+import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.PageMybatisPlusUtils;
 import com.smart119.common.utils.UUIDGenerator;
@@ -26,10 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -61,6 +61,13 @@ public class WxUserServiceImpl implements WxUserService {
 
     @Autowired
     private TSerialNumberService tSerialNumberService;
+
+    @Autowired
+    private SysFileDao sysFileDao;
+
+
+    @Autowired
+    private AttachmentService attachmentService;
 
     @Override
     public  IPage<WxUser> queryListPage(Map<String, Object> params) {
@@ -156,6 +163,43 @@ public class WxUserServiceImpl implements WxUserService {
             fileService.uploadFile(file, type, openId);
 
         }
+    }
+
+
+    @Override
+    public void batchRemove(String[] openIds) {
+        List<String> list = new ArrayList<>();
+        CollectionUtils.addAll(list, openIds);
+        if (CollectionUtils.isEmpty(list)) {
+             return;
+        }
+        for (String openId: openIds) {
+            deletContentFile(openId);
+        }
+        wxUserMapper.deleteBatchIds(list);
+    }
+
+
+    /**
+     * 删除内容相关图片
+     * @param openId
+     */
+    private void deletContentFile(String openId) {
+        WxUser wxUser = wxUserMapper.selectById(openId);
+        if (Objects.isNull(wxUser)) {
+            return;
+        }
+        LambdaQueryWrapper<SysFile> queryWrapper = new LambdaQueryWrapper();
+        queryWrapper.eq(SysFile::getContentId, wxUser.getOpenId());
+        List<SysFile> sysFiles = sysFileDao.selectList(queryWrapper);
+        if (CollectionUtils.isEmpty(sysFiles)) {
+            return;
+        }
+        List<String> fileIdList = new ArrayList<>();
+        for (SysFile sysFile: sysFiles) {
+            fileIdList.add(sysFile.getFileId());
+        }
+        attachmentService.batchDeleteFile(fileIdList);
     }
 }
 
