@@ -54,6 +54,12 @@ public class ContentDO implements Serializable {
 	private Date gtmModified;
 
 
+	/**
+	 * 活动费用
+	 */
+	private long price;
+
+
 
 
 	/**
@@ -303,5 +309,13 @@ public class ContentDO implements Serializable {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+
+	public long getPrice() {
+		return price;
+	}
+
+	public void setPrice(long price) {
+		this.price = price;
 	}
 }

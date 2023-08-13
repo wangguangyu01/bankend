@@ -14,7 +14,7 @@ function save() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/system/thresholdConfig/save",
+		url : "/system/config/save",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		success : function(data) {
@@ -39,24 +39,29 @@ function validateRule() {
 	var icon = "<i class='fa fa-times-circle'></i> ";
 	$("#signupForm").validate({
 		rules : {
-			thresholdType : {
+			paramKey : {
+				required : true
+			},
+			paramName : {
+				required : true
+			},
+			paramValue : {
 				required : true
 			}
 		},
 		messages : {
-			thresholdType : {
-				required : icon + "请选择阈值类型",
+			paramKey : {
+				required : icon + "参数key必填",
+			},
+			paramName : {
+				required : icon + "参数paramName必填",
+			},
+			paramValue : {
+				required : icon + "参数paramValue必填",
 			}
 		}
 	})
 }
 
 
-function changeRepeatType() {
-	var repeatType = $('#thresholdType').val();
-	if (repeatType === '1') {
-		$(".areaRange").hide();
-	} else {
-		$(".areaRange").show();
-	}
-}
+

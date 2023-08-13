@@ -86,6 +86,10 @@ function returnList() {
 
 function initFileInput(ctrlName) {
 	var control = $('#' + ctrlName);
+	var flag =false;
+	if (ctrlName == 'moneyQRCode') {
+		flag= true;
+	}
 	control.fileinput({
 		language: 'zh', //设置语言
 		//uploadUrl: "upload/insert", //上传的地址
@@ -106,7 +110,7 @@ function initFileInput(ctrlName) {
 		//minFileCount: 0,
 		//maxFileCount: 10, //表示允许同时上传的最大文件个数
 		enctype: 'multipart/form-data',
-		validateInitialCount:true,
+		validateInitialCount: flag,
 		previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
 		msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
 		layoutTemplates :{

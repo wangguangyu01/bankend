@@ -181,7 +181,7 @@ function showFile(attachmentDOList, index) {
             //minFileCount: 0,
             //maxFileCount: 10, //表示允许同时上传的最大文件个数
             enctype: 'multipart/form-data',
-            validateInitialCount: true,
+            validateInitialCount: false,
             previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
             msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
             layoutTemplates: {

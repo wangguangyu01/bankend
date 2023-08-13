@@ -1,14 +1,15 @@
-var prefix = "/system/thresholdConfig";
+var prefix = "/system/config";
 $(function () {
     load();
 });
 
 function load() {
+    console.log(prefix + "/list");
     $('#exampleTable')
         .bootstrapTable(
             {
                 method: 'get', // 服务器数据的请求方式 get or post
-                url: prefix + "/list?t=" + Math.random(), // 服务器数据的加载地址
+                url: prefix + "/list", // 服务器数据的加载地址
                 //	showRefresh : true,
                 //	showToggle : true,
                 //	showColumns : true,
@@ -60,29 +61,22 @@ function load() {
                         }
                     },
                     {
-                        field: 'thresholdType',
-                        title: '阈值类型',
+                        field: 'paramKey',
+                        title: '参数Key',
                         visible: true,
-                        formatter: function (value, row, index) {
-                            if (row.thresholdType === '1') {
-                                return "根据电话判断多报";
-                            } else if (row.thresholdType === '2') {
-                                return "根据地址范围判断多报";
-                            }
-                        }
                     },
                     {
-                        field: 'timeRange',
-                        title: '时间范围规则（分钟）',
+                        field: 'paramName',
+                        title: '参数名称',
+                        visible: true,
+                    },
+                    {
+                        field: 'paramValue',
+                        title: '参数值',
                         visible: true
 
                     },
-                    {
-                        field: 'areaRange',
-                        title: '区域范围规则（米）',
-                        visible: true
 
-                    },
                     {
                         field: 'createUserName',
                         title: '创建人'
@@ -91,24 +85,7 @@ function load() {
                         field: 'createTime',
                         title: '创建时间'
                     },
-                    {
-                        field: 'status',
-                        title: '停用/启用',
-                        formatter: function (value, row, index) {
-                            var e = '<a class="btn btn-success btn-xs" href="#" mce_href="#" title="点击启用" onclick="changeStatus(\''
-                                + row.id + '\',\'' + 1
-                                + '\')"><i class="fa fa-hourglass-start"></i>启用</a> ';
-                            var f = '<a class="btn btn-danger btn-xs" href="#" mce_href="#" title="点击停用" onclick="changeStatus(\''
-                                + row.id + '\',\'' + 0
-                                + '\')"><i class="fa fa-square-o">停用</i></a> ';
-                            if (row.status == 0) {
-                                return e;
-                            } else {
-                                return f;
-                            }
 
-                        }
-                    },
                     {
                         title: '操作',
                         field: 'id',

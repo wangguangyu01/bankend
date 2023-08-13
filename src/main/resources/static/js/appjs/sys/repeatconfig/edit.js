@@ -12,7 +12,7 @@ function update() {
 	$.ajax({
 		cache : true,
 		type : "POST",
-		url : "/system/thresholdConfig/update",
+		url : "/system/config/update",
 		data : $('#signupForm').serialize(),// 你的formid
 		async : false,
 		success : function(data) {

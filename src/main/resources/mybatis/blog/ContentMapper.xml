@@ -21,7 +21,8 @@
                `status`,
                `author`,
                `gtm_create`,
-               `gtm_modified`
+               `gtm_modified`,
+                `price`
         from blog_content
         where cid = #{value}
     </select>
@@ -46,7 +47,8 @@
                `status`,
                `author`,
                `gtm_create`,
-               `gtm_modified`
+               `gtm_modified`,
+                `price`
         from blog_content
         where uuid = #{uuid}
     </select>
@@ -69,7 +71,8 @@
                `status`,
                `author`,
                `gtm_create`,
-               `gtm_modified`
+               `gtm_modified`,
+                `price`
         from blog_content
         <where>
             <if test="cid != null and cid != ''">
@@ -226,7 +229,8 @@
                  `status`,
                  `author`,
                  `gtm_create`,
-                 `gtm_modified`)
+                 `gtm_modified`,
+                `price`)
         values (#{uuid},
                 #{title},
                 #{slug},
@@ -244,7 +248,8 @@
                 #{status},
                 #{author},
                 #{gtmCreate},
-                #{gtmModified})
+                #{gtmModified},
+                #{price})
     </insert>
 
     <update id="update" parameterType="com.smart119.blog.domain.ContentDO">
@@ -299,7 +304,10 @@
                 `gtm_create` = #{gtmCreate},
             </if>
             <if test="gtmModified != null">
-                `gtm_modified` = #{gtmModified}
+                `gtm_modified` = #{gtmModified},
+            </if>
+            <if test="price != null">
+                price = #{gtmModified}
             </if>
         </set>
         where cid = #{cid}

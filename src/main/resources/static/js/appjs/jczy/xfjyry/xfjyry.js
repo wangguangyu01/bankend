@@ -79,7 +79,16 @@ function load() {
                     },
                     {
                         field: 'approve',
-                        title: '是否审核通过'
+                        title: '是否审核通过',
+                        formatter : function(value, row, index) {
+                            if (value == '0') {
+                                return '<span class="label label-danger">通过</span>';
+                            } else if (value == '1') {
+                                return '<span class="label label-primary">不通过</span>';
+                            } else {
+                                return '<span class="label label-primary">待审核</span>';
+                            }
+                        }
                     },
                     {
                         title: '操作',

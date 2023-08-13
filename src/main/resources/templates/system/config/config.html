@@ -9,10 +9,10 @@
             <div class="ibox-body">
                 <div class="fixed-table-toolbar">
                     <div class="columns pull-left">
-                        <button shiro:hasPermission="system:thresholdConfig:add" type="button" class="btn  btn-primary" onclick="add()">
+                        <button shiro:hasPermission="system:config:add" type="button" class="btn  btn-primary" onclick="add()">
                             <i class="fa fa-plus" aria-hidden="true"></i>添加
                         </button>
-                        <button shiro:hasPermission="system:thresholdConfig:batchRemove" type="button" class="btn  btn-danger"
+                        <button shiro:hasPermission="system:config:batchRemove" type="button" class="btn  btn-danger"
                                 onclick="batchRemove()">
                             <i class="fa fa-trash" aria-hidden="true"></i>删除
                         </button >
@@ -43,12 +43,12 @@
         var s_resetPwd_h = 'hidden';
     </script>
 </div>
-<div shiro:hasPermission="system:thresholdConfig:edit">
+<div shiro:hasPermission="system:config:edit">
     <script type="text/javascript">
         s_edit_h = '';
     </script>
 </div>
-<div shiro:hasPermission="system:thresholdConfig:remove">
+<div shiro:hasPermission="system:config:remove">
     <script type="text/javascript">
         var s_remove_h = '';
     </script>

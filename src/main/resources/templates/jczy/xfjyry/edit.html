@@ -210,9 +210,9 @@
 							<div class="form-group">
 								<label class="col-sm-2 control-label">审核是否通过：</label>
 								<div class="col-sm-4">
-									<input type="radio" name="approve" value="通过" th:checked="${wxUser.approve=='通过'|| wxUser.approve=='待审核' || wxUser.approve == null  || wxUser.approve=='' }">通过</input>
+									<input type="radio" name="approve" value="0" th:checked="${wxUser.approve=='0'|| wxUser.approve=='待审核' || wxUser.approve == null  || wxUser.approve=='' }">通过</input>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="radio" name="approve"  value="不通过" th:checked="${wxUser.approve=='不通过'}">不通过</input>
+									<input type="radio" name="approve"  value="1" th:checked="${wxUser.approve=='不通过'}">不通过</input>
 								</div>
 							</div>
 

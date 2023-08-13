@@ -43,7 +43,6 @@ public class WxUserController  extends BaseController {
     private FileService fileService;
 
     @GetMapping()
-        //@RequiresPermissions("blog:bContent:bContent")
     String wxUserPage() {
         return "jczy/xfjyry/xfjyry";
     }
