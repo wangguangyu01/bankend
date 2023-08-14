@@ -80,13 +80,14 @@ function load() {
                     {
                         field: 'approve',
                         title: '是否审核通过',
-                        formatter : function(value, row, index) {
-                            if (value == '0') {
-                                return '<span class="label label-danger">通过</span>';
-                            } else if (value == '1') {
-                                return '<span class="label label-primary">不通过</span>';
+                        formatter: function (value, row, index) {
+                           console.log("row.value--->"+value);
+                            if(value=='0'){
+                                return '通过';
+                            }else if (value=='1') {
+                                return '不通过';
                             } else {
-                                return '<span class="label label-primary">待审核</span>';
+                                return '待审核';
                             }
                         }
                     },
