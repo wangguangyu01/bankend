@@ -307,7 +307,7 @@
                 `gtm_modified` = #{gtmModified},
             </if>
             <if test="price != null">
-                price = #{gtmModified}
+                price = #{price}
             </if>
         </set>
         where cid = #{cid}

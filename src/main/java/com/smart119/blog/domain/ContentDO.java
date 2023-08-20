@@ -57,7 +57,7 @@ public class ContentDO implements Serializable {
 	/**
 	 * 活动费用
 	 */
-	private long price;
+	private Integer price;
 
 
 
@@ -311,11 +311,11 @@ public class ContentDO implements Serializable {
 		this.uuid = uuid;
 	}
 
-	public long getPrice() {
+	public Integer getPrice() {
 		return price;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
 }
