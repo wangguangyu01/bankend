@@ -38,7 +38,7 @@ public class BlogController {
 		return pageUtils;
 	}
 
-	@GetMapping("/open/post/{cid}")
+	@GetMapping("/open/post/{uuid}")
 	String post(@PathVariable("cid") Long cid, Model model) {
 		ContentDO bContentDO = bContentService.get(cid);
 		model.addAttribute("bContent", bContentDO);

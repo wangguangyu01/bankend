@@ -10,15 +10,9 @@
 					<div id="exampleToolbar" role="group">
 						<div class="form-group col-sm-6">
 							<input id="searchName" type="text" class="form-control" placeholder="用户名">
+							<input id="uuid" type="hidden"  th:value="${uuid}"/>
 						</div>
 						<button class="btn btn-success" onclick="reLoad()">查询</button>
-						<button type="button" class="btn  btn-primary" onclick="add()">
-							<i class="fa fa-plus" aria-hidden="true"></i>添加
-						</button>
-						<button type="button" class="btn  btn-danger"
-							onclick="batchRemove()">
-							<i class="fa fa-trash" aria-hidden="true"></i>删除
-						</button>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>

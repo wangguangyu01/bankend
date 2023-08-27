@@ -27,7 +27,6 @@ $().ready(function() {
 	initFileInput("input-id1");
 	initFileInput("input-id2");
 	initFileInput("input-id3");
-	initFileInput("moneyQRCode");
 });
 
 
@@ -87,9 +86,6 @@ function returnList() {
 function initFileInput(ctrlName) {
 	var control = $('#' + ctrlName);
 	var flag =false;
-	if (ctrlName == 'moneyQRCode') {
-		flag= true;
-	}
 	control.fileinput({
 		language: 'zh', //设置语言
 		//uploadUrl: "upload/insert", //上传的地址

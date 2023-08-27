@@ -7,6 +7,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart119.blog.domain.ContentDO;
+import com.smart119.browse.dao.WxBrowsingUsersDao;
+import com.smart119.browse.dao.WxPersonalBrowseDao;
+import com.smart119.browse.domain.WxBrowsingUsers;
+import com.smart119.browse.domain.WxPersonalBrowse;
 import com.smart119.common.dao.SysFileDao;
 import com.smart119.common.domain.SysFile;
 import com.smart119.common.service.AttachmentService;
@@ -69,14 +73,20 @@ public class WxUserServiceImpl implements WxUserService {
     @Autowired
     private AttachmentService attachmentService;
 
+    @Autowired
+    private WxBrowsingUsersDao wxBrowsingUsersDao;
+
+    @Autowired
+    private WxPersonalBrowseDao wxPersonalBrowseDao;
+
     @Override
-    public  IPage<WxUser> queryListPage(Map<String, Object> params) {
+    public IPage<WxUser> queryListPage(Map<String, Object> params) {
         Page<WxUser> page = new Page();
         PageMybatisPlusUtils.pageHelperUtils(params, page);
         LambdaQueryWrapper<WxUser> wxUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        String phone = (String)params.get("phone");
+        String phone = (String) params.get("phone");
         if (StringUtils.isNotBlank(phone)) {
-            wxUserLambdaQueryWrapper.eq(WxUser::getPhone, (String)params.get("phone"));
+            wxUserLambdaQueryWrapper.eq(WxUser::getPhone, (String) params.get("phone"));
         }
         wxUserLambdaQueryWrapper.orderByDesc(WxUser::getUpdateTime);
         IPage<WxUser> wxUserPage = wxUserMapper.selectPage(page, wxUserLambdaQueryWrapper);
@@ -91,7 +101,7 @@ public class WxUserServiceImpl implements WxUserService {
         List<SysFile> sysFiles = fileService.queryFile(openId, 4);
         if (CollectionUtils.isNotEmpty(sysFiles)) {
             List<SysFile> imagePaths = new ArrayList<>();
-            for (SysFile file: sysFiles) {
+            for (SysFile file : sysFiles) {
                 fileService.updateFileUrl(file);
                 imagePaths.add(file);
             }
@@ -112,7 +122,6 @@ public class WxUserServiceImpl implements WxUserService {
         queryWrapper.eq(WxUser::getSerialNumber, serialNumber);
         return wxUserMapper.selectOne(queryWrapper);
     }
-
 
 
     @Override
@@ -158,7 +167,7 @@ public class WxUserServiceImpl implements WxUserService {
     }
 
     private void uploadFiles(MultipartFile[] files, Integer type, String openId) throws IOException {
-        for (MultipartFile file: files) {
+        for (MultipartFile file : files) {
             // 个人生活照片
             fileService.uploadFile(file, type, openId);
 
@@ -171,10 +180,10 @@ public class WxUserServiceImpl implements WxUserService {
         List<String> list = new ArrayList<>();
         CollectionUtils.addAll(list, openIds);
         if (CollectionUtils.isEmpty(list)) {
-             return;
+            return;
         }
-        for (String openId: openIds) {
-            deletContentFile(openId);
+        for (String openId : openIds) {
+            deletAboutOpenId(openId);
         }
         wxUserMapper.deleteBatchIds(list);
     }
@@ -182,24 +191,33 @@ public class WxUserServiceImpl implements WxUserService {
 
     /**
      * 删除内容相关图片
+     *
      * @param openId
      */
-    private void deletContentFile(String openId) {
-        WxUser wxUser = wxUserMapper.selectById(openId);
-        if (Objects.isNull(wxUser)) {
-            return;
-        }
+    private void deletAboutOpenId(String openId) {
         LambdaQueryWrapper<SysFile> queryWrapper = new LambdaQueryWrapper();
-        queryWrapper.eq(SysFile::getContentId, wxUser.getOpenId());
+        queryWrapper.eq(SysFile::getContentId, openId);
         List<SysFile> sysFiles = sysFileDao.selectList(queryWrapper);
-        if (CollectionUtils.isEmpty(sysFiles)) {
-            return;
+        if (CollectionUtils.isNotEmpty(sysFiles)) {
+            List<String> fileIdList = new ArrayList<>();
+            for (SysFile sysFile : sysFiles) {
+                fileIdList.add(sysFile.getFileId());
+            }
+            attachmentService.batchDeleteFile(fileIdList);
+            sysFileDao.delete(queryWrapper);
         }
-        List<String> fileIdList = new ArrayList<>();
-        for (SysFile sysFile: sysFiles) {
-            fileIdList.add(sysFile.getFileId());
+        LambdaQueryWrapper<WxBrowsingUsers> browsingUsersLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        browsingUsersLambdaQueryWrapper.eq(WxBrowsingUsers::getLoginOpenId, openId);
+        int count = wxBrowsingUsersDao.selectCount(browsingUsersLambdaQueryWrapper);
+        if (count > 0) {
+            wxBrowsingUsersDao.delete(browsingUsersLambdaQueryWrapper);
         }
-        attachmentService.batchDeleteFile(fileIdList);
+        LambdaQueryWrapper<WxPersonalBrowse> personalBrowseLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        personalBrowseLambdaQueryWrapper.eq(WxPersonalBrowse::getLoginOpenId, openId);
+        int personalCount = wxPersonalBrowseDao.selectCount(personalBrowseLambdaQueryWrapper);
+        if (personalCount > 0) {
+            wxPersonalBrowseDao.delete(personalBrowseLambdaQueryWrapper);
+        }
     }
 }
 

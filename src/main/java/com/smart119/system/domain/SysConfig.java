@@ -47,7 +47,7 @@ public class SysConfig {
      * 状态   0：隐藏   1：显示
      */
     @TableField(value = "status")
-    @ApiModelProperty(value="状态   0：隐藏   1：显示")
+    @ApiModelProperty(value="状态   0：显示   1：废除")
     private int status;
 
     /**

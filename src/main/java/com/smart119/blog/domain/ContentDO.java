@@ -60,6 +60,25 @@ public class ContentDO implements Serializable {
 	private Integer price;
 
 
+	/**
+	 * 是否有效
+	 * 0：有效
+	 * 1：过期
+	 */
+	private String staleDated;
+
+
+	public String getStaleDated() {
+		return staleDated;
+	}
+
+	public void setStaleDated(String staleDated) {
+		this.staleDated = staleDated;
+	}
+
+
+
+
 
 
 	/**

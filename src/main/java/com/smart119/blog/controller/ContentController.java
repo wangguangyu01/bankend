@@ -12,6 +12,7 @@ import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -127,8 +128,12 @@ public class ContentController extends BaseController {
         if (null == bContent.getType()) {
             bContent.setType("article");
         }
+
         bContent.setGtmCreate(new Date());
         bContent.setGtmModified(new Date());
+        int priceVal  = NumberUtils.toInt(String.valueOf(bContent.getPrice()), 0);
+        int price   = priceVal * 100;
+        bContent.setPrice(price);
         int count;
         ContentDO contentDO = bContentService.queryUuid(bContent.getUuid());
         if (Objects.isNull(contentDO)) {
@@ -147,9 +152,6 @@ public class ContentController extends BaseController {
                 // 收款二维码
                 uploadFile(moneyQRCode, 2, bContent.getUuid());
             }
-
-
-
             return R.ok().put("cid", bContent.getCid());
         }
         return R.error();
@@ -192,6 +194,9 @@ public class ContentController extends BaseController {
             return R.error(1, "演示系统不允许修改,完整体验请部署程序");
         }
         bContent.setGtmCreate(new Date());
+        int priceVal  = NumberUtils.toInt(String.valueOf(bContent.getPrice()), 0);
+        int price   = priceVal * 100;
+        bContent.setPrice(price);
         bContentService.update(bContent);
         return R.ok();
     }
@@ -225,4 +230,7 @@ public class ContentController extends BaseController {
         bContentService.batchRemove(cids);
         return R.ok();
     }
+
+
+
 }

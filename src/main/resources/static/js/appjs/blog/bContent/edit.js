@@ -26,7 +26,6 @@ $().ready(function () {
     $('#content_sn').summernote('code', content);
     validateRule();
     initFileInput(fileList);
-    initFileInputQRCode(moneyQRCode);
 });
 
 $.validator.setDefaults({

@@ -54,25 +54,7 @@
     </select>
 
     <select id="list" resultType="com.smart119.blog.domain.ContentDO">
-        select `cid`,
-               `uuid`,
-               `title`,
-               `slug`,
-               `created`,
-               `modified`,
-               `type`,
-               `tags`,
-               `categories`,
-               `hits`,
-               `comments_num`,
-               `allow_comment`,
-               `allow_ping`,
-               `allow_feed`,
-               `status`,
-               `author`,
-               `gtm_create`,
-               `gtm_modified`,
-                `price`
+        select *
         from blog_content
         <where>
             <if test="cid != null and cid != ''">

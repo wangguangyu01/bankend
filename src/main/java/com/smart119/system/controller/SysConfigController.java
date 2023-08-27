@@ -29,7 +29,7 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/system/config")
 @Controller
-public class SysConfigController  extends BaseController {
+public class SysConfigController extends BaseController {
 
     @Autowired
     private SysConfigService sysConfigService;
@@ -53,7 +53,7 @@ public class SysConfigController  extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-       return pageUtils;
+        return pageUtils;
 
     }
 
@@ -71,11 +71,16 @@ public class SysConfigController  extends BaseController {
     @ResponseBody
     @PostMapping("/save")
     @RequiresPermissions("system:config:add")
-    public R save(SysConfig sysRepeatConfigDo ) {
+    public R save(SysConfig sysRepeatConfigDo) {
         UserDO user = (UserDO) SecurityUtils.getSubject().getPrincipal();
         SysConfig sysConfig = new SysConfig();
         BeanUtils.copyProperties(sysRepeatConfigDo, sysConfig);
-        sysConfig.setStatus(1);
+        if (org.apache.commons.lang3.StringUtils.contains(sysConfig.getParamName(), "费用")) {
+            int paramValue = NumberUtils.toInt(sysConfig.getParamValue(), 0);
+            paramValue = paramValue * 100;
+            sysConfig.setParamValue(String.valueOf(paramValue));
+        }
+        sysConfig.setStatus(0);
         if (sysConfigService.addSysConfig(sysConfig)) {
             return R.ok();
         } else {
@@ -108,6 +113,11 @@ public class SysConfigController  extends BaseController {
             if (ObjectUtils.isEmpty(sysConfigData)) {
                 return R.error("查询不到此配置");
             }
+            if (org.apache.commons.lang3.StringUtils.contains(sysConfig.getParamName(), "费用")) {
+                int paramValue = NumberUtils.toInt(sysConfig.getParamValue(), 0);
+                paramValue = paramValue * 100;
+                sysConfig.setParamValue(String.valueOf(paramValue));
+            }
             boolean flag = sysConfigService.updateSysConfig(sysConfig);
             if (flag) {
                 return R.ok();
@@ -117,7 +127,6 @@ public class SysConfigController  extends BaseController {
         }
         return R.error();
     }
-
 
 
 }

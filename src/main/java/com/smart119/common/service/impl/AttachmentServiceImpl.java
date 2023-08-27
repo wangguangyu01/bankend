@@ -2,11 +2,14 @@ package com.smart119.common.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.smart119.common.config.BootdoConfig;
 import com.smart119.common.config.FtpConfig;
 import com.smart119.common.dao.AttachmentDao;
+import com.smart119.common.dao.SystemConfigDao;
 import com.smart119.common.domain.AttachmentDO;
 import com.smart119.common.domain.SysFile;
+import com.smart119.common.domain.SystemConfig;
 import com.smart119.common.dto.FileRequestDto;
 import com.smart119.common.dto.FileResponseDto;
 import com.smart119.common.dto.FileidDeleteInfoDo;
@@ -67,6 +70,10 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     @Autowired
     public RestTemplate restTemplate;
+
+
+    @Autowired
+    private SystemConfigDao systemConfigMapper;
 
     @Override
     public AttachmentDO get(String attachmentId) {
@@ -184,7 +191,13 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Override
     public String weixinToken() {
         String token = "";
-        String tokenUrl = weixinUrl + "cgi-bin/token?grant_type=client_credential&appid=" + weixinAppId + "&secret=" + weixinSecret;
+        LambdaQueryWrapper<SystemConfig> systemConfigLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        systemConfigLambdaQueryWrapper.eq(SystemConfig::getSysConfigKey, "weixinAppid");
+        SystemConfig systemConfig = systemConfigMapper.selectOne(systemConfigLambdaQueryWrapper);
+        systemConfigLambdaQueryWrapper.clear();
+        systemConfigLambdaQueryWrapper.eq(SystemConfig::getSysConfigKey, "weixinSecret");
+        SystemConfig systemConfigSecret = systemConfigMapper.selectOne(systemConfigLambdaQueryWrapper);
+        String tokenUrl = weixinUrl + "cgi-bin/token?grant_type=client_credential&appid=" + systemConfig.getSysConfigValue() + "&secret=" + systemConfigSecret.getSysConfigValue();
         ResponseEntity<JSONObject> responseEntity = restTemplate.getForEntity(tokenUrl, JSONObject.class);
         if (responseEntity.getStatusCodeValue() == 200) {
             JSONObject body = responseEntity.getBody();

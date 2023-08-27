@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.smart119.common.config.BootdoConfig;
+import com.smart119.common.dao.SystemConfigDao;
 import com.smart119.common.dto.FileRequestDto;
 import com.smart119.common.dto.FileResponseDto;
 import com.smart119.common.service.AttachmentService;
@@ -50,6 +51,9 @@ public class Smart119ApplicationTest {
     @Autowired
     private WxUserService wxUserService;
 
+    @Autowired
+    private SystemConfigDao systemConfigMapper;
+
 
     @Test
     public void testPassword() throws IOException {
@@ -87,12 +91,8 @@ public class Smart119ApplicationTest {
 
     @Test
     public void testPassword4() throws IOException {
-         Map<String, Object> map = new HashMap<>();
-         map.put("limit", 10);
-         map.put("offset", 0);
-         map.put("phone", "");
-         IPage<WxUser> wxUserIPage = wxUserService.queryListPage(map);
-         System.out.println(JSONObject.toJSON(wxUserIPage));
+        int count  =  systemConfigMapper.selectCount(null);
+        System.out.println(count);
     }
 
 }

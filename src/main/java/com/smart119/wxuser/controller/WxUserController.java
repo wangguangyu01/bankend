@@ -9,13 +9,17 @@ import com.smart119.common.domain.SysFile;
 import com.smart119.common.enums.ResponseStatusEnum;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.FileService;
+import com.smart119.common.utils.DateUtils;
 import com.smart119.common.utils.PageUtils;
 import com.smart119.common.utils.Query;
 import com.smart119.common.utils.R;
+import com.smart119.system.domain.WxMsgTemplate;
+import com.smart119.system.service.WxMsgTemplateService;
 import com.smart119.wxuser.domain.WxUser;
 import com.smart119.wxuser.service.WxUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,6 +46,9 @@ public class WxUserController  extends BaseController {
     AttachmentService attachmentService;
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private WxMsgTemplateService wxMsgTemplateService;
 
     @GetMapping()
     String wxUserPage() {
@@ -131,7 +139,32 @@ public class WxUserController  extends BaseController {
                 return R.error(ResponseStatusEnum.RESCODE_10004.getCode(), "用户已经不存在");
             }
             wxUserData.setApprove(wxUser.getApprove());
+            wxUserData.setUpdateTime(new Date());
             int count  = wxUserService.updateWxUser(wxUserData);
+            // 通过模板
+            WxMsgTemplate wxMsgTemplate = null;
+            if (StringUtils.equals(wxUser.getApprove(), "0")) {
+                // 通过模板
+                wxMsgTemplate = wxMsgTemplateService.queryOne(1);
+                String data = wxMsgTemplate.getData();
+                data = StringUtils.replace(data, "审核事项", wxUser.getWxNumber() + "审核通过");
+                data = StringUtils.replace(data, "申请人", wxUser.getNickname());
+                data = StringUtils.replace(data, "申请时间(2019-10-20 21:00:00)", DateUtils.format(wxUserData.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+                data = StringUtils.replace(data, "备注",  "您的注册用户审核通过");
+                wxMsgTemplate.setData(data);
+            } else {
+                // 不通过模板
+                wxMsgTemplate = wxMsgTemplateService.queryOne(1);
+                String data = wxMsgTemplate.getData();
+                data = StringUtils.replace(data, "审核事项", wxUser.getWxNumber() + "审核不通过");
+                data = StringUtils.replace(data, "申请人", wxUser.getNickname());
+                data = StringUtils.replace(data, "申请时间(2019-10-20 21:00:00)",  DateUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
+                data = StringUtils.replace(data, "备注",  "审核未通过请加管理员weisi7890");
+                wxMsgTemplate.setData(data);
+            }
+            if (!ObjectUtils.isEmpty(wxMsgTemplate)) {
+                wxMsgTemplateService.sendWxMsg(wxUser.getOpenId(), wxMsgTemplate);
+            }
             return  R.ok();
         } catch (Exception e) {
             e.printStackTrace();

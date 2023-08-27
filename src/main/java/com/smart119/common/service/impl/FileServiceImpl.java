@@ -8,6 +8,7 @@ import com.smart119.common.dto.FileRequestDto;
 import com.smart119.common.dto.FileResponseDto;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.utils.DateUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -125,12 +126,14 @@ public class FileServiceImpl implements FileService {
             list.add(fileRequestDto);
             List<FileResponseDto> responseDtos = attachmentService.batchDownloadFile(list);
             Date date = new Date();
-            for (FileResponseDto fileResponseDto : responseDtos) {
-                expireTime  = DateUtils.calculateDate(date, Calendar.SECOND, fileResponseDto.getMax_age());
-                file.setUrl(fileResponseDto.getDownload_url());
-                file.setRequestTime(date);
-                file.setExpireTime(expireTime);
-                this.updateFile(file);
+            if (CollectionUtils.isNotEmpty(responseDtos)) {
+                for (FileResponseDto fileResponseDto : responseDtos) {
+                    expireTime  = DateUtils.calculateDate(date, Calendar.SECOND, fileResponseDto.getMax_age());
+                    file.setUrl(fileResponseDto.getDownload_url());
+                    file.setRequestTime(date);
+                    file.setExpireTime(expireTime);
+                    this.updateFile(file);
+                }
             }
         }
         return file;
