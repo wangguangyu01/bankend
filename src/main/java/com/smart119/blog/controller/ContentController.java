@@ -1,7 +1,10 @@
 package com.smart119.blog.controller;
 
 import com.smart119.blog.domain.ContentDO;
+import com.smart119.blog.domain.WxActivity;
 import com.smart119.blog.service.ContentService;
+import com.smart119.blog.service.WxActivityService;
+import com.smart119.blog.vo.WxActivityVo;
 import com.smart119.common.config.Constant;
 import com.smart119.common.controller.BaseController;
 import com.smart119.common.domain.AttachmentDO;
@@ -11,6 +14,7 @@ import com.smart119.common.dto.FileResponseDto;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
+import com.smart119.common.utils.poi.ExcelUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,7 +25,10 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -40,6 +47,9 @@ public class ContentController extends BaseController {
     AttachmentService attachmentService;
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    private WxActivityService wxActivityService;
 
     @GetMapping()
     @RequiresPermissions("blog:bContent:bContent")
@@ -231,6 +241,40 @@ public class ContentController extends BaseController {
         return R.ok();
     }
 
+
+    @GetMapping("/wxActivityListPage/{uuid}")
+    String wxActivityListPage(@PathVariable("uuid") String uuid, Model model) {
+        ContentDO bContentDO = bContentService.queryUuid(uuid);
+        model.addAttribute("bContent", bContentDO);
+        model.addAttribute("uuid", uuid);
+        return "blog/bcomments/bComments";
+    }
+
+
+
+    @GetMapping("/wxActivityList")
+    @ResponseBody
+    PageUtils wxActivityList(@RequestParam Map<String, Object> params) {
+        Query query = new Query(params);
+        int total = wxActivityService.count(query);
+        List<WxActivity> list = wxActivityService.queryWxActivityListPage(query);
+        PageUtils pageUtils = new PageUtils(list, total);
+        return pageUtils;
+    }
+
+
+    @GetMapping(value = "/wxActivityListExcel")
+    public void wxActivityListExcel(@RequestParam String activityUuid, HttpServletResponse response) throws IOException {
+        ContentDO contentDO =  bContentService.queryUuid(activityUuid);
+        List<WxActivityVo> list = wxActivityService.queryWxActivityList(activityUuid);
+
+        String fileName ="参加活动:" + contentDO.getTitle() +"的人员";
+        fileName = URLEncoder.encode(fileName, "UTF8");
+        response.setContentType("application/vnd.ms-excel;chartset=utf-8");
+        response.setHeader("Content-Disposition", "attachment;filename="+fileName + ".xls");
+        ExcelUtil excelUtil = ExcelUtil.getInstance();
+        excelUtil.exportObj2Excel(response.getOutputStream(), list, WxActivityVo.class, false);
+    }
 
 
 }

@@ -9,10 +9,11 @@
 				<div class="ibox-body">
 					<div id="exampleToolbar" role="group">
 						<div class="form-group col-sm-6">
-							<input id="searchName" type="text" class="form-control" placeholder="用户名">
+							<input id="searchWxNumber" type="text" class="form-control" placeholder="微信号">
 							<input id="uuid" type="hidden"  th:value="${uuid}"/>
 						</div>
 						<button class="btn btn-success" onclick="reLoad()">查询</button>
+						<button class="btn btn-success" onclick="wxActivityListExcel()">导出</button>
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>

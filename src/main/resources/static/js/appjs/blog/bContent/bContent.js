@@ -83,7 +83,14 @@ function load() {
                     {
                         visible: true,
                         field: 'categories',
-                        title: '分类'
+                        title: '分类',
+                        formatter: function (value, row, index) {
+                            if (value == '1') {
+                                return '<span class="label label-danger">精彩时刻</span>';
+                            } else if (value == '2') {
+                                return '<span class="label label-primary">最新活动</span>';
+                            }
+                        }
                     },
                     {
 
@@ -126,8 +133,11 @@ function load() {
 								var f = '<a class="btn btn-success btn-sm" href="#" title="参加活动人员"  mce_href="#" onclick="preview(\''
 									+ row.uuid
 									+ '\')">参加活动人员</a> ';
-							}
-                            return e + d + f;
+                                return e + d + f;
+							} else {
+                                return e + d;
+                            }
+
                         }
                     }]
             });
@@ -184,7 +194,7 @@ function remove(id) {
 }
 
 function preview(id) {
-    window.open("/blog/open/post/" + id);
+    window.open("/blog/bContent/wxActivityListPage/" + id);
     //window.location.href="/blog/open/post/"+id;
 }
 

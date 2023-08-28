@@ -8,7 +8,7 @@ function load() {
         .bootstrapTable(
             {
                 method: 'get', // 服务器数据的请求方式 get or post
-                url: prefix + "/list", // 服务器数据的加载地址
+                url: "/blog/bContent/wxActivityList", // 服务器数据的加载地址
                 //	showRefresh : true,
                 //	showToggle : true,
                 //	showColumns : true,
@@ -31,8 +31,9 @@ function load() {
                     return {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
-                        offset: params.offset
-                        //name:$('#searchName').val(),
+                        offset: params.offset,
+                        wxNumber: $('#searchWxNumber').val(),
+                        activityUuid: $('#uuid').val()
                         //  username:$('#searchName').val()
                     };
                 },
@@ -51,56 +52,36 @@ function load() {
                         title: '主键'
                     },
                     {
-                        field: 'coid',
-                        title: ''
+                        field: 'nickname',
+                        title: '微信昵称'
                     },
                     {
-                        field: 'created',
-                        title: '创建者'
+                        field: 'wxNumber',
+                        title: '微信号'
                     },
                     {
-                        field: 'author',
-                        title: '作者'
+                        field: 'phone',
+                        title: '联系电话'
                     },
                     {
-                        field: 'authorId',
-                        title: '作者编号'
+                        field: 'emergencyPhone',
+                        title: '紧急联系人'
                     },
                     {
-                        field: 'ownerId',
-                        title: '归属人编号'
+                        field: 'sex',
+                        title: '性别'
                     },
                     {
-                        field: 'email',
-                        title: '邮箱'
+                        field: 'card',
+                        title: '身份证'
                     },
                     {
-                        field: 'url',
-                        title: '链接地址'
+                        field: 'address',
+                        title: '详细住址'
                     },
                     {
-                        field: 'ip',
-                        title: 'ip地址'
-                    },
-                    {
-                        field: 'agent',
-                        title: '代理人'
-                    },
-                    {
-                        field: 'content',
-                        title: '内容'
-                    },
-                    {
-                        field: 'type',
-                        title: '类型'
-                    },
-                    {
-                        field: 'status',
-                        title: '状态'
-                    },
-                    {
-                        field: 'parent',
-                        title: '原始文章'
+                        field: 'createTime',
+                        title: '报名时间'
                     },
                     {
                         title: '操作',
@@ -113,9 +94,6 @@ function load() {
                             var d = '<a class="btn btn-warning btn-sm" href="#" title="删除"  mce_href="#" onclick="remove(\''
                                 + row.id
                                 + '\')"><i class="fa fa-remove"></i></a> ';
-                            var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-                                + row.id
-                                + '\')"><i class="fa fa-key"></i></a> ';
                             return e + d;
                         }
                     }]
@@ -210,4 +188,10 @@ function batchRemove() {
     }, function () {
 
     });
+}
+
+
+function wxActivityListExcel() {
+    var activityUuid = $('#uuid').val();
+    self.location.href = "/blog/bContent/wxActivityListExcel?activityUuid="+activityUuid;
 }
