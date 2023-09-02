@@ -10,6 +10,7 @@ import com.smart119.system.domain.UserDO;
 import com.smart119.system.service.SysConfigService;
 import com.smart119.wxuser.domain.WxUser;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -22,8 +23,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -47,6 +51,16 @@ public class SysConfigController extends BaseController {
         PageUtils pageUtils = new PageUtils(new ArrayList<>(), 0);
         try {
             IPage<SysConfig> bContentList = sysConfigService.queryListPage(params);
+            List<SysConfig> sysConfigList  =bContentList.getRecords();
+            if (CollectionUtils.isNotEmpty(sysConfigList)) {
+                for (SysConfig sysConfig: sysConfigList) {
+                    if (org.apache.commons.lang3.StringUtils.contains(sysConfig.getParamName(), "费用")) {
+                        BigDecimal paramValueDecimal = NumberUtils.createBigDecimal(sysConfig.getParamValue());
+                        BigDecimal divide = paramValueDecimal.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+                        sysConfig.setParamValue(String.valueOf(divide));
+                    }
+                }
+            }
             pageUtils = new PageUtils(bContentList.getRecords(),
                     NumberUtils.toInt(String.valueOf(bContentList.getTotal()), 0));
             return pageUtils;
@@ -97,6 +111,11 @@ public class SysConfigController extends BaseController {
         }
         SysConfig sysConfig = sysConfigService.queryById(
                 NumberUtils.toLong(id, -1));
+        if (org.apache.commons.lang3.StringUtils.contains(sysConfig.getParamName(), "费用")) {
+            BigDecimal paramValueDecimal = NumberUtils.createBigDecimal(sysConfig.getParamValue());
+            BigDecimal divide = paramValueDecimal.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+            sysConfig.setParamValue(String.valueOf(divide));
+        }
         model.addAttribute("sysConfig", sysConfig);
         return "system/config/edit";
     }
