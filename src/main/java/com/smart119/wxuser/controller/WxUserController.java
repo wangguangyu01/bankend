@@ -147,7 +147,7 @@ public class WxUserController  extends BaseController {
                 // 通过模板
                 wxMsgTemplate = wxMsgTemplateService.queryOne(1);
                 String data = wxMsgTemplate.getData();
-                data = StringUtils.replace(data, "审核事项", wxUser.getWxNumber() + "审核通过");
+                data = StringUtils.replace(data, "审核事项", "用户"+ wxUser.getPhone() + "审核通过");
                 data = StringUtils.replace(data, "申请人", wxUser.getNickname());
                 data = StringUtils.replace(data, "申请时间(2019-10-20 21:00:00)", DateUtils.format(wxUserData.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
                 data = StringUtils.replace(data, "备注",  "您的注册用户审核通过");
@@ -156,7 +156,7 @@ public class WxUserController  extends BaseController {
                 // 不通过模板
                 wxMsgTemplate = wxMsgTemplateService.queryOne(1);
                 String data = wxMsgTemplate.getData();
-                data = StringUtils.replace(data, "审核事项", wxUser.getWxNumber() + "审核不通过");
+                data = StringUtils.replace(data, "审核事项", "用户"+ wxUser.getPhone() + "审核不通过");
                 data = StringUtils.replace(data, "申请人", wxUser.getNickname());
                 data = StringUtils.replace(data, "申请时间(2019-10-20 21:00:00)",  DateUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
                 data = StringUtils.replace(data, "备注",  "审核未通过请加管理员weisi7890");

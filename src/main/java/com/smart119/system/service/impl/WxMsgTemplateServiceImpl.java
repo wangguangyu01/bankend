@@ -62,8 +62,7 @@ public class WxMsgTemplateServiceImpl extends ServiceImpl<WxMsgTemplateDao, WxMs
         body.put("page", wxMsgTemplate.getUrl());
         JSONObject jsonObject = JSONObject.parseObject(wxMsgTemplate.getData());
         body.put("data", jsonObject);
-        body.put("miniprogram", JSONObject.parseObject(wxMsgTemplate.getMiniprogram()));
-        body.put("miniprogram_state", "developer");
+        body.put("miniprogram_state", wxMsgTemplate.getMiniprogram());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         System.out.println(JSONObject.toJSONString(body));
