@@ -15,7 +15,12 @@ import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.*;
 import com.smart119.common.utils.poi.ExcelUtil;
+import com.smart119.system.domain.OderPay;
+import com.smart119.system.domain.OderPayReturn;
+import com.smart119.system.service.OderPayReturnService;
+import com.smart119.system.service.OderPayService;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +30,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,6 +56,15 @@ public class ContentController extends BaseController {
 
     @Autowired
     private WxActivityService wxActivityService;
+
+    @Resource
+    private OderPayService oderPayService;
+
+    @Resource
+    private OderPayReturnService oderPayReturnService;
+
+
+    private
 
     @GetMapping()
     @RequiresPermissions("blog:bContent:bContent")
@@ -252,6 +267,28 @@ public class ContentController extends BaseController {
 
 
 
+    @GetMapping("/returnPay/{uuid}")
+    String returnPay(@PathVariable("uuid") String uuid, Model model) {
+        ContentDO bContentDO = bContentService.queryUuid(uuid);
+        model.addAttribute("bContent", bContentDO);
+        model.addAttribute("uuid", uuid);
+        return "blog/bcomments/returnPayRecord";
+    }
+
+
+
+    @GetMapping("/returnPayRecordList")
+    @ResponseBody
+    PageUtils returnPayRecordList(@RequestParam Map<String, Object> params) {
+        Query query = new Query(params);
+        int total = oderPayReturnService.count(query);
+        List<OderPayReturn> list = oderPayReturnService.queryReturnPayListPage(query);
+        PageUtils pageUtils = new PageUtils(list, total);
+        return pageUtils;
+    }
+
+
+
     @GetMapping("/wxActivityList")
     @ResponseBody
     PageUtils wxActivityList(@RequestParam Map<String, Object> params) {
@@ -261,6 +298,35 @@ public class ContentController extends BaseController {
         PageUtils pageUtils = new PageUtils(list, total);
         return pageUtils;
     }
+
+
+    @PostMapping("/moneyBack")
+    @ResponseBody
+    public R moneyBack(@RequestParam Long id) throws Exception {
+        WxActivity wxActivity = wxActivityService.queryWxActivityById(id);
+        if (ObjectUtils.isEmpty(wxActivity)) {
+            return R.error("未查询到本次参与活动");
+        }
+        if (StringUtils.isBlank(wxActivity.getOpenId())) {
+            return R.error("缺少参与用户");
+        }
+        if (StringUtils.isBlank(wxActivity.getTradeNo())) {
+            return R.error("缺少订单号");
+        }
+        OderPay oderPay = oderPayService.queryByTradeNo(wxActivity.getTradeNo(), wxActivity.getOpenId());
+        if (ObjectUtils.isEmpty(oderPay) || StringUtils.isBlank(oderPay.getTransactionId()) ) {
+            return R.error("未查询到下单");
+        }
+        if (oderPay.getPaySuccess()!=2) {
+            return R.error("订单支付未成功");
+        }
+        oderPayService.moneyBack(oderPay);
+
+        return R.ok();
+    }
+
+
+
 
 
     @GetMapping(value = "/wxActivityListExcel")

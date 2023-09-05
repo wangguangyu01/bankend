@@ -198,11 +198,12 @@ public class AttachmentServiceImpl implements AttachmentService {
         systemConfigLambdaQueryWrapper.eq(SystemConfig::getSysConfigKey, "weixinSecret");
         SystemConfig systemConfigSecret = systemConfigMapper.selectOne(systemConfigLambdaQueryWrapper);
         String tokenUrl = weixinUrl + "cgi-bin/token?grant_type=client_credential&appid=" + systemConfig.getSysConfigValue() + "&secret=" + systemConfigSecret.getSysConfigValue();
-        ResponseEntity<JSONObject> responseEntity = restTemplate.getForEntity(tokenUrl, JSONObject.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(tokenUrl, String.class);
         if (responseEntity.getStatusCodeValue() == 200) {
-            JSONObject body = responseEntity.getBody();
-            if (!ObjectUtils.isEmpty(body)) {
-                token = body.getString("access_token");
+            String body = responseEntity.getBody();
+            if (StringUtils.isNotBlank(body)) {
+                JSONObject jsonObject = JSONObject.parseObject(body);
+                token = jsonObject.getString("access_token");
             }
         }
         return token;
@@ -310,9 +311,10 @@ public class AttachmentServiceImpl implements AttachmentService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<>(JSONObject.toJSONString(body), httpHeaders);
-        ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(fileUploadUrl, request, JSONObject.class);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(fileUploadUrl, request, String.class);
         if (responseEntity.getStatusCodeValue() == 200) {
-            JSONObject jsonObject = responseEntity.getBody();
+            String responseEntityBody = responseEntity.getBody();
+            JSONObject jsonObject = JSONObject.parseObject(responseEntityBody);
             String errcode = jsonObject.getString("errcode");
             if ("0".equals(errcode)) {
                 JSONArray jsonArray =jsonObject.getJSONArray("file_list");

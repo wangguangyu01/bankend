@@ -133,7 +133,10 @@ function load() {
 								var f = '<a class="btn btn-success btn-sm" href="#" title="参加活动人员"  mce_href="#" onclick="preview(\''
 									+ row.uuid
 									+ '\')">参加活动人员</a> ';
-                                return e + d + f;
+                                var n = '<a class="btn btn-success btn-sm" href="#" title="参加活动人员"  mce_href="#" onclick="returnPay(\''
+                                    + row.uuid
+                                    + '\')">退款记录</a> ';
+                                return e + d + f + n;
 							} else {
                                 return e + d;
                             }
@@ -195,6 +198,12 @@ function remove(id) {
 
 function preview(id) {
     window.open("/blog/bContent/wxActivityListPage/" + id);
+    //window.location.href="/blog/open/post/"+id;
+}
+
+
+function returnPay(id) {
+    window.open("/blog/bContent/returnPay/" + id);
     //window.location.href="/blog/open/post/"+id;
 }
 

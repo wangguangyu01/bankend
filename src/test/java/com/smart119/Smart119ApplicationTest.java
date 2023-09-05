@@ -10,6 +10,7 @@ import com.smart119.common.dto.FileRequestDto;
 import com.smart119.common.dto.FileResponseDto;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.utils.*;
+import com.smart119.system.service.OderPayService;
 import com.smart119.wxuser.domain.WxUser;
 import com.smart119.wxuser.service.WxUserService;
 import org.apache.commons.io.IOUtils;
@@ -24,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -36,6 +38,8 @@ import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -53,6 +57,11 @@ public class Smart119ApplicationTest {
 
     @Autowired
     private SystemConfigDao systemConfigMapper;
+
+    @Resource
+    private OderPayService oderPayService;
+
+
 
 
     @Test
@@ -90,9 +99,11 @@ public class Smart119ApplicationTest {
 
 
     @Test
-    public void testPassword4() throws IOException {
+    public void testPassword4() throws Exception {
         int count  =  systemConfigMapper.selectCount(null);
         System.out.println(count);
+        oderPayService.getWechatPayCertificates();
+
     }
 
 }

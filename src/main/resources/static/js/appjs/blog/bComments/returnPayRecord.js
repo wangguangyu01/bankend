@@ -8,7 +8,7 @@ function load() {
         .bootstrapTable(
             {
                 method: 'get', // 服务器数据的请求方式 get or post
-                url: "/blog/bContent/wxActivityList", // 服务器数据的加载地址
+                url: "/blog/bContent/returnPayRecordList", // 服务器数据的加载地址
                 //	showRefresh : true,
                 //	showToggle : true,
                 //	showColumns : true,
@@ -52,48 +52,48 @@ function load() {
                         title: '主键'
                     },
                     {
-                        field: 'nickname',
+                        field: 'payReturnUser',
                         title: '微信昵称'
                     },
                     {
-                        field: 'wxNumber',
+                        field: 'payReturnNumber',
                         title: '微信号'
                     },
                     {
-                        field: 'phone',
+                        field: 'payReturnPhone',
                         title: '联系电话'
                     },
                     {
-                        field: 'emergencyPhone',
-                        title: '紧急联系人'
-                    },
-                    {
-                        field: 'sex',
-                        title: '性别'
-                    },
-                    {
-                        field: 'card',
-                        title: '身份证'
-                    },
-                    {
-                        field: 'address',
-                        title: '详细住址'
-                    },
-                    {
-                        field: 'createTime',
-                        title: '报名时间'
-                    },
-                    {
-                        title: '操作',
-                        field: 'id',
-                        align: 'center',
+                        field: 'amountRefund',
+                        title: '退款金额',
                         formatter: function (value, row, index) {
-                            var d = '<a class="btn btn-warning btn-sm" href="#" title="退款"  mce_href="#" onclick="remove(\''
-                                + row.id
-                                + '\')">退款</a> ';
-                            return  d;
+                             var valuePlace = parseInt(value);
+                             return valuePlace / 100;
                         }
-                    }]
+                    },
+                    {
+                        field: 'amountTotal',
+                        title: '支付金额',
+                        formatter: function (value, row, index) {
+                            var valuePlace = parseInt(value);
+                            return valuePlace / 100;
+                        }
+                    },
+                    {
+                        field: 'successTime',
+                        title: '退款时间'
+                    }
+                    // ,
+                    // {
+                    //     title: '操作',
+                    //     field: 'id',
+                    //     align: 'center',
+                    //     formatter: function (value, row, index) {
+                    //         var d = ' ';
+                    //         return  d;
+                    //     }
+                    // }
+                    ]
             });
 }
 

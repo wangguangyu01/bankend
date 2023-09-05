@@ -19,4 +19,9 @@ public interface WxActivityService {
 
 
     List<WxActivityVo> queryWxActivityList(String activityUuid);
+
+
+
+    WxActivity queryWxActivityById(Long id);
+
 }

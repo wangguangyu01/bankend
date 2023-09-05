@@ -33,4 +33,10 @@ public class WxActivityServiceImpl implements WxActivityService {
     public List<WxActivityVo> queryWxActivityList(String activityUuid) {
         return activityDao.queryWxActivityList(activityUuid);
     }
+
+
+    @Override
+    public WxActivity queryWxActivityById(Long id) {
+        return activityDao.selectById(id);
+    }
 }

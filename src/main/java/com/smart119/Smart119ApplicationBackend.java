@@ -7,9 +7,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhangshunhua
@@ -26,8 +33,30 @@ import org.springframework.web.client.RestTemplate;
 public class Smart119ApplicationBackend {
     @Bean
     public RestTemplate restTemplate(){
+        RestTemplate restTemplate = new RestTemplate(getFactory());
+        restTemplate.setMessageConverters(getConverts());
+        return restTemplate;
+    }
 
-        return new RestTemplate();
+
+    private SimpleClientHttpRequestFactory getFactory() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        return factory;
+    }
+
+    private List<HttpMessageConverter<?>> getConverts() {
+        List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
+        // String杞崲鍣?/span>
+        StringHttpMessageConverter stringConvert = new StringHttpMessageConverter();
+        List<MediaType> stringMediaTypes = new ArrayList<MediaType>() {{
+            //娣诲姞鍝嶅簲鏁版嵁鏍煎紡锛屼笉鍖归厤浼氭姤401
+            add(MediaType.TEXT_PLAIN);
+            add(MediaType.TEXT_XML);
+            add(MediaType.APPLICATION_JSON);
+        }};
+        stringConvert.setSupportedMediaTypes(stringMediaTypes);
+        messageConverters.add(stringConvert);
+        return messageConverters;
     }
 
     public static void main(String[] args) {
