@@ -31,7 +31,8 @@ import java.util.List;
 @EnableCaching
 @EnableScheduling
 public class Smart119ApplicationBackend {
-    @Bean
+
+    @Bean(name = "restTemplate")
     public RestTemplate restTemplate(){
         RestTemplate restTemplate = new RestTemplate(getFactory());
         restTemplate.setMessageConverters(getConverts());
@@ -57,6 +58,12 @@ public class Smart119ApplicationBackend {
         stringConvert.setSupportedMediaTypes(stringMediaTypes);
         messageConverters.add(stringConvert);
         return messageConverters;
+    }
+
+
+    @Bean(name = "restTemplateImag")
+    public RestTemplate restTemplateImag(){
+        return new RestTemplate();
     }
 
     public static void main(String[] args) {

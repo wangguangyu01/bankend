@@ -22,7 +22,8 @@
                `author`,
                `gtm_create`,
                `gtm_modified`,
-                `price`
+                `price`,
+                staleDated
         from blog_content
         where cid = #{value}
     </select>
@@ -289,7 +290,10 @@
                 `gtm_modified` = #{gtmModified},
             </if>
             <if test="price != null">
-                price = #{price}
+                price = #{price},
+            </if>
+             <if test="staleDated != null">
+                staleDated = #{staleDated}
             </if>
         </set>
         where cid = #{cid}

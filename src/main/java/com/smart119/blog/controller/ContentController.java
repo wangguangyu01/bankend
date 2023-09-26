@@ -64,7 +64,6 @@ public class ContentController extends BaseController {
     private OderPayReturnService oderPayReturnService;
 
 
-    private
 
     @GetMapping()
     @RequiresPermissions("blog:bContent:bContent")
@@ -95,6 +94,13 @@ public class ContentController extends BaseController {
     @RequiresPermissions("blog:bContent:edit")
     String edit(@PathVariable("cid") Long cid, Model model) throws Exception {
         ContentDO bContentDO = bContentService.get(cid);
+        if (!ObjectUtils.isEmpty(bContentDO)) {
+             if (!ObjectUtils.isEmpty(bContentDO.getPrice())) {
+                  double price = bContentDO.getPrice().doubleValue();
+                  price = price / 100;
+                  bContentDO.setPrice(price);
+             }
+        }
         model.addAttribute("bContent", bContentDO);
         List<SysFile> fileList = fileService.queryFile(bContentDO.getUuid(),1);
         if (CollectionUtils.isNotEmpty(fileList)) {
@@ -156,8 +162,8 @@ public class ContentController extends BaseController {
 
         bContent.setGtmCreate(new Date());
         bContent.setGtmModified(new Date());
-        int priceVal  = NumberUtils.toInt(String.valueOf(bContent.getPrice()), 0);
-        int price   = priceVal * 100;
+        double priceVal  = NumberUtils.toDouble(String.valueOf(bContent.getPrice()), 0);
+        double price   = priceVal * 100;
         bContent.setPrice(price);
         int count;
         ContentDO contentDO = bContentService.queryUuid(bContent.getUuid());
@@ -219,8 +225,8 @@ public class ContentController extends BaseController {
             return R.error(1, "演示系统不允许修改,完整体验请部署程序");
         }
         bContent.setGtmCreate(new Date());
-        int priceVal  = NumberUtils.toInt(String.valueOf(bContent.getPrice()), 0);
-        int price   = priceVal * 100;
+        double priceVal  = NumberUtils.toInt(String.valueOf(bContent.getPrice()), 0);
+        double price   = priceVal * 100;
         bContent.setPrice(price);
         bContentService.update(bContent);
         return R.ok();

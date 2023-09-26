@@ -41,8 +41,8 @@
 									<select data-placeholder="活动是否过期" name="staleDated" title="活动是否过期" id=""
 											class="form-control chosen-select" tabindex="1" required>
 										<option value="">--请选择--</option>
-										<option value="1" th:selected="${bContent.staleDated == '0'}">有效</option>
-										<option value="2" th:selected="${bContent.staleDated == '1'}">过期</option>
+										<option value="0" th:selected="${bContent.staleDated == '0'}">有效</option>
+										<option value="1" th:selected="${bContent.staleDated == '1'}">过期</option>
 									</select>
 								</div>
 							</div>

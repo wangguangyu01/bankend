@@ -1,4 +1,4 @@
-var prefix = "/banner/banner"
+var prefix = "/wxBanner/banner"
 $(function () {
     load();
 });
@@ -32,8 +32,7 @@ function load() {
                         //说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
                         limit: params.limit,
                         offset: params.offset,
-                        searchName:$('#searchName').val(),
-                        searchZq:$('#searchZq').val()
+                        bannerNanme:$.trim($('#searchName').val())
                         // username:$('#searchName').val()
                     };
                 },
@@ -48,82 +47,63 @@ function load() {
                         checkbox: true
                     },
                     {
-                        field: 'px',
-                        title: '排序',
-                        formatter: function (value, row, index) {
-                            var html = ``;
-                            html += `<select class="form-control" onchange="changePx('${row.bt}', '${row.scBannerId}',this)">`;
-
-                            for(var i=1;i<11;i++){
-                                if(i==value){
-                                    html += `<option value='${i}' selected="true">${i}</option>`
-                                }else{
-                                    html += `<option value='${i}'>${i}</option>`
-                                }
-                            }
-                            html += `</select>`
-                            return html;
-                        }
+                        visible : false,
+                        field : 'id',
+                        title : ''
                     },
+                    // {
+                    //     field: 'px',
+                    //     title: '排序',
+                    //     formatter: function (value, row, index) {
+                    //         var html = ``;
+                    //         html += `<select class="form-control" onchange="changePx('${row.bt}', '${row.scBannerId}',this)">`;
+                    //
+                    //         for(var i=1;i<11;i++){
+                    //             if(i==value){
+                    //                 html += `<option value='${i}' selected="true">${i}</option>`
+                    //             }else{
+                    //                 html += `<option value='${i}'>${i}</option>`
+                    //             }
+                    //         }
+                    //         html += `</select>`
+                    //         return html;
+                    //     }
+                    // },
                     {
-                        field: 'bt',
+                        field: 'bannerNanme',
                         title: '标题'
                     },
                     {
-                        field: 'flmc',
-                        title: '所属分类'
-                    },
-                    {
-                        field: 'flmc',
-                        title: '缩略图',
+                        field: 'bannerType',
+                        title: '微信滚动广告类型',
                         formatter: function (value, row, index) {
-                            var html = ``;
-                            html+=`<div>`
-                            for(var i=0;i<row.attachmentDOList.length;i++){
-                                html+=`<img width="200px" height="150px" src="/attach/ftpDownload?id=${row.attachmentDOList[i].attachmentId}">&nbsp;&nbsp;`
+                            console.log("row.value--->"+value);
+                            if(value=='1'){
+                                return '精彩时刻';
+                            }else if (value=='2') {
+                                return '最新活动';
                             }
-                            html+=`</div>`
-                            return html;
                         }
                     },
                     {
-                        field: 'fbsj',
+                        field: 'createTime',
                         title: '发布时间'
-                    },
-                    {
-                        field: 'zt',
-                        title: '状态',
-                        formatter: function (value, row, index) {
-                            var html = ``;
-                            html += `<select class="form-control" onchange="changeZt('${row.bt}','${row.scBannerId}',this)">`;
-                            if(value=='0'){
-                                html += `<option value='0' selected="true">显示</option>`
-                                html += `<option value='1'>隐藏</option>`
-                            }else{
-                                html += `<option value='0'>显示</option>`
-                                html += `<option value='1' selected="true">隐藏</option>`
-                            }
-                            html += `</select>`
-                            return html;
-                        }
-                    },
-                    {
-                        title: '操作',
-                        field: 'id',
-                        align: 'center',
-                        formatter: function (value, row, index) {
-                            var e = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
-                                + row.scBannerId
-                                + '\')"><i class="fa fa-edit"></i></a> ';
-                            var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
-                                + row.scBannerId
-                                + '\')"><i class="fa fa-remove"></i></a> ';
-                            var f = '<a class="btn btn-success btn-sm" href="#" title="备用"  mce_href="#" onclick="resetPwd(\''
-                                + row.scBannerId
-                                + '\')"><i class="fa fa-key"></i></a> ';
-                            return e + d;
-                        }
-                    }]
+                    }
+                    // , {
+                    //     title: '操作',
+                    //     field: 'id',
+                    //     align: 'center',
+                    //     formatter: function (value, row, index) {
+                    //         var e = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="编辑" onclick="edit(\''
+                    //             + row.id
+                    //             + '\')"><i class="fa fa-edit"></i></a> ';
+                    //         var d = '<a class="btn btn-warning btn-sm" href="#" title="删除"  mce_href="#" onclick="remove(\''
+                    //             + row.id
+                    //             + '\')"><i class="fa fa-remove"></i></a> ';
+                    //         return e + d;
+                    //     }
+                    // }
+                    ]
             });
 }
 function reLoad() {
@@ -145,7 +125,7 @@ function add() {
         title: '增加',
         maxmin: true,
         shadeClose: false, // 点击遮罩关闭层
-        area: ['800px', '750px'],
+        area: ['500px', '400px'],
         content: prefix + '/add' // iframe的url
     });
 }

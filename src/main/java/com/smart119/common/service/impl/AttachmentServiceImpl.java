@@ -37,6 +37,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.util.*;
 
@@ -68,7 +69,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Autowired
     public FtpConfig ftpConfig;
 
-    @Autowired
+    @Resource(name = "restTemplateImag")
     public RestTemplate restTemplate;
 
 
@@ -274,10 +275,10 @@ public class AttachmentServiceImpl implements AttachmentService {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = new HttpEntity<>(JSONObject.toJSONString(body), httpHeaders);
-        ResponseEntity<JSONObject> responseEntity = restTemplate.postForEntity(fileUploadUrl, request, JSONObject.class);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(fileUploadUrl, request, String.class);
         JSONObject jsonUploadUrl = null;
         if (responseEntity.getStatusCodeValue() == 200) {
-            jsonUploadUrl = responseEntity.getBody();
+            jsonUploadUrl = JSONObject.parseObject(responseEntity.getBody());
             // 文件名字创建成功
             if ("0".equals(jsonUploadUrl.getString("errcode"))) {
                 httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);

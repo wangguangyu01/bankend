@@ -9,15 +9,12 @@
 				<div class="ibox-body">
 					<div class="fixed-table-toolbar">
 						<div class="columns pull-left">
-							<button shiro:hasPermission="banner:banner:add" type="button" class="btn  btn-primary" onclick="add()">
-								<i class="fa fa-plus" aria-hidden="true"></i>添加图片
+							<button  type="button" class="btn  btn-primary" onclick="add()">
+								<i class="fa fa-plus" aria-hidden="true"></i>添加
 							</button>
-							<button shiro:hasPermission="banner:banner:batchRemove" type="button" class="btn  btn-danger"
+							<button type="button" class="btn  btn-danger"
 								onclick="batchRemove()">
 								<i class="fa fa-trash" aria-hidden="true"></i>删除
-							</button>
-							<button shiro:hasPermission="banner:banner:add" type="button" class="btn  btn-primary" onclick="addFl()">
-								<i class="fa fa-plus" aria-hidden="true"></i>添加分类
 							</button>
 						</div>
 						<div class="columns pull-right">
@@ -27,15 +24,7 @@
 							<input id="searchName" type="text" class="form-control"
 								placeholder="请输入关键字">
 						</div>
-						<div class="columns pull-right col-md-2">
-							<select class="form-control" id="searchZq" name="searchZq">
-								<option value="">请选择</option>
-								<option value="1">近一天</option>
-								<option value="2">近三天</option>
-								<option value="3">近一周</option>
-								<option value="4">近一月</option>
-							</select>
-						</div>
+
 					</div>
 					<table id="exampleTable" data-mobile-responsive="true">
 					</table>
