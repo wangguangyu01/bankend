@@ -47,10 +47,18 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-1 control-label">参加活动费用：</label>
+								<label class="col-sm-1 control-label">普通用户费用：</label>
 								<div class="col-sm-4">
 									<input  id="price" name="price" class="form-control" type="text"
 											th:value="${bContent.price}"/>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="col-sm-1 control-label">会员活动费用：</label>
+								<div class="col-sm-4">
+									<input  id="proPay" name="proPay" class="form-control" type="text"
+											th:value="${bContent.proPay}"/>
 								</div>
 							</div>
 							<div class="form-group">

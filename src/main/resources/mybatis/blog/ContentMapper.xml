@@ -23,7 +23,8 @@
                `gtm_create`,
                `gtm_modified`,
                 `price`,
-                staleDated
+                staleDated,
+                `pro_pay`
         from blog_content
         where cid = #{value}
     </select>
@@ -49,7 +50,8 @@
                `author`,
                `gtm_create`,
                `gtm_modified`,
-                `price`
+                `price`,
+                `pro_pay`
         from blog_content
         where uuid = #{uuid}
     </select>
@@ -213,7 +215,8 @@
                  `author`,
                  `gtm_create`,
                  `gtm_modified`,
-                `price`)
+                `price`,
+                `pro_pay`)
         values (#{uuid},
                 #{title},
                 #{slug},
@@ -232,7 +235,8 @@
                 #{author},
                 #{gtmCreate},
                 #{gtmModified},
-                #{price})
+                #{price},
+                #{proPay})
     </insert>
 
     <update id="update" parameterType="com.smart119.blog.domain.ContentDO">
@@ -291,6 +295,9 @@
             </if>
             <if test="price != null">
                 price = #{price},
+            </if>
+            <if test="proPay != null">
+                pro_pay = #{proPay},
             </if>
              <if test="staleDated != null">
                 staleDated = #{staleDated}

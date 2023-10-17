@@ -60,6 +60,9 @@ public class ContentDO implements Serializable {
 	private Double price;
 
 
+	private Double proPay;
+
+
 	/**
 	 * 是否有效
 	 * 0：有效
@@ -336,5 +339,13 @@ public class ContentDO implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Double getProPay() {
+		return proPay;
+	}
+
+	public void setProPay(Double proPay) {
+		this.proPay = proPay;
 	}
 }

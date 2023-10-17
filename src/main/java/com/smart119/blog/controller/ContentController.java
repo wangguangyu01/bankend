@@ -100,6 +100,11 @@ public class ContentController extends BaseController {
                   price = price / 100;
                   bContentDO.setPrice(price);
              }
+            if (!ObjectUtils.isEmpty(bContentDO.getProPay())) {
+                double proPay = bContentDO.getProPay().doubleValue();
+                proPay = proPay / 100;
+                bContentDO.setProPay(proPay);
+            }
         }
         model.addAttribute("bContent", bContentDO);
         List<SysFile> fileList = fileService.queryFile(bContentDO.getUuid(),1);
@@ -165,6 +170,11 @@ public class ContentController extends BaseController {
         double priceVal  = NumberUtils.toDouble(String.valueOf(bContent.getPrice()), 0);
         double price   = priceVal * 100;
         bContent.setPrice(price);
+
+        double proPayVal  = NumberUtils.toDouble(String.valueOf(bContent.getProPay()), 0);
+        double proPay   = proPayVal * 100;
+        bContent.setProPay(proPay);
+
         int count;
         ContentDO contentDO = bContentService.queryUuid(bContent.getUuid());
         if (Objects.isNull(contentDO)) {
