@@ -133,7 +133,7 @@ function load() {
 								var f = '<a class="btn btn-success btn-sm" href="#" title="参加活动人员"  mce_href="#" onclick="preview(\''
 									+ row.uuid
 									+ '\')">参加活动人员</a> ';
-                                var n = '<a class="btn btn-success btn-sm" href="#" title="参加活动人员"  mce_href="#" onclick="returnPay(\''
+                                var n = '<a class="btn btn-success btn-sm" href="#" title="退款记录"  mce_href="#" onclick="returnPay(\''
                                     + row.uuid
                                     + '\')">退款记录</a> ';
                                 return e + d + f + n;

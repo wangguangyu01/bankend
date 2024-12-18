@@ -66,9 +66,9 @@ public class Smart119ApplicationTest {
 
     @Test
     public void testPassword() throws IOException {
-       // System.out.println(MD5Utils.encrypt("admin", "admin"));
-        String path = attachmentService.weixinUpload("/Users/wangguangyu/WeChatProjects/smart119_bms_backend/uploadFile/1dfc9671-9b26-4123-a548-83018973691f.png");
-        System.out.println( path);
+       System.out.println(MD5Utils.encrypt("admin", "admin@1234"));
+//        String path = attachmentService.weixinUpload("/Users/wangguangyu/WeChatProjects/smart119_bms_backend/uploadFile/1dfc9671-9b26-4123-a548-83018973691f.png");
+//        System.out.println( path);
     }
 
 

@@ -24,7 +24,7 @@
     </sql>
 
     <select id="queryWxActivityListPage" resultMap="BaseResultMap">
-        select wx_activity.trade_no,
+        select distinct wx_activity.trade_no,
                wx_activity.id,
                wx_activity.open_id,
                wx_activity.nickname,
@@ -38,8 +38,8 @@
                wx_activity.create_time
         from wx_activity,
              oder_pay
-        where wx_activity.trade_no = oder_pay.trade_no
-          and oder_pay.pay_success = '2'
+        where ((wx_activity.trade_no = oder_pay.trade_no
+          and oder_pay.pay_success = '2') or (status = '0'))
         <if test="param != null">
             <if test="param.wxNumber != null and param.wxNumber != ''">
                  and wx_activity.wx_number = #{param.wxNumber}
