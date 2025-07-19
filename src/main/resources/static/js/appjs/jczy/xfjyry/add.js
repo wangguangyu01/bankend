@@ -1,9 +1,9 @@
 $().ready(function() {
     validateRule();
-    initFileInput("input-id", 1, 5);
-    initFileInput("identityCard", 1, 2);
-    initFileInput("salary", 1, 5);
-    initFileInput("academicCertificate", 1, 20);
+    initFileInput("input-id", 0, 5);
+    initFileInput("identityCard", 0, 2);
+    initFileInput("salary", 0, 5);
+    initFileInput("academicCertificate", 0, 20);
     initFileInput("vehicleLicense", 0, 1);
     initFileInput("premisesPermit", 0, 5);
     initFileInput("credit", 0, 1);
@@ -71,6 +71,7 @@ function validateRule() {
 
 
 function initFileInput(ctrlName, minCount, maxCount) {
+    console.log("ctrlName-->", ctrlName);
     var control = $('#' + ctrlName);
     control.fileinput({
         language: 'zh', //设置语言

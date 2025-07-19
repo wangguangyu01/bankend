@@ -47,11 +47,6 @@ import java.util.*;
 public class AttachmentServiceImpl implements AttachmentService {
 
 
-    @Value("${weixin.secret}")
-    private String weixinSecret;
-
-    @Value("${weixin.appid}")
-    private String weixinAppId;
 
 
     @Value("${weixin.env}")

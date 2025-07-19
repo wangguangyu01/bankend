@@ -12,10 +12,13 @@ import com.smart119.browse.dao.WxPersonalBrowseDao;
 import com.smart119.browse.domain.WxBrowsingUsers;
 import com.smart119.browse.domain.WxPersonalBrowse;
 import com.smart119.common.dao.SysFileDao;
+import com.smart119.common.dao.SystemConfigDao;
 import com.smart119.common.domain.SysFile;
+import com.smart119.common.domain.SystemConfig;
 import com.smart119.common.service.AttachmentService;
 import com.smart119.common.service.FileService;
 import com.smart119.common.utils.PageMybatisPlusUtils;
+import com.smart119.common.utils.RSAKeyPairGenerator;
 import com.smart119.common.utils.UUIDGenerator;
 import com.smart119.system.service.TSerialNumberService;
 import com.smart119.wxuser.dao.WxUserDao;
@@ -33,24 +36,17 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.*;
 
 @Slf4j
 @Service
 public class WxUserServiceImpl implements WxUserService {
 
-    @Value("${weixin.secret}")
-    private String weixinSecret;
-
-    @Value("${weixin.appid}")
-    private String weixinAppId;
 
 
-    @Value("${weixin.env}")
-    private String weixinEnv;
 
-    @Value("${weixin.url}")
-    private String weixinUrl;
 
 
     @Autowired
@@ -79,17 +75,30 @@ public class WxUserServiceImpl implements WxUserService {
     @Autowired
     private WxPersonalBrowseDao wxPersonalBrowseDao;
 
+    @Autowired
+    private SystemConfigDao systemConfigMapper;
+
     @Override
-    public IPage<WxUser> queryListPage(Map<String, Object> params) {
+    public IPage<WxUser> queryListPage(Map<String, Object> params) throws Exception {
         Page<WxUser> page = new Page();
         PageMybatisPlusUtils.pageHelperUtils(params, page);
         LambdaQueryWrapper<WxUser> wxUserLambdaQueryWrapper = new LambdaQueryWrapper<>();
         String phone = (String) params.get("phone");
+
         if (StringUtils.isNotBlank(phone)) {
-            wxUserLambdaQueryWrapper.eq(WxUser::getPhone, (String) params.get("phone"));
+            phone = getPhoneEncrypt(phone);
+            wxUserLambdaQueryWrapper.eq(WxUser::getPhone, phone);
         }
         wxUserLambdaQueryWrapper.orderByDesc(WxUser::getUpdateTime);
         IPage<WxUser> wxUserPage = wxUserMapper.selectPage(page, wxUserLambdaQueryWrapper);
+        if (wxUserPage.getTotal() > 0) {
+            List<WxUser> wxUsers = wxUserPage.getRecords();
+            for (WxUser wxUser: wxUsers) {
+                PrivateKey  privateKey = getPrivateKey();
+                String phoneDec = RSAKeyPairGenerator.decrypt(wxUser.getPhone(), privateKey);
+                wxUser.setPhone(phoneDec);
+            }
+        }
 
         return wxUserPage;
     }
@@ -98,6 +107,11 @@ public class WxUserServiceImpl implements WxUserService {
     @Override
     public WxUser queryByOpenId(String openId) throws Exception {
         WxUser wxUser = wxUserMapper.selectById(openId);
+        if (ObjectUtils.isEmpty(wxUser)) {
+            PrivateKey  privateKey = getPrivateKey();
+            String phoneDec = RSAKeyPairGenerator.decrypt(wxUser.getPhone(), privateKey);
+            wxUser.setPhone(phoneDec);
+        }
         List<SysFile> sysFiles = fileService.queryFile(openId, 4);
         if (CollectionUtils.isNotEmpty(sysFiles)) {
             List<SysFile> imagePaths = new ArrayList<>();
@@ -111,7 +125,7 @@ public class WxUserServiceImpl implements WxUserService {
     }
 
     @Override
-    public int updateWxUser(WxUser wxUser) {
+    public int updateWxUser(WxUser wxUser) throws Exception {
         return wxUserMapper.updateById(wxUser);
     }
 
@@ -120,15 +134,29 @@ public class WxUserServiceImpl implements WxUserService {
     public WxUser queryBySerialNumber(String serialNumber) throws Exception {
         LambdaQueryWrapper<WxUser> queryWrapper = new LambdaQueryWrapper();
         queryWrapper.eq(WxUser::getSerialNumber, serialNumber);
-        return wxUserMapper.selectOne(queryWrapper);
+        WxUser wxUser = wxUserMapper.selectOne(queryWrapper);
+        if (!ObjectUtils.isEmpty(wxUser)) {
+            PrivateKey  privateKey = getPrivateKey();
+            String phoneDec = RSAKeyPairGenerator.decrypt(wxUser.getPhone(), privateKey);
+            wxUser.setPhone(phoneDec);
+        }
+        return wxUser;
     }
 
 
     @Override
     public WxUser queryByPhone(String phone) throws Exception {
         LambdaQueryWrapper<WxUser> queryWrapper = new LambdaQueryWrapper();
+        phone = getPhoneEncrypt(phone);
         queryWrapper.eq(WxUser::getPhone, phone);
-        return wxUserMapper.selectOne(queryWrapper);
+        WxUser wxUser = wxUserMapper.selectOne(queryWrapper);
+        if (!ObjectUtils.isEmpty(wxUser)) {
+            PrivateKey  privateKey = getPrivateKey();
+            String phoneDec = RSAKeyPairGenerator.decrypt(wxUser.getPhone(), privateKey);
+            wxUser.setPhone(phoneDec);
+        }
+
+        return wxUser;
     }
 
 
@@ -140,11 +168,13 @@ public class WxUserServiceImpl implements WxUserService {
                           MultipartFile[] vehicleLicensetFile,
                           MultipartFile[] premisesPermitFile,
                           MultipartFile[] credittFile,
-                          WxUser wxUser) throws IOException {
+                          WxUser wxUser) throws Exception {
         String serialNumber = tSerialNumberService.createSerialNumber();
         wxUser.setSerialNumber(serialNumber);
         String openId = UUIDGenerator.getUUID();
         wxUser.setOpenId(openId);
+        String  phone = getPhoneEncrypt(wxUser.getPhone());
+        wxUser.setPhone(phone);
         int count = wxUserMapper.insert(wxUser);
         if (count > 0) {
             uploadFiles(files, 4, openId);
@@ -218,6 +248,29 @@ public class WxUserServiceImpl implements WxUserService {
         if (personalCount > 0) {
             wxPersonalBrowseDao.delete(personalBrowseLambdaQueryWrapper);
         }
+    }
+
+    private PrivateKey getPrivateKey() throws Exception {
+        LambdaQueryWrapper<SystemConfig> rsa_private_key = new LambdaQueryWrapper<>();
+        rsa_private_key.eq(SystemConfig::getSysConfigKey, "rsa_private_key");
+        SystemConfig privateKey = systemConfigMapper.selectOne(rsa_private_key);
+        return RSAKeyPairGenerator.getPrivateKey(privateKey.getSysConfigValue());
+    }
+
+
+    /**
+     * 手机号加密
+     * @param phone2
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public String getPhoneEncrypt(String phone2) throws Exception {
+        LambdaQueryWrapper<SystemConfig> rsa_public_key = new LambdaQueryWrapper<>();
+        rsa_public_key.eq(SystemConfig::getSysConfigKey, "rsa_public_key");
+        SystemConfig publicKey = systemConfigMapper.selectOne(rsa_public_key);
+        PublicKey publicKey1 = RSAKeyPairGenerator.getPublicKey(publicKey.getSysConfigValue());
+        return RSAKeyPairGenerator.encrypt(phone2, publicKey1);
     }
 }
 

@@ -18,7 +18,7 @@ public interface WxUserService {
      * @param params
      * @return
      */
-    IPage<WxUser> queryListPage(Map<String, Object> params);
+    IPage<WxUser> queryListPage(Map<String, Object> params)  throws Exception;
 
 
     /**
@@ -48,7 +48,7 @@ public interface WxUserService {
      * @param wxUser
      * @return
      */
-    int updateWxUser(WxUser wxUser);
+    int updateWxUser(WxUser wxUser) throws Exception ;
 
 
 
@@ -59,12 +59,16 @@ public interface WxUserService {
                    MultipartFile[] vehicleLicensetFile,
                    MultipartFile[] premisesPermitFile,
                    MultipartFile[] credittFile,
-                   WxUser wxUser) throws IOException;
+                   WxUser wxUser) throws Exception;
 
 
 
 
     void batchRemove(String[] openIds);
+
+
+
+    public String getPhoneEncrypt(String phone2) throws Exception;
 
 
 

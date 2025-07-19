@@ -58,7 +58,8 @@ public class WxUserController  extends BaseController {
 
     @ResponseBody
     @GetMapping("/list")
-    public PageUtils list(@RequestParam Map<String, Object> params) {
+    public PageUtils list(@RequestParam Map<String, Object> params) throws Exception {
+
         IPage<WxUser> bContentList = wxUserService.queryListPage(params);
         PageUtils pageUtils = new PageUtils(bContentList.getRecords(),
                 NumberUtils.toInt(String.valueOf(bContentList.getTotal()), 0));
@@ -185,7 +186,7 @@ public class WxUserController  extends BaseController {
             @RequestPart(value = "academicCertificatetFile", required = false)  MultipartFile[] academicCertificatetFile,
             @RequestPart(value = "vehicleLicensetFile", required = false) MultipartFile[] vehicleLicensetFile,
             @RequestPart(value = "premisesPermitFile", required = false) MultipartFile[] premisesPermitFile,
-            @RequestPart(value = "premisesPermitFile", required = false)MultipartFile[] credittFile,
+            @RequestPart(value = "credittFile", required = false)MultipartFile[] credittFile,
             WxUser wxUser)  {
         try {
             if (ObjectUtils.isEmpty(wxUser)) {
