@@ -96,6 +96,7 @@ mybatis-plus:
     jdbc-type-for-null: 'null'
 
 
+
 weixin:
   env: prod-0gws2yp30d12fdb1
   url: https://api.weixin.qq.com/
